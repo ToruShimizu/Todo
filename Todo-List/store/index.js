@@ -5,12 +5,16 @@ export const state = () => ({
 
 export const mutations = {
   // リスト追加
-  create (state, payload) {
-    state.todos.push({content: payload.content})
+  create (state, payload,text) {
+    state.todos.push({content: payload.content, done:false,})
   },
   remove (state, payload) {
     state.todos.splice(state.todos.indexOf(payload.todo), 1)
   },
+  toggle (state, payload) {
+    payload.done = !payload.done
+  }
+
 }
 
 export const actions = {
@@ -20,7 +24,11 @@ export const actions = {
   },
   remove (context, payload) {
     context.commit('remove', payload)
+  },
+  toggle (context, payload) {
+    context.commit('toggle', payload)
   }
+
 }
 
 export const getters = {

@@ -61,9 +61,10 @@
         <template v-for="(todo, i) in todos">
           <v-divider v-if="i !== 0" :key="`${i}-divider`"></v-divider>
           <v-list-item :key="`${i}-${todo.content}`">
+          <p>{{todo.id}}</p>
             <v-list-item-action>
               <v-checkbox
-                v-model="todo.done"
+                :checked="todo.done" @change="toggle(todo)"
                 :color="(todo.done && 'grey') || 'primary'"
               >
                 <template v-slot:label>
@@ -94,6 +95,9 @@
 
 <script>
 import { mapState } from 'vuex'
+import { mapMutations } from 'vuex'
+import { mapActions } from 'vuex'
+
 export default {
   data () {
     return {
@@ -124,16 +128,18 @@ export default {
   methods: {
     create () {
       this.$store.dispatch('create', {
-        content: this.content,
-        done: false,
+        content: this.content
       })
       this.content = ''
     },
-     remove (todo){
+    remove (todo) {
        if(confirm(todo.content+'を削除しますか？'))
       this.$store.dispatch('remove', todo)
-    }
+    },
+    toggle (todo) {
+      this.$store.dispatch('toggle', todo)
   }
+}
 }
 </script>
 
