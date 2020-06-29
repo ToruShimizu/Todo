@@ -130,6 +130,7 @@ export default {
       this.content = ''
     },
      remove (todo){
+       if(confirm(todo.content+'を削除しますか？'))
       this.$store.dispatch('remove', todo)
     }
   }
