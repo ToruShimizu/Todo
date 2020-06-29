@@ -28,10 +28,10 @@
     </v-layout>
 
     <h2 class="display-1 success--text pl-4">
-      Tasks:&nbsp;
+      Todos:&nbsp;
       <v-fade-transition leave-absolute>
-        <span :key="`tasks-${tasks.length}`">
-          {{ tasks.length }}
+        <span :key="`todos-${todos.length}`">
+          {{ todos.length }}
         </span>
       </v-fade-transition>
     </h2>
@@ -40,13 +40,13 @@
 
     <v-row class="my-1" align="center">
       <strong class="mx-4 info--text text--darken-2">
-        未完了: {{ remainingTasks }}
+        未完了: {{ remainingTodos }}
       </strong>
 
       <v-divider vertical></v-divider>
 
       <strong class="mx-4 success--text text--darken-2">
-        完了: {{ completedTasks }}
+        完了: {{ completedTodos }}
       </strong>
 
       <v-spacer></v-spacer>
@@ -56,30 +56,32 @@
 
     <v-divider class="mb-4"></v-divider>
 
-    <v-card v-if="tasks.length > 0">
+    <v-card v-if="todos.length > 0">
       <v-slide-y-transition class="py-0" group tag="v-list">
-        <template v-for="(task, i) in tasks">
+        <template v-for="(todo, i) in todos">
           <v-divider v-if="i !== 0" :key="`${i}-divider`"></v-divider>
-          <v-list-item :key="`${i}-${task.content}`">
+          <v-list-item :key="`${i}-${todo.content}`">
             <v-list-item-action>
               <v-checkbox
-                v-model="task.done"
-                :color="(task.done && 'grey') || 'primary'"
+                v-model="todo.done"
+                :color="(todo.done && 'grey') || 'primary'"
               >
                 <template v-slot:label>
                   <div
-                    :class="(task.done && 'grey--text') || 'primary--text'"
+                    :class="(todo.done && 'grey--text') || 'primary--text'"
                     class="ml-4"
-                    v-text="task.content"
+                    v-text="todo.content"
                   ></div>
+                 <v-icon @click="remove(todo)">mdi-delete-outline</v-icon>
                 </template>
               </v-checkbox>
+
             </v-list-item-action>
 
             <v-spacer></v-spacer>
 
             <v-scroll-x-transition>
-              <v-icon v-if="task.done" color="success">
+              <v-icon v-if="todo.done" color="success">
                 check
               </v-icon>
             </v-scroll-x-transition>
@@ -105,17 +107,17 @@ export default {
       contentExists () {
       return this.content.length > 0
     },
-    completedTasks () {
-      return this.tasks.filter(task => task.done).length
+    completedTodos () {
+      return this.todos.filter(task => task.done).length
     },
     progress () {
-      return (this.completedTasks / this.tasks.length) * 100
+      return (this.completedTodos / this.todos.length) * 100
     },
-    remainingTasks () {
-      return this.tasks.length - this.completedTasks
+    remainingTodos () {
+      return this.todos.length - this.completedTodos
     },
       ...mapState([
-      'tasks'
+      'todos'
     ]),
   },
 
@@ -126,6 +128,9 @@ export default {
         done: false,
       })
       this.content = ''
+    },
+     remove (todo){
+      this.$store.dispatch('remove', todo)
     }
   }
 }
