@@ -3,6 +3,7 @@
     <v-layout>
       <v-flex>
         <!-- <v-icon>mdi-pen-plus</v-icon> -->
+        <!-- タスク追加テキストエリア -->
         <v-text-field
           v-if="editing"
           v-model="content"
@@ -10,6 +11,8 @@
           solo
           @keydown.enter="create"
         ></v-text-field>
+
+        <!-- タスク更新用テキストエリア -->
         <v-text-field
           v-else
           v-model="dammyContent"
@@ -21,6 +24,7 @@
       </v-flex>
       <v-flex mt-1 ml-2>
         <transition name="fade">
+          <!-- 送信ボタン -->
           <v-btn v-if="contentExists" @click="create" type="submit" color="success">
             <v-icon>mdi-pen-plus</v-icon>
           </v-btn>
@@ -39,38 +43,27 @@
 
     <v-divider class="mt-4"></v-divider>
 
-    <v-row class="my-1" align="center">
-      <v-tabs>
-        <v-tab name="disp" value="0" v-model="disp">すべて:{{ todos.length }}</v-tab>
-        <v-divider vertical></v-divider>
-
-        <v-tab name="disp" value="1" v-model="disp">未完了:{{ remainingTodos }}</v-tab>
-        <v-divider vertical></v-divider>
-
-        <v-tab name="disp" value="2" v-model="disp">完了: {{ completedTodos }}</v-tab>
-      </v-tabs>
-      <div class="todo-list__header">
-        <input type="radio" id="all" name="disp" value="0" v-model="disp" />
-        <label for="all">All ({{todosCount}})</label>
-        <input type="radio" id="notDone" name="disp" value="1" v-model="disp" />
-        <label for="notDone">Not Done ({{remainingTodos}})</label>
-        <input type="radio" id="done" name="disp" value="2" v-model="disp" />
-        <label for="done">Done ({{completedTodos}})</label>
-      </div>
-      <v-divider vertical></v-divider>
-
-      <v-spacer></v-spacer>
-
-      <v-progress-circular :value="progress" class="mr-2" color="success"></v-progress-circular>
-    </v-row>
-
-    <v-divider class="mb-4"></v-divider>
-
     <v-card v-if="todos.length > 0">
+          <!-- 完了、未完了のタブ切り替え -->
+      <v-tabs>
+        <v-tab name="disp" value=0 v-model="disp">すべて:{{ todos.length }}</v-tab>
+        <v-divider vertical></v-divider>
+
+        <v-tab name="disp" value=1 v-model="disp">未完了:{{ remainingTodos }}</v-tab>
+        <v-divider vertical></v-divider>
+
+        <v-tab name="disp" value=2 v-model="disp">
+          完了: {{ completedTodos }} 
+                <!-- 完了率の表示 -->
+          <v-progress-circular :value="progress" class="ml-3" color="success"></v-progress-circular></v-tab>
+      </v-tabs>
+    <v-divider class="mb-4"></v-divider>
+      <!-- リストの増減に応じてスライド -->
       <v-slide-y-transition class="py-0" group tag="v-list">
-        <template v-for="(todo, i) in computedTodos" :text="todo.content">
+        <!-- todosの表示 -->
+        <template v-for="(todo, i) in todos">
           <v-divider v-if="i !== 0" :key="`${i}-divider`"></v-divider>
-          <v-list-item :key="`${i}-${todo.content}`" :text="todo.content">
+          <v-list-item :key="`${i}-${todo.content}`"> 
             <v-list-item-action>
               <v-checkbox
                 :checked="todo.done"
@@ -85,17 +78,21 @@
                   ></div>
 
                   <v-spacer></v-spacer>
-                  <v-icon @click="edit">mdi-lead-pencil</v-icon>
-                  <v-icon @click="remove(todo)">mdi-delete-outline</v-icon>
+             
                 </template>
               </v-checkbox>
             </v-list-item-action>
 
             <v-spacer></v-spacer>
 
-            <v-scroll-x-transition>
+            <!-- <v-scroll-x-transition>
               <v-icon v-if="todo.done" color="success">check</v-icon>
-            </v-scroll-x-transition>
+            </v-scroll-x-transition> -->
+
+                 <!-- 編集用ボタン -->
+                  <v-icon @click="edit">mdi-lead-pencil</v-icon>
+                  <!-- 削除ボタン -->
+                  <v-icon @click="remove(todo)">mdi-delete-outline</v-icon>
           </v-list-item>
         </template>
       </v-slide-y-transition>
@@ -113,7 +110,7 @@ export default {
       done: false,
       editing: true,
       text: '',
-      disp: '0'
+      disp: 0
     }
   },
 
@@ -123,11 +120,11 @@ export default {
     },
     computedTodos() {
       switch (this.disp) {
-        case '0':
+        case 0:
           return this.todos
-        case '1':
+        case 1:
           return this.remainingTodos
-        case '2':
+        case 3:
           return this.completedTodos
       }
     },
