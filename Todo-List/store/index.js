@@ -13,6 +13,12 @@ export const mutations = {
   },
   toggle (state, payload) {
     payload.done = !payload.done
+  },
+  update(state, { id, title, detail }) {
+    const index = state.todos.findIndex(todo => todo.id === id);
+    if (index >= 0) {
+      state.todos[index].title = title;
+    }
   }
 
 }
@@ -27,10 +33,24 @@ export const actions = {
   },
   toggle (context, payload) {
     context.commit('toggle', payload)
-  }
+  },
+  updateTodo({ commit }, todo) {
+    commit("update", todo);
+  },
 
 }
 
 export const getters = {
-
+  todosCount (state) {
+    return state.todos.length;
+  },
+  completedTodos (state,getters) {
+    return state.todos.filter(todo => todo.done).length
+  },
+  progress (state,getters) {
+    return (getters.completedTodos / state.todos.length) * 100
+  },
+  remainingTodos (state,getters) {
+    return state.todos.length - getters.completedTodos
+  },
 }
