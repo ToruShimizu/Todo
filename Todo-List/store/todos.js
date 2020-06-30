@@ -1,3 +1,9 @@
+import { firestoreAction } from 'vuexfire'
+import firebase from '~/plugins/firebase'
+
+const db = firebase.firestore()
+// リアルタイムでtodosの中身を反映
+const todoRef = db.collection('todo')
 
 export const state = () => ({
   todos:[]
@@ -27,17 +33,28 @@ export const mutations = {
 }
 
 export const actions = {
+  // 初期化
+  init: firestoreAction(({ bindFirestoreRef }) => {
+    bindFirestoreRef('todos', todoRef)
+  }),
+
   // タスク追加
-  create (context, payload) {
-    context.commit('create', payload)
-  },
+  create: firestoreAction((context, {content,date}) => {
+    todoRef.create({
+      content,
+      date,
+      done: false
+    })
+  }),
   // タスク削除
-  remove (context, payload) {
-    context.commit('remove', payload)
-  },
+  remove: firestoreAction((context, id) => {
+   todoRef.doc(id).delete()
+  }),
   // 完了、未完了切り替え
-  toggle (context, payload) {
-    context.commit('toggle', payload)
+  toggle: firestoreAction((context, todo) => {
+    taskRef.doc(todo.id).update({
+      done: !todo.done
+    })
   },
   updateTodo({ commit }, todo) {
     commit("update", todo)
@@ -61,5 +78,9 @@ export const getters = {
   // 未完了タスクのカウント
   remainingTodos (state,getters) {
     return state.todos.length - getters.completedTodos
+  },
+  // 日付順でソート
+  orderdTodos: (state) => {
+    return _.orderBy(state.tasks, 'date', 'asc')
   }
 }
