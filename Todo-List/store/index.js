@@ -1,13 +1,15 @@
+
 export const state = () => ({
-  todos:[]
+  todos:[],
+  theValue:''
 })
 
 export const mutations = {
 
   // タスク追加
-  create (state, payload,text) {
-    state.todos.push({content: payload.content, done:false,})
-  },
+ create (state,payload) {
+   state.todos.push({ content: payload.content, done: false })
+ },
   // タスク削除
   remove (state, payload) {
     state.todos.splice(state.todos.indexOf(payload.todo), 1)
@@ -26,10 +28,10 @@ export const mutations = {
 }
 
 export const actions = {
-  // 初期化
-
   // タスク追加
-
+  create (context,payload) {
+    context.commit('create', payload)
+  },
   // タスク削除
   remove (context, payload) {
     context.commit('remove', payload)
