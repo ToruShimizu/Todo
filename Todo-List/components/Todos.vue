@@ -38,21 +38,23 @@
 
     <v-divider class="mt-4"></v-divider>
 
-    <v-card v-if="todos.length > 0">
+    <v-card v-if="todos.length > 0" >
+      <v-list >
+
 
       <!-- 完了、未完了のタブ切り替え -->
       <v-tabs>
-        <v-tab name="disp" value="0" v-model="disp"
+        <v-tab @click="filter = 'all'"
           >すべて:{{ todos.length }}</v-tab
         >
         <v-divider vertical></v-divider>
 
-        <v-tab name="disp" value="1" v-model="disp"
+        <v-tab name="disp" @click="filter = 'active'"
           >未完了:{{ remainingTodos }}</v-tab
         >
         <v-divider vertical></v-divider>
 
-        <v-tab name="disp" value="2" v-model="disp">
+        <v-tab name="disp" @click="filter = 'done'">
           完了: {{ completedTodos }}
 
           <!-- 完了率の表示 -->
@@ -66,11 +68,9 @@
 
       <v-divider class="mb-4"></v-divider>
       <v-slide-y-transition class="py-0" group tag="v-list">
-        <template v-for="(todo, i) in todos">
+       
           <v-divider v-if="i !== 0" :key="`${i}-divider`"></v-divider>
-
-          <v-list-item :key="`${i}-${todo.content}`">
-
+          <v-list-item  v-for="(todo, i) in todosFiltered" :key="`${i}-${todo.content}`">
             <!-- 完了、未完了切り替えチェックボックス -->
             <v-checkbox
               :checked="todo.done"
@@ -94,7 +94,6 @@
                 @blur="doneEdit(todo)"
                 @keyup.enter="doneEdit(todo)"
                 @keyup.esc="cancelEdit(todo)"
-                v-focus
                 label="タスクを変更する"
                 outlined
                 dense
@@ -109,8 +108,12 @@
             <!-- 削除ボタン -->
             <v-icon @click="remove(todo)">mdi-delete-outline</v-icon>
           </v-list-item>
-        </template>
+          
+
+        
       </v-slide-y-transition>
+            </v-list>
+
     </v-card>
   </v-container>
 </template>
@@ -125,7 +128,7 @@ export default {
       done: false,
       editing: false,
       editContent: "",
-      disp: 0,
+      filter: 'all'
     }
   },
 
@@ -133,15 +136,14 @@ export default {
     contentExists() {
       return this.content.length > 0
     },
-    computedTodos() {
-      switch (this.disp) {
-        case 0:
-          return this.todos
-        case 1:
-          return this.remainingTodos
-        case 3:
-          return this.completedTodos
-      }
+    todosFiltered () {
+      if(this.filter == 'all') {
+        return this.todos
+      }else if(this.filter == 'active') {
+        return this.todos.filter(todo => !todo.done)
+      }else if(this.filter == 'done')
+      return this.todos.filter(todo => todo.done)
+
     },
     ...mapGetters([
       "completedTodos",
@@ -150,7 +152,7 @@ export default {
       "remainingTodos",
       "todosCount"
     ]),
-    ...mapState(["todos", "editedTodo"])
+    ...mapState(["todos"])
   },
 
   methods: {
@@ -180,7 +182,8 @@ export default {
     candelEdit (todo) {
       todo.content = this.beforeEditCache
       todo.editing = false
-    }
+    },
+
   }
 }
 </script>
