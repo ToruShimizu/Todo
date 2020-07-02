@@ -2,6 +2,7 @@
   <v-container style="max-width: 500px">
     <v-layout>
       <v-flex>
+
         <!-- タスク追加テキストエリア -->
         <v-text-field
           v-model="content"
@@ -13,6 +14,7 @@
         ></v-text-field>
       </v-flex>
       <v-flex mt-1 ml-2>
+
         <!-- 送信ボタン -->
         <transition name="fade">
           <v-btn
@@ -37,6 +39,7 @@
     <v-divider class="mt-4"></v-divider>
 
     <v-card v-if="todos.length > 0">
+
       <!-- 完了、未完了のタブ切り替え -->
       <v-tabs>
         <v-tab name="disp" value="0" v-model="disp"
@@ -63,10 +66,12 @@
 
       <v-divider class="mb-4"></v-divider>
       <v-slide-y-transition class="py-0" group tag="v-list">
-        <template v-for="(todo, i) in todos" >
+        <template v-for="(todo, i) in todos">
           <v-divider v-if="i !== 0" :key="`${i}-divider`"></v-divider>
 
           <v-list-item :key="`${i}-${todo.content}`">
+
+            <!-- 完了、未完了切り替えチェックボックス -->
             <v-checkbox
               :checked="todo.done"
               @change="toggle(todo)"
@@ -81,9 +86,11 @@
                 @click="editTodo(todo)"
                 >{{ todo.content }}</v-list-item-title
               >
+
+              <!-- 編集用のテキストエリア -->
               <v-text-field
                 v-else
-                v-model="todo.content"
+                v-model="todo.editContent"
                 @blur="doneEdit(todo)"
                 @keyup.enter="doneEdit(todo)"
                 @keyup.esc="cancelEdit(todo)"
@@ -93,58 +100,47 @@
                 dense
               ></v-text-field>
             </v-list-item-content>
+
             <v-spacer></v-spacer>
+            
+            <!-- 編集用ボタン -->
             <v-icon @click="editTodo(todo)">mdi-lead-pencil</v-icon>
 
-            <!-- </v-list-item-action> -->
-            <v-spacer></v-spacer>
-
-            <!-- <v-scroll-x-transition>
-              <v-icon v-if="todo.done" color="success">check</v-icon>
-            </v-scroll-x-transition> -->
-
-            <!-- 編集用ボタン -->
-
-            <!-- <v-icon  @click="editTodo(todo)">mdi-lead-pencil</v-icon> -->
             <!-- 削除ボタン -->
             <v-icon @click="remove(todo)">mdi-delete-outline</v-icon>
           </v-list-item>
         </template>
       </v-slide-y-transition>
-
-      <!-- リストの増減に応じてスライド -->
     </v-card>
   </v-container>
 </template>
 
 <script>
-import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
+import { mapState, mapMutations, mapGetters, mapActions } from "vuex"
 
 export default {
-  data() {
+  data () {
     return {
       content: "",
-      beforeEditCache:'',
       done: false,
-      editing: true,
-      text: "",
+      editing: false,
+      editContent: "",
       disp: 0,
-      title: ""
-    };
+    }
   },
 
   computed: {
     contentExists() {
-      return this.content.length > 0;
+      return this.content.length > 0
     },
     computedTodos() {
       switch (this.disp) {
         case 0:
-          return this.todos;
+          return this.todos
         case 1:
-          return this.remainingTodos;
+          return this.remainingTodos
         case 3:
-          return this.completedTodos;
+          return this.completedTodos
       }
     },
     ...mapGetters([
@@ -154,48 +150,39 @@ export default {
       "remainingTodos",
       "todosCount"
     ]),
-     theValue: {
-      get() {
-        return this.$store.theValue
-      },
-      set(value) {
-        this.$store.dispatch("setTheValue", value)
-      }
-    },
-    ...mapState(["todos"])
+    ...mapState(["todos", "editedTodo"])
   },
 
   methods: {
-    create() {
+    create () {
       this.$store.dispatch("create", {
         content: this.content
-      });
-      this.content = "";
+      })
+      this.content = ""
     },
 
-    remove(todo) {
+    remove (todo) {
       if (confirm(todo.content + "を削除しますか？"))
-        this.$store.dispatch("remove", todo);
+        this.$store.dispatch("remove", todo)
     },
-    toggle(todo) {
-      this.$store.dispatch("toggle", todo);
+    toggle (todo) {
+      this.$store.dispatch("toggle", todo)
     },
-    editTodo(todo) {
+    editTodo (todo) {
+      todo.editing = true
       this.beforeEditCache = todo.content
-      todo.editing = true;
+      todo.editContent = todo.content
     },
-    doneEdit(todo) {
-      if(todo.content.trim()== '') {
-        todo.content = this.beforeEditCache
-      }
-      todo.editing = false;
+    doneEdit (todo) {
+      this.$store.dispatch("doneEdit", todo)
+      todo.editing = false
     },
-    candelEdit(todo) {
+    candelEdit (todo) {
       todo.content = this.beforeEditCache
       todo.editing = false
     }
   }
-};
+}
 </script>
 
 <style>
