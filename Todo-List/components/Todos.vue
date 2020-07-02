@@ -40,6 +40,7 @@
 
     <v-card v-if="todos.length > 0">
 
+
       <!-- 完了、未完了のタブ切り替え -->
       <v-tabs>
         <v-tab name="disp" value="0" v-model="disp"
@@ -66,7 +67,7 @@
 
       <v-divider class="mb-4"></v-divider>
       <v-slide-y-transition class="py-0" group tag="v-list">
-        <template v-for="(todo, i) in todos">
+        <template v-for="(todo, i) in computedTodos">
           <v-divider v-if="i !== 0" :key="`${i}-divider`"></v-divider>
 
           <v-list-item :key="`${i}-${todo.content}`">
@@ -94,7 +95,6 @@
                 @blur="doneEdit(todo)"
                 @keyup.enter="doneEdit(todo)"
                 @keyup.esc="cancelEdit(todo)"
-                v-focus
                 label="タスクを変更する"
                 outlined
                 dense
@@ -109,7 +109,9 @@
             <!-- 削除ボタン -->
             <v-icon @click="remove(todo)">mdi-delete-outline</v-icon>
           </v-list-item>
+          
         </template>
+        
       </v-slide-y-transition>
     </v-card>
   </v-container>
@@ -137,11 +139,20 @@ export default {
       switch (this.disp) {
         case 0:
           return this.todos
-        case 1:
-          return this.remainingTodos
-        case 3:
-          return this.completedTodos
+          case 1:
+            return this.todos.filter(todo => !todo.done)
+        case 2:
+          return this.todos.filter(todo => todo.done)
       }
+    },
+    todosFiltered () {
+      if(this.filter == 'all') {
+        return this.todos
+      }else if(this.filter == 'active') {
+        return this.todos.filter(todo => !todo.done)
+      }else if(this.filter == 'completed')
+      return this.todos.filter(todo => todo.done)
+
     },
     ...mapGetters([
       "completedTodos",
@@ -150,7 +161,7 @@ export default {
       "remainingTodos",
       "todosCount"
     ]),
-    ...mapState(["todos", "editedTodo"])
+    ...mapState(["todos"])
   },
 
   methods: {
@@ -180,7 +191,8 @@ export default {
     candelEdit (todo) {
       todo.content = this.beforeEditCache
       todo.editing = false
-    }
+    },
+
   }
 }
 </script>
