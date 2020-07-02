@@ -1,7 +1,6 @@
 export const state = () => ({
   todos: [],
-  editedTodo: {}
-});
+})
 
 export const mutations = {
   // タスク追加
