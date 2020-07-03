@@ -42,6 +42,7 @@
       <v-list >
 
 
+
       <!-- 完了、未完了のタブ切り替え -->
       <v-tabs>
         <v-tab @click="filter = 'all'"
@@ -109,7 +110,6 @@
             <v-icon @click="remove(todo)">mdi-delete-outline</v-icon>
           </v-list-item>
           
-
         
       </v-slide-y-transition>
             </v-list>
