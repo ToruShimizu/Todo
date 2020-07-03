@@ -2,7 +2,11 @@
   <v-container style="max-width: 500px">
     <v-layout>
       <v-flex>
+        <div>
 
+        <img :src="photoURL" v-if="photoURL">
+        <p>{{userName}}</p>
+        </div>
         <!-- タスク追加テキストエリア -->
         <v-text-field
           v-model="content"
@@ -150,7 +154,9 @@ export default {
       "progress",
       "updateTodo",
       "remainingTodos",
-      "todosCount"
+      "todosCount",
+      'userName',
+      'photoURL'
     ]),
     ...mapState(["todos"])
   },
