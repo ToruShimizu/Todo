@@ -9,11 +9,13 @@ export const state = () => ({
 })
 
 export const mutations = {
-  // setLoginUser (state, user) {
-  //   state.login_user = user
-  // },
+  // ログインユーザー情報の取得
   setLoginUser (state, user) {
     state.login_user = user
+  },
+  // ログインユーザー情報の削除
+  deleteLoginUser(state) {
+    state.login_user = null
   },
   // タスク追加
   create (state, payload) {
@@ -36,17 +38,16 @@ export const mutations = {
 }
 
 export const actions = {
-  // setLoginUser ( context , user) {
-  //   context.commit('setLoginUser', user)
-  // },
-  setLoginUser ( context, user) {
-    context.commit('setLoginUser', user)
+
+  // ログインユーザー情報の取得
+  setLoginUser ( {commit}, user) {
+    commit('setLoginUser', user)
   },
-  // ログイン機能
-  // login () {
-  //   const google_auth_provider = new firebase.auth.GoogleAuthProvider()
-  //   firebase.auth().signInWithRedirect(google_auth_provider)
-  // },
+  // ログインユーザー情報の削除
+  deleteLoginUser({commit}){
+    commit('deleteLoginUser')
+  },
+  // ログイン
   login () {
     const provider = new firebase.auth.GoogleAuthProvider()
     firebase.auth().signInWithPopup(provider)
@@ -54,7 +55,10 @@ export const actions = {
       alert('Hello, '+result.user.displayName+'!')
     })
   },
-
+  // ログアウト
+  logout () {
+    firebase.auth().signOut()
+  },
   // タスク追加
   create (context, payload) {
     context.commit("create", payload)
