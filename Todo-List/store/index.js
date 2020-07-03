@@ -1,8 +1,20 @@
+import firebase from '~/plugins/firebase'
+export const strict = false
+
+
+
 export const state = () => ({
   todos: [],
+  login_user: null,
 })
 
 export const mutations = {
+  // setLoginUser (state, user) {
+  //   state.login_user = user
+  // },
+  setLoginUser (state, user) {
+    state.login_user = user
+  },
   // タスク追加
   create (state, payload) {
     state.todos.push({ content: payload.content, done: false })
@@ -24,6 +36,25 @@ export const mutations = {
 }
 
 export const actions = {
+  // setLoginUser ( context , user) {
+  //   context.commit('setLoginUser', user)
+  // },
+  setLoginUser ( context, user) {
+    context.commit('setLoginUser', user)
+  },
+  // ログイン機能
+  // login () {
+  //   const google_auth_provider = new firebase.auth.GoogleAuthProvider()
+  //   firebase.auth().signInWithRedirect(google_auth_provider)
+  // },
+  login () {
+    const provider = new firebase.auth.GoogleAuthProvider()
+    firebase.auth().signInWithPopup(provider)
+    .then((result) => {
+      alert('Hello, '+result.user.displayName+'!')
+    })
+  },
+
   // タスク追加
   create (context, payload) {
     context.commit("create", payload)
