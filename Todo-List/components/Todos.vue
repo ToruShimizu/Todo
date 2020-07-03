@@ -2,23 +2,17 @@
   <v-container style="max-width: 500px">
     <v-layout>
       <v-flex>
-        <div>
-
-        <img :src="photoURL" v-if="photoURL">
-        <p>{{userName}}</p>
-        </div>
         <!-- タスク追加テキストエリア -->
         <v-text-field
           v-model="content"
           label="タスクを追加する"
-          prepend-inner-icon="mdi-map-marker"
+          prepend-inner-icon="mdi-lead-pencil"
           @keydown.enter="create"
           persistent-hint
           outlined
         ></v-text-field>
       </v-flex>
       <v-flex mt-1 ml-2>
-
         <!-- 送信ボタン -->
         <transition name="fade">
           <v-btn
@@ -42,96 +36,89 @@
 
     <v-divider class="mt-4"></v-divider>
 
-    <v-card v-if="todos.length > 0" >
-      <v-list >
+    <v-card v-if="todos.length > 0">
+      <v-list>
+        <!-- 完了、未完了のタブ切り替え -->
+        <v-tabs>
+          <v-tab @click="filter = 'all'">すべて:{{ todos.length }}</v-tab>
+          <v-divider vertical></v-divider>
 
+          <v-tab name="disp" @click="filter = 'active'"
+            >未完了:{{ remainingTodos }}</v-tab
+          >
+          <v-divider vertical></v-divider>
 
+          <v-tab name="disp" @click="filter = 'done'">
+            完了: {{ completedTodos }}
 
-      <!-- 完了、未完了のタブ切り替え -->
-      <v-tabs>
-        <v-tab @click="filter = 'all'"
-          >すべて:{{ todos.length }}</v-tab
-        >
-        <v-divider vertical></v-divider>
+            <!-- 完了率の表示 -->
+            <v-progress-circular
+              :value="progress"
+              class="ml-3"
+              color="success"
+            ></v-progress-circular
+          ></v-tab>
+        </v-tabs>
 
-        <v-tab name="disp" @click="filter = 'active'"
-          >未完了:{{ remainingTodos }}</v-tab
-        >
-        <v-divider vertical></v-divider>
-
-        <v-tab name="disp" @click="filter = 'done'">
-          完了: {{ completedTodos }}
-
-          <!-- 完了率の表示 -->
-          <v-progress-circular
-            :value="progress"
-            class="ml-3"
-            color="success"
-          ></v-progress-circular
-        ></v-tab>
-      </v-tabs>
-
-      <v-divider class="mb-4"></v-divider>
-      <v-slide-y-transition class="py-0" group tag="v-list">
-       
-          <v-divider v-if="i !== 0" :key="`${i}-divider`"></v-divider>
-          <v-list-item  v-for="(todo, i) in todosFiltered" :key="`${i}-${todo.content}`">
-            <!-- 完了、未完了切り替えチェックボックス -->
-            <v-checkbox
-              :checked="todo.done"
-              @change="toggle(todo)"
-              :color="(todo.done && 'grey') || 'primary'"
-            >
-            </v-checkbox>
-            <v-list-item-content>
-              <v-list-item-title
-                :class="(todo.done && 'grey--text') || 'primary--text'"
-                class="ml-4"
-                v-if="!todo.editing"
-                @click="editTodo(todo)"
-                >{{ todo.content }}</v-list-item-title
+        <v-divider class="mb-4"></v-divider>
+        <v-slide-y-transition class="py-0" group tag="v-list">
+          <template v-for="(todo, i) in todosFiltered">
+            <v-divider v-if="i !== 0" :key="`${i}-divider`"></v-divider>
+            <v-list-item :key="`${i}-${todo.content}`">
+              <!-- 完了、未完了切り替えチェックボックス -->
+              <v-checkbox
+                :checked="todo.done"
+                @change="toggle(todo)"
+                :color="(todo.done && 'grey') || 'primary'"
               >
+              </v-checkbox>
+              <v-list-item-content>
+                <v-list-item-title
+                  :class="(todo.done && 'grey--text') || 'primary--text'"
+                  class="ml-4"
+                  v-if="!todo.editing"
+                  @click="editTodo(todo)"
+                  >{{ todo.content }}</v-list-item-title
+                >
 
-              <!-- 編集用のテキストエリア -->
-              <v-text-field
-                v-else
-                v-model="todo.editContent"
-                @blur="doneEdit(todo)"
-                @keyup.enter="doneEdit(todo)"
-                @keyup.esc="cancelEdit(todo)"
-                label="タスクを変更する"
-                outlined
-                dense
-              ></v-text-field>
-            </v-list-item-content>
+                <!-- 編集用のテキストエリア -->
+                <v-text-field
+                  v-else
+                  v-model="todo.editContent"
+                  @blur="doneEdit(todo)"
+                  @keyup.enter="doneEdit(todo)"
+                  @keyup.esc="cancelEdit(todo)"
+                  label="タスクを変更する"
+                  outlined
+                  dense
+                ></v-text-field>
+              </v-list-item-content>
 
-            <v-spacer></v-spacer>
-            
-            <!-- 編集用ボタン -->
-            <v-icon @click="editTodo(todo)">mdi-lead-pencil</v-icon>
+              <v-spacer></v-spacer>
 
-            <!-- 削除ボタン -->
-            <v-icon @click="remove(todo)">mdi-delete-outline</v-icon>
-          </v-list-item>
-          
-        
-      </v-slide-y-transition>
-            </v-list>
+              <!-- 編集用ボタン -->
+              <v-icon @click="editTodo(todo)">mdi-lead-pencil</v-icon>
 
+              <!-- 削除ボタン -->
+              <v-icon @click="remove(todo)">mdi-delete-outline</v-icon>
+            </v-list-item>
+          </template>
+        </v-slide-y-transition>
+      </v-list>
     </v-card>
   </v-container>
 </template>
 
 <script>
-import { mapState, mapMutations, mapGetters, mapActions } from "vuex"
+import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
 
 export default {
-  data () {
+  data() {
     return {
-      content: "",
+      content: '',
       done: false,
       editing: false,
-      editContent: "",
+      editContent: '',
       filter: 'all'
     }
   },
@@ -140,56 +127,53 @@ export default {
     contentExists() {
       return this.content.length > 0
     },
-    todosFiltered () {
-      if(this.filter == 'all') {
+    todosFiltered() {
+      if (this.filter == 'all') {
         return this.todos
-      }else if(this.filter == 'active') {
+      } else if (this.filter == 'active') {
         return this.todos.filter(todo => !todo.done)
-      }else if(this.filter == 'done')
-      return this.todos.filter(todo => todo.done)
-
+      } else if (this.filter == 'done')
+        return this.todos.filter(todo => todo.done)
     },
     ...mapGetters([
-      "completedTodos",
-      "progress",
-      "updateTodo",
-      "remainingTodos",
-      "todosCount",
+      'completedTodos',
+      'progress',
+      'updateTodo',
+      'remainingTodos',
+      'todosCount',
       'userName',
       'photoURL'
     ]),
-    ...mapState(["todos"])
+    ...mapState(['todos'])
   },
 
   methods: {
-    create () {
-      this.$store.dispatch("create", {
+    create() {
+      this.$store.dispatch('create', {
         content: this.content
       })
-      this.content = ""
+      this.content = ''
     },
-
-    remove (todo) {
-      if (confirm(todo.content + "を削除しますか？"))
-        this.$store.dispatch("remove", todo)
+    remove(todo) {
+      if (confirm(todo.content + 'を削除しますか？'))
+        this.$store.dispatch('remove', todo)
     },
-    toggle (todo) {
-      this.$store.dispatch("toggle", todo)
+    toggle(todo) {
+      this.$store.dispatch('toggle', todo)
     },
-    editTodo (todo) {
+    editTodo(todo) {
       todo.editing = true
       this.beforeEditCache = todo.content
       todo.editContent = todo.content
     },
-    doneEdit (todo) {
-      this.$store.dispatch("doneEdit", todo)
+    doneEdit(todo) {
+      this.$store.dispatch('doneEdit', todo)
       todo.editing = false
     },
-    candelEdit (todo) {
+    candelEdit(todo) {
       todo.content = this.beforeEditCache
       todo.editing = false
-    },
-
+    }
   }
 }
 </script>
@@ -197,9 +181,9 @@ export default {
 <style>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s;
+  transition: opacity 0.5s
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
+  opacity: 0
 }
 </style>
