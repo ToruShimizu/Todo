@@ -40,11 +40,11 @@ export const mutations = {
 export const actions = {
 
   // ログインユーザー情報の取得
-  setLoginUser ( {commit}, user) {
+  setLoginUser ( { commit }, user) {
     commit('setLoginUser', user)
   },
   // ログインユーザー情報の削除
-  deleteLoginUser({commit}){
+  deleteLoginUser({ commit }){
     commit('deleteLoginUser')
   },
   // ログイン
@@ -60,23 +60,26 @@ export const actions = {
     firebase.auth().signOut()
   },
   // タスク追加
-  create (context, payload) {
-    context.commit("create", payload)
+  create ({ commit }, payload) {
+    commit("create", payload)
   },
   // タスク削除
-  remove (context, payload) {
-    context.commit("remove", payload)
+  remove ({ commit }, payload) {
+    commit("remove", payload)
   },
   // 完了、未完了切り替え
-  toggle (context, payload) {
-    context.commit("toggle", payload)
+  toggle ({ commit }, payload) {
+    commit("toggle", payload)
   },
-  doneEdit (context, payload) {
-    context.commit("doneEdit", payload)
+  doneEdit ({ commit }, payload) {
+    commit("doneEdit", payload)
   }
 }
 
 export const getters = {
+  userName: state => state.login_user ? state.login_user.displayName : '',
+  photoURL: state => state.login_user ? state.login_user.photoURL: '',
+  
   // タスク総数のカウント
   todosCount (state) {
     return state.todos.length
