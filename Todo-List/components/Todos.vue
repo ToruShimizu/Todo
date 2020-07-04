@@ -43,12 +43,12 @@
           <v-tab @click="taskFilter = 'all'">すべて:{{ todos.length }}</v-tab>
           <v-divider vertical></v-divider>
 
-          <v-tab name="disp" @click="taskFilter = 'active'"
+          <v-tab  @click="taskFilter = 'active'"
             >未完了:{{ remainingTodos }}</v-tab
           >
           <v-divider vertical></v-divider>
 
-          <v-tab name="disp" @click="taskFilter = 'done'">
+          <v-tab  @click="taskFilter = 'done'">
             完了: {{ completedTodos }}
 
             <!-- 完了率の表示 -->
@@ -68,7 +68,7 @@
               <!-- 完了、未完了切り替えチェックボックス -->
               <v-checkbox
                 :checked="item.done"
-                @change="toggleDone(todo)"
+                @change="toggleDone(item)"
                 :color="(item.done && 'grey') || 'primary'"
               >
               </v-checkbox>
@@ -84,9 +84,9 @@
                 <v-text-field
                   v-else
                   v-model="item.editTask"
-                  @blur="addEditTask(todo)"
-                  @keyup.enter="addEditTask(todo)"
-                  @keyup.esc="cancelEdit(todo)"
+                  @blur="addEditTask(item)"
+                  @keyup.enter="addEditTask(item)"
+                  @keyup.esc="cancelEdit(item)"
                   label="タスクを変更する"
                   outlined
                   dense
@@ -96,10 +96,10 @@
               <v-spacer></v-spacer>
 
               <!-- 編集用ボタン -->
-              <v-icon @click="taskEdit(todo)">mdi-lead-pencil</v-icon>
+              <v-icon @click="taskEdit(item)">mdi-lead-pencil</v-icon>
 
               <!-- 削除ボタン -->
-              <v-icon @click="removeTask(todo)">mdi-delete-outline</v-icon>
+              <v-icon @click="removeTask(item)">mdi-delete-outline</v-icon>
             </v-list-item>
           </template>
         </v-slide-y-transition>
@@ -119,20 +119,20 @@ export default {
       done: false,
       editEditing: false,
       editTask: '',
-      filter: 'all'
+      taskFilter: 'all'
     }
   },
 
   computed: {
-    titleExists() {
+    taskExists() {
       return this.task.length > 0
     },
     todosFiltered() {
-      if (this.filter == 'all') {
+      if (this.taskFilter == 'all') {
         return this.todos
-      } else if (this.filter == 'active') {
+      } else if (this.taskFilter == 'active') {
         return this.todos.filter(todo => !todo.done)
-      } else if (this.filter == 'done')
+      } else if (this.taskfilter == 'done')
         return this.todos.filter(todo => todo.done)
     },
     // page_items () {
@@ -168,27 +168,26 @@ export default {
       })
       this.task = ''
    },
-    removeTask(todo) {
-      if (confirm( 'を削除しますか？'))
-        this.$store.dispatch('removeTask', todo)
-        console.log(todo)
-        console.log(todo.task)
+    removeTask(item) {
+      if (confirm( item.task + 'を削除しますか？'))
+        this.$store.dispatch('removeTask', item)
     },
-    toggleDone (todo) {
-      this.$store.dispatch('toggleDone', todo)
+    toggleDone (item) {
+      this.$store.dispatch('toggleDone', item)
     },
-    taskEdit (todo) {
-      todo.editEditing = true
-      this.beforeEditCache = todo.task
-      todo.editTask = todo.task
+    taskEdit (item) {
+      item.editEditing = true
+      this.beforeEditCache = item.task
+      item.editTask = item.task
     },
-    addEditTask (todo) {
-      this.$store.dispatch('addEditTask', todo)
-      todo.editEditing = false
+    addEditTask (item) {
+      this.$store.dispatch('addEditTask', item)
+      item.editEditing = false
+      item.done = false
     },
-    cancelEdit(todo) {
-      todo.task = this.beforeEditCache
-      todo.editEditing = false
+    cancelEdit(item) {
+      item.task = this.beforeEditCache
+      item.editEditing = false
     }
   }
 }
