@@ -1,4 +1,6 @@
 import firebase from '~/plugins/firebase'
+import { auth } from '~/plugins/firebase'
+import { db } from '~/plugins/firebase'
 export const strict = false
 
 export const state = () => ({
@@ -18,6 +20,7 @@ export const mutations = {
   // タスク追加
   addTask (state, payload) {
     state.todos.push({ task: payload.task, done: false })
+    
   },
   // タスク削除
   removeTask (state, payload) {
@@ -41,11 +44,6 @@ export const actions = {
   setLoginUser ( { commit }, user) {
     commit('setLoginUser', user)
   },
-  // fetchAddresses ({ getters, commit }) {
-  //   firebase.firestore().collection(`users/${getters.uid}/addresses`).get().then(snapshot => {
-  //     snapshot.forEach(doc => commit('todos', { id: doc.id, todos:  doc.data() }))
-  //   })
-  // },
   // ログインユーザー情報の削除
   deleteLoginUser({ commit }){
     commit('deleteLoginUser')
@@ -53,27 +51,30 @@ export const actions = {
   // ログイン
   login () {
     const provider = new firebase.auth.GoogleAuthProvider()
-    firebase.auth().signInWithPopup(provider)
+    auth.signInWithPopup(provider)
     .then((result) => {
       alert('Hello, '+result.user.displayName+'!')
     })
   },
   // ログアウト
   logout () {
-    firebase.auth().signOut()
+    auth.signOut()
   },
   // タスク追加
   addTask ({ commit }, payload) {
-      firebase.firestore().collection('users').doc('user1').set({task:payload.task,done:false})
+    
+      db.collection('users').doc('user1').set({task:payload.task,done:false}).then(function() {
+        
+        console.log("Document successfully written!")
+    })
+    .catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
     commit("addTask", payload)
   },
-  // create ({ commit }, todo) {
-  //   firebase.firestore().collection('users').doc('user1').set({content:todo.content,done:false})
-  //   commit('todos',todo)
-  // },
   // タスク削除
   removeTask ({ commit }, payload) {
-    firebase.firestore().collection("users").doc("user1").delete().then(function() {
+    db.collection("users").doc("user1").delete().then(function() {
       console.log("Document successfully deleted!");
   }).catch(function(error) {
       console.error("Error removing document: ", error)
@@ -85,8 +86,24 @@ export const actions = {
     commit("toggleDone", payload)
   },
   addEditTask ({ commit }, payload) {
-    commit("addEditTask", payload)
-  },
+    if(payload.editTask == "") {
+      return
+    }
+    var taskRef = db.collection("users").doc("user1")
+
+    // Set the "capital" field of the city 'DC'
+    taskRef.update({
+       task:payload.editTask
+    })
+    .then(function() {
+        console.log("Document successfully updated!");
+    })
+    .catch(function(error) {
+        // The document probably doesn't exist.
+        console.error("Error updating document: ", error);
+    })
+commit("addEditTask", payload)
+},
 }
 
 export const getters = {
