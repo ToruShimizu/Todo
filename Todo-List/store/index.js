@@ -1,8 +1,6 @@
 import firebase from '~/plugins/firebase'
 export const strict = false
 
-
-
 export const state = () => ({
   todos: [],
   login_user: null,
@@ -34,15 +32,20 @@ export const mutations = {
       return
     }
     payload.content = payload.editContent
-  }
+  },
+
 }
 
 export const actions = {
-
   // ログインユーザー情報の取得
   setLoginUser ( { commit }, user) {
     commit('setLoginUser', user)
   },
+  // fetchAddresses ({ getters, commit }) {
+  //   firebase.firestore().collection(`users/${getters.uid}/addresses`).get().then(snapshot => {
+  //     snapshot.forEach(doc => commit('todos', { id: doc.id, todos:  doc.data() }))
+  //   })
+  // },
   // ログインユーザー情報の削除
   deleteLoginUser({ commit }){
     commit('deleteLoginUser')
@@ -60,8 +63,12 @@ export const actions = {
     firebase.auth().signOut()
   },
   // タスク追加
-  create ({ commit }, payload) {
-    commit("create", payload)
+  // create ({ commit }, payload) {
+  //   commit("create", payload)
+  // },
+  create ({ commit }, todo) {
+    firebase.firestore().collection('users').doc('todos').set({content:todo.content,done:false})
+    commit('todos',todo)
   },
   // タスク削除
   remove ({ commit }, payload) {
@@ -73,13 +80,13 @@ export const actions = {
   },
   doneEdit ({ commit }, payload) {
     commit("doneEdit", payload)
-  }
+  },
 }
 
 export const getters = {
   userName: state => state.login_user ? state.login_user.displayName : '',
   photoURL: state => state.login_user ? state.login_user.photoURL: '',
-  
+  uid: state => state.login_user ? state.login_user.uid: null,
   // タスク総数のカウント
   todosCount (state) {
     return state.todos.length
