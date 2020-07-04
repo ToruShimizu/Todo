@@ -16,22 +16,22 @@ export const mutations = {
     state.login_user = null
   },
   // タスク追加
-  create (state, payload) {
-    state.todos.push({ content: payload.content, done: false })
+  addTask (state, payload) {
+    state.todos.push({ task: payload.task, done: false })
   },
   // タスク削除
-  remove (state, payload) {
-    state.todos.splice(state.todos.indexOf(payload.todo), 1)
+  removeTask (state, payload) {
+    state.todos.splice(state.todos.indexOf(payload.task), 1)
   },
   // 完了、未完了切り替え
-  toggle (state, payload) {
+  toggleDone (state, payload) {
     payload.done = !payload.done
   },
-  doneEdit (state, payload) {
-    if (payload.editContent == "") {
+  addEditTask (state, payload) {
+    if (payload.editTask == "") {
       return
     }
-    payload.content = payload.editContent
+    payload.task = payload.editTask
   },
 
 }
@@ -63,23 +63,29 @@ export const actions = {
     firebase.auth().signOut()
   },
   // タスク追加
-  // create ({ commit }, payload) {
-  //   commit("create", payload)
-  // },
-  create ({ commit }, todo) {
-    firebase.firestore().collection('users').doc('todos').set({content:todo.content,done:false})
-    commit('todos',todo)
+  addTask ({ commit }, payload) {
+      firebase.firestore().collection('users').doc('user1').set({task:payload.task,done:false})
+    commit("addTask", payload)
   },
+  // create ({ commit }, todo) {
+  //   firebase.firestore().collection('users').doc('user1').set({content:todo.content,done:false})
+  //   commit('todos',todo)
+  // },
   // タスク削除
-  remove ({ commit }, payload) {
-    commit("remove", payload)
+  removeTask ({ commit }, payload) {
+    firebase.firestore().collection("users").doc("user1").delete().then(function() {
+      console.log("Document successfully deleted!");
+  }).catch(function(error) {
+      console.error("Error removing document: ", error)
+  })
+  commit("removeTask", payload)
   },
   // 完了、未完了切り替え
-  toggle ({ commit }, payload) {
-    commit("toggle", payload)
+  toggleDone ({ commit }, payload) {
+    commit("toggleDone", payload)
   },
-  doneEdit ({ commit }, payload) {
-    commit("doneEdit", payload)
+  addEditTask ({ commit }, payload) {
+    commit("addEditTask", payload)
   },
 }
 

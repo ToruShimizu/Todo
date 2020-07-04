@@ -4,10 +4,10 @@
       <v-flex>
         <!-- タスク追加テキストエリア -->
         <v-text-field
-          v-model="content"
+          v-model="task"
           label="タスクを追加する"
           prepend-inner-icon="mdi-lead-pencil"
-          @keydown.enter="create"
+          @keydown.enter="addTask"
           persistent-hint
           outlined
         ></v-text-field>
@@ -16,8 +16,8 @@
         <!-- 送信ボタン -->
         <transition name="fade">
           <v-btn
-            v-if="contentExists"
-            @click="create"
+            v-if="taskExists"
+            @click="addTask"
             type="submit"
             color="success"
           >
@@ -40,15 +40,15 @@
       <v-list>
         <!-- 完了、未完了のタブ切り替え -->
         <v-tabs>
-          <v-tab @click="filter = 'all'">すべて:{{ todos.length }}</v-tab>
+          <v-tab @click="taskFilter = 'all'">すべて:{{ todos.length }}</v-tab>
           <v-divider vertical></v-divider>
 
-          <v-tab name="disp" @click="filter = 'active'"
+          <v-tab name="disp" @click="taskFilter = 'active'"
             >未完了:{{ remainingTodos }}</v-tab
           >
           <v-divider vertical></v-divider>
 
-          <v-tab name="disp" @click="filter = 'done'">
+          <v-tab name="disp" @click="taskFilter = 'done'">
             完了: {{ completedTodos }}
 
             <!-- 完了率の表示 -->
@@ -62,31 +62,30 @@
 
         <v-divider class="mb-4"></v-divider>
         <v-slide-y-transition class="py-0" group tag="v-list">
-          <template v-for="(todo, i) in todosFiltered">
+          <template v-for="(item, i) in todosFiltered">
             <v-divider v-if="i !== 0" :key="`${i}-divider`"></v-divider>
-            <v-list-item :key="`${i}-${todo.content}`">
+            <v-list-item :key="`${i}-${item.task}`">
               <!-- 完了、未完了切り替えチェックボックス -->
               <v-checkbox
-                :checked="todo.done"
-                @change="toggle(todo)"
-                :color="(todo.done && 'grey') || 'primary'"
+                :checked="item.done"
+                @change="toggleDone(todo)"
+                :color="(item.done && 'grey') || 'primary'"
               >
               </v-checkbox>
               <v-list-item-content>
                 <v-list-item-title
-                  :class="(todo.done && 'grey--text') || 'primary--text'"
+                  :class="(item.done && 'grey--text') || 'primary--text'"
                   class="ml-4"
-                  v-if="!todo.editing"
-                  @click="editTodo(todo)"
-                  >{{ todo.content }}</v-list-item-title
+                  v-if="!item.editEditing"
+                  >{{ item.task }}</v-list-item-title
                 >
 
                 <!-- 編集用のテキストエリア -->
                 <v-text-field
                   v-else
-                  v-model="todo.editContent"
-                  @blur="doneEdit(todo)"
-                  @keyup.enter="doneEdit(todo)"
+                  v-model="item.editTask"
+                  @blur="addEditTask(todo)"
+                  @keyup.enter="addEditTask(todo)"
                   @keyup.esc="cancelEdit(todo)"
                   label="タスクを変更する"
                   outlined
@@ -97,10 +96,10 @@
               <v-spacer></v-spacer>
 
               <!-- 編集用ボタン -->
-              <v-icon @click="editTodo(todo)">mdi-lead-pencil</v-icon>
+              <v-icon @click="taskEdit(todo)">mdi-lead-pencil</v-icon>
 
               <!-- 削除ボタン -->
-              <v-icon @click="remove(todo)">mdi-delete-outline</v-icon>
+              <v-icon @click="removeTask(todo)">mdi-delete-outline</v-icon>
             </v-list-item>
           </template>
         </v-slide-y-transition>
@@ -116,17 +115,17 @@ import firebase from '@/plugins/firebase'
 export default {
   data() {
     return {
-      content: '',
+      task: '',
       done: false,
-      editing: false,
-      editContent: '',
+      editEditing: false,
+      editTask: '',
       filter: 'all'
     }
   },
 
   computed: {
-    contentExists() {
-      return this.content.length > 0
+    titleExists() {
+      return this.task.length > 0
     },
     todosFiltered() {
       if (this.filter == 'all') {
@@ -156,46 +155,40 @@ export default {
       'photoURL'
     ]),
     ...mapActions([
-      'create'
+      
     ]),
     ...mapState(['todos'])
   },
 
   methods: {
-  //    create () {
-  //    const db = firebase.firestore()
-  //    const date = new Date()
-  //    let dbUsers = db.collection('users').doc('todos')
-  //      .set({
-  //       //  content: this.content,
-  //        content: date
-  //      })
-  //  },
-  // create() {
-  //     this.$store.dispatch('create', {
-  //       content: this.content
-  //     })
-  //     this.content = ''
-  //  },
-    remove(todo) {
-      if (confirm(todo.content + 'を削除しますか？'))
-        this.$store.dispatch('remove', todo)
+  addTask () {
+      this.$store.dispatch('addTask',{
+        task: this.task,
+        done:false
+      })
+      this.task = ''
+   },
+    removeTask(todo) {
+      if (confirm( 'を削除しますか？'))
+        this.$store.dispatch('removeTask', todo)
+        console.log(todo)
+        console.log(todo.task)
     },
-    toggle(todo) {
-      this.$store.dispatch('toggle', todo)
+    toggleDone (todo) {
+      this.$store.dispatch('toggleDone', todo)
     },
-    editTodo(todo) {
-      todo.editing = true
-      this.beforeEditCache = todo.content
-      todo.editContent = todo.content
+    taskEdit (todo) {
+      todo.editEditing = true
+      this.beforeEditCache = todo.task
+      todo.editTask = todo.task
     },
-    doneEdit(todo) {
-      this.$store.dispatch('doneEdit', todo)
-      todo.editing = false
+    addEditTask (todo) {
+      this.$store.dispatch('addEditTask', todo)
+      todo.editEditing = false
     },
     cancelEdit(todo) {
-      todo.content = this.beforeEditCache
-      todo.editing = false
+      todo.task = this.beforeEditCache
+      todo.editEditing = false
     }
   }
 }
