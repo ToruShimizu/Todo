@@ -11,7 +11,7 @@
           persistent-hint
           outlined
         ></v-text-field>
-      </v-flex>
+        </v-flex>
       <v-flex mt-1 ml-2>
         <!-- 送信ボタン -->
         <transition name="fade">
@@ -111,6 +111,7 @@
 
 <script>
 import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
+import firebase from '@/plugins/firebase'
 
 export default {
   data() {
@@ -135,6 +136,16 @@ export default {
       } else if (this.filter == 'done')
         return this.todos.filter(todo => todo.done)
     },
+    // page_items () {
+    //   let arr = []
+    //   let data = this.todos
+    //   data.forEach(element => {
+    //     if(element.content.toLowerCase().indexOf(this.content.toLowerCase()) >= 0){
+    //       arr.push(element)
+    //     }
+    //   })
+    //   return arr
+    // },
     ...mapGetters([
       'completedTodos',
       'progress',
@@ -144,16 +155,28 @@ export default {
       'userName',
       'photoURL'
     ]),
+    ...mapActions([
+      'create'
+    ]),
     ...mapState(['todos'])
   },
 
   methods: {
-    create() {
-      this.$store.dispatch('create', {
-        content: this.content
-      })
-      this.content = ''
-    },
+  //    create () {
+  //    const db = firebase.firestore()
+  //    const date = new Date()
+  //    let dbUsers = db.collection('users').doc('todos')
+  //      .set({
+  //       //  content: this.content,
+  //        content: date
+  //      })
+  //  },
+  // create() {
+  //     this.$store.dispatch('create', {
+  //       content: this.content
+  //     })
+  //     this.content = ''
+  //  },
     remove(todo) {
       if (confirm(todo.content + 'を削除しますか？'))
         this.$store.dispatch('remove', todo)
@@ -170,7 +193,7 @@ export default {
       this.$store.dispatch('doneEdit', todo)
       todo.editing = false
     },
-    candelEdit(todo) {
+    cancelEdit(todo) {
       todo.content = this.beforeEditCache
       todo.editing = false
     }
