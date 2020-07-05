@@ -6,6 +6,7 @@ export const strict = false
 export const state = () => ({
   todos: [],
   login_user: null,
+  drawer: false,
 })
 
 export const mutations = {
@@ -17,10 +18,12 @@ export const mutations = {
   deleteLoginUser(state) {
     state.login_user = null
   },
+  toggleSideMenu (state) {
+    state.drawer = !state.drawer
+  },
   // タスク追加
   addTask (state, payload) {
     state.todos.push({ task: payload.task, done: false })
-    
   },
   // タスク削除
   removeTask (state, payload) {
@@ -47,6 +50,9 @@ export const actions = {
   // ログインユーザー情報の削除
   deleteLoginUser({ commit }){
     commit('deleteLoginUser')
+  },
+  toggleSideMenu ({ commit }) {
+    commit('toggleSideMenu')
   },
   // ログイン
   login () {
