@@ -2,20 +2,25 @@
   <v-app dark>
     <v-card color="grey lighten-4" flat tile>
       <v-toolbar color="indigo darken-2" dense dark>
-        <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
-      <v-toolbar-side-icon v-show="$store.state.login_user" @click.stop="toggleSideMenu">
-      </v-toolbar-side-icon>
+      <!-- <v-toolbar-side-icon v-show="$store.state.login_user" @click.stop="toggleSideMenu"> -->
+      <!-- </v-toolbar-side-icon> -->
 
         <v-toolbar-title>
           ToDo
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-icon v-if="$store.state.login_user" @click="logout"
+              <v-toolbar-items v-if="$store.state.login_user">
+
+        <v-icon @click="logout"
           >mdi-logout-variant</v-icon
         >
-        <v-icon v-if="!$store.state.login_user" @click="login"
+              </v-toolbar-items>
+                    <v-toolbar-items v-if="!$store.state.login_user">
+
+        <v-icon @click="login"
           >mdi-account</v-icon
         >
+                    </v-toolbar-items>
       </v-toolbar>
     </v-card>
     <todos />
@@ -30,7 +35,7 @@ import firebase from 'firebase';
 
 export default {
   components: {
-    Todos
+    Todos,
   },
 
   data() {
