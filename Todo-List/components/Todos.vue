@@ -4,6 +4,7 @@
       <v-flex>
         <!-- タスク追加テキストエリア -->
         <v-text-field
+          v-if="!searchKeyword"
           v-model="task"
           label="タスクを追加する"
           prepend-inner-icon="mdi-lead-pencil"
@@ -11,7 +12,17 @@
           persistent-hint
           outlined
         ></v-text-field>
-        </v-flex>
+        <!-- タスク検索テキストエリア -->
+        <v-text-field
+          v-else
+          v-model="task"
+          label="タスクを検索する"
+          prepend-inner-icon="mdi-lead-pencil"
+          @blur="cancelSerchTask"
+          persistent-hint
+          outlined
+        ></v-text-field>
+      </v-flex>
       <v-flex mt-1 ml-2>
         <!-- 送信ボタン -->
         <transition name="fade">
@@ -24,11 +35,12 @@
             <v-icon>mdi-pen-plus</v-icon>
           </v-btn>
         </transition>
+        <v-btn v-if="todos.length > 0" @click="searchTask">find</v-btn>
       </v-flex>
     </v-layout>
 
-    <h2 class="display-1 success--text pl-4">
-      Todos:&nbsp;
+    <h2 class="display-1 grey--text pl-4">
+      totalTodos:&nbsp;
       <v-fade-transition leave-absolute>
         <span :key="`todos-${todos.length}`">{{ todos.length }}</span>
       </v-fade-transition>
@@ -43,12 +55,12 @@
           <v-tab @click="taskFilter = 'all'">すべて:{{ todos.length }}</v-tab>
           <v-divider vertical></v-divider>
 
-          <v-tab  @click="taskFilter = 'active'"
+          <v-tab @click="taskFilter = 'active'"
             >未完了:{{ remainingTodos }}</v-tab
           >
           <v-divider vertical></v-divider>
 
-          <v-tab  @click="taskFilter = 'done'">
+          <v-tab @click="taskFilter = 'done'">
             完了: {{ completedTodos }}
 
             <!-- 完了率の表示 -->
@@ -119,15 +131,26 @@ export default {
       done: false,
       editEditing: false,
       editTask: '',
-      taskFilter: 'all'
+      taskFilter: 'all',
+      searchKeyword: false
     }
   },
 
   computed: {
     taskExists() {
-      return this.task.length > 0
+      if (!this.searchKeyword) return this.task.length > 0
     },
     todosFiltered() {
+      // タスク検索
+      let arr = []
+      let data = this.todos
+      data.forEach(el => {
+        if (el.task.toLowerCase().indexOf(this.task.toLowerCase()) >= 0) {
+          arr.push(el)
+        }
+      })
+      return arr
+      // 完了状態の絞り込み
       if (this.taskFilter == 'all') {
         return this.todos
       } else if (this.taskFilter == 'active') {
@@ -135,16 +158,6 @@ export default {
       } else if (this.taskfilter == 'done')
         return this.todos.filter(todo => todo.done)
     },
-    // page_items () {
-    //   let arr = []
-    //   let data = this.todos
-    //   data.forEach(element => {
-    //     if(element.content.toLowerCase().indexOf(this.content.toLowerCase()) >= 0){
-    //       arr.push(element)
-    //     }
-    //   })
-    //   return arr
-    // },
     ...mapGetters([
       'completedTodos',
       'progress',
@@ -154,33 +167,31 @@ export default {
       'userName',
       'photoURL'
     ]),
-    ...mapActions([
-      
-    ]),
+    ...mapActions([]),
     ...mapState(['todos'])
   },
 
   methods: {
-  addTask () {
-      this.$store.dispatch('addTask',{
+    addTask() {
+      this.$store.dispatch('addTask', {
         task: this.task,
-        done:false
+        done: false
       })
       this.task = ''
-   },
+    },
     removeTask(item) {
-      if (confirm( item.task + 'を削除しますか？'))
+      if (confirm(item.task + 'を削除しますか？'))
         this.$store.dispatch('removeTask', item)
     },
-    toggleDone (item) {
+    toggleDone(item) {
       this.$store.dispatch('toggleDone', item)
     },
-    taskEdit (item) {
+    taskEdit(item) {
       item.editEditing = true
       this.beforeEditCache = item.task
       item.editTask = item.task
     },
-    addEditTask (item) {
+    addEditTask(item) {
       this.$store.dispatch('addEditTask', item)
       item.editEditing = false
       item.done = false
@@ -188,6 +199,13 @@ export default {
     cancelEdit(item) {
       item.task = this.beforeEditCache
       item.editEditing = false
+    },
+    searchTask() {
+      this.searchKeyword = true
+    },
+    cancelSerchTask() {
+      this.searchKeyword = false
+      this.task = ''
     }
   }
 }
@@ -196,9 +214,9 @@ export default {
 <style>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s
+  transition: opacity 0.5s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0
+  opacity: 0;
 }
 </style>
