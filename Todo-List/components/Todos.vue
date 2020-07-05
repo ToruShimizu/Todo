@@ -8,34 +8,36 @@
           v-model="task"
           label="タスクを追加する"
           prepend-inner-icon="mdi-lead-pencil"
-          @keydown.enter="addTask"
           persistent-hint
           outlined
-        ></v-text-field>
+          @keydown.enter="addTask"
+        />
         <!-- タスク検索テキストエリア -->
         <v-text-field
           v-else
           v-model="task"
           label="タスクを検索する"
           prepend-inner-icon="mdi-lead-pencil"
-          @blur="cancelSerchTask"
           persistent-hint
           outlined
-        ></v-text-field>
+          @blur="cancelSerchTask"
+        />
       </v-flex>
       <v-flex mt-1 ml-2>
         <!-- 送信ボタン -->
         <transition name="fade">
           <v-btn
             v-if="taskExists"
-            @click="addTask"
             type="submit"
             color="success"
+            @click="addTask"
           >
             <v-icon>mdi-pen-plus</v-icon>
           </v-btn>
         </transition>
-        <v-btn v-if="todos.length > 0" @click="searchTask">find</v-btn>
+        <v-btn v-if="todos.length > 0" @click="searchTask">
+          find
+        </v-btn>
       </v-flex>
     </v-layout>
 
@@ -46,19 +48,21 @@
       </v-fade-transition>
     </h2>
 
-    <v-divider class="mt-4"></v-divider>
+    <v-divider class="mt-4" />
 
     <v-card v-if="todos.length > 0">
       <v-list>
         <!-- 完了、未完了のタブ切り替え -->
         <v-tabs>
-          <v-tab @click="taskFilter = 'all'">すべて:{{ todos.length }}</v-tab>
-          <v-divider vertical></v-divider>
+          <v-tab @click="taskFilter = 'all'">
+            すべて:{{ todos.length }}
+          </v-tab>
+          <v-divider vertical />
 
-          <v-tab @click="taskFilter = 'active'"
-            >未完了:{{ remainingTodos }}</v-tab
-          >
-          <v-divider vertical></v-divider>
+          <v-tab @click="taskFilter = 'active'">
+            未完了:{{ remainingTodos }}
+          </v-tab>
+          <v-divider vertical />
 
           <v-tab @click="taskFilter = 'done'">
             完了: {{ completedTodos }}
@@ -68,50 +72,54 @@
               :value="progress"
               class="ml-3"
               color="success"
-            ></v-progress-circular
-          ></v-tab>
+            />
+          </v-tab>
         </v-tabs>
 
-        <v-divider class="mb-4"></v-divider>
+        <v-divider class="mb-4" />
         <v-slide-y-transition class="py-0" group tag="v-list">
           <template v-for="(item, i) in todosFiltered">
-            <v-divider v-if="i !== 0" :key="`${i}-divider`"></v-divider>
+            <v-divider v-if="i !== 0" :key="`${i}-divider`" />
             <v-list-item :key="`${i}-${item.task}`">
               <!-- 完了、未完了切り替えチェックボックス -->
               <v-checkbox
                 :checked="item.done"
-                @change="toggleDone(item)"
                 :color="(item.done && 'grey') || 'primary'"
-              >
-              </v-checkbox>
+                @change="toggleDone(item)"
+              />
               <v-list-item-content>
                 <v-list-item-title
+                  v-if="!item.editEditing"
                   :class="(item.done && 'grey--text') || 'primary--text'"
                   class="ml-4"
-                  v-if="!item.editEditing"
-                  >{{ item.task }}</v-list-item-title
                 >
+                  {{ item.task }}
+                </v-list-item-title>
 
                 <!-- 編集用のテキストエリア -->
                 <v-text-field
                   v-else
                   v-model="item.editTask"
-                  @blur="addEditTask(item)"
-                  @keyup.enter="addEditTask(item)"
-                  @keyup.esc="cancelEdit(item)"
                   label="タスクを変更する"
                   outlined
                   dense
-                ></v-text-field>
+                  @blur="addEditTask(item)"
+                  @keyup.enter="addEditTask(item)"
+                  @keyup.esc="cancelEdit(item)"
+                />
               </v-list-item-content>
 
-              <v-spacer></v-spacer>
+              <v-spacer />
 
               <!-- 編集用ボタン -->
-              <v-icon @click="taskEdit(item)">mdi-lead-pencil</v-icon>
+              <v-icon @click="taskEdit(item)">
+                mdi-lead-pencil
+              </v-icon>
 
               <!-- 削除ボタン -->
-              <v-icon @click="removeTask(item)">mdi-delete-outline</v-icon>
+              <v-icon @click="removeTask(item)">
+                mdi-delete-outline
+              </v-icon>
             </v-list-item>
           </template>
         </v-slide-y-transition>
@@ -122,7 +130,6 @@
 
 <script>
 import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
-import firebase from '@/plugins/firebase'
 
 export default {
   data() {
