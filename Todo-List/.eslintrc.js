@@ -18,15 +18,15 @@ module.exports = {
   // add your custom rules here
   rules: {
     'vue/max-attributes-per-line': 'off',
-    "prettier.singleQuote": true,
-"prettier.semi":false,
     "semi": [2, "never"],
+    "prettier.semi":false,
+
     // 文字列はシングルクオートのみ
     "quotes": [2, "single"],
     "prettier/prettier": [
       "error",
       {
-        
+        "singleQuote": true,
         "trailingComma": "es5",
       }
     ]
