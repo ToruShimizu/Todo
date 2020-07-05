@@ -58,12 +58,13 @@ export const actions = {
   },
   // ログアウト
   logout () {
+    alert('ログアウトしました')
     auth.signOut()
   },
   // タスク追加
   addTask ({ commit }, payload) {
     
-      db.collection('users').doc('user1').set({task:payload.task,done:false}).then(function() {
+      db.collection('users').doc('user1').set({task:payload.task}).then(function() {
         
         console.log("Document successfully written!")
     })
@@ -115,7 +116,7 @@ export const getters = {
     return state.todos.length
   },
   // 完了タスクのカウント
-  completedTodos (state, getters) {
+  completedTodos (state) {
     return state.todos.filter(todo => todo.done).length
   },
   // タスクの完了率
