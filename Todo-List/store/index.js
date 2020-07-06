@@ -4,7 +4,7 @@ import { db } from '~/plugins/firebase'
 export const strict = false
 
 export const state = () => ({
-  todos: [{task:'プログラミングの勉強',detail:'Vue.jsの勉強',date:'2020-07-01',time:'19:00',done:false}],
+  todos: [{task:'プログラミング学習',detail:'Nuxt.jsとfirebaseでTodoリストを作る',date:'2020-07-01',time:'19:00',done:false}],
   login_user: null,
   drawer: false,
 })
