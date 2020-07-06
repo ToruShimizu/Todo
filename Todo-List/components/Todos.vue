@@ -28,7 +28,7 @@
       />
     </v-col>
 
-    <v-card v-if="todos.length > 0">
+    <v-card v-if="todos.length > 0" >
       <v-list>
         <!-- 完了、未完了のタブ切り替え -->
         <v-tabs>
@@ -62,12 +62,12 @@
 
             <v-list-item :key="`${i}-${item.task}`">
               <!-- 完了、未完了切り替えチェックボックス -->
-              <v-checkbox
-                :checked="item.done"
-                :color="(item.done && 'grey') || 'primary'"
-                @change="toggleDone(item)"
-              />
+              <v-icon
+                :color="(!item.done && 'grey') || 'primary'"
+                @click="toggleDone(item)">mdi-check-circle-outline</v-icon>
+                   <detail :task="item.task" :detail="item.detail" :date="item.date" :time="item.time"/>
               <v-list-item-content>
+
                 <v-list-item-title
                   v-if="!item.editEditing"
                   :class="(item.done && 'grey--text') || 'primary--text'"
@@ -76,7 +76,7 @@
 
                 <!-- 編集用のテキストエリア -->
                 <v-text-field
-                  v-else
+                   v-if="item.editEditing"
                   v-model="item.editTask"
                   label="タスクを変更する"
                   outlined
@@ -90,7 +90,7 @@
               <v-spacer />
 
               <!-- 編集用ボタン -->
-              <detail :task="item.task" :detail="item.detail" :date="item.date" :time="item.time"/>
+
               <v-btn icon>
                 <v-icon @click="taskEdit(item)" bottom>mdi-lead-pencil</v-icon>
               </v-btn>
