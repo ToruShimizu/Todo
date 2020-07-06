@@ -19,7 +19,7 @@
 
     <v-list-item two-line>
       <v-list-item-content>
-        <v-list-item-title>{{task}}</v-list-item-title>
+        <v-list-item-title><v-icon>mdi-briefcase-outline</v-icon>{{task}}</v-list-item-title>
         <v-list-item-subtitle>{{detail}}</v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
