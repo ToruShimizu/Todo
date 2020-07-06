@@ -56,7 +56,7 @@
         <v-divider class="mb-4" />
 
         <v-slide-y-transition class="py-0" group tag="v-list">
-          <template v-for="(item, i) in todosFiltered">
+          <template v-for="(item, i) in todosFiltered" >
 
             <v-divider v-if="i !== 0" :key="`${i}-divider`" />
 
@@ -90,6 +90,7 @@
               <v-spacer />
 
               <!-- 編集用ボタン -->
+              <detail :task="item.task" :detail="item.detail" :date="item.date" :time="item.time"/>
               <v-btn icon>
                 <v-icon @click="taskEdit(item)" bottom>mdi-lead-pencil</v-icon>
               </v-btn>
@@ -109,15 +110,21 @@
 <script>
 import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
 import AddTask from '@/components/AddTask'
+import Detail from '@/components/Detail'
 
 export default {
   components: {
-    AddTask
+    AddTask,
+    Detail
   },
   props: {},
   data() {
     return {
-      task: '',
+    task: '',
+    detail: '',
+    date: new Date().toISOString().substr(0, 10),
+    dialog: false,
+    time: null,
       editEditing: false,
       editTask: '',
       taskFilter: 'all',
