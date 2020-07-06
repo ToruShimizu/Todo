@@ -151,14 +151,16 @@ export default {
       // タスク検索
       let arr = []
       let data = this.todos
-      data.forEach(el => {
-        if (el.task.toLowerCase().indexOf(this.task.toLowerCase()) >= 0) {
-          arr.push(el)
+      if(this.searchKeyword) {
+        data.forEach(el => {
+          if (el.task.toLowerCase().indexOf(this.task.toLowerCase()) >= 0) {
+            arr.push(el)
         }
       })
       return arr
+      }
       // 完了状態の絞り込み
-      if (this.taskFilter == 'all') {
+      else if (this.taskFilter == 'all') {
         return this.todos
       } else if (this.taskFilter == 'active') {
         return this.todos.filter(todo => !todo.done)
