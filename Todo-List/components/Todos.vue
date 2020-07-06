@@ -3,21 +3,15 @@
     <v-layout>
       <v-flex>
         <!-- タスク追加テキストエリア -->
-        <v-text-field
-          v-if="!searchKeyword"
-          v-model="task"
-          label="タスクを追加する"
-          prepend-inner-icon="mdi-lead-pencil"
-          persistent-hint
-          outlined
-          @keydown.enter="addTask"
-        />
+            <AddTask />
+
+
         <!-- タスク検索テキストエリア -->
         <v-text-field
-          v-else
+          v-if="todos.length > 0"
           v-model="task"
           label="タスクを検索する"
-          prepend-inner-icon="mdi-lead-pencil"
+          prepend-inner-icon="mdi-magnify"
           persistent-hint
           outlined
           @blur="cancelSerchTask"
@@ -26,17 +20,25 @@
       <v-flex mt-1 ml-2>
         <!-- 送信ボタン -->
         <transition name="fade">
+
           <v-btn
             v-if="taskExists"
             type="submit"
             color="success"
             @click="addTask"
+            value="add"
+            bottom
           >
-            <v-icon>mdi-pen-plus</v-icon>
+            <v-icon >mdi-pen-plus</v-icon>
+          <span>add</span>
           </v-btn>
         </transition>
+        <!-- 検索ボタン -->
         <v-btn v-if="todos.length > 0" @click="searchTask">
-          find
+          <v-icon>mdi-magnify</v-icon>
+        </v-btn>
+        <v-btn v-if="searchKeyword" @click="cancelSerchTask">
+          <v-icon>mdi-close-circle</v-icon>
         </v-btn>
       </v-flex>
     </v-layout>
@@ -65,14 +67,16 @@
           <v-divider vertical />
 
           <v-tab @click="taskFilter = 'done'">
-            完了: {{ completedTodos }}
+            完了: {{ completedTodos }}/{{todos.length}}
 
             <!-- 完了率の表示 -->
             <v-progress-circular
               :value="progress"
-              class="ml-3"
+              :rotate="270"
+              :size="45"
+              class="ml-1 "
               color="success"
-            />
+            > {{progress}}</v-progress-circular>
           </v-tab>
         </v-tabs>
 
@@ -112,14 +116,18 @@
               <v-spacer />
 
               <!-- 編集用ボタン -->
-              <v-icon @click="taskEdit(item)">
+              <v-btn icon >
+              <v-icon @click="taskEdit(item)" bottom>
                 mdi-lead-pencil
               </v-icon>
+              </v-btn>
 
               <!-- 削除ボタン -->
+              <v-btn icon >
               <v-icon @click="removeTask(item)">
                 mdi-delete-outline
               </v-icon>
+              </v-btn>
             </v-list-item>
           </template>
         </v-slide-y-transition>
@@ -130,11 +138,14 @@
 
 <script>
 import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
+import AddTask from '@/components/AddTask'
 
 export default {
+  components: {
+    AddTask
+  },
   data() {
     return {
-      task: '',
       done: false,
       editEditing: false,
       editTask: '',
@@ -146,6 +157,7 @@ export default {
   computed: {
     taskExists() {
       if (!this.searchKeyword) return this.task.length > 0
+
     },
     todosFiltered() {
       // タスク検索
