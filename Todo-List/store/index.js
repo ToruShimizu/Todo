@@ -4,7 +4,7 @@ import { db } from '~/plugins/firebase'
 export const strict = false
 
 export const state = () => ({
-  todos: [],
+  todos: [{task:'プログラミングの勉強',detail:'Vue.jsの勉強',date:'2020-07-01',time:'19:00',done:false}],
   login_user: null,
   drawer: false,
 })
@@ -23,7 +23,7 @@ export const mutations = {
   },
   // タスク追加
   addTask (state, payload) {
-    state.todos.push({ task: payload.task, done: false })
+    state.todos.push({ date:payload.date,time:payload.time,task: payload.task, detail:payload.detail,done: false })
   },
   // タスク削除
   removeTask (state, payload) {
@@ -69,9 +69,9 @@ export const actions = {
   },
   // タスク追加
   addTask ({ commit }, payload) {
-    
+
       db.collection('users').doc('user1').set({task:payload.task}).then(function() {
-        
+
         console.log("Document successfully written!")
     })
     .catch(function(error) {
