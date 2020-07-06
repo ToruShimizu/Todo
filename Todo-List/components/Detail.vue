@@ -1,12 +1,7 @@
 <template>
   <div class="text-center">
-    <v-btn
-      color="blue"
-      dark
-      @click="sheet = !sheet"
-    >
-      Open v-model
-    </v-btn>
+
+<v-icon @click="sheet = !sheet">mdi-clipboard-text-outline</v-icon>
     <v-bottom-sheet v-model="sheet">
       <v-sheet class="text-center" height="200px">
 
@@ -16,36 +11,18 @@
           color="red"
           @click="sheet = !sheet"
         >close</v-btn>
-    <v-list disabled>
-      <v-list-item-group  color="primary">
         <v-list-item>
-          <v-list-item-icon>
-            <v-icon></v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>{{date}}</v-list-item-title>
-          </v-list-item-content>
-          <v-list-item-icon>
-            <v-icon></v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>{{time}}</v-list-item-title>
-          </v-list-item-content>
-          <v-list-item-icon>
-            <v-icon></v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>{{task}}</v-list-item-title>
-          </v-list-item-content>
-          <v-list-item-icon>
-            <v-icon ></v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>{{detail}}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list-item-group>
-    </v-list>
+      <v-list-item-content>
+        <v-list-item-title> <v-icon>mdi-calendar-today</v-icon>{{date}} {{time}}</v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>
+
+    <v-list-item two-line>
+      <v-list-item-content>
+        <v-list-item-title>{{task}}</v-list-item-title>
+        <v-list-item-subtitle>{{detail}}</v-list-item-subtitle>
+      </v-list-item-content>
+    </v-list-item>
       </v-sheet>
     </v-bottom-sheet>
   </div>
