@@ -62,9 +62,11 @@
 
             <v-list-item :key="`${i}-${item.task}`">
               <!-- 完了、未完了切り替えチェックボックス -->
+              <v-btn icon>
               <v-icon
                 :color="(!item.done && 'grey') || 'primary'"
                 @click="toggleDone(item)">mdi-check-circle-outline</v-icon>
+              </v-btn>
                    <detail :task="item.task" :detail="item.detail" :date="item.date" :time="item.time"/>
               <v-list-item-content>
 
@@ -75,7 +77,7 @@
                 >{{ item.task }}</v-list-item-title>
 
                 <!-- 編集用のテキストエリア -->
-                <v-text-field
+                <!-- <v-text-field
                    v-if="item.editEditing"
                   v-model="item.editTask"
                   label="タスクを変更する"
@@ -84,16 +86,11 @@
                   @blur="addEditTask(item)"
                   @keyup.enter="addEditTask(item)"
                   @keyup.esc="cancelEdit(item)"
-                />
+                /> -->
               </v-list-item-content>
 
               <v-spacer />
-
-              <!-- 編集用ボタン -->
-
-              <v-btn icon>
-                <v-icon @click="taskEdit(item)" bottom>mdi-lead-pencil</v-icon>
-              </v-btn>
+                <editTask :task="item.task" :detail="item.detail" :date="item.date" :time="item.time" @edit2="addEditTask"/>
 
               <!-- 削除ボタン -->
               <v-btn icon>
@@ -111,11 +108,13 @@
 import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
 import AddTask from '@/components/AddTask'
 import Detail from '@/components/Detail'
+import EditTask from '@/components/EditTask'
 
 export default {
   components: {
     AddTask,
-    Detail
+    Detail,
+    EditTask
   },
   props: {},
   data() {
@@ -125,10 +124,8 @@ export default {
     date: new Date().toISOString().substr(0, 10),
     dialog: false,
     time: null,
-      editEditing: false,
-      editTask: '',
-      taskFilter: 'all',
-      searchTask: '',
+    taskFilter: 'all',
+    searchTask: '',
     }
   },
 
@@ -164,7 +161,7 @@ export default {
       'userName',
       'photoURL'
     ]),
-    ...mapActions([]),
+    ...mapActions(['addEditTask',]),
     ...mapState(['todos'])
   },
 
@@ -180,11 +177,6 @@ export default {
       item.editEditing = true
       this.beforeEditCache = item.task
       item.editTask = item.task
-    },
-    addEditTask(item) {
-      this.$store.dispatch('addEditTask', item)
-      item.editEditing = false
-      item.done = false
     },
     cancelEdit(item) {
       item.task = this.beforeEditCache
