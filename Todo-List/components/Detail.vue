@@ -1,7 +1,8 @@
 <template>
   <div class="text-center">
-
+<v-btn icon>
 <v-icon @click="sheet = !sheet">mdi-clipboard-text-outline</v-icon>
+</v-btn>
     <v-bottom-sheet v-model="sheet">
       <v-sheet class="text-center" height="200px">
 
@@ -38,13 +39,16 @@ import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
         required: true
       },
       detail: {
-        type:String
+        type:String,
+        required: true
       },
       date: {
-        type: Date
+        type: String,
+        required: true
       },
       time: {
-        type: Date
+        type: String,
+        required: true
       }
     },
     computed: {
