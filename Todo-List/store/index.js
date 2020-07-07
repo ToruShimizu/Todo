@@ -5,6 +5,8 @@ export const strict = false
 
 export const state = () => ({
   todos: [{task:'プログラミング学習',detail:'Nuxt.jsとfirebaseでTodoリストを作る',date:'2020-07-01',time:'19:00',done:false}],
+  editTask:'',
+  editDetail: '',
   login_user: null,
   drawer: false,
 })
@@ -34,10 +36,11 @@ export const mutations = {
     payload.done = !payload.done
   },
   addEditTask (state, payload) {
-    if (payload.editTask == "") {
-      return
-    }
     payload.task = payload.editTask
+    payload.detail = payload.editDetail
+    payload.date = payload.editDate
+    payload.time = payload.editTime
+    payload.done = false
   },
 
 }
@@ -93,22 +96,22 @@ export const actions = {
     commit("toggleDone", payload)
   },
   addEditTask ({ commit }, payload) {
-    if(payload.editTask == "") {
-      return
-    }
-    var taskRef = db.collection("users").doc("user1")
+    const taskRef = db.collection("users").doc("user1")
 
     // Set the "capital" field of the city 'DC'
-    taskRef.update({
-       task:payload.editTask
-    })
-    .then(function() {
-        console.log("Document successfully updated!");
-    })
-    .catch(function(error) {
-        // The document probably doesn't exist.
-        console.error("Error updating document: ", error);
-    })
+    // taskRef.update({
+    //    task:payload.editTask,
+    //    detail: payload.editDetail,
+    //    date: payload.editDate,
+    //    time: payload.editTime
+    // })
+    // .then(function() {
+    //     console.log("Document successfully updated!");
+    // })
+    // .catch(function(error) {
+    //     // The document probably doesn't exist.
+    //     console.error("Error updating document: ", error);
+    // })
 commit("addEditTask", payload)
 },
 }
