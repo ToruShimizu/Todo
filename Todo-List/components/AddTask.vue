@@ -77,12 +77,13 @@
                   label="タスクを追加する"
                   prepend-inner-icon="mdi-pencil-outline"
                   @keydown.enter="addTask"
+                  clearable
                 />
               </v-col>
               <v-col cols="12">
                 <!-- 詳細入力エリア -->
                 <v-text-field v-model="detail" label="詳細を追加する"
-                prepend-inner-icon="mdi-briefcase-outline" required></v-text-field>
+                prepend-inner-icon="mdi-briefcase-outline" required clearable></v-text-field>
               </v-col>
             </v-row>
           </v-container>
@@ -100,6 +101,7 @@
 <script>
 import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
 export default {
+
   data: () => ({
     task: '',
     detail: '',
@@ -124,7 +126,8 @@ export default {
       this.task = ''
       this.dialog = false
     }
-  }
+  },
+
 }
 </script>
 
