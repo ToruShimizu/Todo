@@ -36,19 +36,19 @@ import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
     props: {
       task: {
         type: String,
-        required: true
+        default: undefined
       },
       detail: {
         type:String,
-        required: true
+        default: undefined
       },
       date: {
         type: String,
-        required: true
+       default: undefined
       },
       time: {
         type: String,
-        required: true
+       default: undefined
       }
     },
     computed: {
