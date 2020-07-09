@@ -8,7 +8,7 @@
       </template>
       <v-card>
         <v-card-title>
-          <span class="headline">AddToTask</span>
+          <span class="headline">EditToTask</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -32,9 +32,6 @@
                       readonly
                       v-bind="attrs"
                       v-on="on"
-                       @blur="addEditTask()"
-                  @keyup.enter="addEditTask()"
-                  @keyup.esc="cancelEdit()"
                     ></v-text-field>
                   </template>
                   <v-date-picker v-model="editDate" no-title scrollable>
@@ -65,9 +62,6 @@
                       readonly
                       v-bind="attrs"
                       v-on="on"
-                       @blur="addEditTask()"
-                  @keyup.enter="addEditTask()"
-                  @keyup.esc="cancelEdit()"
                     ></v-text-field>
                   </template>
                   <v-time-picker
@@ -84,12 +78,13 @@
                   v-model="editTask"
                   label="タスクを追加する"
                   prepend-inner-icon="mdi-pencil-outline"
+                  clearable
                 />
               </v-col>
               <v-col cols="12">
                 <!-- 詳細入力エリア -->
                 <v-text-field v-model="editDetail" label="詳細を追加する"
-                prepend-inner-icon="mdi-briefcase-outline" required></v-text-field>
+                prepend-inner-icon="mdi-briefcase-outline" required clearable></v-text-field>
               </v-col>
             </v-row>
           </v-container>
@@ -97,7 +92,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-          <v-btn color="blue darken-1" text @click="addEditTask">Save</v-btn>
+          <v-btn color="blue darken-1" text @click="save()">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -108,21 +103,37 @@
 import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
 export default {
   props: {
+    // editTask: {
+    //   type: String,
+    //   required: true
+    // },
+    // editDetail: {
+    //   type: String,
+
+    // },
+    // editDate: {
+    //   type: String,
+    //         required: true
+    // },
+    // editTime: {
+    //   type: String,
+    //         required: true
+    // },
     task: {
       type: String,
-      required: true
+      default: undefined
     },
     detail: {
       type: String,
-      required: true
+      default: undefined
     },
     date: {
       type: String,
-            required: true
+      default: undefined
     },
     time: {
       type: String,
-            required: true
+      default: undefined
     },
   },
   data: () => ({
@@ -135,12 +146,9 @@ export default {
     menu2: false
   }),
   computed: {
-    // ...mapState(['todos'])
+    ...mapState([])
   },
   methods: {
-    edit () {
-    this.$emit('edti2');
-    },
     e () {
       this.dialog = true
       this.editTask = this.task
@@ -148,7 +156,19 @@ export default {
       this.editDate = this.date
       this.editTime = this.time
     },
-    ...mapActions(['addEditTask',]),
+    save () {
+      this.$emit('edit',this.editTask);
+
+    }
+    // addEditTask () {
+    //         this.$store.dispatch('addEditTask')
+    //         this.task = this.editTask
+
+    //   // console.log(this.editTask)
+    //   // console.log(this.task)
+
+    // },
+    // ...mapActions(['addEditTask',]),
 
   }
 }
