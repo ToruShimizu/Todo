@@ -25,6 +25,7 @@
         label="タスクを検索する"
         prepend-inner-icon="mdi-pencil-plus-outline"
         persistent-hint
+        clearable
       />
     </v-col>
 
@@ -68,6 +69,7 @@
                 @click="toggleDone(item)">mdi-check-circle-outline</v-icon>
               </v-btn>
                    <detail :task="item.task" :detail="item.detail" :date="item.date" :time="item.time"/>
+
               <v-list-item-content>
 
                 <v-list-item-title
@@ -90,11 +92,13 @@
               </v-list-item-content>
 
               <v-spacer />
-                <editTask :task="item.task" :detail="item.detail" :date="item.date" :time="item.time" @edit2="addEditTask"/>
+                <editTask :task="item.task" :detail="item.detail" :date="item.date" :time="item.time" @edit="addEditTask(item)"/>
 
               <!-- 削除ボタン -->
+
               <v-btn icon>
                 <v-icon @click="removeTask(item)">mdi-delete-outline</v-icon>
+
               </v-btn>
             </v-list-item>
           </template>
@@ -116,7 +120,10 @@ export default {
     Detail,
     EditTask
   },
-  props: {},
+  props: {
+    editTask: String,
+
+  },
   data() {
     return {
     task: '',
@@ -155,13 +162,11 @@ export default {
     ...mapGetters([
       'completedTodos',
       'progress',
-      'updateTodo',
       'remainingTodos',
       'todosCount',
       'userName',
       'photoURL'
     ]),
-    ...mapActions(['addEditTask',]),
     ...mapState(['todos'])
   },
 
@@ -173,14 +178,19 @@ export default {
     toggleDone(item) {
       this.$store.dispatch('toggleDone', item)
     },
-    taskEdit(item) {
-      item.editEditing = true
-      this.beforeEditCache = item.task
-      item.editTask = item.task
-    },
     cancelEdit(item) {
       item.task = this.beforeEditCache
       item.editEditing = false
+    },
+     addEditTask (item) {
+            this.$store.dispatch('addEditTask',item)
+            // item.task = item.editTask
+            // console.log(item.editTask)
+            console.log(item.editTask)
+
+      console.log(this.editTask)
+      // console.log(this.task)
+
     },
   }
 }
