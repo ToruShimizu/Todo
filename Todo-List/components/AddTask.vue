@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="dialog" persistent max-width="600px">
+    <v-dialog v-model="taskDialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="primary" dark v-bind="attrs" v-on="on">タスクを追加する</v-btn>
       </template>
@@ -90,7 +90,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+          <v-btn color="blue darken-1" text @click="taskDialog = false">Close</v-btn>
           <v-btn color="blue darken-1" text @click="addTask">Save</v-btn>
         </v-card-actions>
       </v-card>
@@ -99,21 +99,18 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
 export default {
 
   data: () => ({
     task: '',
     detail: '',
     date: new Date().toISOString().substr(0, 10),
-    dialog: false,
+    taskDialog: false,
     time: null,
     menu: false,
     menu2: false
   }),
-  computed: {
-    // ...mapState(['todos'])
-  },
+
   methods: {
     addTask() {
       this.$store.dispatch('addTask', {
@@ -124,7 +121,7 @@ export default {
         done: false,
       })
       this.task = ''
-      this.dialog = false
+      this.taskDialog = false
     }
   },
 
