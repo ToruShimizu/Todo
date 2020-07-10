@@ -1,10 +1,10 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="dialog" persistent max-width="600px">
+    <v-dialog v-model="editDialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn v-bind="attrs" @click="e" icon>
-                <v-icon bottom>mdi-lead-pencil</v-icon>
-              </v-btn>
+        <v-btn v-bind="attrs" @click="editTaskOpen" icon>
+          <v-icon bottom>mdi-lead-pencil</v-icon>
+        </v-btn>
       </template>
       <v-card>
         <v-card-title>
@@ -83,15 +83,20 @@
               </v-col>
               <v-col cols="12">
                 <!-- 詳細入力エリア -->
-                <v-text-field v-model="editDetail" label="詳細を追加する"
-                prepend-inner-icon="mdi-briefcase-outline" required clearable></v-text-field>
+                <v-text-field
+                  v-model="editDetail"
+                  label="詳細を追加する"
+                  prepend-inner-icon="mdi-briefcase-outline"
+                  required
+                  clearable
+                ></v-text-field>
               </v-col>
             </v-row>
           </v-container>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+          <v-btn color="blue darken-1" text @click="editDialog = false">Close</v-btn>
           <v-btn color="blue darken-1" text @click="save()">Save</v-btn>
         </v-card-actions>
       </v-card>
@@ -120,8 +125,8 @@ export default {
     //         required: true
     // },
     task: {
-      type: String,
-      default: undefined
+      type: String
+      // default: undefined
     },
     detail: {
       type: String,
@@ -134,14 +139,14 @@ export default {
     time: {
       type: String,
       default: undefined
-    },
+    }
   },
   data: () => ({
-    editTask:'',
-    editDetail:'',
-    editDate:'',
-    editTime:'',
-    dialog: false,
+    editTask: '',
+    editDetail: '',
+    editDate: '',
+    editTime: '',
+    editDialog: false,
     menu: false,
     menu2: false
   }),
@@ -149,16 +154,15 @@ export default {
     ...mapState([])
   },
   methods: {
-    e () {
-      this.dialog = true
+    editTaskOpen() {
+      this.editDialog = true
       this.editTask = this.task
       this.editDetail = this.detail
       this.editDate = this.date
       this.editTime = this.time
     },
-    save () {
-      this.$emit('edit',this.editTask);
-
+    save() {
+      this.$emit('edit')
     }
     // addEditTask () {
     //         this.$store.dispatch('addEditTask')
@@ -169,7 +173,6 @@ export default {
 
     // },
     // ...mapActions(['addEditTask',]),
-
   }
 }
 </script>
