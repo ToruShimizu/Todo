@@ -22,17 +22,18 @@ export const mutations = {
     state.drawer = !state.drawer
   },
   // タスク追加
-  addTask (state, todo) {
+  addTask (state, { todo }) {
     state.todos.push({ date:todo.date,time:todo.time,task: todo.task, detail:todo.detail,done: false })
   },
   // タスク削除
-  removeTask (state, todo) {
+  removeTask (state, { todo }) {
     state.todos.splice(state.todos.indexOf(todo.task), 1)
   },
   // 完了、未完了切り替え
-  doneTask (state, todo) {
+  doneTask (state, { todo }) {
     todo.done = !todo.done
   },
+
 }
 
 export const actions = {
@@ -70,7 +71,7 @@ export const actions = {
     .catch(function(error) {
         console.error("Error writing document: ", error);
     });
-    commit("addTask", todo)
+    commit("addTask", { todo })
   },
   // タスク削除
   removeTask ({ commit }, todo) {
@@ -79,18 +80,15 @@ export const actions = {
   }).catch(function(error) {
       console.error("Error removing document: ", error)
   })
-  commit("removeTask", todo)
+  commit("removeTask", { todo })
   },
   // 完了、未完了切り替え
   doneTask ({ commit }, todo) {
-    commit("doneTask", todo)
+    commit("doneTask", { todo })
   },
-  editTaskOpen ({commit}, todo) {
-    commit('editTaskOpen',todo)
-  },
-  updateTask ({ commit }) {
+  updateTask ({ commit },todo) {
     const taskRef = db.collection("users").doc("user1")
-    commit("updateTask")
+    commit("updateTask",{ todo })
 
     // Set the "capital" field of the city 'DC'
     // taskRef.update({
