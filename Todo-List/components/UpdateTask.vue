@@ -76,7 +76,7 @@
                 <!-- タスク入力エリア -->
                 <v-text-field
                   v-model="editTask"
-                  label="タスクを追加する"
+                  label="タスクを変更する"
                   prepend-inner-icon="mdi-pencil-outline"
                   clearable
                 />
@@ -97,7 +97,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="editDialog = false">Close</v-btn>
-          <v-btn color="blue darken-1" text @click="save()">Save</v-btn>
+          <v-btn color="blue darken-1" text @click="updateTask">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -142,7 +142,7 @@ export default {
     }
   },
   data: () => ({
-    editTask: '',
+    // editTask: '',
     editDetail: '',
     editDate: '',
     editTime: '',
@@ -151,28 +151,23 @@ export default {
     menu2: false
   }),
   computed: {
-    ...mapState([])
+    ...mapState(['editTask'])
   },
   methods: {
-    editTaskOpen() {
+    editTaskOpen () {
+      this.$store.dispatch('editTaskOpen')
       this.editDialog = true
-      this.editTask = this.task
-      this.editDetail = this.detail
-      this.editDate = this.date
-      this.editTime = this.time
     },
-    save() {
-      this.$emit('edit')
-    }
-    // addEditTask () {
-    //         this.$store.dispatch('addEditTask')
+
+    // updateTask () {
+    //         this.$store.dispatch('updateTask')
     //         this.task = this.editTask
 
-    //   // console.log(this.editTask)
-    //   // console.log(this.task)
+    //   console.log(this.editTask)
+    //   console.log(this.task)
 
     // },
-    // ...mapActions(['addEditTask',]),
+    ...mapActions(['updateTask',]),
   }
 }
 </script>
