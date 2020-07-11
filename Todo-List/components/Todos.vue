@@ -112,11 +112,13 @@
 import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
 import AddTask from '@/components/AddTask'
 import Detail from '@/components/Detail'
+import UpdateTask from '@/components/UpdateTask'
 
 export default {
   components: {
     AddTask,
     Detail,
+    UpdateTask
   },
   // props: {
   //   editTask: String,
