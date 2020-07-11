@@ -5,8 +5,6 @@ export const strict = false
 
 export const state = () => ({
   todos: [{task:'プログラミング学習',detail:'Nuxt.jsとfirebaseでTodoリストを作る',date:'2020-07-01',time:'19:00',done:false}],
-  editTask:'',
-  editDetail: '',
   login_user: null,
   drawer: false,
 })
@@ -24,25 +22,17 @@ export const mutations = {
     state.drawer = !state.drawer
   },
   // タスク追加
-  addTask (state, payload) {
-    state.todos.push({ date:payload.date,time:payload.time,task: payload.task, detail:payload.detail,done: false })
+  addTask (state, todo) {
+    state.todos.push({ date:todo.date,time:todo.time,task: todo.task, detail:todo.detail,done: false })
   },
   // タスク削除
-  removeTask (state, payload) {
-    state.todos.splice(state.todos.indexOf(payload.task), 1)
+  removeTask (state, todo) {
+    state.todos.splice(state.todos.indexOf(todo.task), 1)
   },
   // 完了、未完了切り替え
-  toggleDone (state, payload) {
-    payload.done = !payload.done
+  doneTask (state, todo) {
+    todo.done = !todo.done
   },
-  addEditTask (state, payload) {
-    payload.task = payload.editTask
-    payload.detail = payload.editDetail
-    payload.date = payload.editDate
-    payload.time = payload.editTime
-    payload.done = false
-  },
-
 }
 
 export const actions = {
@@ -71,36 +61,40 @@ export const actions = {
     auth.signOut()
   },
   // タスク追加
-  addTask ({ commit }, payload) {
+  addTask ({ commit }, todo) {
 
-      db.collection('users').doc('user1').set({task:payload.task}).then(function() {
+      db.collection('users').doc('user1').set({task:todo.task}).then(function() {
 
         console.log("Document successfully written!")
     })
     .catch(function(error) {
         console.error("Error writing document: ", error);
     });
-    commit("addTask", payload)
+    commit("addTask", todo)
   },
   // タスク削除
-  removeTask ({ commit }, payload) {
+  removeTask ({ commit }, todo) {
     db.collection("users").doc("user1").delete().then(function() {
       console.log("Document successfully deleted!");
   }).catch(function(error) {
       console.error("Error removing document: ", error)
   })
-  commit("removeTask", payload)
+  commit("removeTask", todo)
   },
   // 完了、未完了切り替え
-  toggleDone ({ commit }, payload) {
-    commit("toggleDone", payload)
+  doneTask ({ commit }, todo) {
+    commit("doneTask", todo)
   },
-  addEditTask ({ commit }, payload) {
+  editTaskOpen ({commit}, todo) {
+    commit('editTaskOpen',todo)
+  },
+  updateTask ({ commit }) {
     const taskRef = db.collection("users").doc("user1")
+    commit("updateTask")
 
     // Set the "capital" field of the city 'DC'
     // taskRef.update({
-    //    task:payload.editTask,
+    //    task:todo.editTask,
     //    detail: payload.editDetail,
     //    date: payload.editDate,
     //    time: payload.editTime
@@ -112,7 +106,6 @@ export const actions = {
     //     // The document probably doesn't exist.
     //     console.error("Error updating document: ", error);
     // })
-commit("addEditTask", payload)
 },
 }
 
