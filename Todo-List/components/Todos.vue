@@ -29,7 +29,7 @@
       />
     </v-col>
 
-    <v-card v-if="todos.length > 0" >
+    <v-card v-if="todos.length > 0">
       <v-list>
         <!-- 完了、未完了のタブ切り替え -->
         <v-tabs>
@@ -57,26 +57,24 @@
         <v-divider class="mb-4" />
 
         <v-slide-y-transition class="py-0" group tag="v-list">
-          <template v-for="(item, i) in todosFiltered" >
-
+          <template v-for="(todo, i) in todosFiltered">
             <v-divider v-if="i !== 0" :key="`${i}-divider`" />
 
-            <v-list-item :key="`${i}-${item.task}`">
+            <v-list-item :key="`${i}-${todo.task}`">
               <!-- 完了、未完了切り替えチェックボックス -->
               <v-btn icon>
-              <v-icon
-                :color="(!item.done && 'grey') || 'primary'"
-                @click="toggleDone(item)">mdi-check-circle-outline</v-icon>
+                <v-icon
+                  :color="(!todo.done && 'grey') || 'primary'"
+                  @click="doneTask(todo)"
+                >mdi-check-circle-outline</v-icon>
               </v-btn>
-                   <detail :task="item.task" :detail="item.detail" :date="item.date" :time="item.time"/>
+              <detail :task="todo.task" :detail="todo.detail" :date="todo.date" :time="todo.time" />
 
               <v-list-item-content>
-
                 <v-list-item-title
-                  v-if="!item.editEditing"
-                  :class="(item.done && 'grey--text') || 'primary--text'"
-                  class="ml-4"
-                >{{ item.task }}</v-list-item-title>
+                  :class="(todo.done && 'grey--text') || 'primary--text'"
+                  class="ml-2"
+                >{{ todo.task }}</v-list-item-title>
 
                 <!-- 編集用のテキストエリア -->
                 <!-- <v-text-field
@@ -88,18 +86,20 @@
                   @blur="addEditTask(item)"
                   @keyup.enter="addEditTask(item)"
                   @keyup.esc="cancelEdit(item)"
-                /> -->
+                />-->
               </v-list-item-content>
 
-              <v-spacer />
-                <editTask :task="item.task" :detail="item.detail" :date="item.date" :time="item.time" @edit="addEditTask(item)"/>
+              <!-- <v-spacer /> -->
+              <updateTask :task="todo.task" :detail="todo.detail" :date="todo.date" :time="todo.time" />
+
+              <!-- <updateTask :task="item.task" :detail="item.detail" :date="item.date" :time="item.time" @edit="addEditTask(item)"/> -->
 
               <!-- 削除ボタン -->
 
-              <v-btn icon>
+              <!-- <v-btn icon>
                 <v-icon @click="removeTask(item)">mdi-delete-outline</v-icon>
 
-              </v-btn>
+              </v-btn>-->
             </v-list-item>
           </template>
         </v-slide-y-transition>
@@ -112,27 +112,32 @@
 import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
 import AddTask from '@/components/AddTask'
 import Detail from '@/components/Detail'
-import EditTask from '@/components/EditTask'
 
 export default {
   components: {
     AddTask,
     Detail,
-    EditTask
   },
-  props: {
-    editTask: String,
+  // props: {
+  //   editTask: String,
 
-  },
+  // },
   data() {
     return {
-    task: '',
-    detail: '',
-    date: new Date().toISOString().substr(0, 10),
-    dialog: false,
-    time: null,
-    taskFilter: 'all',
-    searchTask: '',
+      task: '',
+      detail: '',
+      date: new Date().toISOString().substr(0, 10),
+      taskDialog: false,
+      // editDialog: false,
+      time: null,
+      taskFilter: 'all',
+      searchTask: ''
+      // editTask:'',
+      // editDetail:'',
+      // editDate:'',
+      // editTime:'',
+      // menu: false,
+      // menu2: false
     }
   },
 
@@ -175,23 +180,14 @@ export default {
       if (confirm(item.task + 'を削除しますか？'))
         this.$store.dispatch('removeTask', item)
     },
-    toggleDone(item) {
-      this.$store.dispatch('toggleDone', item)
+    doneTask(todo) {
+      this.$store.dispatch('doneTask', todo)
     },
     cancelEdit(item) {
       item.task = this.beforeEditCache
       item.editEditing = false
     },
-     addEditTask (item) {
-            this.$store.dispatch('addEditTask',item)
-            // item.task = item.editTask
-            // console.log(item.editTask)
-            console.log(item.editTask)
-
-      console.log(this.editTask)
-      // console.log(this.task)
-
-    },
+    // ...mapActions(['doneTask'])
   }
 }
 </script>
