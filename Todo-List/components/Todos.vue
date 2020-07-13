@@ -77,29 +77,120 @@
                 >{{ todo.task }}</v-list-item-title>
 
                 <!-- 編集用のテキストエリア -->
-                <!-- <v-text-field
-                   v-if="item.editEditing"
-                  v-model="item.editTask"
-                  label="タスクを変更する"
-                  outlined
-                  dense
-                  @blur="addEditTask(item)"
-                  @keyup.enter="addEditTask(item)"
-                  @keyup.esc="cancelEdit(item)"
-                />-->
               </v-list-item-content>
-
+              <v-row justify="center">
+                <v-dialog v-model="editDialog" persistent max-width="600px">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn v-bind="attrs" @click="editTaskOpen(todo)" icon>
+                      <v-icon bottom>mdi-lead-pencil</v-icon>
+                    </v-btn>
+                  </template>
+                  <v-card>
+                    <v-card-title>
+                      <span class="headline">EditToTask</span>
+                    </v-card-title>
+                    <v-card-text>
+                      <v-container>
+                        <v-row>
+                          <v-col cols="12" sm="6" md="4">
+                            <!-- 日付変更エリア -->
+                            <v-menu
+                              ref="menu"
+                              v-model="selectDate"
+                              :close-on-content-click="false"
+                              :return-value.sync="date"
+                              transition="scale-transition"
+                              offset-y
+                              min-width="290px"
+                            >
+                              <template v-slot:activator="{ on, attrs }">
+                                <v-text-field
+                                  v-model="editDate"
+                                  label="日付を変更する"
+                                  prepend-icon="mdi-calendar-today"
+                                  readonly
+                                  v-bind="attrs"
+                                  v-on="on"
+                                ></v-text-field>
+                              </template>
+                              <v-date-picker v-model="editDate" no-title scrollable>
+                                <v-spacer></v-spacer>
+                                <v-btn text color="primary" @click="selectDate = false">Cancel</v-btn>
+                                <v-btn text color="primary" @click="$refs.menu.save(editDate)">OK</v-btn>
+                              </v-date-picker>
+                            </v-menu>
+                          </v-col>
+                          <v-col cols="12" sm="6" md="4">
+                            <!-- 時間変更エリア -->
+                            <v-menu
+                              ref="menu"
+                              v-model="selectTime"
+                              :close-on-content-click="false"
+                              :nudge-right="40"
+                              :return-value.sync="time"
+                              transition="scale-transition"
+                              offset-y
+                              max-width="290px"
+                              min-width="290px"
+                            >
+                              <template v-slot:activator="{ on, attrs }">
+                                <v-text-field
+                                  v-model="editTime"
+                                  label="Picker in menu"
+                                  prepend-icon="mdi-clock-time-four-outline"
+                                  readonly
+                                  v-bind="attrs"
+                                  v-on="on"
+                                ></v-text-field>
+                              </template>
+                              <v-time-picker
+                                v-if="selectTime"
+                                v-model="editTime"
+                                full-width
+                                @click="$refs.menu.save(editTime)"
+                              ></v-time-picker>
+                            </v-menu>
+                          </v-col>
+                          <v-col cols="12" sm="6" md="4">
+                            <!-- タスク変更エリア -->
+                            <v-text-field
+                              v-model="editTask"
+                              label="タスクを変更する"
+                              prepend-inner-icon="mdi-pencil-outline"
+                              clearable
+                            />
+                          </v-col>
+                          <v-col cols="12">
+                            <!-- 詳細変更エリア -->
+                            <v-text-field
+                              v-model="editDetail"
+                              label="詳細を変更する"
+                              prepend-inner-icon="mdi-briefcase-outline"
+                              required
+                              clearable
+                            ></v-text-field>
+                          </v-col>
+                        </v-row>
+                      </v-container>
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="blue darken-1" text @click="editDialog = false">Close</v-btn>
+                      <v-btn color="blue darken-1" text @click="updateTask(todo)">Save</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+              </v-row>
               <!-- <v-spacer /> -->
-              <updateTask :task="todo.task" :detail="todo.detail" :date="todo.date" :time="todo.time" />
+              <!-- <updateTask :task="todo.task" :detail="todo.detail" :date="todo.date"  :time="todo.time" /> -->
 
-              <!-- <updateTask :task="item.task" :detail="item.detail" :date="item.date" :time="item.time" @edit="addEditTask(item)"/> -->
+              <!-- <updateTask :task="item.task" :detail="item.detail" :date="item.date" :time="item.time" @click="updateTask(todo)"/> -->
 
               <!-- 削除ボタン -->
 
-              <!-- <v-btn icon>
-                <v-icon @click="removeTask(item)">mdi-delete-outline</v-icon>
-
-              </v-btn>-->
+              <v-btn icon>
+                <v-icon @click="removeTask(todo)">mdi-delete-outline</v-icon>
+              </v-btn>
             </v-list-item>
           </template>
         </v-slide-y-transition>
@@ -109,37 +200,30 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
-import AddTask from '@/components/AddTask'
-import Detail from '@/components/Detail'
-import UpdateTask from '@/components/UpdateTask'
+import { mapState, mapMutations, mapGetters, mapActions } from "vuex"
+import AddTask from "@/components/AddTask"
+import Detail from "@/components/Detail"
+// import UpdateTask from "@/components/UpdateTask"
 
 export default {
   components: {
     AddTask,
     Detail,
-    UpdateTask
+    // UpdateTask
   },
-  // props: {
-  //   editTask: String,
-
-  // },
   data() {
     return {
-      task: '',
-      detail: '',
       date: new Date().toISOString().substr(0, 10),
-      taskDialog: false,
-      // editDialog: false,
-      time: null,
+      time: '',
       taskFilter: 'all',
-      searchTask: ''
-      // editTask:'',
-      // editDetail:'',
-      // editDate:'',
-      // editTime:'',
-      // menu: false,
-      // menu2: false
+      searchTask: '',
+      editTask: '',
+      editDetail: '',
+      editDate: '',
+      editTime: '',
+      editDialog: false,
+      selectDate: false,
+      selectTime: false
     }
   },
 
@@ -185,10 +269,21 @@ export default {
     doneTask(todo) {
       this.$store.dispatch('doneTask', todo)
     },
-    cancelEdit(item) {
-      item.task = this.beforeEditCache
-      item.editEditing = false
+    editTaskOpen(todo) {
+      this.editDialog = true
+      this.editTask = todo.task
+      this.editDetail = todo.detail
+      this.editDate = todo.date
+      this.editTime = todo.time
     },
+    updateTask(todo) {
+      this.$store.dispatch('updateTask', todo)
+      todo.task = this.editTask
+      todo.detail = this.editDetail
+      todo.date = this.editDate
+      todo.time = this.editTime
+      this.editDialog = false
+    }
     // ...mapActions(['doneTask'])
   }
 }
