@@ -115,11 +115,16 @@ export const actions = {
     commit('doneTask', { todo })
   },
   updateTask({ commit }, todo) {
-    const taskRef = db.collection('user').doc('user1')
+    const taskRef = db.collection('users').doc('user1')
 
     // Set the 'capital' field of the city 'DC'
-    taskRef
-      .update({})
+    taskRef.update({
+        task:todo.editTask,
+        detail:todo.editDetail,
+        date:todo.editDate,
+        time:todo.editTime,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      })
       .then(function() {
         console.log('Document successfully updated!')
       })
