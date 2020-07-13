@@ -101,7 +101,8 @@
 <script>
 export default {
 
-  data: () => ({
+  data (){
+    return {
     task: '',
     detail: '',
     date: new Date().toISOString().substr(0, 10),
@@ -109,7 +110,8 @@ export default {
     time: null,
     menu: false,
     menu2: false
-  }),
+    }
+  },
 
   methods: {
     addTask() {
@@ -121,6 +123,9 @@ export default {
         done: false,
       })
       this.task = ''
+      this.detail = ''
+      this.date = ''
+      this.time = ''
       this.taskDialog = false
     }
   },
