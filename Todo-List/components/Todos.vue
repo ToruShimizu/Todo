@@ -23,9 +23,8 @@
         v-if="todos.length > 0"
         v-model="searchTask"
         label="タスクを検索する"
-        prepend-inner-icon="mdi-pencil-plus-outline"
+        prepend-inner-icon="mdi-magnify"
         persistent-hint
-        clearable
       />
     </v-col>
 
