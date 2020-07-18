@@ -81,7 +81,7 @@ export const actions = {
   },
   // タスク追加
   addTask({ commit }, todo) {
-    db.collection('todos')
+    db.collection('users').doc('user1')
       .set({
         task: todo.task,
         detail: todo.detail,
