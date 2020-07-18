@@ -115,6 +115,9 @@ export default {
 
   methods: {
     addTask() {
+      if(!this.task || !this.detail || !this.date || !this.time) {
+        return
+      }
       this.$store.dispatch('addTask', {
         date: this.date,
         time: this.time,
