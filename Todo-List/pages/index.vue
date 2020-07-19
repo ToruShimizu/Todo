@@ -46,22 +46,6 @@ export default {
       }
     });
   },
-  async asyncData({ redirect, store }) {
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        const { uid, displayName, email } = user;
-        store.dispatch("setUser", {
-          user: { id: uid, name: displayName, email: email }
-        });
-
-        const cookies = new Cookies();
-        const cookie = { id: uid, name: displayName, email: email };
-        cookies.set("user", JSON.stringify(cookie));
-        redirect("/todos");
-      }
-    });
-    return {};
-  },
   computed: {
     ...mapGetters(["userName", "photoURL"])
   },
