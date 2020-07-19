@@ -37,7 +37,7 @@ export const mutations = {
   },
   // タスク削除
   removeTask(state, { todo }) {
-    state.todos.splice(state.todos.indexOf(todo.task), 1)
+    state.todos.splice(state.todos.indexOf(todo), 1)
   },
   updateTask(state, todo) {
     todo.task = todo.editTask
