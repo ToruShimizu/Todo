@@ -52,6 +52,25 @@ export const mutations = {
 }
 
 export const actions = {
+  addUser({commit}, payload) {
+    const usersRef = db.collection('users')
+
+    const user = {
+      userName: payload.userName,
+      password: payload.password,
+      created_at: firebase.firestore.FieldValue.serverTimestamp(),
+  updated_at: firebase.firestore.FieldValue.serverTimestamp()
+    }
+    return new Promise((resolve,reject) => {
+      usersRef.add(user).then(ref => {
+        resolve(true)
+      })
+      .catch(error => {
+        console.error('An error occurred in addUser(): ', error)
+        reject(error)
+      })
+    })
+  },
   // ログインユーザー情報の取得
   setLoginUser({ commit }, user) {
     commit('setLoginUser', user)
