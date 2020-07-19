@@ -192,15 +192,15 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapGetters, mapActions } from "vuex"
-import AddTask from "@/components/AddTask"
-import Detail from "@/components/Detail"
+import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
+import AddTask from "@/components/AddTask";
+import Detail from "@/components/Detail";
 // import UpdateTask from "@/components/UpdateTask"
 
 export default {
   components: {
     AddTask,
-    Detail,
+    Detail
     // UpdateTask
   },
   data() {
@@ -216,50 +216,50 @@ export default {
       detailTask: false,
       selectDate: false,
       selectTime: false
-    }
+    };
   },
 
   computed: {
     todosFiltered() {
       // タスク検索
-      let arr = []
-      let data = this.todos
+      let arr = [];
+      let data = this.todos;
       if (this.searchTask.length > 0) {
         data.forEach(el => {
           if (
             el.task.toLowerCase().indexOf(this.searchTask.toLowerCase()) >= 0
           ) {
-            arr.push(el)
+            arr.push(el);
           }
-        })
-        return arr
+        });
+        return arr;
       }
       // 完了状態の絞り込み
-      else if (this.taskFilter == 'all') {
-        return this.todos
-      } else if (this.taskFilter == 'active') {
-        return this.todos.filter(todo => !todo.done)
-      } else if (this.taskfilter == 'done')
-        return this.todos.filter(todo => todo.done)
+      else if (this.taskFilter == "all") {
+        return this.todos;
+      } else if (this.taskFilter == "active") {
+        return this.todos.filter(todo => !todo.done);
+      } else if (this.taskfilter == "done")
+        return this.todos.filter(todo => todo.done);
     },
     ...mapGetters([
-      'completedTodos',
-      'progress',
-      'remainingTodos',
-      'todosCount',
-      'userName',
-      'photoURL'
+      "completedTodos",
+      "progress",
+      "remainingTodos",
+      "todosCount",
+      "userName",
+      "photoURL"
     ]),
-    ...mapState(['todos'])
+    ...mapState(["todos"])
   },
 
   methods: {
     removeTask(item) {
-      if (confirm(item.task + 'を削除しますか？'))
-        this.$store.dispatch('removeTask', item)
+      if (confirm(item.task + "を削除しますか？"))
+        this.$store.dispatch("removeTask", item);
     },
     doneTask(todo) {
-      this.$store.dispatch('doneTask', todo)
+      this.$store.dispatch("doneTask", todo);
     },
     openTask(todo) {
       this.detailTask = true
@@ -278,7 +278,7 @@ export default {
     }
     // ...mapActions(['doneTask'])
   }
-}
+};
 </script>
 
 <style>
