@@ -254,9 +254,9 @@ export default {
   },
 
   methods: {
-    removeTask(item) {
-      if (confirm(item.task + "を削除しますか？"))
-        this.$store.dispatch("removeTask", item);
+    removeTask(todo) {
+      if (confirm(todo.task + "を削除しますか？"))
+        this.$store.dispatch("removeTask", todo);
     },
     doneTask(todo) {
       this.$store.dispatch("doneTask", todo);
