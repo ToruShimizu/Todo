@@ -79,7 +79,7 @@
                 <v-dialog v-model="detailTask" persistent max-width="600px">
                   <v-card>
                     <v-card-title>
-                      <span class="headline">EditToTask</span>
+                      <span class="headline">detailTask</span>
                     </v-card-title>
                     <v-card-text>
                       <v-container>
@@ -128,7 +128,7 @@
                               <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
                                   v-model="editTime"
-                                  label="Picker in menu"
+                                  label="時間を変更する"
                                   prepend-icon="mdi-clock-time-four-outline"
                                   readonly
                                   v-bind="attrs"
@@ -173,13 +173,8 @@
                   </v-card>
                 </v-dialog>
               </v-row>
-              <!-- <v-spacer /> -->
-              <!-- <updateTask :task="todo.task" :detail="todo.detail" :date="todo.date"  :time="todo.time" /> -->
-
-              <!-- <updateTask :task="item.task" :detail="item.detail" :date="item.date" :time="item.time" @click="updateTask(todo)"/> -->
 
               <!-- 削除ボタン -->
-
               <v-btn icon>
                 <v-icon @click="removeTask(todo)">mdi-delete-outline</v-icon>
               </v-btn>
