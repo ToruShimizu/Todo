@@ -67,23 +67,16 @@
                   @click="doneTask(todo)"
                 >mdi-check-circle-outline</v-icon>
               </v-btn>
-              <detail :task="todo.task" :detail="todo.detail" :date="todo.date" :time="todo.time" />
-
               <v-list-item-content>
                 <v-list-item-title
+                  @click="openTask(todo)"
                   :class="(todo.done && 'grey--text') || 'primary--text'"
                   class="ml-2"
                 >{{ todo.task }}</v-list-item-title>
-
                 <!-- 編集用のテキストエリア -->
               </v-list-item-content>
               <v-row justify="center">
-                <v-dialog v-model="editDialog" persistent max-width="600px">
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn v-bind="attrs" @click="editTaskOpen(todo)" icon>
-                      <v-icon bottom>mdi-lead-pencil</v-icon>
-                    </v-btn>
-                  </template>
+                <v-dialog v-model="detailTask" persistent max-width="600px">
                   <v-card>
                     <v-card-title>
                       <span class="headline">EditToTask</span>
@@ -174,7 +167,7 @@
                     </v-card-text>
                     <v-card-actions>
                       <v-spacer></v-spacer>
-                      <v-btn color="blue darken-1" text @click="editDialog = false">Close</v-btn>
+                      <v-btn color="blue darken-1" text @click="detailTask = false">Close</v-btn>
                       <v-btn color="blue darken-1" text @click="updateTask(todo)">Save</v-btn>
                     </v-card-actions>
                   </v-card>
@@ -199,15 +192,15 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapGetters, mapActions } from "vuex"
-import AddTask from "@/components/AddTask"
-import Detail from "@/components/Detail"
+import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
+import AddTask from "@/components/AddTask";
+import Detail from "@/components/Detail";
 // import UpdateTask from "@/components/UpdateTask"
 
 export default {
   components: {
     AddTask,
-    Detail,
+    Detail
     // UpdateTask
   },
   data() {
@@ -220,56 +213,56 @@ export default {
       editDetail: '',
       editDate: '',
       editTime: '',
-      editDialog: false,
+      detailTask: false,
       selectDate: false,
       selectTime: false
-    }
+    };
   },
 
   computed: {
     todosFiltered() {
       // タスク検索
-      let arr = []
-      let data = this.todos
+      let arr = [];
+      let data = this.todos;
       if (this.searchTask.length > 0) {
         data.forEach(el => {
           if (
             el.task.toLowerCase().indexOf(this.searchTask.toLowerCase()) >= 0
           ) {
-            arr.push(el)
+            arr.push(el);
           }
-        })
-        return arr
+        });
+        return arr;
       }
       // 完了状態の絞り込み
-      else if (this.taskFilter == 'all') {
-        return this.todos
-      } else if (this.taskFilter == 'active') {
-        return this.todos.filter(todo => !todo.done)
-      } else if (this.taskfilter == 'done')
-        return this.todos.filter(todo => todo.done)
+      else if (this.taskFilter == "all") {
+        return this.todos;
+      } else if (this.taskFilter == "active") {
+        return this.todos.filter(todo => !todo.done);
+      } else if (this.taskfilter == "done")
+        return this.todos.filter(todo => todo.done);
     },
     ...mapGetters([
-      'completedTodos',
-      'progress',
-      'remainingTodos',
-      'todosCount',
-      'userName',
-      'photoURL'
+      "completedTodos",
+      "progress",
+      "remainingTodos",
+      "todosCount",
+      "userName",
+      "photoURL"
     ]),
-    ...mapState(['todos'])
+    ...mapState(["todos"])
   },
 
   methods: {
     removeTask(item) {
-      if (confirm(item.task + 'を削除しますか？'))
-        this.$store.dispatch('removeTask', item)
+      if (confirm(item.task + "を削除しますか？"))
+        this.$store.dispatch("removeTask", item);
     },
     doneTask(todo) {
-      this.$store.dispatch('doneTask', todo)
+      this.$store.dispatch("doneTask", todo);
     },
-    editTaskOpen(todo) {
-      this.editDialog = true
+    openTask(todo) {
+      this.detailTask = true
       this.editTask = todo.task
       this.editDetail = todo.detail
       this.editDate = todo.date
@@ -281,11 +274,11 @@ export default {
       todo.detail = this.editDetail
       todo.date = this.editDate
       todo.time = this.editTime
-      this.editDialog = false
+      this.detailTask = false
     }
     // ...mapActions(['doneTask'])
   }
-}
+};
 </script>
 
 <style>
