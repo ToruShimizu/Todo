@@ -67,10 +67,9 @@
                   @click="doneTask(todo)"
                 >mdi-check-circle-outline</v-icon>
               </v-btn>
-              <detail :task="todo.task" :detail="todo.detail" :date="todo.date" :time="todo.time" />
-
               <v-list-item-content>
                 <v-list-item-title
+                  @click="openTask(todo)"
                   :class="(todo.done && 'grey--text') || 'primary--text'"
                   class="ml-2"
                 >{{ todo.task }}</v-list-item-title>
@@ -78,12 +77,7 @@
                 <!-- 編集用のテキストエリア -->
               </v-list-item-content>
               <v-row justify="center">
-                <v-dialog v-model="editDialog" persistent max-width="600px">
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn v-bind="attrs" @click="editTaskOpen(todo)" icon>
-                      <v-icon bottom>mdi-lead-pencil</v-icon>
-                    </v-btn>
-                  </template>
+                <v-dialog v-model="detailTask" persistent max-width="600px">
                   <v-card>
                     <v-card-title>
                       <span class="headline">EditToTask</span>
@@ -174,7 +168,7 @@
                     </v-card-text>
                     <v-card-actions>
                       <v-spacer></v-spacer>
-                      <v-btn color="blue darken-1" text @click="editDialog = false">Close</v-btn>
+                      <v-btn color="blue darken-1" text @click="detailTask = false">Close</v-btn>
                       <v-btn color="blue darken-1" text @click="updateTask(todo)">Save</v-btn>
                     </v-card-actions>
                   </v-card>
@@ -220,7 +214,7 @@ export default {
       editDetail: '',
       editDate: '',
       editTime: '',
-      editDialog: false,
+      detailTask: false,
       selectDate: false,
       selectTime: false
     }
@@ -268,8 +262,8 @@ export default {
     doneTask(todo) {
       this.$store.dispatch('doneTask', todo)
     },
-    editTaskOpen(todo) {
-      this.editDialog = true
+    openTask(todo) {
+      this.detailTask = true
       this.editTask = todo.task
       this.editDetail = todo.detail
       this.editDate = todo.date
@@ -281,7 +275,7 @@ export default {
       todo.detail = this.editDetail
       todo.date = this.editDate
       todo.time = this.editTime
-      this.editDialog = false
+      this.detailTask = false
     }
     // ...mapActions(['doneTask'])
   }
