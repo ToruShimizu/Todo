@@ -14,7 +14,6 @@ export const state = () => ({
     }
   ],
   login_user: null,
-  drawer: false
 })
 
 export const mutations = {
@@ -25,9 +24,6 @@ export const mutations = {
   // ログインユーザー情報の削除
   deleteLoginUser(state) {
     state.login_user = null
-  },
-  toggleSideMenu(state) {
-    state.drawer = !state.drawer
   },
   // タスク追加
   addTask(state, { todo }) {
