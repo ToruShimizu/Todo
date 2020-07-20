@@ -95,8 +95,9 @@ export const actions = {
     auth.signOut()
   },
   // タスク追加
-  addTask({ commit }, todo) {
-    db.collection('users').doc('user1')
+  async addTask({ commit }, todo) {
+    try {
+      await db.collection('users').doc('user1')
       .set({
         task: todo.task,
         detail: todo.detail,
@@ -104,12 +105,10 @@ export const actions = {
         time: todo.time,
         created: firebase.firestore.FieldValue.serverTimestamp()
       })
-      .then(function() {
-        console.log('Document successfully written!')
-      })
-      .catch(function(error) {
-        console.error('Error writing document: ', error)
-      })
+    }
+    catch(error) {
+        console.log('Error writing document: ', error)
+      }
     commit('addTask', { todo })
   },
   // タスク削除
