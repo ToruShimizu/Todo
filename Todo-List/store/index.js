@@ -128,24 +128,24 @@ export const actions = {
   doneTask({ commit }, todo) {
     commit('doneTask', { todo })
   },
-  updateTask({ commit }, todo) {
-    const taskRef = db.collection('users').doc('user1')
+  async updateTask({ commit }, todo) {
+    try {
 
-    // Set the 'capital' field of the city 'DC'
-    taskRef.update({
+      const taskRef = db.collection('users').doc('user1')
+
+      // Set the 'capital' field of the city 'DC'
+      return taskRef.update({
         task:todo.editTask,
         detail:todo.editDetail,
         date:todo.editDate,
         time:todo.editTime,
         updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
       })
-      .then(function() {
-        console.log('Document successfully updated!')
-      })
-      .catch(function(error) {
+    }
+      catch(error) {
         // The document probably doesn't exist.
         console.error('Error updating document: ', error)
-      })
+      }
     commit('updateTask', todo)
   }
 }
