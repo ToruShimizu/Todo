@@ -9,6 +9,7 @@ const taskRef = db.collection('todos').doc('task')
 
 export const state = () => ({
   todos: [],
+  
   login_user: null,
 })
 
@@ -31,19 +32,14 @@ export const mutations = {
   },
   // タスク追加
   addTask(state, { todo }) {
-    state.todos.push({
-      date: todo.date,
-      time: todo.time,
-      task: todo.task,
-      detail: todo.detail,
-      done: false
-    })
+    state.todos.push(todo.task)
   },
   // タスク削除
   removeTask(state, { todo }) {
     state.todos.splice(state.todos.indexOf(todo), 1)
   },
   updateTask(state, todo) {
+
     todo.task = todo.editTask
     todo.detail = todo.editDetail
     todo.date = todo.editDate
