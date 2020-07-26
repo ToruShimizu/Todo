@@ -21,6 +21,9 @@
       </v-app-bar>
     </v-card>
     <todos />
+     <v-footer color="indigo darken-2" dark app>
+      Todo
+    </v-footer>
   </v-app>
 </template>
 
