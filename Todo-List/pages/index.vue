@@ -34,7 +34,6 @@
     </v-list>
   </v-container>
         </v-navigation-drawer>
-        <v-card color="grey lighten-4" flat tile>
       <v-app-bar color="indigo darken-2"  dark app clipped-left>
         <v-app-bar-nav-icon @click="drawer=!drawer"></v-app-bar-nav-icon>
         <v-toolbar-title>ToDo</v-toolbar-title>
@@ -62,7 +61,6 @@
           <v-icon @click="login">mdi-account</v-icon>
         </v-toolbar-items>
       </v-app-bar>
-    </v-card>
     <todos />
     <v-footer color="indigo darken-2" dark app>
     <span class="grey--text text--lighten-2">&copy; {{ new Date().getFullYear() }}</span>
