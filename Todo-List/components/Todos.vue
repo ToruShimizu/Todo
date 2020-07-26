@@ -149,7 +149,7 @@
                           <v-col cols="12" sm="6" md="4">
                             <!-- タスク変更エリア -->
                             <v-text-field
-                              v-model="editTask"
+                              v-model="editTitle"
                               label="タスクを変更する"
                               prepend-inner-icon="mdi-pencil-outline"
                               clearable
@@ -207,7 +207,7 @@ export default {
       time: '',
       taskFilter: 'all',
       searchTask: '',
-      editTask: '',
+      editTitle: '',
       editDetail: '',
       editDate: '',
       editTime: '',
@@ -261,14 +261,14 @@ export default {
     },
     openTask(todo) {
       this.detailTask = true
-      this.editTask = todo.task
+      this.editTitle = todo.title
       this.editDetail = todo.detail
       this.editDate = todo.date
       this.editTime = todo.time
     },
     updateTask(todo) {
       this.$store.dispatch('updateTask', todo)
-      todo.task = this.editTask
+      todo.title = this.editTitle
       todo.detail = this.editDetail
       todo.date = this.editDate
       todo.time = this.editTime

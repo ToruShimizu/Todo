@@ -9,7 +9,7 @@ const taskRef = db.collection('todos').doc('task')
 
 export const state = () => ({
   todos: [],
-  
+
   login_user: null,
 })
 
@@ -39,8 +39,7 @@ export const mutations = {
     state.todos.splice(state.todos.indexOf(todo), 1)
   },
   updateTask(state, todo) {
-
-    todo.task = todo.editTask
+    todo.title = todo.editTitle
     todo.detail = todo.editDetail
     todo.date = todo.editDate
     todo.time = todo.editTime
@@ -154,7 +153,7 @@ export const actions = {
 
       // Set the 'capital' field of the city 'DC'
       return taskRef.update({
-        task:todo.editTask,
+        task:todo.editTitle,
         detail:todo.editDetail,
         date:todo.editDate,
         time:todo.editTime,
