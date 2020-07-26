@@ -1,6 +1,39 @@
 <template>
   <v-app>
-           <v-navigation-drawer v-model="drawer" app clipped>Navigation Lists</v-navigation-drawer>
+           <v-navigation-drawer v-model="drawer" app clipped>
+              <v-container>
+    <v-list-item>
+      <v-list-item-content>
+        <v-list-item-title class="title grey--text text--darken-2">
+          Login User
+        </v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>
+    <v-divider></v-divider>
+      <v-list dense nav>
+      <v-list-item v-if="$store.state.login_user" >
+        <v-list-item-icon>
+         <v-avatar size="50">
+             <img
+          v-if="photoURL"
+        :src="photoURL"
+      >
+    </v-avatar>
+        </v-list-item-icon>
+        <v-list-item-content>
+          <v-list-item-title class="title grey--text text--darken-2">{{userName}}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-list-item v-else>
+        <v-list-item-content>
+          <v-list-item-title>
+            ログインユーザーはいません
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
+  </v-container>
+           </v-navigation-drawer>
         <v-card color="grey lighten-4" flat tile>
       <v-app-bar color="indigo darken-2"  dark app clipped-left>
         <v-app-bar-nav-icon @click="drawer=!drawer"></v-app-bar-nav-icon>
@@ -8,13 +41,6 @@
         <v-spacer></v-spacer>
 
         <v-toolbar-items v-if="$store.state.login_user">
-          <v-toolbar-title>{{userName}}</v-toolbar-title>
-          <v-avatar size="40">
-      <img
-      v-if="photoURL"
-        :src="photoURL"
-      >
-    </v-avatar>
           <v-icon @click="logout">mdi-logout-variant</v-icon>
         </v-toolbar-items>
         <v-toolbar-items v-if="!$store.state.login_user">
