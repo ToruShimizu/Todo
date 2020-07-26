@@ -117,15 +117,18 @@ export const actions = {
   },
   // タスク追加
   async addTask({ commit }, todo) {
+    const task = {
+      title: todo.task.title,
+      detail: todo.task.detail,
+      date: todo.task.date,
+      time: todo.task.time,
+      done: false,
+      created: firebase.firestore.FieldValue.serverTimestamp()
+
+    }
     try {
       await taskRef
-      .set({
-        task: todo.task,
-        detail: todo.detail,
-        date: todo.date,
-        time: todo.time,
-        created: firebase.firestore.FieldValue.serverTimestamp()
-      })
+      .set(task)
     }
     catch(error) {
         console.log('Error writing document: ', error)
