@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <v-app>
         <v-card color="grey lighten-4" flat tile>
-      <v-toolbar color="indigo darken-2" dense dark>
+      <v-app-bar color="indigo darken-2" dense dark app>
         <v-toolbar-title>ToDo</v-toolbar-title>
         <v-spacer></v-spacer>
 
@@ -18,10 +18,10 @@
         <v-toolbar-items v-if="!$store.state.login_user">
           <v-icon @click="login">mdi-account</v-icon>
         </v-toolbar-items>
-      </v-toolbar>
+      </v-app-bar>
     </v-card>
     <todos />
-  </div>
+  </v-app>
 </template>
 
 <script>
