@@ -26,7 +26,7 @@
         label="タスクを検索する"
         prepend-inner-icon="mdi-magnify"
         persistent-hint
-            clearable
+        clearable
       />
 
     </v-col>
@@ -62,7 +62,7 @@
           <template v-for="(todo, i) in todosFiltered">
             <v-divider v-if="i !== 0" :key="`${i}-divider`" />
 
-            <v-list-item :key="`${i}-${todo.task}`">
+            <v-list-item :key="`${i}-${todo.title}`">
               <!-- 完了、未完了切り替えチェックボックス -->
               <v-btn icon>
                 <v-icon
@@ -75,7 +75,7 @@
                   @click="openTask(todo)"
                   :class="(todo.done && 'grey--text') || 'primary--text'"
                   class="ml-2"
-                >{{ todo.task }}</v-list-item-title>
+                >{{ todo.title }}</v-list-item-title>
                 <!-- 編集用のテキストエリア -->
               </v-list-item-content>
               <v-row justify="center">

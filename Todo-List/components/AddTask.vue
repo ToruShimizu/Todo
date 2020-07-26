@@ -17,14 +17,14 @@
                   ref="menu"
                   v-model="menu"
                   :close-on-content-click="false"
-                  :return-value.sync="date"
+                  :return-value.sync="task.date"
                   transition="scale-transition"
                   offset-y
                   min-width="290px"
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
-                      v-model="date"
+                      v-model="task.date"
                       label="Picker in menu"
                       prepend-icon="mdi-calendar-today"
                       readonly
@@ -32,10 +32,10 @@
                       v-on="on"
                     ></v-text-field>
                   </template>
-                  <v-date-picker v-model="date" no-title scrollable>
+                  <v-date-picker v-model="task.date" no-title scrollable>
                     <v-spacer></v-spacer>
                     <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                    <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+                    <v-btn text color="primary" @click="$refs.menu.save(task.date)">OK</v-btn>
                   </v-date-picker>
                 </v-menu>
               </v-col>
@@ -46,7 +46,7 @@
                   v-model="menu2"
                   :close-on-content-click="false"
                   :nudge-right="40"
-                  :return-value.sync="time"
+                  :return-value.sync="task.time"
                   transition="scale-transition"
                   offset-y
                   max-width="290px"
@@ -54,7 +54,7 @@
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
-                      v-model="time"
+                      v-model="task.time"
                       label="Picker in menu"
                       prepend-icon="mdi-clock-time-four-outline"
                       readonly
@@ -64,16 +64,16 @@
                   </template>
                   <v-time-picker
                     v-if="menu2"
-                    v-model="time"
+                    v-model="task.time"
                     full-width
-                    @click:minute="$refs.menu.save(time)"
+                    @click:minute="$refs.menu.save(task.time)"
                   ></v-time-picker>
                 </v-menu>
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <!-- タスク入力エリア -->
                 <v-text-field
-                  v-model="task"
+                  v-model="task.title"
                   label="タスクを追加する"
                   prepend-inner-icon="mdi-pencil-outline"
                   @keydown.enter="addTask"
@@ -82,7 +82,7 @@
               </v-col>
               <v-col cols="12">
                 <!-- 詳細入力エリア -->
-                <v-text-field v-model="detail" label="詳細を追加する"
+                <v-text-field v-model="task.detail" label="詳細を追加する"
                 prepend-inner-icon="mdi-briefcase-outline" required clearable></v-text-field>
               </v-col>
             </v-row>
@@ -103,11 +103,14 @@ export default {
 
   data (){
     return {
-    task: '',
+    task:{
+    title:'',
     detail: '',
     date: new Date().toISOString().substr(0, 10),
-    taskDialog: false,
     time: null,
+    done:false
+    },
+    taskDialog: false,
     menu: false,
     menu2: false
     }
@@ -118,18 +121,13 @@ export default {
       if(!this.task) {
         return
       }
-      this.$store.dispatch('addTask', {
-        date: this.date,
-        time: this.time,
-        task: this.task,
-        detail: this.detail,
-        done: false,
-      })
-      this.task = ''
+      this.$store.dispatch('addTask', { task: this.task })
+      .then(() => {
       this.detail = ''
       this.date = ''
       this.time = ''
       this.taskDialog = false
+      })
     }
   },
 
