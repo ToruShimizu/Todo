@@ -17,20 +17,6 @@
 
     <v-divider class="mt-4" />
 
-    <!-- タスク検索入力エリア -->
-    <v-col cols="12" sm="6" md="4">
-
-      <v-text-field
-        v-if="todos.length > 0"
-        v-model="searchTask"
-        label="タスクを検索する"
-        prepend-inner-icon="mdi-magnify"
-        persistent-hint
-        clearable
-      />
-
-    </v-col>
-
     <v-card v-if="todos.length > 0">
       <v-list>
         <!-- 完了、未完了のタブ切り替え -->
