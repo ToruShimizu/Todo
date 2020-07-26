@@ -123,10 +123,10 @@ export default {
       }
       this.$store.dispatch('addTask', { task: this.task })
       .then(() => {
-      this.title = ''
-      this.detail = ''
-      this.date = ''
-      this.time = ''
+      this.task.title = ''
+      this.task.detail = ''
+      this.task.date = new Date().toISOString().substr(0, 10),
+      this.task.time = ''
       this.taskDialog = false
       })
     }
