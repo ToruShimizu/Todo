@@ -247,8 +247,6 @@ export default {
       "progress",
       "remainingTodos",
       "todosCount",
-      "userName",
-      "photoURL"
     ]),
     ...mapState(["todos"])
   },
