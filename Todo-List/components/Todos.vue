@@ -216,7 +216,9 @@ export default {
       selectTime: false
     };
   },
-
+    created() {
+    this.$store.dispatch('fetchTodos')
+  },
   computed: {
     todosFiltered() {
       // タスク検索

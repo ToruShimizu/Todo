@@ -8,15 +8,7 @@ const taskRef = db.collection('todos').doc('task')
 
 
 export const state = () => ({
-  todos: [
-    {
-      task: 'プログラミング学習',
-      detail: 'Nuxt.jsとfirebaseでTodoリストを作る',
-      date: '2020-07-01',
-      time: '19:00',
-      done: false
-    }
-  ],
+  todos: [],
   login_user: null,
 })
 
@@ -28,6 +20,14 @@ export const mutations = {
   // ログインユーザー情報の削除
   deleteLoginUser(state) {
     state.login_user = null
+  },
+  // 初期化
+  initTodos (state) {
+    state.todos = []
+  },
+  // 取り出したデータを格納
+  addTodos(state, todos) {
+    state.todos.push(todos)
   },
   // タスク追加
   addTask(state, { todo }) {
@@ -98,6 +98,23 @@ export const actions = {
     alert('ログアウトしました')
     auth.signOut()
   },
+  // データを取り出す
+  fetchTodos ({ commit }) {
+    commit('initTodos')
+    return new Promise ((resolve, reject) => {
+      todosRef.orderBy('created', 'desc').get()
+      .then(res => {
+        res.forEach((doc) => {
+          commit('addTodos', doc.data())
+          resolve(true)
+        })
+      })
+      .catch(error => {
+        console.error('An error occurred in fetchUsers(): ', error)
+        reject(error)
+      })
+    })
+  },
   // タスク追加
   async addTask({ commit }, todo) {
     try {
@@ -157,6 +174,7 @@ export const getters = {
   userName: state => (state.login_user ? state.login_user.displayName : ''),
   photoURL: state => (state.login_user ? state.login_user.photoURL : ''),
   uid: state => (state.login_user ? state.login_user.uid : null),
+
   // タスク総数のカウント
   todosCount(state) {
     return state.todos.length
