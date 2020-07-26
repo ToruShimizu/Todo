@@ -53,7 +53,7 @@
         <v-icon @click="login">mdi-account</v-icon>
       </v-toolbar-items>
     </v-app-bar>
-    <v-container>
+    <v-container mt-12>
       <todos />
     </v-container>
     <v-footer color="indigo darken-2" dark app>
