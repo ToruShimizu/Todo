@@ -14,7 +14,7 @@
       <v-list-item v-if="$store.state.login_user" >
         <v-list-item-icon>
          <v-avatar size="50">
-             <img
+          <img
           v-if="photoURL"
         :src="photoURL"
       >
@@ -33,11 +33,26 @@
       </v-list-item>
     </v-list>
   </v-container>
-           </v-navigation-drawer>
+        </v-navigation-drawer>
         <v-card color="grey lighten-4" flat tile>
       <v-app-bar color="indigo darken-2"  dark app clipped-left>
         <v-app-bar-nav-icon @click="drawer=!drawer"></v-app-bar-nav-icon>
         <v-toolbar-title>ToDo</v-toolbar-title>
+        <v-spacer></v-spacer>
+            <v-col cols="12" sm="6" md="4">
+
+        <v-text-field
+        flat
+        solo-inverted
+        hide-details
+        v-model="searchTask"
+        prepend-inner-icon="mdi-magnify"
+        label="Search"
+        class="hidden-sm-and-down"
+        clearable
+      ></v-text-field>
+          </v-col>
+
         <v-spacer></v-spacer>
 
         <v-toolbar-items v-if="$store.state.login_user">
@@ -49,9 +64,9 @@
       </v-app-bar>
     </v-card>
     <todos />
-     <v-footer color="indigo darken-2" dark app>
-      Todo
-    </v-footer>
+    <v-footer color="indigo darken-2" dark app>
+Todo
+</v-footer>
   </v-app>
 </template>
 
@@ -84,7 +99,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["login", "setLoginUser", "logout", "deleteLoginUser"])
+    ...mapActions(["login","setLoginUser", "logout", "deleteLoginUser"])
   }
 };
 </script>
