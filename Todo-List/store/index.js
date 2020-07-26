@@ -2,6 +2,10 @@ import firebase from '~/plugins/firebase'
 import { auth } from '~/plugins/firebase'
 import { db } from '~/plugins/firebase'
 export const strict = false
+const todosRef = db.collection('todos')
+const taskRef = db.collection('todos').doc('task')
+
+
 
 export const state = () => ({
   todos: [
@@ -59,7 +63,7 @@ export const actions = {
       userName: payload.userName,
       password: payload.password,
       created_at: firebase.firestore.FieldValue.serverTimestamp(),
-  updated_at: firebase.firestore.FieldValue.serverTimestamp()
+      updated_at: firebase.firestore.FieldValue.serverTimestamp()
     }
     return new Promise((resolve,reject) => {
       usersRef.add(user).then(ref => {
@@ -97,7 +101,7 @@ export const actions = {
   // タスク追加
   async addTask({ commit }, todo) {
     try {
-      await db.collection('users').doc('user1')
+      await taskRef
       .set({
         task: todo.task,
         detail: todo.detail,
@@ -113,8 +117,8 @@ export const actions = {
   },
   // タスク削除
   removeTask({ commit }, todo) {
-    db.collection('users')
-      .doc('user1')
+    db.collection('todos')
+      .doc('task')
       .delete()
       .then(function() {
         console.log('Document successfully deleted!')
@@ -131,7 +135,6 @@ export const actions = {
   async updateTask({ commit }, todo) {
     try {
 
-      const taskRef = db.collection('users').doc('user1')
 
       // Set the 'capital' field of the city 'DC'
       return taskRef.update({
