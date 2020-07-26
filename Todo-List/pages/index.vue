@@ -65,7 +65,8 @@
     </v-card>
     <todos />
     <v-footer color="indigo darken-2" dark app>
-Todo
+    <span class="grey--text text--lighten-2">&copy; {{ new Date().getFullYear() }}</span>
+
 </v-footer>
   </v-app>
 </template>
