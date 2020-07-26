@@ -123,6 +123,7 @@ export default {
       }
       this.$store.dispatch('addTask', { task: this.task })
       .then(() => {
+      this.title = ''
       this.detail = ''
       this.date = ''
       this.time = ''
