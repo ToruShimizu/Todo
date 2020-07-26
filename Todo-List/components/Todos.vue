@@ -224,7 +224,7 @@ export default {
       // タスク検索
       let arr = [];
       let data = this.todos;
-      if (this.searchTask.length > 0) {
+      if (this.searchTask) {
         data.forEach(el => {
           if (
             el.task.toLowerCase().indexOf(this.searchTask.toLowerCase()) >= 0
