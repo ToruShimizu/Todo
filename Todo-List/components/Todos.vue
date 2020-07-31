@@ -42,8 +42,6 @@
           </v-tab>
         </v-tabs>
 
-        <v-divider class="mb-4" />
-
         <v-slide-y-transition class="py-0" group tag="v-list">
           <template v-for="(todo, id) in todosFiltered">
             <v-divider v-if="i !== 0" :key="`${id}-divider`" />
