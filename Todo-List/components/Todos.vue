@@ -41,6 +41,7 @@
             >{{progress}}</v-progress-circular>
           </v-tab>
         </v-tabs>
+                  <v-divider  />
 
         <v-slide-y-transition class="py-0" group tag="v-list">
           <template v-for="(todo, i) in todosFiltered">
