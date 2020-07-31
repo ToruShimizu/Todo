@@ -2,7 +2,10 @@
   <v-row justify="center">
     <v-dialog v-model="taskDialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on">タスクを追加する</v-btn>
+        <v-btn color="primary" dark v-bind="attrs" v-on="on" class="hidden-xs-only">タスクを追加する</v-btn>
+        <v-btn color="primary" dark v-bind="attrs" v-on="on" class="hidden-sm-and-up">
+          <v-icon>mdi-pen-plus</v-icon>
+        </v-btn>
       </template>
       <v-card>
         <v-card-title>
@@ -82,8 +85,13 @@
               </v-col>
               <v-col cols="12">
                 <!-- 詳細入力エリア -->
-                <v-text-field v-model="task.detail" label="詳細を追加する"
-                prepend-inner-icon="mdi-briefcase-outline" required clearable></v-text-field>
+                <v-text-field
+                  v-model="task.detail"
+                  label="詳細を追加する"
+                  prepend-inner-icon="mdi-briefcase-outline"
+                  required
+                  clearable
+                ></v-text-field>
               </v-col>
             </v-row>
           </v-container>
@@ -100,38 +108,35 @@
 
 <script>
 export default {
-
-  data (){
-    return {
-    task:{
-    title:'',
-    detail: '',
-    date: new Date().toISOString().substr(0, 10),
-    time: null,
-    done:false
-    },
-    taskDialog: false,
-    menu: false,
-    menu2: false
+  data() {
+        return {
+      task: {
+        title: '',
+        detail: '',
+        date: new Date().toISOString().substr(0, 10),
+        time: null,
+        done: false,
+      },
+      taskDialog: false,
+      menu: false,
+      menu2: false,
     }
   },
 
   methods: {
     addTask() {
-      if(!this.task) {
+      if (!this.task) {
         return
       }
-      this.$store.dispatch('addTask', { task: this.task })
-      .then(() => {
-      this.task.title = ''
-      this.task.detail = ''
-      this.task.date = new Date().toISOString().substr(0, 10),
-      this.task.time = ''
-      this.taskDialog = false
+      this.$store.dispatch('addTask', { task: this.task }).then(() => {
+        this.task.title = ''
+        this.task.detail = ''
+        (this.task.date = new Date().toISOString().substr(0, 10)),
+          (this.task.time = '')
+        this.taskDialog = false
       })
-    }
-  },
-
+    },
+  }
 }
 </script>
 
