@@ -128,13 +128,12 @@ export default {
       if (!this.task) {
         return
       }
-      this.$store.dispatch('addTask', { task: this.task }).then(() => {
+      this.$store.dispatch('addTask', { task: this.task })
         this.task.title = ''
         this.task.detail = ''
-        (this.task.date = new Date().toISOString().substr(0, 10)),
-          (this.task.time = '')
+        this.task.date = new Date().toISOString().substr(0, 10)
+        this.task.time = ''
         this.taskDialog = false
-      })
     },
   }
 }
