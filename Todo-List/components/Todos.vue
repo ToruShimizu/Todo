@@ -45,10 +45,10 @@
         <v-divider class="mb-4" />
 
         <v-slide-y-transition class="py-0" group tag="v-list">
-          <template v-for="(todo, i) in todosFiltered">
-            <v-divider v-if="i !== 0" :key="`${i}-divider`" />
+          <template v-for="(todo, id) in todosFiltered">
+            <v-divider v-if="i !== 0" :key="`${id}-divider`" />
 
-            <v-list-item :key="`${i}-${todo.title}`">
+            <v-list-item :key="`${id}-${todo.title}`">
               <!-- 完了、未完了切り替えチェックボックス -->
               <v-btn icon>
                 <v-icon
