@@ -239,7 +239,7 @@ export default {
 
   methods: {
     removeTask(todo) {
-      if (confirm(todo.task + "を削除しますか？"))
+      if (confirm(todo.title + "を削除しますか？"))
         this.$store.dispatch("removeTask", todo);
     },
     doneTask(todo) {
