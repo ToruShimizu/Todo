@@ -73,7 +73,7 @@
                     <v-card-text>
                       <v-container>
                         <v-row>
-                          <v-col cols="12" sm="6" md="4">
+                          <v-col cols="12" sm="6" md="6">
                             <!-- 日付変更エリア -->
                             <v-menu
                               ref="menu"
@@ -88,7 +88,7 @@
                                 <v-text-field
                                   v-model="editDate"
                                   label="日付を変更する"
-                                  prepend-icon="mdi-calendar-today"
+                                  prepend-inner-icon="mdi-calendar-today"
                                   readonly
                                   v-bind="attrs"
                                   v-on="on"
@@ -101,7 +101,7 @@
                               </v-date-picker>
                             </v-menu>
                           </v-col>
-                          <v-col cols="12" sm="6" md="4">
+                          <v-col cols="12" sm="6" md="6">
                             <!-- 時間変更エリア -->
                             <v-menu
                               ref="menu"
@@ -118,7 +118,7 @@
                                 <v-text-field
                                   v-model="editTime"
                                   label="時間を変更する"
-                                  prepend-icon="mdi-clock-time-four-outline"
+                                  prepend-inner-icon="mdi-clock-time-four-outline"
                                   readonly
                                   v-bind="attrs"
                                   v-on="on"
@@ -132,7 +132,7 @@
                               ></v-time-picker>
                             </v-menu>
                           </v-col>
-                          <v-col cols="12" sm="6" md="4">
+                          <v-col cols="12" sm="12" md="12">
                             <!-- タスク変更エリア -->
                             <v-text-field
                               v-model="editTitle"
