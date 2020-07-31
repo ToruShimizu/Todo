@@ -12,7 +12,7 @@
           <span class="headline">AddToTask</span>
         </v-card-title>
         <v-form ref="form"
-    lazy-validation>
+    lazy-validation >
         <v-card-text>
           <v-container>
             <v-row>
@@ -101,7 +101,7 @@
         </v-card-text>
            <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="taskDialog = false">Close</v-btn>
+          <v-btn color="blue darken-1" text @click="closeTaskDialog">Close</v-btn>
           <v-btn color="blue darken-1" text @click="addTask">Save</v-btn>
         </v-card-actions>
         </v-form>
@@ -144,6 +144,13 @@ export default {
         this.task.time = ''
         this.taskDialog = false
     },
+    closeTaskDialog () {
+        this.task.title = ''
+        this.task.detail = ''
+        this.task.date = new Date().toISOString().substr(0, 10)
+        this.task.time = ''
+        this.taskDialog = false
+    }
   }
 }
 </script>
