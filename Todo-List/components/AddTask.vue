@@ -80,6 +80,7 @@
                   label="タスクを追加する"
                   prepend-inner-icon="mdi-pencil-outline"
                   @keydown.enter="addTask"
+                  :rules="titleRules"
                   clearable
                 />
               </v-col>
@@ -92,6 +93,7 @@
                   required
                   clearable
                 ></v-text-field>
+
               </v-col>
             </v-row>
           </v-container>
@@ -117,6 +119,9 @@ export default {
         time: null,
         done: false,
       },
+       titleRules:[
+         v => !!v || 'タイトルは必須入力です'
+       ],
       taskDialog: false,
       menu: false,
       menu2: false,
