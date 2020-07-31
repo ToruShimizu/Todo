@@ -11,6 +11,8 @@
         <v-card-title>
           <span class="headline">AddToTask</span>
         </v-card-title>
+        <v-form ref="form"
+    lazy-validation>
         <v-card-text>
           <v-container>
             <v-row>
@@ -93,16 +95,16 @@
                   required
                   clearable
                 ></v-text-field>
-
               </v-col>
             </v-row>
           </v-container>
         </v-card-text>
-        <v-card-actions>
+           <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="taskDialog = false">Close</v-btn>
           <v-btn color="blue darken-1" text @click="addTask">Save</v-btn>
         </v-card-actions>
+        </v-form>
       </v-card>
     </v-dialog>
   </v-row>
@@ -119,6 +121,7 @@ export default {
         time: null,
         done: false,
       },
+      validate: true,
        titleRules:[
          v => !!v || 'タイトルは必須入力です'
        ],
@@ -130,7 +133,8 @@ export default {
 
   methods: {
     addTask() {
-      if (!this.task) {
+      if (!this.task.title) {
+        this.$refs.form.validate()
         return
       }
       this.$store.dispatch('addTask', { task: this.task })
