@@ -31,7 +31,7 @@
       <v-app-bar-nav-icon @click="drawer=!drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>ToDo</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-col cols="12" sm="6" md="4">
+      <v-col cols="6" sm="6" md="6">
         <v-text-field
           flat
           solo-inverted
@@ -39,17 +39,17 @@
           v-model="searchTask"
           prepend-inner-icon="mdi-magnify"
           label="Search"
-          class="hidden-sm-and-down"
+
           clearable
         ></v-text-field>
       </v-col>
-
-      <v-spacer></v-spacer>
+              <v-spacer></v-spacer>
 
       <v-toolbar-items v-if="$store.state.login_user">
         <v-icon @click="logout">mdi-logout-variant</v-icon>
       </v-toolbar-items>
       <v-toolbar-items v-if="!$store.state.login_user">
+
         <v-icon @click="login">mdi-account</v-icon>
       </v-toolbar-items>
     </v-app-bar>
