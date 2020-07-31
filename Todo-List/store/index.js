@@ -143,6 +143,9 @@ export const actions = {
   },
   // 完了、未完了切り替え
   doneTask({ commit }, todo) {
+    taskRef.update({
+      done: !todo.done
+    })
     commit('doneTask', { todo })
   },
   async updateTask({ commit }, todo) {
