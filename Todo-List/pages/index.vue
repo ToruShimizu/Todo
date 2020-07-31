@@ -39,11 +39,10 @@
           v-model="searchTask"
           prepend-inner-icon="mdi-magnify"
           label="Search"
-
           clearable
         ></v-text-field>
       </v-col>
-              <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
 
       <v-toolbar-items v-if="$store.state.login_user">
         <v-icon @click="logout">mdi-logout-variant</v-icon>
