@@ -119,7 +119,6 @@ export const actions = {
       time: todo.task.time,
       done: false,
       created: firebase.firestore.FieldValue.serverTimestamp()
-
     }
     try {
       await taskRef
@@ -132,8 +131,7 @@ export const actions = {
   },
   // タスク削除
   removeTask({ commit }, todo) {
-    db.collection('todos')
-      .doc('task')
+      taskRef
       .delete()
       .then(function() {
         console.log('Document successfully deleted!')
