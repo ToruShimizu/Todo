@@ -115,7 +115,7 @@ export default {
       task: {
         title: '',
         detail: '',
-        date: new Date().toISOString().substr(0, 10),
+        date: [new Date().toISOString().substr(0, 10)],
         time: null,
         done: false,
       },
@@ -129,7 +129,7 @@ export default {
       menu2: false,
     }
   },
-  
+
   methods: {
     addTask() {
       if (!this.task.title) {
