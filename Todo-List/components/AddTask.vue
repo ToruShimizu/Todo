@@ -144,14 +144,14 @@ export default {
       this.$store.dispatch('addTask', { task: this.task })
       this.task.title = ''
       this.task.detail = ''
-      this.task.date = new Date().toISOString().substr(0, 10)
+      this.task.date = [new Date().toISOString().substr(0, 10)]
       this.task.time = ''
       this.taskDialog = false
     },
     closeTaskDialog () {
       this.task.title = ''
       this.task.detail = ''
-      this.task.date = new Date().toISOString().substr(0, 10)
+      this.task.date = [new Date().toISOString().substr(0, 10)]
       this.task.time = ''
       this.taskDialog = false
     }
