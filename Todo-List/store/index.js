@@ -184,7 +184,8 @@ export const getters = {
   },
   // タスクの完了率
   progress(state, getters) {
-    return (getters.completedTodos / state.todos.length) * 100
+    let completed = (getters.completedTodos / state.todos.length) * 100
+    return completed.toFixed()
   },
   // 未完了タスクのカウント
   remainingTodos(state, getters) {
