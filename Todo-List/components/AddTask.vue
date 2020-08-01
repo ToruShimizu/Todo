@@ -27,7 +27,7 @@
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field
-                        v-model="task.date"
+                        v-model="dateRangeText"
                         label="Picker in dialog"
                         prepend-icon="event"
                         readonly
@@ -35,7 +35,7 @@
                         v-on="on"
                       ></v-text-field>
                     </template>
-                    <v-date-picker v-model="task.date" scrollable>
+                    <v-date-picker v-model="task.date" scrollable range>
                       <v-spacer></v-spacer>
                       <v-btn text color="primary" @click="modal = false">Cancel</v-btn>
                       <v-btn text color="primary" @click="$refs.dialog.save(task.date)">OK</v-btn>
@@ -115,7 +115,7 @@ export default {
       task: {
         title: '',
         detail: '',
-        date: new Date().toISOString().substr(0, 10),
+        date: [new Date().toISOString().substr(0, 10)],
         time: null,
         done: false,
       },
@@ -129,7 +129,12 @@ export default {
       menu2: false,
     }
   },
-
+  computed: {
+    dateRangeText () {
+      const date = this.task.date
+      return Object.values(date).join('~')
+      },
+    },
   methods: {
     addTask() {
       if (!this.task.title) {
@@ -139,14 +144,14 @@ export default {
       this.$store.dispatch('addTask', { task: this.task })
       this.task.title = ''
       this.task.detail = ''
-      this.task.date = new Date().toISOString().substr(0, 10)
+      this.task.date = [new Date().toISOString().substr(0, 10)]
       this.task.time = ''
       this.taskDialog = false
     },
     closeTaskDialog () {
       this.task.title = ''
       this.task.detail = ''
-      this.task.date = new Date().toISOString().substr(0, 10)
+      this.task.date = [new Date().toISOString().substr(0, 10)]
       this.task.time = ''
       this.taskDialog = false
     }
