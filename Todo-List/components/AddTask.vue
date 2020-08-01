@@ -27,7 +27,7 @@
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field
-                        v-model="task.date"
+                        v-model="dateRangeText"
                         label="Picker in dialog"
                         prepend-icon="event"
                         readonly
@@ -129,7 +129,12 @@ export default {
       menu2: false,
     }
   },
-
+  computed: {
+    dateRangeText () {
+      const date = this.task.date
+      return Object.values(date).join('~')
+      },
+    },
   methods: {
     addTask() {
       if (!this.task.title) {
