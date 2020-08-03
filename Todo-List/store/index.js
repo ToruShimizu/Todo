@@ -11,6 +11,13 @@ const taskRef = db.collection('todos').doc('task')
 
 export const state = () => ({
   todos: [],
+  task: {
+    title: '',
+    detail: '',
+    date: [new Date().toISOString().substr(0, 10)],
+    time: null,
+    done: false,
+  },
 
   login_user: null,
 })
