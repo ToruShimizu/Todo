@@ -18,7 +18,6 @@
     <v-divider class="mt-4" />
 
     <v-card v-if="todos.length > 0">
-      <v-list>
         <!-- 完了、未完了のタブ切り替え -->
         <v-tabs>
           <v-tab @click="taskFilter = 'all'">すべて:{{ todos.length }}</v-tab>
@@ -43,11 +42,10 @@
         </v-tabs>
                   <v-divider  />
 
-        <v-slide-y-transition class="py-0" group tag="v-list">
-          <template v-for="(todo, i) in todosFiltered">
-            <v-divider v-if="i !== 0" :key="`${i}-divider`" />
+            <v-divider  />
 
-            <v-list-item :key="`${i}-${todo.title}`">
+      <v-list>
+            <v-list-item v-for="todo in todosFiltered" :key="todo.id">
               <!-- 完了、未完了切り替えチェックボックス -->
               <v-btn icon>
                 <v-icon
@@ -167,8 +165,6 @@
                 <v-icon @click="removeTask(todo)">mdi-delete-outline</v-icon>
               </v-btn>
             </v-list-item>
-          </template>
-        </v-slide-y-transition>
       </v-list>
     </v-card>
   </v-container>
