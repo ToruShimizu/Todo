@@ -162,7 +162,7 @@
 
               <!-- 削除ボタン -->
               <v-btn icon>
-                <v-icon @click="removeTask(todo)">mdi-delete-outline</v-icon>
+                <v-icon @click="removeTask(todo.id)">mdi-delete-outline</v-icon>
               </v-btn>
             </v-list-item>
       </v-list>
@@ -233,10 +233,17 @@ export default {
   },
 
   methods: {
-    removeTask(todo) {
-      if (confirm(todo.title + "を削除しますか？"))
-        this.$store.dispatch("removeTask", todo);
-    },
+     removeTask(id) {
+      if (!confirm('Are you sure?')) return
+
+      this.$store.dispatch('removeTask', { id })
+      .then(() => {
+        setTimeout(() => {
+          this.$store.dispatch('fetchTodos')
+        }, 1000)
+      })
+  },
+
     doneTask(todo) {
       this.$store.dispatch("doneTask", todo);
     },
@@ -255,8 +262,8 @@ export default {
       todo.time = this.editTime
       this.detailTask = false
     }
-    // ...mapActions(['doneTask'])
   }
+    // ...mapActions(['doneTask'])
 };
 </script>
 
