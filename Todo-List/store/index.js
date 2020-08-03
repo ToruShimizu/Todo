@@ -1,6 +1,8 @@
 import firebase from '~/plugins/firebase'
 import { auth } from '~/plugins/firebase'
 import { db } from '~/plugins/firebase'
+import { v4 as uuidv4 } from 'uuid';
+
 export const strict = false
 const todosRef = db.collection('todos')
 const taskRef = db.collection('todos').doc('task')
@@ -113,6 +115,7 @@ export const actions = {
   // タスク追加
   async addTask({ commit }, todo) {
     const task = {
+      id: uuidv4(),
       title: todo.task.title,
       detail: todo.task.detail,
       date: todo.task.date,
@@ -121,8 +124,8 @@ export const actions = {
       created: firebase.firestore.FieldValue.serverTimestamp()
     }
     try {
-      await taskRef
-      .set(task)
+      await todosRef
+      .add(task)
     }
     catch(error) {
         console.log('Error writing document: ', error)
@@ -150,8 +153,6 @@ export const actions = {
   },
   async updateTask({ commit }, todo) {
     try {
-
-
       // Set the 'capital' field of the city 'DC'
       return taskRef.update({
         task:todo.editTitle,
@@ -190,5 +191,5 @@ export const getters = {
   // 未完了タスクのカウント
   remainingTodos(state, getters) {
     return state.todos.length - getters.completedTodos
-  }
+  },
 }
