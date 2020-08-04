@@ -40,8 +40,11 @@ export const mutations = {
     state.todos.push(todos)
   },
   // タスク追加
-  addTask(state, { todo }) {
-    state.todos.push(todo.task)
+  // addTask(state, { todo }) {
+  //   state.todos.push(todo.task)
+  // },
+  addTask(state, task) {
+    state.task = task
   },
   // タスク削除
   removeTask(state, { todo }) {
@@ -139,17 +142,38 @@ export const actions = {
       }
     commit('addTask', { todo })
   },
+  fetchTask({ commit }, payload) {
+    return new Promise((resolve, reject) => {
+      todosRef.where('id', '==', payload.id).get()
+      .then(res => {
+        res.forEach((doc) => {
+          commit('addUser', doc.data())
+          resolve(true)
+        })
+      })
+      .catch(error => {
+        console.error('An error occurred in fetchTodos(): ', error)
+        reject(error)
+      })
+    })
+  },
   // タスク削除
-  removeTask({ commit }, todo) {
-      taskRef
-      .delete()
-      .then(function() {
-        console.log('Document successfully deleted!')
+  removeTask({ commit }, payload) {
+    return new Promise((resolve, reject) => {
+      todosRef.where('id', '==', payload.id).get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          todosRef.doc(doc.id).delete()
+          .then(ref => {
+            resolve(true)
+          })
+          .catch(error => {
+            console.error('An error occurred in removeTask(): ', error)
+            reject(error)
+          })
+        })
       })
-      .catch(function(error) {
-        console.error('Error removing document: ', error)
-      })
-    commit('removeTask', { todo })
+    })
   },
   // 完了、未完了切り替え
   doneTask({ commit }, todo) {
@@ -174,7 +198,8 @@ export const actions = {
         console.error('Error updating document: ', error)
       }
     commit('updateTask', todo)
-  }
+  },
+
 }
 
 export const getters = {
@@ -199,4 +224,7 @@ export const getters = {
   remainingTodos(state, getters) {
     return state.todos.length - getters.completedTodos
   },
+  getTask(state) {
+    return state.task
+  }
 }
