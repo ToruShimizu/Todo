@@ -29,7 +29,8 @@
                       <v-text-field
                         v-model="dateRangeText"
                         label="Picker in dialog"
-                        prepend-icon="event"
+                                                          prepend-inner-icon="mdi-calendar-today"
+
                         readonly
                         v-bind="attrs"
                         v-on="on"
@@ -147,6 +148,7 @@ export default {
       this.task.date = [new Date().toISOString().substr(0, 10)]
       this.task.time = ''
       this.taskDialog = false
+
     },
     closeTaskDialog () {
       this.task.title = ''
