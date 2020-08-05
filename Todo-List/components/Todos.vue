@@ -61,6 +61,9 @@
                 >{{ todo.title }}</v-list-item-title>
                 <!-- 編集用のテキストエリア -->
               </v-list-item-content>
+                 <nuxt-link :to="{ name: 'todos-edit-id', params: { id: todo.id } }">
+          Edit
+        </nuxt-link>
               <!-- 削除ボタン -->
               <v-btn icon>
                 <v-icon @click="removeTask(todo.id)">mdi-delete-outline</v-icon>
