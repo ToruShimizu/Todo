@@ -147,7 +147,7 @@ export const actions = {
       todosRef.where('id', '==', payload.id).get()
       .then(res => {
         res.forEach((doc) => {
-          commit('addUser', doc.data())
+          commit('addTask', doc.data())
           resolve(true)
         })
       })
