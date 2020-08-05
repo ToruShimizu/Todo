@@ -99,6 +99,13 @@ export default {
   created() {
     const id = this.$route.params.id
     this.$store.dispatch('fetchTask', { id })
-  }
+  },
+  data() {
+    return {
+      detailTask: true,
+      selectDate2: false,
+      selectTime2: false
+    }
+  },
 }
 </script>
