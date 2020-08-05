@@ -29,7 +29,7 @@
                       <v-text-field
                         v-model="dateRangeText"
                         label="Picker in dialog"
-                                                          prepend-inner-icon="mdi-calendar-today"
+                        prepend-inner-icon="mdi-calendar-today"
 
                         readonly
                         v-bind="attrs"
