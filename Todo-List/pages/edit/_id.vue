@@ -114,23 +114,22 @@ export default {
       selectTime2: false
     }
   },
+
     methods: {
-    editTask(e) {
-      const task = {
+   editTask(e) {
+     const task = {
         id: this.$store.getters.getTask.id,
         title:  e.target.title.value,
         detail: e.target.detail.value,
         date: e.target.date.value,
         time: e.target.time.value
-        },
-
+        }
       this.$store.dispatch('editTask', { task })
       .then(() => {
         setTimeout(() => {
           this.$router.push('/')
         }, 1000)
       })
-
     }
   }
 }
