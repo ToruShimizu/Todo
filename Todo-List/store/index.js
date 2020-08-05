@@ -197,7 +197,7 @@ export const actions = {
             updated_at: firebase.firestore.FieldValue.serverTimestamp()
           }
 
-          todossRef.doc(doc.id).update(task)
+          todosRef.doc(doc.id).update(task)
           .then(ref => {
             resolve(true)
           })
