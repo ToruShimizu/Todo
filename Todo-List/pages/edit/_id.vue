@@ -12,16 +12,16 @@
                             <!-- 日付変更エリア -->
                             <v-menu
                               ref="menu"
-                              v-model="selectDate"
+                              :value="$store.getters.getTask.date"
                               :close-on-content-click="false"
-                              :return-value.sync="date"
+                              :return-value.sync="$store.getters.getTask.date"
                               transition="scale-transition"
                               offset-y
                               min-width="290px"
                             >
                               <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
-                                  v-model="editDate"
+                                  :value="$store.getters.getTask.date"
                                   label="日付を変更する"
                                   prepend-inner-icon="mdi-calendar-today"
                                   readonly
@@ -32,7 +32,7 @@
                               <v-date-picker v-model="editDate" no-title scrollable>
                                 <v-spacer></v-spacer>
                                 <v-btn text color="primary" @click="selectDate = false">Cancel</v-btn>
-                                <v-btn text color="primary" @click="$refs.menu.save(editDate)">OK</v-btn>
+                                <v-btn text color="primary" @click="$refs.menu.save($store.getters.getTask.date)">OK</v-btn>
                               </v-date-picker>
                             </v-menu>
                           </v-col>
@@ -40,7 +40,7 @@
                             <!-- 時間変更エリア -->
                             <v-menu
                               ref="menu"
-                              v-model="selectTime"
+                              :value="$store.getters.getTask.time"
                               :close-on-content-click="false"
                               :nudge-right="40"
                               :return-value.sync="time"
@@ -51,7 +51,7 @@
                             >
                               <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
-                                  v-model="editTime"
+                                  :value="$store.getters.getTask.time"
                                   label="時間を変更する"
                                   prepend-inner-icon="mdi-clock-time-four-outline"
                                   readonly
@@ -61,16 +61,16 @@
                               </template>
                               <v-time-picker
                                 v-if="selectTime"
-                                v-model="editTime"
+                                :value="$store.getters.getTask"
                                 full-width
-                                @click="$refs.menu.save(editTime)"
+                                @click="$refs.menu.save($store.getters.getTask)"
                               ></v-time-picker>
                             </v-menu>
                           </v-col>
                           <v-col cols="12" sm="12" md="12">
                             <!-- タスク変更エリア -->
                             <v-text-field
-                              v-model="editTitle"
+                              :value="$store.getters.getTask.title"
                               label="タスクを変更する"
                               prepend-inner-icon="mdi-pencil-outline"
                               clearable
@@ -79,7 +79,7 @@
                           <v-col cols="12">
                             <!-- 詳細変更エリア -->
                             <v-text-field
-                              v-model="editDetail"
+                              :value="$store.getters.getTask.detail"
                               label="詳細を変更する"
                               prepend-inner-icon="mdi-briefcase-outline"
                               required
