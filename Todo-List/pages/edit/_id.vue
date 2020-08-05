@@ -94,7 +94,7 @@
                         <nuxt-link to="/">
                         <v-btn color="blue darken-1" text >Close</v-btn>
                         </nuxt-link>
-                        <v-btn color="blue darken-1" text >Save</v-btn>
+                        <v-btn color="blue darken-1" text @click="editTask">Save</v-btn>
                       </v-card-actions>
                   </v-card>
                 </v-dialog>
