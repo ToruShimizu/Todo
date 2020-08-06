@@ -12,6 +12,7 @@ const taskRef = db.collection('todos').doc('task')
 export const state = () => ({
   todos: [],
   task: {
+    id:'',
     title: '',
     detail: '',
     date: [new Date().toISOString().substr(0, 10)],
@@ -181,6 +182,32 @@ export const actions = {
       done: !todo.done
     })
     commit('doneTask', { todo })
+  },
+  editTask({ commit }, payload) {
+    return new Promise((resolve, reject) => {
+      todosRef.where('id', '==', payload.task.id).get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          const task = {
+            id: uuidv4(),
+            title: payload.task.title,
+            // detail: payload.task.detail,
+            // date: payload.task.date,
+            // time: payload.task.time,
+            updated_at: firebase.firestore.FieldValue.serverTimestamp()
+          }
+
+          todosRef.doc(doc.id).update(task)
+          .then(ref => {
+            resolve(true)
+          })
+          .catch(error => {
+            console.error('An error occurred in editUser(): ', error)
+            resolve(error)
+          })
+        })
+      })
+    })
   },
   async updateTask({ commit }, todo) {
     try {
