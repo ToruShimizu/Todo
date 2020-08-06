@@ -14,7 +14,7 @@
                 <v-dialog
                   ref="dialog"
                   v-model="modal"
-                  :value="$store.getters.getTask.time"
+                  :value="$store.getters.getTask.date"
                   persistent
                   width="290px"
                 >
@@ -34,7 +34,7 @@
                     <v-btn
                       text
                       color="primary"
-                      @click="$refs.dialog.save($store.getters.getTask.time)"
+                      @click="$refs.dialog.save($store.getters.getTask.date)"
                     >OK</v-btn>
                   </v-date-picker>
                 </v-dialog>
