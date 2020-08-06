@@ -1,12 +1,14 @@
 <template>
  <v-row justify="center">
                 <v-dialog v-model="detailTask" persistent max-width="600px">
+¥
                   <v-card>
                     <v-card-title>
                       <span class="headline">detailTask</span>
                     </v-card-title>
                     <v-card-text>
                       <v-container>
+
                         <v-row>
                           <v-col cols="12" sm="6" md="6">
                             <!-- 日付変更エリア -->
@@ -70,6 +72,7 @@
                           <v-col cols="12" sm="12" md="12">
                             <!-- タスク変更エリア -->
                             <v-text-field
+                            
                               :value="$store.getters.getTask.title"
                               label="タスクを変更する"
                               prepend-inner-icon="mdi-pencil-outline"
@@ -97,6 +100,7 @@
                         <v-btn color="blue darken-1" text @click="editTask">Save</v-btn>
                       </v-card-actions>
                   </v-card>
+
                 </v-dialog>
               </v-row>
 </template>
@@ -120,9 +124,9 @@ export default {
      const task = {
         id: this.$store.getters.getTask.id,
         title:  e.target.title.value,
-        detail: e.target.detail.value,
-        date: e.target.date.value,
-        time: e.target.time.value
+        // detail: e.target.detail.value,
+        // date: e.target.date.value,
+        // time: e.target.time.value
         }
       this.$store.dispatch('editTask', { task })
       .then(() => {

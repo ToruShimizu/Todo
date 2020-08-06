@@ -191,9 +191,9 @@ export const actions = {
           const task = {
             id: uuidv4(),
             title: payload.task.title,
-            detail: payload.task.detail,
-            date: payload.task.date,
-            time: payload.task.time,
+            // detail: payload.task.detail,
+            // date: payload.task.date,
+            // time: payload.task.time,
             updated_at: firebase.firestore.FieldValue.serverTimestamp()
           }
 
