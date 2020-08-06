@@ -62,7 +62,7 @@
                                 ></v-text-field>
                               </template>
                               <v-time-picker
-                                v-if="selectTime"
+                                v-if="selectTime2"
                                 :value="$store.getters.getTask"
                                 full-width
                                 @click="$refs.menu.save($store.getters.getTask)"
@@ -72,7 +72,7 @@
                           <v-col cols="12" sm="12" md="12">
                             <!-- タスク変更エリア -->
                             <v-text-field
-                            
+
                               :value="$store.getters.getTask.title"
                               label="タスクを変更する"
                               prepend-inner-icon="mdi-pencil-outline"
