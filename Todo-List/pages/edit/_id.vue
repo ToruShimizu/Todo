@@ -12,11 +12,12 @@
               <v-col cols="12" sm="6" md="6">
                 <!-- 日付変更エリア -->
                 <v-dialog
-                  ref="dialog"
-                  v-model="modal"
-                  :value="$store.getters.getTask.date"
-                  persistent
-                  width="290px"
+                ref="dialog"
+                v-model="modal"
+                :return-value.sync="$store.getters.getTask.date"
+
+                persistent
+                width="290px"
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
@@ -28,7 +29,7 @@
                       v-on="on"
                     ></v-text-field>
                   </template>
-                  <v-date-picker scrollable range>
+                  <v-date-picker :value="$store.getters.getTask.date" scrollable range>
                     <v-spacer></v-spacer>
                     <v-btn text color="primary" @click="modal = false">Cancel</v-btn>
                     <v-btn
@@ -113,6 +114,7 @@ export default {
   data() {
     return {
       detailTask: true,
+      modal: false,
       selectDate2: false,
       selectTime2: false,
     }
