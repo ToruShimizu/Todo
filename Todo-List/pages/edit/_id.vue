@@ -1,7 +1,6 @@
 <template>
   <v-row justify="center">
     <v-dialog v-model="detailTask" persistent max-width="600px">
-      ¥
       <v-card>
         <v-card-title>
           <span class="headline">detailTask</span>
@@ -15,7 +14,6 @@
                 ref="dialog"
                 v-model="modal"
                 :return-value.sync="$store.getters.getTask.date"
-
                 persistent
                 width="290px"
                 >
