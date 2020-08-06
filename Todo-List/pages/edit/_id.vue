@@ -45,7 +45,7 @@
                               :value="$store.getters.getTask.time"
                               :close-on-content-click="false"
                               :nudge-right="40"
-                              :return-value.sync="time"
+                              :return-value.sync="$store.getters.getTask.time"
                               transition="scale-transition"
                               offset-y
                               max-width="290px"
