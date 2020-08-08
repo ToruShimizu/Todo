@@ -15,7 +15,7 @@
           outlined
           style="border-color:#979797;"
           tile
-          @click="login"
+          @click="googleLogin"
         >
           <img
             class="button-logo-img mr-4"
@@ -50,7 +50,7 @@ export default {
     login() {
       this.$store.dispatch('login', { email: this.email, password: this.password})
   },
-    ...mapActions(['login']),
+    ...mapActions(['googleLogin']),
   },
 }
 

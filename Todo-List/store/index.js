@@ -95,7 +95,7 @@ export const actions = {
     commit('toggleSideMenu')
   },
   // ログイン
-  login() {
+  googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider()
     auth.signInWithPopup(provider).then(result => {
       alert('Hello, ' + result.user.displayName + '!')
