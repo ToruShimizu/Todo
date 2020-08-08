@@ -29,6 +29,7 @@
           outlined
           style="border-color:#979797;"
           tile
+          @click="login"
         >アカウントなしでログイン</v-btn>
       </v-card-text>
     </v-card>
@@ -39,8 +40,17 @@
 import { mapActions } from 'vuex'
 
 export default {
+  data() {
+    return {
+      email: 'test@example.com',
+      password: 'testUser'
+    }
+  },
     methods: {
-    ...mapActions(['login',]),
+    login() {
+      this.$store.dispatch('login', { email: this.email, password: this.password})
+  },
+    ...mapActions(['login']),
   },
 }
 

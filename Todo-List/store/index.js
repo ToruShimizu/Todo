@@ -106,6 +106,15 @@ export const actions = {
     alert('ログアウトしました')
     auth.signOut()
   },
+  login ({commit},payload) {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(payload.email, payload.password)
+      .then(result => {
+        // サインイン成功後にトップページに遷移する
+        alert('アカウントなしでログインします')
+      })
+  },
   // データを取り出す
   fetchTodos ({ commit }) {
     commit('initTodos')
