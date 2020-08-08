@@ -15,6 +15,7 @@
           outlined
           style="border-color:#979797;"
           tile
+          @click="login"
         >
           <img
             class="button-logo-img mr-4"
@@ -33,3 +34,14 @@
     </v-card>
   </v-app>
 </template>
+
+<script>
+import { mapActions } from 'vuex'
+
+export default {
+    methods: {
+    ...mapActions(['login',]),
+  },
+}
+
+</script>
