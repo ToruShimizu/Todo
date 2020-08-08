@@ -29,7 +29,7 @@
           outlined
           style="border-color:#979797;"
           tile
-        >アカウントなしででログイン</v-btn>
+        >アカウントなしでログイン</v-btn>
       </v-card-text>
     </v-card>
   </v-app>
