@@ -133,7 +133,7 @@ export const actions = {
     })
   },
   // タスク追加
-  async addTask({ commit }, todo) {
+  async addTask({ getters,commit }, todo) {
     const task = {
       id: uuidv4(),
       title: todo.task.title,
@@ -143,12 +143,14 @@ export const actions = {
       done: false,
       created: firebase.firestore.FieldValue.serverTimestamp()
     }
-    try {
-      await todosRef
-      .add(task)
-    }
-    catch(error) {
+    if(getters.uid){
+      try {
+        await db.collection(`user/${getters.uid}/todos`)
+        .add(task)
+      }
+      catch(error) {
         console.log('Error writing document: ', error)
+      }
       }
     commit('addTask', { todo })
   },
