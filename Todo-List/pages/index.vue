@@ -80,8 +80,11 @@ export default {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setLoginUser(user)
+        if(this.$router.currentRoute.name === 'signIn')
+        this.$router.push('/')
       } else {
         this.deleteLoginUser()
+        this.$router.push('signIn')
       }
     })
   },
