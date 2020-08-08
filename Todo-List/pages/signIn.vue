@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-card width="400px" class="mx-auto mt-5">
+    <v-card width="400px" class="mx-auto mt-5 text-center">
       <v-card-title>
         <h1>Todo</h1>
         <p>
@@ -15,7 +15,7 @@
           outlined
           style="border-color:#979797;"
           tile
-          @click="login"
+          @click="googleLogin"
         >
           <img
             class="button-logo-img mr-4"
@@ -29,7 +29,8 @@
           outlined
           style="border-color:#979797;"
           tile
-        >アカウントなしででログイン</v-btn>
+          @click="login"
+        >アカウントなしでログイン</v-btn>
       </v-card-text>
     </v-card>
   </v-app>
@@ -39,8 +40,17 @@
 import { mapActions } from 'vuex'
 
 export default {
+  data() {
+    return {
+      email: 'test@example.com',
+      password: 'testUser'
+    }
+  },
     methods: {
-    ...mapActions(['login',]),
+    login() {
+      this.$store.dispatch('login', { email: this.email, password: this.password})
+  },
+    ...mapActions(['googleLogin']),
   },
 }
 

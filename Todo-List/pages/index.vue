@@ -10,13 +10,14 @@
         <v-divider></v-divider>
         <v-list dense nav>
           <v-list-item v-if="$store.state.login_user">
-            <v-list-item-icon>
+            <v-list-item-icon v-if="photoURL">
               <v-avatar size="50">
-                <img v-if="photoURL" :src="photoURL" />
+                <img :src="photoURL" />
               </v-avatar>
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title class="title grey--text text--darken-2">{{userName}}</v-list-item-title>
+              <v-list-item-title class="title grey--text text--darken-2" v-if="!userName">テストユーザー</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item v-else>

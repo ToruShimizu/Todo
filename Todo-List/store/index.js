@@ -95,7 +95,7 @@ export const actions = {
     commit('toggleSideMenu')
   },
   // ログイン
-  login() {
+  googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider()
     auth.signInWithPopup(provider).then(result => {
       alert('Hello, ' + result.user.displayName + '!')
@@ -105,6 +105,15 @@ export const actions = {
   logout() {
     alert('ログアウトしました')
     auth.signOut()
+  },
+  login ({commit},payload) {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(payload.email, payload.password)
+      .then(result => {
+        // サインイン成功後にトップページに遷移する
+        alert('アカウントなしでログインします')
+      })
   },
   // データを取り出す
   fetchTodos ({ commit }) {
