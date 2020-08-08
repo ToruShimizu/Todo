@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-card width="400px" class="mx-auto mt-5">
+    <v-card width="400px" class="mx-auto mt-5 text-center">
       <v-card-title>
         <h1>Todo</h1>
         <p>
