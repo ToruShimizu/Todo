@@ -44,8 +44,9 @@ export const mutations = {
   // addTask(state, { todo }) {
   //   state.todos.push(todo.task)
   // },
-  addTask(state, task) {
-    state.task = task
+  addTask(state, {id,todo}) {
+    todo.id = id
+    state.todos.push(todo)
   },
   // タスク削除
   removeTask(state, { todo }) {
@@ -134,17 +135,17 @@ export const actions = {
   },
   // タスク追加
  addTask({ getters,commit }, todo) {
-    const task = {
-      title: todo.task.title,
-      detail: todo.task.detail,
-      date: todo.task.date,
-      time: todo.task.time,
-      done: false,
-      created: firebase.firestore.FieldValue.serverTimestamp()
-    }
+    // const task = {
+    //   title: todo.task.title,
+    //   detail: todo.task.detail,
+    //   date: todo.task.date,
+    //   time: todo.task.time,
+    //   done: false,
+    //   created: firebase.firestore.FieldValue.serverTimestamp()
+    // }
     if(getters.uid){
      db.collection(`user/${getters.uid}/todos`)
-        .add(task)
+        .add(todo)
         .then(doc => {
           commit('addTask', { id: doc.id,todo })
         })
