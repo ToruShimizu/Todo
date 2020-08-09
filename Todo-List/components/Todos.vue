@@ -95,7 +95,7 @@ export default {
       if (this.searchTask) {
         data.forEach((el) => {
           if (
-            el.task.toLowerCase().indexOf(this.searchTask.toLowerCase()) >= 0
+            el.task.title.toLowerCase().indexOf(this.searchTask.toLowerCase()) >= 0
           ) {
             arr.push(el)
           }
