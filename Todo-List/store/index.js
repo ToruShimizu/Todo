@@ -37,14 +37,8 @@ export const mutations = {
     state.todos = []
   },
   // 取り出したデータを格納
-  addTodos(state, todos) {
-    state.todos.push(todos)
-  },
   // タスク追加
-  // addTask(state, { todo }) {
-  //   state.todos.push(todo.task)
-  // },
-  addTask(state, {id,todo}) {
+  addTask(state, todo) {
     todo.id = id
     state.todos.push(todo)
   },
@@ -117,55 +111,46 @@ export const actions = {
       })
   },
   // データを取り出す
-  fetchTodos ({ getters,commit }) {
-    commit('initTodos')
-    return new Promise ((resolve, reject) => {
-      db.collection(`user/${getters.uid}/todos`).orderBy('created', 'desc').get()
-      .then(res => {
-        res.forEach((doc) => {
-          commit('addTodos', doc.data())
-          resolve(true)
-        })
-      })
-      .catch(error => {
-        console.error('An error occurred in fetchUsers(): ', error)
-        reject(error)
-      })
+  fetchTodos ({ getters, commit }) {
+    db.collection(`users/${getters.uid}/todos`).get().then(snapshot => {
+      snapshot.forEach(doc => commit('addTask', { id: doc.id, task:  doc.data() }))
     })
   },
   // タスク追加
  addTask({ getters,commit }, todo) {
-    // const task = {
-    //   title: todo.task.title,
-    //   detail: todo.task.detail,
-    //   date: todo.task.date,
-    //   time: todo.task.time,
-    //   done: false,
-    //   created: firebase.firestore.FieldValue.serverTimestamp()
-    // }
+    const task = {
+      title: todo.task.title,
+      detail: todo.task.detail,
+      date: todo.task.date,
+      time: todo.task.time,
+      done: false,
+      created: firebase.firestore.FieldValue.serverTimestamp()
+    }
+
     if(getters.uid){
-     db.collection(`user/${getters.uid}/todos`)
-        .add(todo)
+     db.collection(`users/${getters.uid}/todos`)
+        .add(task)
         .then(doc => {
           commit('addTask', { id: doc.id,todo })
+          console.log(doc.id)
         })
       }
   },
-  fetchTask({ getters,commit }, payload) {
-    return new Promise((resolve, reject) => {
-      db.collection(`user/${getters.uid}/todos`).where('id', '==', payload.id).get()
-      .then(res => {
-        res.forEach((doc) => {
-          commit('addTask', doc.data())
-          resolve(true)
-        })
-      })
-      .catch(error => {
-        console.error('An error occurred in fetchTodos(): ', error)
-        reject(error)
-      })
-    })
-  },
+  // fetchTask({ getters,commit }, payload) {
+  //   return new Promise((resolve, reject) => {
+  //     db.collection(`user/${getters.uid}/todos`).where('id', '==', payload.id).get()
+  //     .then(res => {
+  //       res.forEach((doc) => {
+  //         commit('addTask', doc.data())
+  //         resolve(true)
+  //       })
+  //     })
+  //     .catch(error => {
+  //       console.error('An error occurred in fetchTodos(): ', error)
+  //       reject(error)
+  //     })
+  //   })
+  // },
   // タスク削除
   removeTask({ getters,commit }, payload) {
     return new Promise((resolve, reject) => {
@@ -259,7 +244,7 @@ export const getters = {
   remainingTodos(state, getters) {
     return state.todos.length - getters.completedTodos
   },
-  getTask(state) {
-    return state.task
-  }
+  // getTask(state) {
+  //   return state.task
+  // }
 }
