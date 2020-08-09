@@ -38,7 +38,7 @@ export const mutations = {
   },
   // 取り出したデータを格納
   // タスク追加
-  addTask(state, todo) {
+  addTodos(state, todo) {
     state.todos.push(todo)
   },
   // タスク削除
@@ -112,7 +112,7 @@ export const actions = {
   // データを取り出す
   fetchTodos ({ getters, commit }) {
     db.collection(`users/${getters.uid}/todos`).get().then(snapshot => {
-      snapshot.forEach(doc => commit('addTask', { id: doc.id, task:  doc.data() }))
+      snapshot.forEach(doc => commit('addTodos', { id: doc.id, task:  doc.data() }))
     })
   },
   // タスク追加
