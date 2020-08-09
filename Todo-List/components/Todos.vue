@@ -84,9 +84,6 @@ export default {
       searchTask: '',
     }
   },
-  created() {
-    this.$store.dispatch('fetchTodos')
-  },
   computed: {
     todosFiltered() {
       // タスク検索
