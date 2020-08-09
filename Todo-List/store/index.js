@@ -19,7 +19,7 @@ export const state = () => ({
     time: null,
     done: false,
   },
-
+  searchTask: '',
   login_user: null,
 })
 
