@@ -39,7 +39,6 @@ export const mutations = {
   // 取り出したデータを格納
   // タスク追加
   addTask(state, todo) {
-    todo.id = id
     state.todos.push(todo)
   },
   // タスク削除
