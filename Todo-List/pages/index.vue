@@ -81,6 +81,7 @@ export default {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setLoginUser(user)
+        this.fetchTodos()
         if(this.$router.currentRoute.name === 'signIn')
         this.$router.push('/')
       } else {
@@ -94,7 +95,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['login', 'setLoginUser', 'logout', 'deleteLoginUser']),
+    ...mapActions(['login', 'setLoginUser', 'logout', 'deleteLoginUser','fetchTodos']),
   },
 }
 </script>
