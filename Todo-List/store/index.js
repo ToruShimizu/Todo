@@ -135,21 +135,21 @@ export const actions = {
         })
       }
   },
-  // fetchTask({ getters,commit }, payload) {
-  //   return new Promise((resolve, reject) => {
-  //     db.collection(`user/${getters.uid}/todos`).where('id', '==', payload.id).get()
-  //     .then(res => {
-  //       res.forEach((doc) => {
-  //         commit('addTask', doc.data())
-  //         resolve(true)
-  //       })
-  //     })
-  //     .catch(error => {
-  //       console.error('An error occurred in fetchTodos(): ', error)
-  //       reject(error)
-  //     })
-  //   })
-  // },
+  fetchTask({ getters,commit }, payload) {
+    return new Promise((resolve, reject) => {
+      db.collection(`user/${getters.uid}/todos`).where('id', '==', payload.id).get()
+      .then(res => {
+        res.forEach((doc) => {
+          commit('addTask', doc.data())
+          resolve(true)
+        })
+      })
+      .catch(error => {
+        console.error('An error occurred in fetchTodos(): ', error)
+        reject(error)
+      })
+    })
+  },
   // タスク削除
   removeTask({ getters,commit }, payload) {
     return new Promise((resolve, reject) => {
