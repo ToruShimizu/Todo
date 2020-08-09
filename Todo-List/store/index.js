@@ -248,5 +248,8 @@ export const getters = {
   },
   getTask(state) {
     return state.task
+  },
+  getSearchTask(state) {
+    return state.searchTask
   }
 }
