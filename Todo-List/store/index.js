@@ -41,6 +41,9 @@ export const mutations = {
   addTodos(state, todo) {
     state.todos.push(todo)
   },
+  addTask(state, task) {
+    state.task = task
+  },
   // タスク削除
   removeTask(state, { todo }) {
     state.todos.splice(state.todos.indexOf(todo), 1)
@@ -243,7 +246,7 @@ export const getters = {
   remainingTodos(state, getters) {
     return state.todos.length - getters.completedTodos
   },
-  // getTask(state) {
-  //   return state.task
-  // }
+  getTask(state) {
+    return state.task
+  }
 }
