@@ -154,9 +154,9 @@ export const actions = {
       }
     commit('addTask', { todo })
   },
-  fetchTask({ commit }, payload) {
+  fetchTask({ getters,commit }, payload) {
     return new Promise((resolve, reject) => {
-      todosRef.where('id', '==', payload.id).get()
+      db.collection(`user/${getters.uid}/todos`).where('id', '==', payload.id).get()
       .then(res => {
         res.forEach((doc) => {
           commit('addTask', doc.data())
@@ -170,12 +170,12 @@ export const actions = {
     })
   },
   // タスク削除
-  removeTask({ commit }, payload) {
+  removeTask({ getters,commit }, payload) {
     return new Promise((resolve, reject) => {
-      todosRef.where('id', '==', payload.id).get()
+      db.collection(`user/${getters.uid}/todos`).where('id', '==', payload.id).get()
       .then(snapshot => {
         snapshot.forEach(doc => {
-          todosRef.doc(doc.id).delete()
+          db.collection(`user/${getters.uid}/todos`).doc(doc.id).delete()
           .then(ref => {
             resolve(true)
           })
