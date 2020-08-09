@@ -116,10 +116,10 @@ export const actions = {
       })
   },
   // データを取り出す
-  fetchTodos ({ commit }) {
+  fetchTodos ({ getters,commit }) {
     commit('initTodos')
     return new Promise ((resolve, reject) => {
-      todosRef.orderBy('created', 'desc').get()
+      db.collection(`user/${getters.uid}/todos`).orderBy('created', 'desc').get()
       .then(res => {
         res.forEach((doc) => {
           commit('addTodos', doc.data())
