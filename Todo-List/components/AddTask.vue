@@ -142,12 +142,16 @@ export default {
         this.$refs.form.validate()
         return
       }
-      this.$store.dispatch('addTask', { task: this.task })
+        this.$store.dispatch('addTask',{task:this.task}).then(() => {
+        setTimeout(() => {
+          this.$store.dispatch('fetchTodos')
+        }, 1000)
       this.task.title = ''
       this.task.detail = ''
       this.task.date = [new Date().toISOString().substr(0, 10)]
       this.task.time = ''
       this.taskDialog = false
+      })
 
     },
     closeTaskDialog () {
