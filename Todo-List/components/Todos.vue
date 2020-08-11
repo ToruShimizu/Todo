@@ -80,9 +80,7 @@ export default {
   components: {
     AddTask,
   },
-  created() {
-    this.todos = this.$store.state.todos
-  },
+ 
   data() {
     return {
       taskFilter: 'all',
