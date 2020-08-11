@@ -38,37 +38,6 @@
                   </v-date-picker>
                 </v-dialog>
               </v-col>
-              <v-col cols="12" sm="6" md="6">
-                <!-- 時間変更エリア -->
-                <v-menu
-                  ref="menu"
-                  :value="$store.getters.getTask.time"
-                  :close-on-content-click="false"
-                  :nudge-right="40"
-                  :return-value.sync="$store.getters.getTask.time"
-                  transition="scale-transition"
-                  offset-y
-                  max-width="290px"
-                  min-width="290px"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                      :value="$store.getters.getTask.time"
-                      label="時間を変更する"
-                      prepend-inner-icon="mdi-clock-time-four-outline"
-                      readonly
-                      v-bind="attrs"
-                      v-on="on"
-                    ></v-text-field>
-                  </template>
-                  <v-time-picker
-                    v-if="selectTime2"
-                    :value="$store.getters.getTask"
-                    full-width
-                    @click="$refs.menu.save($store.getters.getTask)"
-                  ></v-time-picker>
-                </v-menu>
-              </v-col>
               <v-col cols="12" sm="12" md="12">
                 <!-- タスク変更エリア -->
                 <v-text-field
@@ -114,7 +83,6 @@ export default {
       detailTask: true,
       modal: false,
       selectDate2: false,
-      selectTime2: false,
     }
   },
 
@@ -125,7 +93,6 @@ export default {
         title: e.target.title.value,
         // detail: e.target.detail.value,
         // date: e.target.date.value,
-        // time: e.target.time.value
       }
       this.$store.dispatch('editTask', { task }).then(() => {
         setTimeout(() => {

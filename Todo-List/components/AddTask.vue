@@ -43,37 +43,7 @@
                     </v-date-picker>
                   </v-dialog>
                 </v-col>
-                <v-col cols="12" sm="6" md="6">
-                  <!-- 時間入力エリア -->
-                  <v-menu
-                    ref="menu"
-                    v-model="menu2"
-                    :close-on-content-click="false"
-                    :nudge-right="40"
-                    :return-value.sync="task.time"
-                    transition="scale-transition"
-                    offset-y
-                    max-width="290px"
-                    min-width="290px"
-                  >
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-text-field
-                        v-model="task.time"
-                        label="Picker in menu"
-                        prepend-inner-icon="mdi-clock-time-four-outline"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
-                      ></v-text-field>
-                    </template>
-                    <v-time-picker
-                      v-if="menu2"
-                      v-model="task.time"
-                      full-width
-                      @click:minute="$refs.menu.save(task.time)"
-                    ></v-time-picker>
-                  </v-menu>
-                </v-col>
+
                 <v-col cols="12" sm="12" md="12">
                   <!-- タスク入力エリア -->
                   <v-text-field
@@ -117,7 +87,6 @@ export default {
         title: '',
         detail: '',
         date: [new Date().toISOString().substr(0, 10)],
-        time: null,
         done: false,
       },
       validate: true,
@@ -127,7 +96,6 @@ export default {
       modal: false,
       taskDialog: false,
       menu: false,
-      menu2: false,
     }
   },
   computed: {
@@ -149,7 +117,6 @@ export default {
       this.task.title = ''
       this.task.detail = ''
       this.task.date = [new Date().toISOString().substr(0, 10)]
-      this.task.time = ''
       this.taskDialog = false
       })
 
@@ -158,7 +125,6 @@ export default {
       this.task.title = ''
       this.task.detail = ''
       this.task.date = [new Date().toISOString().substr(0, 10)]
-      this.task.time = ''
       this.taskDialog = false
     }
   }

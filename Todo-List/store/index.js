@@ -12,7 +12,6 @@ export const state = () => ({
     title: '',
     detail: '',
     date: [new Date().toISOString().substr(0, 10)],
-    time: null,
     done: false,
   },
   searchTask: '',
@@ -95,7 +94,6 @@ export const actions = {
       title: todo.task.title,
       detail: todo.task.detail,
       date: todo.task.date,
-      time: todo.task.time,
       done: false,
       created: firebase.firestore.FieldValue.serverTimestamp()
     }
@@ -149,7 +147,6 @@ export const actions = {
             title: payload.task.title,
             // detail: payload.task.detail,
             // date: payload.task.date,
-            // time: payload.task.time,
             updated_at: firebase.firestore.FieldValue.serverTimestamp()
           }
 
