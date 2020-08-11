@@ -16,8 +16,19 @@
           <v-card-text>
             <v-container>
               <v-row>
+                     <!-- タスク入力エリア -->
                 <v-col cols="12" sm="6" md="6">
+                  <v-text-field
+                    v-model="task.title"
+                    label="タスクを追加する"
+                    prepend-inner-icon="mdi-pencil-outline"
+                    @keydown.enter="addTask"
+                    :rules="titleRules"
+                    clearable
+                  />
+                </v-col>
                   <!-- 日付入力エリア -->
+                <v-col cols="12" sm="6" md="6">
                   <v-dialog
                     ref="dialog"
                     v-model="modal"
@@ -30,7 +41,6 @@
                         v-model="dateRangeText"
                         label="Picker in dialog"
                         prepend-inner-icon="mdi-calendar-today"
-
                         readonly
                         v-bind="attrs"
                         v-on="on"
@@ -43,20 +53,8 @@
                     </v-date-picker>
                   </v-dialog>
                 </v-col>
-
-                  <!-- タスク入力エリア -->
-                <v-col cols="12" sm="6" md="6">
-                  <v-text-field
-                    v-model="task.title"
-                    label="タスクを追加する"
-                    prepend-inner-icon="mdi-pencil-outline"
-                    @keydown.enter="addTask"
-                    :rules="titleRules"
-                    clearable
-                  />
-                </v-col>
-                <v-col cols="12">
                   <!-- 詳細入力エリア -->
+                <v-col cols="12">
                   <v-text-field
                     v-model="task.detail"
                     label="詳細を追加する"
