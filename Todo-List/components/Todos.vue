@@ -55,10 +55,13 @@
             <v-list-item-title
               :class="(todo.done && 'grey--text') || 'primary--text'"
               class="ml-2"
-            >{{ todo.task.title }}</v-list-item-title>
+            >
+              <nuxt-link :to="{ name: 'edit-id', params: { id: todo.id } }">
+              {{ todo.task.title }}
+              </nuxt-link>
+            </v-list-item-title>
             <!-- 編集用のテキストエリア -->
           </v-list-item-content>
-          <nuxt-link :to="{ name: 'edit-id', params: { id: todo.id } }">Edit</nuxt-link>
           <!-- 削除ボタン -->
           <v-btn icon>
             <v-icon @click="removeTask(todo.id)">mdi-delete-outline</v-icon>
