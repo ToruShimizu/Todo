@@ -4,10 +4,6 @@ import { db } from '~/plugins/firebase'
 import { v4 as uuidv4 } from 'uuid';
 
 export const strict = false
-const todosRef = db.collection('todos')
-const taskRef = db.collection('todos').doc('task')
-
-
 
 export const state = () => ({
   todos: [],
@@ -48,12 +44,6 @@ export const mutations = {
   removeTask(state, { todo }) {
     state.todos.splice(state.todos.indexOf(todo), 1)
   },
-  updateTask(state, todo) {
-    todo.title = todo.editTitle
-    todo.detail = todo.editDetail
-    todo.date = todo.editDate
-    todo.time = todo.editTime
-  },
   // 完了、未完了切り替え
   doneTask(state, { todo }) {
     todo.done = !todo.done
@@ -61,25 +51,7 @@ export const mutations = {
 }
 
 export const actions = {
-  addUser({commit}, payload) {
-    const usersRef = db.collection('users')
 
-    const user = {
-      userName: payload.userName,
-      password: payload.password,
-      created_at: firebase.firestore.FieldValue.serverTimestamp(),
-      updated_at: firebase.firestore.FieldValue.serverTimestamp()
-    }
-    return new Promise((resolve,reject) => {
-      usersRef.add(user).then(ref => {
-        resolve(true)
-      })
-      .catch(error => {
-        console.error('An error occurred in addUser(): ', error)
-        reject(error)
-      })
-    })
-  },
   // ログインユーザー情報の取得
   setLoginUser({ commit }, user) {
     commit('setLoginUser', user)
@@ -87,9 +59,6 @@ export const actions = {
   // ログインユーザー情報の削除
   deleteLoginUser({ commit }) {
     commit('deleteLoginUser')
-  },
-  toggleSideMenu({ commit }) {
-    commit('toggleSideMenu')
   },
   // ログイン
   googleLogin() {
@@ -204,24 +173,6 @@ export const actions = {
       })
     })
   },
-  async updateTask({ commit }, todo) {
-    try {
-      // Set the 'capital' field of the city 'DC'
-      return taskRef.update({
-        task:todo.editTitle,
-        detail:todo.editDetail,
-        date:todo.editDate,
-        time:todo.editTime,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-      })
-    }
-      catch(error) {
-        // The document probably doesn't exist.
-        console.error('Error updating document: ', error)
-      }
-    commit('updateTask', todo)
-  },
-
 }
 
 export const getters = {
