@@ -8,8 +8,17 @@
         <v-card-text>
           <v-container>
             <v-row>
+               <!-- タスク変更エリア -->
               <v-col cols="12" sm="6" md="6">
+                <v-text-field
+                  :value="$store.getters.getTask.title"
+                  label="タスクを変更する"
+                  prepend-inner-icon="mdi-pencil-outline"
+                  clearable
+                />
+              </v-col>
                 <!-- 日付変更エリア -->
+              <v-col cols="12" sm="6" md="6">
                 <v-dialog
                 ref="dialog"
                 v-model="modal"
@@ -38,17 +47,9 @@
                   </v-date-picker>
                 </v-dialog>
               </v-col>
-                <!-- タスク変更エリア -->
-              <v-col cols="12" sm="6" md="6">
-                <v-text-field
-                  :value="$store.getters.getTask.title"
-                  label="タスクを変更する"
-                  prepend-inner-icon="mdi-pencil-outline"
-                  clearable
-                />
-              </v-col>
-              <v-col cols="12">
+
                 <!-- 詳細変更エリア -->
+              <v-col cols="12">
                 <v-text-field
                   :value="$store.getters.getTask.detail"
                   label="詳細を変更する"
