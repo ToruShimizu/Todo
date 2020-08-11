@@ -41,8 +41,10 @@ export const mutations = {
     state.task = task
   },
   // タスク削除
-  removeTask(state, { todo }) {
-    state.todos.splice(state.todos.indexOf(todo), 1)
+  removeTask (state, { id }) {
+    const index = state.todos.findIndex(todo => todo.id === id)
+
+    state.todos.splice(index, 1)
   },
   // 完了、未完了切り替え
   doneTask(state, { todo }) {
@@ -109,7 +111,7 @@ export const actions = {
   },
   fetchTask({ getters,commit }, payload) {
     return new Promise((resolve, reject) => {
-      db.collection(`user/${getters.uid}/todos`).where('id', '==', payload.id).get()
+      db.collection(`users/${getters.uid}/todos`).where('id', '==', payload.id).get()
       .then(res => {
         res.forEach((doc) => {
           commit('addTask', doc.data())
@@ -124,21 +126,11 @@ export const actions = {
   },
   // タスク削除
   removeTask({ getters,commit }, payload) {
-    return new Promise((resolve, reject) => {
-      db.collection(`user/${getters.uid}/todos`).where('id', '==', payload.id).get()
-      .then(snapshot => {
-        snapshot.forEach(doc => {
-          db.collection(`user/${getters.uid}/todos`).doc(doc.id).delete()
-          .then(ref => {
-            resolve(true)
-          })
-          .catch(error => {
-            console.error('An error occurred in removeTask(): ', error)
-            reject(error)
-          })
-        })
+    if (getters.uid) {
+      db.collection(`users/${getters.uid}/todos`).doc(id).delete().then(() => {
+        commit('removeTask', { id })
       })
-    })
+    }
   },
   // 完了、未完了切り替え
   doneTask({ commit }, todo) {
