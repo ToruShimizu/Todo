@@ -38,8 +38,8 @@
                   </v-date-picker>
                 </v-dialog>
               </v-col>
-              <v-col cols="12" sm="12" md="12">
                 <!-- タスク変更エリア -->
+              <v-col cols="12" sm="6" md="6">
                 <v-text-field
                   :value="$store.getters.getTask.title"
                   label="タスクを変更する"
