@@ -44,8 +44,8 @@
                   </v-dialog>
                 </v-col>
 
-                <v-col cols="12" sm="12" md="12">
                   <!-- タスク入力エリア -->
+                <v-col cols="12" sm="6" md="6">
                   <v-text-field
                     v-model="task.title"
                     label="タスクを追加する"
