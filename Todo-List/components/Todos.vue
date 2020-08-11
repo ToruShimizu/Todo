@@ -53,7 +53,6 @@
           </v-btn>
           <v-list-item-content>
             <v-list-item-title
-              @click="openTask(todo)"
               :class="(todo.done && 'grey--text') || 'primary--text'"
               class="ml-2"
             >{{ todo.task.title }}</v-list-item-title>
@@ -84,7 +83,6 @@ export default {
   data() {
     return {
       taskFilter: 'all',
-      searchTask: '',
     }
   },
   computed: {
