@@ -122,7 +122,7 @@ export const actions = {
   },
   // 完了、未完了切り替え
   doneTask({ commit }, todo) {
-    taskRef.update({
+    db.collection(`users/${getters.uid}/todos`).update({
       done: !todo.done
     })
     commit('doneTask', { todo })
