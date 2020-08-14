@@ -11,7 +11,13 @@
         </h2>
       </v-flex>
       <v-flex>
-        <AddTask />
+           <nuxt-link :to="{ name: 'edit-id', }">
+
+         <v-btn color="primary" dark  class="hidden-xs-only">タスクを追加する</v-btn>
+              </nuxt-link>
+        <v-btn color="primary" dark class="hidden-sm-and-up">
+          <v-icon>mdi-pen-plus</v-icon>
+        </v-btn>
       </v-flex>
     </v-layout>
 
@@ -74,13 +80,8 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import AddTask from '@/components/AddTask'
 
 export default {
-  components: {
-    AddTask,
-  },
-
   data() {
     return {
       taskFilter: 'all',
