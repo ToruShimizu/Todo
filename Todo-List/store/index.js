@@ -46,6 +46,12 @@ export const mutations = {
     const index = state.todos.findIndex(todo => todo.id === id)
     state.todos.splice(index, 1)
   },
+  updateTask (state, { id, task }) {
+    // インデックスを取得
+    const index = state.todos.findIndex(todo => todo.id === id)
+
+    state.todos[index] = task
+  },
   // 完了、未完了切り替え
   doneTask(state, { todo }) {
     todo.done = !todo.done
@@ -138,6 +144,13 @@ export const actions = {
       done: !todo.done
     })
     commit('doneTask', { todo })
+  },
+  updateTask ({ getters, commit }, { id, task }) {
+    if (getters.uid) {
+      db.collection(`users/${getters.uid}/todos`).doc(id).update(task).then(() => {
+        commit('updateTask', { id, task })
+      })
+    }
   },
   editTask({ commit }, payload) {
     return new Promise((resolve, reject) => {
