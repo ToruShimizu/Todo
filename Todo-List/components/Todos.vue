@@ -62,7 +62,8 @@
               :class="(todo.done && 'grey--text') || 'primary--text'"
               class="ml-2"
             >
-              <nuxt-link :to="{ name: 'edit-id', params: { id: todo.id } }">
+              <nuxt-link :to="{ name: 'edit-id',params:{
+              id: todo.id}}">
               {{ todo.task.title }}
               </nuxt-link>
             </v-list-item-title>
