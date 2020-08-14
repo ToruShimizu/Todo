@@ -36,14 +36,17 @@ export const mutations = {
   addTodos(state, todo) {
     state.todos.push(todo)
   },
-  addTask(state, task) {
-    state.task = task
+  addTask(state, {id,todo}) {
+    // state.task = task
+    todo.id= id
+    state.todos.push(todo)
   },
   // タスク削除
   removeTask (state, { id }) {
-    const index = state.todos.findIndex(todo => todo.id === id)
+    state.todos.splice(state.todos.indexOf(id), 1)
 
-    state.todos.splice(index, 1)
+    // const index = state.todos.findIndex(todo => todo.id === id)
+    // state.todos.splice(index, 1)
   },
   // 完了、未完了切り替え
   doneTask(state, { todo }) {
@@ -123,7 +126,7 @@ export const actions = {
     })
   },
   // タスク削除
-  removeTask({ getters,commit }, payload) {
+  removeTask({ getters,commit }, {id}) {
     if (getters.uid) {
       db.collection(`users/${getters.uid}/todos`).doc(id).delete().then(() => {
         commit('removeTask', { id })
