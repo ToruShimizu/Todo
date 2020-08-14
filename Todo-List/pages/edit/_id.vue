@@ -118,12 +118,14 @@ export default {
         this.$refs.form.validate()
         return
       }
-          if (this.$route.params.task_id) {
-        this.updateTask({ id: this.$route.params.task_id, task: this.task })
+      if (this.$route.params.id) {
+        this.updateTask({ id: this.$route.params.id, task: this.task })
+        console.log('updateTask')
       } else {
         this.$store.dispatch('addTask',{task:this.task}).then(() => {
         setTimeout(() => {
           this.$store.dispatch('fetchTodos')
+          console.log('addTask')
         }, 1000)
       })
       }
