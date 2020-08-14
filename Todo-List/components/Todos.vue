@@ -1,16 +1,27 @@
 <template>
   <v-container style="max-width: 500px">
-    <v-layout>
-      <v-flex>
-        <!-- トータルtodos表示 -->
+         <!-- トータルtodos表示 -->
         <h2 class="display-1 grey--text pl-4">
           totalTodos:&nbsp;
           <v-fade-transition leave-absolute>
             <span :key="`todos-${todos.length}`">{{ todos.length }}</span>
           </v-fade-transition>
         </h2>
-      </v-flex>
+    <v-layout>
       <v-flex>
+  <v-col>
+        <v-text-field
+          flat
+          solo-inverted
+          hide-details
+          v-model="searchTask"
+          prepend-inner-icon="mdi-magnify"
+          label="Search"
+          clearable
+        ></v-text-field>
+      </v-col>
+      </v-flex>
+      <v-flex mt-4>
            <nuxt-link :to="{ name: 'edit-id', }">
 
          <v-btn color="primary" dark  class="hidden-xs-only">タスクを追加する</v-btn>
@@ -20,6 +31,8 @@
         </v-btn>
       </v-flex>
     </v-layout>
+
+
 
     <v-divider class="mt-4" />
 
@@ -86,6 +99,7 @@ export default {
   data() {
     return {
       taskFilter: 'all',
+      searchTask: ''
     }
   },
   computed: {
