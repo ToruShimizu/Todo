@@ -66,7 +66,7 @@
           <v-btn icon>
             <v-icon
               :color="(!todo.done && 'grey') || 'primary'"
-              @click="doneTask(todo)"
+              @click="doneTask(todo.id)"
             >mdi-check-circle-outline</v-icon>
           </v-btn>
           <v-list-item-content>
