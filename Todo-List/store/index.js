@@ -193,5 +193,7 @@ export const getters = {
   },
   getSearchTask(state) {
     return state.searchTask
-  }
+  },
+  getAddressById: state => id => state.todos.find(todo => todo.id === id)
+
 }
