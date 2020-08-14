@@ -1,38 +1,37 @@
 <template>
   <v-container style="max-width: 500px">
-         <!-- トータルtodos表示 -->
-        <h2 class="display-1 grey--text pl-4">
-          totalTodos:&nbsp;
-          <v-fade-transition leave-absolute>
-            <span :key="`todos-${todos.length}`">{{ todos.length }}</span>
-          </v-fade-transition>
-        </h2>
+    <!-- トータルtodos表示 -->
+    <h2 class="display-1 grey--text pl-4">
+      totalTodos:&nbsp;
+      <v-fade-transition leave-absolute>
+        <span :key="`todos-${todos.length}`">{{ todos.length }}</span>
+      </v-fade-transition>
+    </h2>
     <v-layout>
       <v-flex>
-  <v-col>
-        <v-text-field
-          flat
-          solo-inverted
-          hide-details
-          v-model="searchTask"
-          prepend-inner-icon="mdi-magnify"
-          label="Search"
-          clearable
-        ></v-text-field>
-      </v-col>
+        <v-col>
+          <v-text-field
+            flat
+            solo-inverted
+            hide-details
+            v-model="searchTask"
+            prepend-inner-icon="mdi-magnify"
+            label="Search"
+            clearable
+          ></v-text-field>
+        </v-col>
       </v-flex>
       <v-flex mt-4>
-           <nuxt-link :to="{ name: 'edit-id', }">
-
-         <v-btn color="primary" dark  class="hidden-xs-only"><v-icon>mdi-pen-plus</v-icon>Add</v-btn>
-              </nuxt-link>
+        <nuxt-link :to="{ name: 'edit-id', }">
+          <v-btn color="primary" dark class="hidden-xs-only">
+            <v-icon>mdi-pen-plus</v-icon>Add
+          </v-btn>
+        </nuxt-link>
         <v-btn color="primary" dark class="hidden-sm-and-up">
           <v-icon>mdi-pen-plus</v-icon>
         </v-btn>
       </v-flex>
     </v-layout>
-
-
 
     <v-divider class="mt-4" />
 
@@ -43,8 +42,7 @@
 
         <v-divider vertical />
 
-        <v-tab @click="taskFilter = 'active'">
-incomplete:{{ remainingTodos }}</v-tab>
+        <v-tab @click="taskFilter = 'active'">incomplete:{{ remainingTodos }}</v-tab>
 
         <v-divider vertical />
 
@@ -72,14 +70,11 @@ incomplete:{{ remainingTodos }}</v-tab>
             >mdi-check-circle-outline</v-icon>
           </v-btn>
           <v-list-item-content>
-            <v-list-item-title
-              :class="(todo.done && 'grey--text') || 'primary--text'"
-              class="ml-2"
-            >
-              <nuxt-link :to="{ name: 'edit-id',params:{
-              id: todo.id}}">
-              {{ todo.task.title }}
-              </nuxt-link>
+            <v-list-item-title :class="(todo.done && 'grey--text') || 'primary--text'" class="ml-2">
+              <nuxt-link
+                :to="{ name: 'edit-id',params:{
+              id: todo.id}}"
+              >{{ todo.task.title }}</nuxt-link>
             </v-list-item-title>
             <!-- 編集用のテキストエリア -->
           </v-list-item-content>
@@ -100,7 +95,7 @@ export default {
   data() {
     return {
       taskFilter: 'all',
-      searchTask: ''
+      searchTask: '',
     }
   },
   computed: {
@@ -111,7 +106,9 @@ export default {
       if (this.searchTask) {
         data.forEach((el) => {
           if (
-            el.task.title.toLowerCase().indexOf(this.searchTask.toLowerCase()) >= 0
+            el.task.title
+              .toLowerCase()
+              .indexOf(this.searchTask.toLowerCase()) >= 0
           ) {
             arr.push(el)
           }
@@ -137,7 +134,7 @@ export default {
 
   methods: {
     removeTask(id) {
-      if (!confirm('Are you sure?'))return
+      if (!confirm('Are you sure?')) return
       this.$store.dispatch('removeTask', { id })
     },
 
@@ -157,6 +154,6 @@ export default {
   opacity: 0
 }
 a {
-  text-decoration: none;
+  text-decoration: none
 }
 </style>
