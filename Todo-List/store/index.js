@@ -1,20 +1,11 @@
 import firebase from '~/plugins/firebase'
 import { auth } from '~/plugins/firebase'
 import { db } from '~/plugins/firebase'
-import { v4 as uuidv4 } from 'uuid';
 
 export const strict = false
 
 export const state = () => ({
   todos: [],
-  task: {
-    id:'',
-    title: '',
-    detail: '',
-    date: [new Date().toISOString().substr(0, 10)],
-    done: false,
-  },
-  searchTask: '',
   login_user: null,
 })
 
@@ -27,19 +18,18 @@ export const mutations = {
   deleteLoginUser(state) {
     state.login_user = null
   },
-  // 初期化
+  // データを初期化する
   initTodos (state) {
     state.todos = []
   },
   // 取り出したデータを格納
-  // タスク追加
   addTodos(state, todo) {
     state.todos.push(todo)
   },
+  // タスク追加
   addTask(state, {id,todo}) {
-    // state.task = task
-    todo.id= id
     state.todos.push(todo)
+    todo.id= id
   },
   // タスク削除
   removeTask (state, { id }) {
@@ -49,7 +39,6 @@ export const mutations = {
   updateTask (state, { id, task }) {
     // インデックスを取得
     const index = state.todos.findIndex(todo => todo.id === id)
-
     state.todos[index] = task
   },
   // 完了、未完了切り替え
@@ -68,18 +57,14 @@ export const actions = {
   deleteLoginUser({ commit }) {
     commit('deleteLoginUser')
   },
-  // ログイン
+  // Googleログイン
   googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider()
     auth.signInWithPopup(provider).then(result => {
       alert('Hello, ' + result.user.displayName + '!')
     })
   },
-  // ログアウト
-  logout() {
-    alert('ログアウトしました')
-    auth.signOut()
-  },
+  // アカウントなしでログイン
   login ({commit},payload) {
     firebase
       .auth()
@@ -89,7 +74,12 @@ export const actions = {
         alert('アカウントなしでログインします')
       })
   },
-  // データを取り出す
+    // ログアウト
+    logout() {
+      alert('ログアウトしました')
+      auth.signOut()
+    },
+  // firestoreからデータを取り出す
   fetchTodos ({ getters, commit }) {
     commit('initTodos')
     db.collection(`users/${getters.uid}/todos`).get().then(snapshot => {
@@ -105,7 +95,6 @@ export const actions = {
       done: false,
       created: firebase.firestore.FieldValue.serverTimestamp()
     }
-
     if(getters.uid){
      db.collection(`users/${getters.uid}/todos`)
         .add(task)
@@ -115,20 +104,13 @@ export const actions = {
         })
       }
   },
-  fetchTask({ getters,commit }, payload) {
-    return new Promise((resolve, reject) => {
-      db.collection(`users/${getters.uid}/todos`).where('id', '==', payload.id).get()
-      .then(res => {
-        res.forEach((doc) => {
-          commit('addTask', doc.data())
-          resolve(true)
-        })
+  // タスク更新
+  updateTask ({ getters, commit }, { id, task }) {
+    if (getters.uid) {
+      db.collection(`users/${getters.uid}/todos`).doc(id).update(task).then(() => {
+        commit('updateTask', { id, task })
       })
-      .catch(error => {
-        console.error('An error occurred in fetchTodos(): ', error)
-        reject(error)
-      })
-    })
+    }
   },
   // タスク削除
   removeTask({ getters,commit }, {id}) {
@@ -145,44 +127,17 @@ export const actions = {
     })
     commit('doneTask', { todo })
   },
-  updateTask ({ getters, commit }, { id, task }) {
-    if (getters.uid) {
-      db.collection(`users/${getters.uid}/todos`).doc(id).update(task).then(() => {
-        commit('updateTask', { id, task })
-      })
-    }
-  },
-  editTask({ commit }, payload) {
-    return new Promise((resolve, reject) => {
-      todosRef.where('id', '==', payload.task.id).get()
-      .then(snapshot => {
-        snapshot.forEach(doc => {
-          const task = {
-            id: uuidv4(),
-            title: payload.task.title,
-            // detail: payload.task.detail,
-            // date: payload.task.date,
-            updated_at: firebase.firestore.FieldValue.serverTimestamp()
-          }
-
-          todosRef.doc(doc.id).update(task)
-          .then(ref => {
-            resolve(true)
-          })
-          .catch(error => {
-            console.error('An error occurred in editUser(): ', error)
-            resolve(error)
-          })
-        })
-      })
-    })
-  },
 }
 
 export const getters = {
+  // ユーザーネームの取得
   userName: state => (state.login_user ? state.login_user.displayName : ''),
+  // ユーザー画像の取得
   photoURL: state => (state.login_user ? state.login_user.photoURL : ''),
+  // uidの取得
   uid: state => (state.login_user ? state.login_user.uid : null),
+  // idを返す関数
+  getAddressById: state => id => state.todos.find(todo => todo.id === id),
 
   // タスク総数のカウント
   todosCount(state) {
@@ -201,12 +156,4 @@ export const getters = {
   remainingTodos(state, getters) {
     return state.todos.length - getters.completedTodos
   },
-  getTask(state) {
-    return state.task
-  },
-  getSearchTask(state) {
-    return state.searchTask
-  },
-  getAddressById: state => id => state.todos.find(todo => todo.id === id)
-
 }
