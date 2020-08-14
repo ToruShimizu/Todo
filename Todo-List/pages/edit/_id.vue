@@ -10,7 +10,7 @@
           <v-card-text>
             <v-container>
               <v-row>
-                     <!-- タスク入力エリア -->
+                <!-- タスク入力エリア -->
                 <v-col cols="12" sm="6" md="6">
                   <v-text-field
                     v-model="task.title"
@@ -134,17 +134,6 @@ export default {
       this.task.detail = ''
       this.task.date = [new Date().toISOString().substr(0, 10)]
     },
-      //   this.$store.dispatch('addTask',{task:this.task}).then(() => {
-      //   setTimeout(() => {
-      //     this.$store.dispatch('fetchTodos')
-      //   }, 1000)
-      // this.task.title = ''
-      // this.task.detail = ''
-      // this.task.date = [new Date().toISOString().substr(0, 10)]
-      // this.taskDialog = false
-      // })
-
-    // },
     closeTaskDialog () {
       this.task.title = ''
       this.task.detail = ''
