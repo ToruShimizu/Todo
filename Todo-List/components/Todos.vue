@@ -120,13 +120,8 @@ export default {
 
   methods: {
     removeTask(id) {
-      if (!confirm('Are you sure?')) return
-
-      this.$store.dispatch('removeTask', { id }).then(() => {
-        setTimeout(() => {
-          this.$store.dispatch('fetchTodos')
-        }, 1000)
-      })
+      if (!confirm('Are you sure?'))return
+      this.$store.dispatch('removeTask', { id })
     },
 
     doneTask(todo) {

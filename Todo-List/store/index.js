@@ -43,10 +43,8 @@ export const mutations = {
   },
   // タスク削除
   removeTask (state, { id }) {
-    state.todos.splice(state.todos.indexOf(id), 1)
-
-    // const index = state.todos.findIndex(todo => todo.id === id)
-    // state.todos.splice(index, 1)
+    const index = state.todos.findIndex(todo => todo.id === id)
+    state.todos.splice(index, 1)
   },
   // 完了、未完了切り替え
   doneTask(state, { todo }) {
@@ -87,6 +85,7 @@ export const actions = {
   },
   // データを取り出す
   fetchTodos ({ getters, commit }) {
+    commit('initTodos')
     db.collection(`users/${getters.uid}/todos`).get().then(snapshot => {
       snapshot.forEach(doc => commit('addTodos', { id: doc.id, task:  doc.data() }))
     })
