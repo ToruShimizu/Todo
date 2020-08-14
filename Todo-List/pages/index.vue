@@ -17,12 +17,12 @@
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title class="title grey--text text--darken-2">{{userName}}</v-list-item-title>
-              <v-list-item-title class="title grey--text text--darken-2" v-if="!userName">テストユーザー</v-list-item-title>
+              <v-list-item-title class="title grey--text text--darken-2" v-if="!userName">Test User</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item v-else>
             <v-list-item-content>
-              <v-list-item-title>ログインユーザーはいません</v-list-item-title>
+              <v-list-item-title>Not Login</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>

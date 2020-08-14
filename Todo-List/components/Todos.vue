@@ -24,7 +24,7 @@
       <v-flex mt-4>
            <nuxt-link :to="{ name: 'edit-id', }">
 
-         <v-btn color="primary" dark  class="hidden-xs-only">タスクを追加する</v-btn>
+         <v-btn color="primary" dark  class="hidden-xs-only"><v-icon>mdi-pen-plus</v-icon>Add</v-btn>
               </nuxt-link>
         <v-btn color="primary" dark class="hidden-sm-and-up">
           <v-icon>mdi-pen-plus</v-icon>
@@ -39,16 +39,17 @@
     <v-card v-if="todos.length > 0">
       <!-- 完了、未完了のタブ切り替え -->
       <v-tabs>
-        <v-tab @click="taskFilter = 'all'">すべて:{{ todos.length }}</v-tab>
+        <v-tab @click="taskFilter = 'all'">All:{{ todos.length }}</v-tab>
 
         <v-divider vertical />
 
-        <v-tab @click="taskFilter = 'active'">未完了:{{ remainingTodos }}</v-tab>
+        <v-tab @click="taskFilter = 'active'">
+incomplete:{{ remainingTodos }}</v-tab>
 
         <v-divider vertical />
 
         <v-tab @click="taskFilter = 'done'">
-          完了: {{ completedTodos }}/{{todos.length}}
+          complete: {{ completedTodos }}/{{todos.length}}
           <!-- 完了率の表示 -->
           <v-progress-circular
             :value="progress"

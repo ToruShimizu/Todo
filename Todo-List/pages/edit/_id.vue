@@ -14,7 +14,7 @@
                 <v-col cols="12" sm="6" md="6">
                   <v-text-field
                     v-model="task.title"
-                    label="タスクを追加する"
+                    label="Add Task"
                     prepend-inner-icon="mdi-pencil-outline"
                     @keydown.enter="addTask"
                     :rules="titleRules"
@@ -51,7 +51,7 @@
                 <v-col cols="12">
                   <v-text-field
                     v-model="task.detail"
-                    label="詳細を追加する"
+                    label="Add Detail"
                     prepend-inner-icon="mdi-briefcase-outline"
                     required
                     clearable
