@@ -3,11 +3,12 @@
     <v-dialog v-model="taskDialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
-          <span class="headline">AddToTask</span>
+          <span class="headline" v-if='!this.$route.params.id'>AddToTask</span>
+          <span class="headline" v-else>EditToTask</span>
         </v-card-title>
         <v-form ref="form" lazy-validation>
           <v-card-text>
-            <v-container>
+            <v-container v-if="!this.$route.params.id">
               <v-row>
                 <!-- タスク入力エリア -->
                 <v-col cols="12" sm="6" md="6">
@@ -58,6 +59,57 @@
                 </v-col>
               </v-row>
             </v-container>
+            <v-container v-else>
+              <v-row>
+                <!-- タスク入力エリア -->
+                <v-col cols="12" sm="6" md="6">
+                  <v-text-field
+                    v-model="task.title"
+                    label="Edit Task"
+                    prepend-inner-icon="mdi-pencil-outline"
+                    @keydown.enter="saveTask"
+                    :rules="titleRules"
+                    clearable
+                  />
+                </v-col>
+                <!-- 日付入力エリア -->
+                <v-col cols="12" sm="6" md="6">
+                  <v-dialog
+                    ref="dialog"
+                    v-model="modal"
+                    :return-value.sync="task.date"
+                    persistent
+                    width="290px"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        v-model="dateRangeText"
+                        label="Picker in dialog"
+                        prepend-inner-icon="mdi-calendar-today"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker v-model="task.date" scrollable range>
+                      <v-spacer></v-spacer>
+                      <v-btn text color="primary" @click="modal = false">Cancel</v-btn>
+                      <v-btn text color="primary" @click="$refs.dialog.save(task.date)">OK</v-btn>
+                    </v-date-picker>
+                  </v-dialog>
+                </v-col>
+                <!-- 詳細入力エリア -->
+                <v-col cols="12">
+                  <v-text-field
+                    v-model="task.detail"
+                    label="Edit Detail"
+                    prepend-inner-icon="mdi-briefcase-outline"
+                    required
+                    clearable
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-container>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -76,9 +128,9 @@
 import { mapActions } from "vuex";
 export default {
   created() {
-    // ルートのパラメーターにアドレスIdが含まれているか
+    // ルートのパラメーターにタスクのIdが含まれているか
     if (!this.$route.params.id) return;
-    // 引数にアドレスのIdを渡すことで該当のアドレスを取得
+    // 引数にタスクのIdを渡すことで該当のタスクを取得
     const task = this.$store.getters.getTaskById(this.$route.params.id);
     if (task) {
       // 取得できれば格納
