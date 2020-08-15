@@ -109,7 +109,7 @@ export default {
   computed: {
     dateRangeText () {
       const date = this.task.date
-      return Object.values(date).join('~')
+      // return Object.values(date).join('~')
       },
     },
   methods: {
