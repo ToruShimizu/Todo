@@ -28,7 +28,6 @@ export const mutations = {
   },
   // タスク追加
   addTask(state, {id,todo}) {
-    state.todos.push(todo)
     todo.id= id
   },
   // タスク削除
