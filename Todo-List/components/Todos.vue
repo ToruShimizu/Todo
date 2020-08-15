@@ -26,10 +26,11 @@
           <v-btn color="primary" dark class="hidden-xs-only">
             <v-icon>mdi-pen-plus</v-icon>Add
           </v-btn>
-        </nuxt-link>
-        <v-btn color="primary" dark class="hidden-sm-and-up">
+          <v-btn color="primary" dark class="hidden-sm-and-up">
           <v-icon>mdi-pen-plus</v-icon>
         </v-btn>
+        </nuxt-link>
+
       </v-flex>
     </v-layout>
 
