@@ -273,4 +273,8 @@ export default {
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
+/* Vuetifyの仕様上スタイルが適用されてしまうため非表示にする */
+.v-slide-group__prev {
+  display: none !important;
+}
 </style>
