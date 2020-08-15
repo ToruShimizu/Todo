@@ -31,7 +31,7 @@
 
         <v-divider vertical />
 
-        <v-tab @click="taskFilter = 'active'">incomplete:{{ remainingTodos }}</v-tab>
+        <v-tab @click="taskFilter = 'active'" class=''>remaining:{{ remainingTodos }}</v-tab>
 
         <v-divider vertical />
 
