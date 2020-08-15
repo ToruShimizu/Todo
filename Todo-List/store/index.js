@@ -136,7 +136,7 @@ export const getters = {
   // uidの取得
   uid: state => (state.login_user ? state.login_user.uid : null),
   // idを返す関数
-  getAddressById: state => id => state.todos.find(todo => todo.id === id),
+  getTaskById: state => id => state.todos.find(todo => todo.id === id),
 
   // タスク総数のカウント
   todosCount(state) {
