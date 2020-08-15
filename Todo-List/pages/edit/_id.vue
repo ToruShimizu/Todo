@@ -61,7 +61,7 @@
             </v-container>
             <v-container v-else>
               <v-row>
-                <!-- タスク入力エリア -->
+                <!-- タスク編集エリア -->
                 <v-col cols="12" sm="6" md="6">
                   <v-text-field
                     v-model="task.title"
@@ -72,7 +72,7 @@
                     clearable
                   />
                 </v-col>
-                <!-- 日付入力エリア -->
+                <!-- 日付編集エリア -->
                 <v-col cols="12" sm="6" md="6">
                   <v-dialog
                     ref="dialog"
@@ -98,7 +98,7 @@
                     </v-date-picker>
                   </v-dialog>
                 </v-col>
-                <!-- 詳細入力エリア -->
+                <!-- 詳細編集エリア -->
                 <v-col cols="12">
                   <v-text-field
                     v-model="task.detail"
