@@ -33,12 +33,10 @@
       <v-toolbar-title>ToDo</v-toolbar-title>
       <v-spacer></v-spacer>
 
-
       <v-toolbar-items v-if="$store.state.login_user">
         <v-icon @click="logout">mdi-logout-variant</v-icon>
       </v-toolbar-items>
       <v-toolbar-items v-if="!$store.state.login_user">
-
         <v-icon @click="login">mdi-account</v-icon>
       </v-toolbar-items>
     </v-app-bar>
@@ -52,9 +50,9 @@
 </template>
 
 <script>
-import Todos from '@/components/Todos'
-import { mapActions, mapGetters } from 'vuex'
-import firebase from 'firebase'
+import Todos from "@/components/Todos";
+import { mapActions, mapGetters } from "vuex";
+import firebase from "firebase";
 
 export default {
   components: {
@@ -64,28 +62,33 @@ export default {
   data() {
     return {
       drawer: null,
-    }
+    };
   },
   created() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.setLoginUser(user)
-        this.fetchTodos()
-        if(this.$router.currentRoute.name === 'signIn')
-        this.$router.push('/')
+        this.setLoginUser(user);
+        this.fetchTodos();
+        if (this.$router.currentRoute.name === "signIn") this.$router.push("/");
       } else {
-        this.deleteLoginUser()
-        this.$router.push('signIn')
+        this.deleteLoginUser();
+        this.$router.push("signIn");
       }
-    })
+    });
   },
   computed: {
-    ...mapGetters(['userName', 'photoURL']),
+    ...mapGetters(["userName", "photoURL"]),
   },
 
   methods: {
-    ...mapActions(['login', 'setLoginUser', 'logout', 'deleteLoginUser','fetchTodos']),
+    ...mapActions([
+      "login",
+      "setLoginUser",
+      "logout",
+      "deleteLoginUser",
+      "fetchTodos",
+    ]),
   },
-}
+};
 </script>
 

@@ -5,8 +5,7 @@
         <v-card-title>
           <span class="headline">AddToTask</span>
         </v-card-title>
-        <v-form ref="form"
-    lazy-validation >
+        <v-form ref="form" lazy-validation>
           <v-card-text>
             <v-container>
               <v-row>
@@ -21,7 +20,7 @@
                     clearable
                   />
                 </v-col>
-                  <!-- 日付入力エリア -->
+                <!-- 日付入力エリア -->
                 <v-col cols="12" sm="6" md="6">
                   <v-dialog
                     ref="dialog"
@@ -47,7 +46,7 @@
                     </v-date-picker>
                   </v-dialog>
                 </v-col>
-                  <!-- 詳細入力エリア -->
+                <!-- 詳細入力エリア -->
                 <v-col cols="12">
                   <v-text-field
                     v-model="task.detail"
@@ -62,8 +61,8 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <nuxt-link to='/'>
-            <v-btn color="blue darken-1" text @click="closeTaskDialog">Close</v-btn>
+            <nuxt-link to="/">
+              <v-btn color="blue darken-1" text @click="closeTaskDialog">Close</v-btn>
             </nuxt-link>
             <v-btn color="blue darken-1" text @click="saveTask">Save</v-btn>
           </v-card-actions>
@@ -74,71 +73,68 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import { mapActions } from "vuex";
 export default {
-    created () {
+  created() {
     // ルートのパラメーターにアドレスIdが含まれているか
-    if (!this.$route.params.id) return
+    if (!this.$route.params.id) return;
     // 引数にアドレスのIdを渡すことで該当のアドレスを取得
-    const task = this.$store.getters.getTaskById(this.$route.params.id)
+    const task = this.$store.getters.getTaskById(this.$route.params.id);
     if (task) {
       // 取得できれば格納
-      this.task = task
+      this.task = task;
     } else {
       // できなければ一覧ページへ遷移
-      this.$router.push({ path: '/' })
+      this.$router.push({ path: "/" });
     }
   },
   data() {
     return {
       task: {
-        title: '',
-        detail: '',
+        title: "",
+        detail: "",
         date: [new Date().toISOString().substr(0, 10)],
         done: false,
       },
       validate: true,
-      titleRules:[
-        v => !!v || 'タイトルは必須入力です'
-        ],
+      titleRules: [(v) => !!v || "タイトルは必須入力です"],
       modal: false,
       taskDialog: true,
       menu: false,
-    }
+    };
   },
   computed: {
-    dateRangeText () {
-      const date = this.task.date
+    dateRangeText() {
+      const date = this.task.date;
       // return Object.values(date).join('~')
-      },
     },
+  },
   methods: {
     saveTask() {
       if (!this.task.title) {
-        this.$refs.form.validate()
-        return
+        this.$refs.form.validate();
+        return;
       }
       if (this.$route.params.id) {
-        this.updateTask({ id: this.$route.params.id, task: this.task })
-        console.log('updateTask')
+        this.updateTask({ id: this.$route.params.id, task: this.task });
+        console.log("updateTask");
       } else {
-        this.addTask({task:this.task})
-        console.log('addTask')
+        this.addTask({ task: this.task });
+        console.log("addTask");
       }
-      this.$router.push({ path: '/' })
-      this.task.title = ''
-      this.task.detail = ''
-      this.task.date = [new Date().toISOString().substr(0, 10)]
+      this.$router.push({ path: "/" });
+      this.task.title = "";
+      this.task.detail = "";
+      this.task.date = [new Date().toISOString().substr(0, 10)];
     },
-    closeTaskDialog () {
-      this.task.title = ''
-      this.task.detail = ''
-      this.task.date = [new Date().toISOString().substr(0, 10)]
-      this.taskDialog = false
+    closeTaskDialog() {
+      this.task.title = "";
+      this.task.detail = "";
+      this.task.date = [new Date().toISOString().substr(0, 10)];
+      this.taskDialog = false;
     },
-      ...mapActions(['addTask', 'updateTask'])
+    ...mapActions(["addTask", "updateTask"]),
   },
-
-}
+};
 </script>
 

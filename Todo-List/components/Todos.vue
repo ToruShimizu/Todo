@@ -89,20 +89,20 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters } from "vuex";
 
 export default {
   data() {
     return {
-      taskFilter: 'all',
-      searchTask: '',
-    }
+      taskFilter: "all",
+      searchTask: "",
+    };
   },
   computed: {
     todosFiltered() {
       // タスク検索
-      let arr = []
-      let data = this.todos
+      let arr = [];
+      let data = this.todos;
       if (this.searchTask) {
         data.forEach((el) => {
           if (
@@ -110,39 +110,39 @@ export default {
               .toLowerCase()
               .indexOf(this.searchTask.toLowerCase()) >= 0
           ) {
-            arr.push(el)
+            arr.push(el);
           }
-        })
-        return arr
+        });
+        return arr;
       }
       // 完了状態の絞り込み
-      else if (this.taskFilter == 'all') {
-        return this.todos
-      } else if (this.taskFilter == 'active') {
-        return this.todos.filter((todo) => !todo.done)
-      } else if (this.taskfilter == 'done')
-        return this.todos.filter((todo) => todo.done)
+      else if (this.taskFilter == "all") {
+        return this.todos;
+      } else if (this.taskFilter == "active") {
+        return this.todos.filter((todo) => !todo.done);
+      } else if (this.taskfilter == "done")
+        return this.todos.filter((todo) => todo.done);
     },
     ...mapGetters([
-      'completedTodos',
-      'progress',
-      'remainingTodos',
-      'todosCount',
+      "completedTodos",
+      "progress",
+      "remainingTodos",
+      "todosCount",
     ]),
-    ...mapState(['todos']),
+    ...mapState(["todos"]),
   },
 
   methods: {
     removeTask(id) {
-      if (!confirm('Are you sure?')) return
-      this.$store.dispatch('removeTask', { id })
+      if (!confirm("Are you sure?")) return;
+      this.$store.dispatch("removeTask", { id });
     },
 
     doneTask(todo) {
-      this.$store.dispatch('doneTask', todo)
+      this.$store.dispatch("doneTask", todo);
     },
   },
-}
+};
 </script>
 
 <style>
