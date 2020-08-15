@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <v-col cols="12" sm="12" md="12">
     <v-card width="400px" class="mx-auto mt-5 text-center">
       <v-card-title>
         <h1>Todo</h1>
@@ -33,6 +34,7 @@
         >アカウントなしでログイン</v-btn>
       </v-card-text>
     </v-card>
+    </v-col>
   </v-app>
 </template>
 
