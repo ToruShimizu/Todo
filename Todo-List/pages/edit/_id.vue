@@ -65,7 +65,7 @@
             <nuxt-link to='/'>
             <v-btn color="blue darken-1" text @click="closeTaskDialog">Close</v-btn>
             </nuxt-link>
-            <v-btn color="blue darken-1" text @click="addTask">Save</v-btn>
+            <v-btn color="blue darken-1" text @click="saveTask">Save</v-btn>
           </v-card-actions>
         </v-form>
       </v-card>
@@ -113,7 +113,7 @@ export default {
       },
     },
   methods: {
-    addTask() {
+    saveTask() {
       if (!this.task.title) {
         this.$refs.form.validate()
         return
