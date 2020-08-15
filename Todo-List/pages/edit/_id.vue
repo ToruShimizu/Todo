@@ -122,12 +122,8 @@ export default {
         this.updateTask({ id: this.$route.params.id, task: this.task })
         console.log('updateTask')
       } else {
-        this.addTask({task:this.task}).then(() => {
-        setTimeout(() => {
-          this.$store.dispatch('fetchTodos')
-          console.log('addTask')
-        }, 1000)
-      })
+        this.addTask({task:this.task})
+        console.log('addTask')
       }
       this.$router.push({ path: '/' })
       this.task.title = ''
