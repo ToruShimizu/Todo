@@ -1,36 +1,24 @@
 <template>
   <v-container style="max-width: 500px">
-    <!-- トータルtodos表示 -->
-    <h2 class="display-1 grey--text pl-4">
-      totalTodos:&nbsp;
-      <v-fade-transition leave-absolute>
-        <span :key="`todos-${todos.length}`">{{ todos.length }}</span>
-      </v-fade-transition>
-    </h2>
     <v-layout>
       <v-flex>
-        <v-col>
-          <v-text-field
-            flat
-            solo-inverted
-            hide-details
-            v-model="searchTask"
-            prepend-inner-icon="mdi-magnify"
-            label="Search"
-            clearable
-          ></v-text-field>
-        </v-col>
+        <!-- トータルtodos表示 -->
+        <h2 class="display-1 grey--text pl-4">
+          totalTodos:&nbsp;
+          <v-fade-transition leave-absolute>
+            <span :key="`todos-${todos.length}`">{{ todos.length }}</span>
+          </v-fade-transition>
+        </h2>
       </v-flex>
-      <v-flex mt-4>
+      <v-flex>
         <nuxt-link :to="{ name: 'edit-id', }">
           <v-btn color="primary" dark class="hidden-xs-only">
             <v-icon>mdi-pen-plus</v-icon>Add
           </v-btn>
           <v-btn color="primary" dark class="hidden-sm-and-up">
-          <v-icon>mdi-pen-plus</v-icon>
-        </v-btn>
+            <v-icon>mdi-pen-plus</v-icon>
+          </v-btn>
         </nuxt-link>
-
       </v-flex>
     </v-layout>
 
@@ -61,6 +49,17 @@
       </v-tabs>
       <v-divider />
       <v-divider />
+      <v-col>
+        <v-text-field
+          flat
+          solo-inverted
+          hide-details
+          v-model="searchTask"
+          prepend-inner-icon="mdi-magnify"
+          label="Search"
+          clearable
+        ></v-text-field>
+      </v-col>
       <v-list>
         <v-list-item v-for="todo in todosFiltered" :key="todo.id">
           <!-- 完了、未完了切り替えチェックボックス -->
@@ -149,13 +148,13 @@ export default {
 <style>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s
+  transition: opacity 0.5s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0
+  opacity: 0;
 }
 a {
-  text-decoration: none
+  text-decoration: none;
 }
 /* Vuetifyの仕様上スタイルが適用されてしまうため非表示にする */
 .v-slide-group__prev {
