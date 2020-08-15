@@ -74,13 +74,13 @@
 </template>
 
 <script>
-import { mapActions} from 'vuex'
+import {mapActions} from 'vuex'
 export default {
     created () {
     // ルートのパラメーターにアドレスIdが含まれているか
-    if (!this.$route.params.address_id) return
+    if (!this.$route.params.id) return
     // 引数にアドレスのIdを渡すことで該当のアドレスを取得
-    const task = this.$store.getters.getAddressById(this.$route.params.task_id)
+    const task = this.$store.getters.getTaskById(this.$route.params.id)
     if (task) {
       // 取得できれば格納
       this.task = task
@@ -122,7 +122,7 @@ export default {
         this.updateTask({ id: this.$route.params.id, task: this.task })
         console.log('updateTask')
       } else {
-        this.$store.dispatch('addTask',{task:this.task}).then(() => {
+        this.addTask({task:this.task}).then(() => {
         setTimeout(() => {
           this.$store.dispatch('fetchTodos')
           console.log('addTask')
@@ -139,9 +139,9 @@ export default {
       this.task.detail = ''
       this.task.date = [new Date().toISOString().substr(0, 10)]
       this.taskDialog = false
-    }
-  },
+    },
       ...mapActions(['addTask', 'updateTask'])
+  },
 
 }
 </script>
