@@ -49,7 +49,9 @@
       </v-tabs>
       <v-divider />
       <v-divider />
-      <v-col>
+      <v-row justify="center">
+
+      <v-col cols="8" >
         <v-text-field
           flat
           solo-inverted
@@ -60,13 +62,14 @@
           clearable
         ></v-text-field>
       </v-col>
+      </v-row>
       <v-list>
         <v-list-item v-for="todo in todosFiltered" :key="todo.id">
           <!-- 完了、未完了切り替えチェックボックス -->
           <v-btn icon>
             <v-icon
               :color="(!todo.done && 'grey') || 'primary'"
-              @click="doneTask(todo.id)"
+              @click="doneTask(todo)"
             >mdi-check-circle-outline</v-icon>
           </v-btn>
           <v-list-item-content>
