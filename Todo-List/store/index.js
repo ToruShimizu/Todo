@@ -75,6 +75,10 @@ export const actions = {
     alert("ログアウトしました");
     auth.signOut();
   },
+  // ユーザー作成
+  async createUser({ commit }, payload) {
+   await firebase.auth().createUserWithEmailAndPassword(payload.userEmail, payload.userPassword)
+  },
   // firestoreからデータを取り出す
   async fetchTodos({ getters, commit }) {
     commit("initTodos");
