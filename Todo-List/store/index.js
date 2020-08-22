@@ -56,21 +56,19 @@ export const actions = {
     commit("deleteLoginUser");
   },
   // Googleログイン
-  googleLogin() {
+  async googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider).then(result => {
+    await auth.signInWithPopup(provider).then(result => {
       alert("Hello, " + result.user.displayName + "!");
     });
   },
   // アカウントなしでログイン
-  login({ commit }, payload) {
-    firebase
+  async login({ commit }, payload) {
+    await firebase
       .auth()
-      .signInWithEmailAndPassword(payload.email, payload.password)
-      .then(result => {
-        // サインイン成功後にトップページに遷移する
-        alert("アカウントなしでログインします");
-      });
+      .signInWithEmailAndPassword(payload.email, payload.password);
+    // サインイン成功後にトップページに遷移する
+    alert("アカウントなしでログインします");
   },
   // ログアウト
   logout() {
@@ -78,18 +76,15 @@ export const actions = {
     auth.signOut();
   },
   // firestoreからデータを取り出す
-  fetchTodos({ getters, commit }) {
+  async fetchTodos({ getters, commit }) {
     commit("initTodos");
-    db.collection(`users/${getters.uid}/todos`)
-      .get()
-      .then(snapshot => {
-        snapshot.forEach(doc =>
-          commit("addTodos", { id: doc.id, task: doc.data() })
-        );
-      });
+    const snapShot = await db.collection(`users/${getters.uid}/todos`).get();
+    snapShot.forEach(doc =>
+      commit("addTodos", { id: doc.id, task: doc.data() })
+    );
   },
   // タスク追加
-  addTask({ getters, commit }, todo) {
+  async addTask({ getters, commit }, todo) {
     const task = {
       title: todo.task.title,
       detail: todo.task.detail,
@@ -98,7 +93,8 @@ export const actions = {
       created: firebase.firestore.FieldValue.serverTimestamp()
     };
     if (getters.uid) {
-      db.collection(`users/${getters.uid}/todos`)
+      await db
+        .collection(`users/${getters.uid}/todos`)
         .add(task)
         .then(doc => {
           commit("addTask", { id: doc.id, todo });
@@ -107,35 +103,34 @@ export const actions = {
     }
   },
   // タスク更新
-  updateTask({ getters, commit }, { id, task }) {
+  async updateTask({ getters, commit }, { id, task }) {
     if (getters.uid) {
-      db.collection(`users/${getters.uid}/todos`)
+      await db
+        .collection(`users/${getters.uid}/todos`)
         .doc(id)
-        .update(task)
-        .then(() => {
-          commit("updateTask", { id, task });
-        });
+        .update(task);
+      commit("updateTask", { id, task });
     }
   },
   // タスク削除
-  removeTask({ getters, commit }, { id }) {
+  async removeTask({ getters, commit }, { id }) {
     if (getters.uid) {
-      db.collection(`users/${getters.uid}/todos`)
+      await db
+        .collection(`users/${getters.uid}/todos`)
         .doc(id)
-        .delete()
-        .then(() => {
-          commit("removeTask", { id });
-        });
+        .delete();
+      commit("removeTask", { id });
     }
   },
   // 完了、未完了切り替え
-  doneTask({ getters,commit }, {todo}) {
-    db.collection(`users/${getters.uid}/todos`).doc(todo.id).update({
-      done: !todo.done
-    })
-    .then(() => {
-      commit("doneTask", { todo });
-    })
+  async doneTask({ getters, commit }, { todo }) {
+    await db
+      .collection(`users/${getters.uid}/todos`)
+      .doc(todo.id)
+      .update({
+        done: !todo.done
+      });
+    commit("doneTask", { todo });
   }
 };
 
