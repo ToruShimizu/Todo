@@ -52,7 +52,7 @@
               v-bind:type="showPassword ? 'text' : 'Password'"
               prepend-icon="mdi-lock"
               v-bind:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-              label="パスワード"
+              label="Password(6文字以上)"
               :rules="[passwordRules.required, passwordRules.min]"
               @click:append="showPassword = !showPassword"
               v-model="userPassword"
