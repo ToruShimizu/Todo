@@ -37,20 +37,27 @@
           <h2>ログインまたは新規作成</h2>
         </v-card-title>
         <v-card-text>
-          <v-form @submit.prevent="createUser">
+          <v-form @submit.prevent="createUser"  ref="form" lazy-validation>
             <p>
               ○○○@example.comとすることで、
               <br />サンプルのメールアドレスを作成できます。
             </p>
-            <v-text-field prepend-icon="mdi-email" label="Email" v-model="userEmail" />
+            <v-text-field
+              prepend-icon="mdi-email"
+              label="Email"
+              v-model="userEmail"
+              :rules="emailRules"
+            />
             <v-text-field
               v-bind:type="showPassword ? 'text' : 'Password'"
               prepend-icon="mdi-lock"
               v-bind:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
               label="パスワード"
+              :rules="[passwordRules.required, passwordRules.min]"
               @click:append="showPassword = !showPassword"
               v-model="userPassword"
             />
+
             <v-card-actions>
               <v-btn type="submit">作成</v-btn>
               <v-btn @click="login">ログイン</v-btn>
@@ -71,9 +78,19 @@ export default {
       email: "test@example.com",
       password: "testUser",
       userName: null,
-      userEmail: null,
-      userPassword: null,
+      userEmail: "",
+      userPassword: "",
       showPassword: false,
+      validate: true,
+      emailRules: [
+        (v) => !!v || "メールアドレスは必須です",
+        (v) =>
+          /.+@.+\..+/.test(v) || "正しいメールアドレスの形式で入力してください",
+      ],
+      passwordRules: {
+        required: (v) => !!v || "パスワードは必須です",
+        min: (v) => v.length >= 6 || "6文字以上で入力してください",
+      },
     };
   },
   methods: {
@@ -84,6 +101,10 @@ export default {
       });
     },
     async createUser() {
+      if(this.emailRules && this.passwordRules) {
+        this.$refs.form.validate()
+        return
+      }
       await this.$store.dispatch("createUser", {
         userEmail: this.userEmail,
         userPassword: this.userPassword,
