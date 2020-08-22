@@ -37,11 +37,10 @@
           <h2>ログインまたは新規作成</h2>
         </v-card-title>
         <v-card-text>
-          <v-form @submit.prevent="addUser">
+          <v-form @submit.prevent="createUser">
             <p>
               ○○○@example.comとすることで、
-              <br />
-              サンプルのメールアドレスを作成できます。
+              <br />サンプルのメールアドレスを作成できます。
             </p>
             <v-text-field prepend-icon="mdi-email" label="Email" v-model="userEmail" />
             <v-text-field
@@ -54,7 +53,7 @@
             />
             <v-card-actions>
               <v-btn type="submit">作成</v-btn>
-              <v-btn @click='login'>ログイン</v-btn>
+              <v-btn @click="login">ログイン</v-btn>
             </v-card-actions>
           </v-form>
         </v-card-text>
@@ -90,13 +89,17 @@ export default {
         password: this.password,
       });
     },
-      async createUser() {
+    async createUser() {
       await this.$store.dispatch("createUser", {
         userEmail: this.userEmail,
         userPassword: this.userPassword,
       });
-      (this.userEmail = null), (this.userPassword = null);
       alert("Successfully created user");
+      this.$store.dispatch("login", {
+        email: this.userEmail,
+        password: this.userPassword,
+      });
+      this.$router.push("/");
     },
     ...mapActions(["googleLogin"]),
   },
