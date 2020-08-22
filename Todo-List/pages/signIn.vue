@@ -101,6 +101,13 @@ export default {
         password: this.password,
       });
     },
+      login() {
+        this.$store.dispatch("login", {
+        email: this.userEmail,
+        password: this.userPassword,
+      });
+
+    },
     async createUser() {
       if(this.emailRules && this.passwordRules) {
         this.$refs.form.validate()
