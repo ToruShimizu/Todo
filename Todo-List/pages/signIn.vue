@@ -47,6 +47,7 @@
               label="Email"
               v-model="userEmail"
               :rules="emailRules"
+              clearable
             />
             <v-text-field
               v-bind:type="showPassword ? 'text' : 'Password'"
