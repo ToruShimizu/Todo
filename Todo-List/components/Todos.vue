@@ -133,7 +133,7 @@ export default {
       this.$store.dispatch("removeTask", { id });
     },
     doneTask(todo) {
-      this.$store.dispatch("doneTask", todo);
+      this.$store.dispatch("doneTask", {todo});
     },
   },
 };
