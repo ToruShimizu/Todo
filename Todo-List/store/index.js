@@ -129,11 +129,13 @@ export const actions = {
     }
   },
   // 完了、未完了切り替え
-  doneTask({ commit }, todo) {
-    db.collection(`users/${getters.uid}/todos`).update({
+  doneTask({ getters,commit }, todo) {
+    db.collection(`users/${getters.uid}/todos`).doc(todo.id).update({
       done: !todo.done
-    });
-    commit("doneTask", { todo });
+    })
+    .then(() => {
+      commit("doneTask", { todo });
+    })
   }
 };
 
