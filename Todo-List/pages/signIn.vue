@@ -30,7 +30,7 @@
             outlined
             style="border-color:#979797;"
             tile
-            @click="login"
+            @click="testLogin"
           >アカウントなしでログイン</v-btn>
         </v-card-text>
         <v-card-title>
