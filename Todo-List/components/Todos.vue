@@ -31,7 +31,7 @@
 
         <v-divider vertical />
 
-        <v-tab @click="taskFilter = 'active'" class=''>remaining:{{ remainingTodos }}</v-tab>
+        <v-tab @click="taskFilter = 'active'" class>remaining:{{ remainingTodos }}</v-tab>
 
         <v-divider vertical />
 
@@ -50,18 +50,17 @@
       <v-divider />
       <v-divider />
       <v-row justify="center">
-
-      <v-col cols="8" >
-        <v-text-field
-          flat
-          solo-inverted
-          hide-details
-          v-model="searchTask"
-          prepend-inner-icon="mdi-magnify"
-          label="Search"
-          clearable
-        ></v-text-field>
-      </v-col>
+        <v-col cols="8">
+          <v-text-field
+            flat
+            solo-inverted
+            hide-details
+            v-model="searchTask"
+            prepend-inner-icon="mdi-magnify"
+            label="Search"
+            clearable
+          ></v-text-field>
+        </v-col>
       </v-row>
       <v-list>
         <v-list-item v-for="todo in todosFiltered" :key="todo.id">
@@ -103,6 +102,19 @@ export default {
   },
   computed: {
     todosFiltered() {
+      // 完了状態の絞り込み
+      switch (this.taskFilter) {
+        case "all":
+          return this.todos;
+          break;
+        case "active":
+          return this.todos.filter((todo) => !todo.done);
+          break;
+        case "done":
+          return this.todos.filter((todo) => todo.done);
+          break;
+        default:
+      }
       // タスク検索
       let arr = [];
       let data = this.todos;
@@ -118,13 +130,6 @@ export default {
         });
         return arr;
       }
-      // 完了状態の絞り込み
-      else if (this.taskFilter == "all") {
-        return this.todos;
-      } else if (this.taskFilter == "active") {
-        return this.todos.filter((todo) => !todo.done);
-      } else if (this.taskfilter == "done")
-        return this.todos.filter((todo) => todo.done);
     },
     ...mapGetters([
       "completedTodos",
