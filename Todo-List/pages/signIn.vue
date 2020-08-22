@@ -90,8 +90,8 @@ export default {
         password: this.password,
       });
     },
-      async addUser() {
-      await this.$store.dispatch("addUser", {
+      async createUser() {
+      await this.$store.dispatch("createUser", {
         userEmail: this.userEmail,
         userPassword: this.userPassword,
       });
