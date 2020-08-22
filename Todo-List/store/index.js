@@ -76,8 +76,8 @@ export const actions = {
     auth.signOut();
   },
   // ユーザー作成
-  createUser({ commit }, payload) {
-    firebase.auth().createUserWithEmailAndPassword(payload.userEmail, payload.userPassword)
+  async createUser({ commit }, payload) {
+   await firebase.auth().createUserWithEmailAndPassword(payload.userEmail, payload.userPassword)
   },
   // firestoreからデータを取り出す
   async fetchTodos({ getters, commit }) {
