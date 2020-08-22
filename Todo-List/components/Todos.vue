@@ -114,20 +114,6 @@ export default {
         case "done":
           return this.todos.filter((todo) => todo.done);
           break;
-        case "searchTask":
-          let arr = [];
-          let data = this.todos;
-          data.forEach((el) => {
-            if (
-              el.task.title
-                .toLowerCase()
-                .indexOf(this.searchTask.toLowerCase()) >= 0
-            ) {
-              arr.push(el);
-            }
-          });
-          return arr;
-          break;
         default:
       }
       // タスク検索
@@ -146,7 +132,6 @@ export default {
       if (!confirm("Are you sure?")) return;
       this.$store.dispatch("removeTask", { id });
     },
-
     doneTask(todo) {
       this.$store.dispatch("doneTask", todo);
     },
