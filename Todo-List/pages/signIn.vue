@@ -43,7 +43,7 @@
               <br />サンプルのメールアドレスを作成できます。
             </p>
             <v-text-field
-              prepend-icon="mdi-email"
+              prepend-inner-icon="mdi-email"
               label="Email"
               v-model="userEmail"
               :rules="emailRules"
@@ -51,7 +51,7 @@
             />
             <v-text-field
               v-bind:type="showPassword ? 'text' : 'Password'"
-              prepend-icon="mdi-lock"
+              prepend-inner-icon="mdi-lock"
               v-bind:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
               label="Password(6文字以上)"
               :rules="[passwordRules.required, passwordRules.min]"
