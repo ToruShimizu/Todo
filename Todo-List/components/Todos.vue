@@ -56,6 +56,7 @@
             solo-inverted
             hide-details
             v-model="searchTask"
+            @input="taskFilter='searchTask'"
             prepend-inner-icon="mdi-magnify"
             label="Search"
             clearable
@@ -113,23 +114,23 @@ export default {
         case "done":
           return this.todos.filter((todo) => todo.done);
           break;
+        case "searchTask":
+          let arr = [];
+          let data = this.todos;
+          data.forEach((el) => {
+            if (
+              el.task.title
+                .toLowerCase()
+                .indexOf(this.searchTask.toLowerCase()) >= 0
+            ) {
+              arr.push(el);
+            }
+          });
+          return arr;
+          break;
         default:
       }
       // タスク検索
-      let arr = [];
-      let data = this.todos;
-      if (this.searchTask) {
-        data.forEach((el) => {
-          if (
-            el.task.title
-              .toLowerCase()
-              .indexOf(this.searchTask.toLowerCase()) >= 0
-          ) {
-            arr.push(el);
-          }
-        });
-        return arr;
-      }
     },
     ...mapGetters([
       "completedTodos",
