@@ -37,7 +37,7 @@
           <h2>ログインまたは新規作成</h2>
         </v-card-title>
         <v-card-text>
-          <v-form @submit.prevent="createUser"  ref="form" lazy-validation>
+          <v-form @submit.prevent="createUser" ref="form" lazy-validation>
             <p>
               ○○○@example.comとすることで、
               <br />サンプルのメールアドレスを作成できます。
@@ -60,8 +60,12 @@
             />
 
             <v-card-actions>
-              <v-btn type="submit">作成</v-btn>
-              <v-btn @click="login">ログイン</v-btn>
+              <v-btn type="submit" color="success">
+                <v-icon left>mdi-account-plus</v-icon>新規作成
+              </v-btn>
+              <v-btn @click="login" color="primary">
+                <v-icon left>mdi-login-variant</v-icon>ログイン
+              </v-btn>
             </v-card-actions>
           </v-form>
         </v-card-text>
@@ -101,17 +105,16 @@ export default {
         password: this.password,
       });
     },
-      login() {
-        this.$store.dispatch("login", {
+    login() {
+      this.$store.dispatch("login", {
         email: this.userEmail,
         password: this.userPassword,
       });
-
     },
     async createUser() {
-      if(this.emailRules && this.passwordRules) {
-        this.$refs.form.validate()
-        return
+      if (this.emailRules && this.passwordRules) {
+        this.$refs.form.validate();
+        return;
       }
       await this.$store.dispatch("createUser", {
         userEmail: this.userEmail,
