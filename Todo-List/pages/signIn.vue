@@ -83,12 +83,6 @@ export default {
         password: this.password,
       });
     },
-    login() {
-      this.$store.dispatch("login", {
-        email: this.email,
-        password: this.password,
-      });
-    },
     async createUser() {
       await this.$store.dispatch("createUser", {
         userEmail: this.userEmail,
