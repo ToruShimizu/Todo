@@ -68,7 +68,7 @@ export const actions = {
       .auth()
       .signInWithEmailAndPassword(payload.email, payload.password);
     // サインイン成功後にトップページに遷移する
-    alert("アカウントなしでログインします");
+    alert("ようこそ" + payload.email + "さん");
   },
   // ログアウト
   logout() {
