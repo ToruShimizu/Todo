@@ -105,8 +105,12 @@ export default {
         password: this.password,
       });
     },
-    login() {
-      this.$store.dispatch("login", {
+    async login() {
+      if (this.emailRules && this.passwordRules) {
+        this.$refs.form.validate();
+        return;
+      }
+     await this.$store.dispatch("login", {
         email: this.userEmail,
         password: this.userPassword,
       });
