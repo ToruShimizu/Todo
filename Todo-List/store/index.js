@@ -6,6 +6,7 @@ export const strict = false;
 
 export const state = () => ({
   todos: [],
+  comments: [],
   login_user: null
 });
 
