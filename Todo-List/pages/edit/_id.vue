@@ -143,6 +143,7 @@
             <v-btn color="blue darken-1" text @click="saveTask">Save</v-btn>
           </v-card-actions>
         </v-form>
+        <Comment/>
       </v-card>
     </v-dialog>
   </v-row>
@@ -150,7 +151,11 @@
 
 <script>
 import { mapActions } from "vuex";
+import Comment from "@/components/Comment"
 export default {
+  components: {
+    Comment
+  },
   created() {
     // ルートのパラメーターにタスクのIdが含まれているか
     if (!this.$route.params.id) return;
