@@ -80,8 +80,6 @@ import { mapActions } from "vuex";
 export default {
   data() {
     return {
-      email: "test@example.com",
-      password: "testUser",
       userName: null,
       userEmail: "",
       userPassword: "",
@@ -101,8 +99,8 @@ export default {
   methods: {
     testLogin() {
       this.$store.dispatch("login", {
-        email: this.email,
-        password: this.password,
+        email: "test@example.com",
+        password: "testUser",
       });
     },
     async login() {
