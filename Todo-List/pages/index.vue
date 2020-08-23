@@ -17,7 +17,7 @@
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title class="title grey--text text--darken-2">{{userName}}</v-list-item-title>
-              <v-list-item-title class="title grey--text text--darken-2" v-if="!userName">Test User</v-list-item-title>
+              <v-list-item-title class="title grey--text text--darken-2" v-if='!userName'>{{userEmail}}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item v-else>
@@ -77,7 +77,7 @@ export default {
     });
   },
   computed: {
-    ...mapGetters(["userName", "photoURL"]),
+    ...mapGetters(["userName", "photoURL","userEmail"]),
   },
 
   methods: {
