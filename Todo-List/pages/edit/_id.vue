@@ -3,7 +3,7 @@
     <v-dialog v-model="taskDialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
-          <span class="headline" v-if='!this.$route.params.id'>AddToTask</span>
+          <span class="headline" v-if="!this.$route.params.id">AddToTask</span>
           <span class="headline" v-else>EditToTask</span>
         </v-card-title>
         <v-form ref="form" lazy-validation>
@@ -61,19 +61,32 @@
             </v-container>
             <v-container v-else>
               <v-row>
+                <v-col cols="12" v-show="!editTitle">
+                  <p @click="editingTitle">
+                    <v-icon>mdi-pencil-outline</v-icon>
+                    {{task.task.title}}
+                  </p>
+                </v-col>
                 <!-- タスク編集エリア -->
-                <v-col cols="12" sm="6" md="6">
+                <v-col cols="12" v-show="editTitle">
                   <v-text-field
                     v-model="task.title"
                     label="Edit Task"
                     prepend-inner-icon="mdi-pencil-outline"
-                    @keydown.enter="saveTask"
+                    @blur="saveEditTitle"
                     :rules="titleRules"
                     clearable
                   />
                 </v-col>
                 <!-- 日付編集エリア -->
-                <v-col cols="12" sm="6" md="6">
+                <v-col cols="12" sm="6" md="6" v-show="!editDate">
+                  <p @click="editingDate">
+                    <v-icon>mdi-calendar-today</v-icon>
+                    {{dateRangeText}}
+                  </p>
+                </v-col>
+
+                <v-col cols="12" sm="6" md="6" v-show="editDate">
                   <v-dialog
                     ref="dialog"
                     v-model="modal"
@@ -83,7 +96,7 @@
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field
-                        v-model="dateRangeText"
+                        v-model="task.date"
                         label="Picker in dialog"
                         prepend-inner-icon="mdi-calendar-today"
                         readonly
@@ -99,13 +112,20 @@
                   </v-dialog>
                 </v-col>
                 <!-- 詳細編集エリア -->
-                <v-col cols="12">
+                <v-col cols="12" v-show="!editDetail">
+                  <p @click="editingDetail">
+                    <v-icon>mdi-briefcase-outline</v-icon>
+                    {{task.task.detail}}
+                  </p>
+                </v-col>
+                <v-col cols="12" v-show="editDetail">
                   <v-text-field
                     v-model="task.detail"
                     label="Edit Detail"
                     prepend-inner-icon="mdi-briefcase-outline"
                     required
                     clearable
+                    @blur="saveEditDetail"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -114,7 +134,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <nuxt-link to="/">
-              <v-btn color="blue darken-1" text @click="closeTaskDialog">Close</v-btn>
+              <v-btn color="blue darken-1" text>Close</v-btn>
             </nuxt-link>
             <v-btn color="blue darken-1" text @click="saveTask">Save</v-btn>
           </v-card-actions>
@@ -153,12 +173,15 @@ export default {
       modal: false,
       taskDialog: true,
       menu: false,
+      editTitle: false,
+      editDate: false,
+      editDetail: false,
     };
   },
   computed: {
     dateRangeText() {
-      const date = this.task.date;
-      // return Object.values(date).join('~')
+      const date = this.task.task.date;
+      return Object.values(date).join("~");
     },
   },
   methods: {
@@ -185,6 +208,32 @@ export default {
       this.task.date = [new Date().toISOString().substr(0, 10)];
       this.taskDialog = false;
     },
+    editingTitle() {
+      this.editTitle = true;
+      this.task.title = this.task.task.title;
+      console.log(this.task.title);
+    },
+    saveEditTitle() {
+      this.editTitle = false;
+      this.task.task.title = this.task.title;
+    },
+    editingDate() {
+      this.editDate = true;
+      this.task.date = this.task.task.date;
+    },
+    saveEditDate() {
+      this.editTitle = false;
+      this.task.task.date = this.task.date;
+    },
+    editingDetail() {
+      this.editDetail = true;
+      this.task.detail = this.task.task.detail;
+    },
+    saveEditDetail() {
+      this.editTitle = false;
+      this.task.task.detail = this.task.detail;
+    },
+
     ...mapActions(["addTask", "updateTask"]),
   },
 };
