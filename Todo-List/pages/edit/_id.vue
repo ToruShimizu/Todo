@@ -32,7 +32,7 @@
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field
-                        v-model="dateRangeText"
+                        v-model="task.date"
                         label="Picker in dialog"
                         prepend-inner-icon="mdi-calendar-today"
                         readonly
@@ -74,6 +74,7 @@
                     label="Edit Task"
                     prepend-inner-icon="mdi-pencil-outline"
                     @blur="saveEditTitle"
+                    ref="focusTitle"
                     :rules="titleRules"
                     clearable
                   />
@@ -102,6 +103,8 @@
                         readonly
                         v-bind="attrs"
                         v-on="on"
+                        @blur="saveEditDate"
+                        ref="focusDate"
                       ></v-text-field>
                     </template>
                     <v-date-picker v-model="task.date" scrollable range>
@@ -126,6 +129,7 @@
                     required
                     clearable
                     @blur="saveEditDetail"
+                    ref="focusDetail"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -192,6 +196,7 @@ export default {
       }
       if (this.$route.params.id) {
         this.updateTask({ id: this.$route.params.id, task: this.task });
+        this.$router.push({ path: "/" });
         console.log("updateTask");
       } else {
         this.addTask({ task: this.task });
@@ -211,26 +216,35 @@ export default {
     editingTitle() {
       this.editTitle = true;
       this.task.title = this.task.task.title;
+      this.$nextTick(() => {
+        this.$refs.focusTitle.focus();
+      });
       console.log(this.task.title);
+    },
+    editingDate() {
+      this.editDate = true;
+      this.task.date = this.task.task.date;
+      this.$nextTick(() => {
+        this.$refs.focusDate.focus();
+      });
+    },
+    editingDetail() {
+      this.editDetail = true;
+      this.task.detail = this.task.task.detail;
+      this.$nextTick(() => {
+        this.$refs.focusDetail.focus();
+      });
     },
     saveEditTitle() {
       this.editTitle = false;
       this.task.task.title = this.task.title;
     },
-    editingDate() {
-      this.editDate = true;
-      this.task.date = this.task.task.date;
-    },
     saveEditDate() {
-      this.editTitle = false;
+      this.editDate = false;
       this.task.task.date = this.task.date;
     },
-    editingDetail() {
-      this.editDetail = true;
-      this.task.detail = this.task.task.detail;
-    },
     saveEditDetail() {
-      this.editTitle = false;
+      this.editDetail = false;
       this.task.task.detail = this.task.detail;
     },
 
