@@ -141,6 +141,7 @@ export const actions = {
 export const getters = {
   // ユーザーネームの取得
   userName: state => (state.login_user ? state.login_user.displayName : ""),
+  userEmail: state => (state.login_user ? state.login_user.email : ""),
   // ユーザー画像の取得
   photoURL: state => (state.login_user ? state.login_user.photoURL : ""),
   // uidの取得
