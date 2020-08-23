@@ -80,7 +80,6 @@ import { mapActions } from "vuex";
 export default {
   data() {
     return {
-      userName: null,
       userEmail: "",
       userPassword: "",
       showPassword: false,
@@ -97,21 +96,22 @@ export default {
     };
   },
   methods: {
-    testLogin() {
+   testLogin() {
       this.$store.dispatch("login", {
         email: "test@example.com",
         password: "testUser",
       });
     },
-    async login() {
+    login() {
       if (this.emailRules && this.passwordRules) {
         this.$refs.form.validate();
         return;
       }
-     await this.$store.dispatch("login", {
+     this.$store.dispatch("login", {
         email: this.userEmail,
         password: this.userPassword,
       });
+
     },
     async createUser() {
       if (this.emailRules && this.passwordRules) {
