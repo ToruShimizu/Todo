@@ -63,12 +63,13 @@ export const actions = {
     });
   },
   // アカウントなしでログイン
+  // FIXME エラーを返すようにする
   async login({ commit }, payload) {
-    await firebase
+      await firebase
       .auth()
       .signInWithEmailAndPassword(payload.email, payload.password);
-    // サインイン成功後にトップページに遷移する
-    alert("ようこそ" + payload.email + "さん");
+      // サインイン成功後にトップページに遷移する
+      alert("ようこそ" + payload.email + "さん");
   },
   // ログアウト
   logout() {
