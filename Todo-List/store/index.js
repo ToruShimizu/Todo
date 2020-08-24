@@ -45,9 +45,12 @@ export const mutations = {
   doneTask(state, { todo }) {
     todo.done = !todo.done;
   },
-  addComment(state, { message }) {
+  addComments(state, { message }) {
     state.comments.push(message)
-  }
+  },
+  // addMessage(state, { id,message }) {
+  //   message.id = id
+  // }
 };
 
 export const actions = {
@@ -144,9 +147,16 @@ export const actions = {
   async addComment({getters, commit}, { id,message }) {
       await db
         .collection(`users/${getters.uid}/todos`)
-        .doc(id).collection(`comments/${getters.uid}/message`).add({ message:message, id:id});
-        commit("addComment", { message });
-  }
+        .doc(id).collection(`comments/${getters.uid}/message`).add({message:message}).then(doc => {
+          commit("addComments", { id:doc.id,message });
+        });
+  },
+  async fetchComments({ getters, commit }) {
+    const snapShot = await db.collection(`users/${getters.uid}/todos`).doc().collection(`comments/${getters.uid}/message`).get();
+    snapShot.forEach(doc =>
+      commit("addComments", { id: doc.id, message: doc.data() })
+    );
+  },
 };
 
 export const getters = {
