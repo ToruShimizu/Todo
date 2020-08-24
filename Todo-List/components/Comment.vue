@@ -2,7 +2,7 @@
   <v-card max-width="400" class="mx-auto">
     <v-container>
       <v-layout>
-        <f-flex>
+        <v-flex>
           <v-text-field
             flat
             solo-inverted
@@ -12,7 +12,7 @@
             label="Add Comment"
             clearable
           ></v-text-field>
-        </f-flex>
+        </v-flex>
         <v-flex>
           <v-btn @click="addComment" color="primary">
             <v-icon left>mdi-pen-plus</v-icon>Add
@@ -34,7 +34,7 @@
 export default {
   data() {
     return {
-      message: "hoge",
+      message: "",
     };
   },
   methods: {
