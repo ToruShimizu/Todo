@@ -37,5 +37,12 @@ export default {
       message: "hoge",
     };
   },
+  methods: {
+      addComment() {
+      this.$store.dispatch("addComment", { id: this.$route.params.id, message: this.message });
+      this.message = "";
+    },
+  }
+
 };
 </script>
