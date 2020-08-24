@@ -126,7 +126,6 @@ export default {
     ]),
     ...mapState(["todos"]),
   },
-
   methods: {
     removeTask(id) {
       if (!confirm("Are you sure?")) return;

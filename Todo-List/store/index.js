@@ -6,6 +6,7 @@ export const strict = false;
 
 export const state = () => ({
   todos: [],
+  comments: [],
   login_user: null
 });
 
@@ -43,7 +44,13 @@ export const mutations = {
   // 完了、未完了切り替え
   doneTask(state, { todo }) {
     todo.done = !todo.done;
-  }
+  },
+  addComments(state, { message }) {
+    state.comments.push(message)
+  },
+  // addMessage(state, { id,message }) {
+  //   message.id = id
+  // }
 };
 
 export const actions = {
@@ -136,7 +143,20 @@ export const actions = {
         done: !todo.done
       });
     commit("doneTask", { todo });
-  }
+  },
+  async addComment({getters, commit}, { id,message }) {
+      await db
+        .collection(`users/${getters.uid}/todos`)
+        .doc(id).collection(`comments/${getters.uid}/message`).add({message:message}).then(doc => {
+          commit("addComments", { id:doc.id,message });
+        });
+  },
+  async fetchComments({ getters, commit }) {
+    const snapShot = await db.collection(`users/${getters.uid}/todos`).doc().collection(`comments/${getters.uid}/message`).get();
+    snapShot.forEach(doc =>
+      commit("addComments", { id: doc.id, message: doc.data() })
+    );
+  },
 };
 
 export const getters = {
