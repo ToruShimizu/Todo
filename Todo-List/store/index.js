@@ -44,6 +44,9 @@ export const mutations = {
   // 完了、未完了切り替え
   doneTask(state, { todo }) {
     todo.done = !todo.done;
+  },
+  addComment(state, { message }) {
+    state.comments.push(message)
   }
 };
 
@@ -137,6 +140,12 @@ export const actions = {
         done: !todo.done
       });
     commit("doneTask", { todo });
+  },
+  async addComment({getters, commit}, { id,message }) {
+      await db
+        .collection(`users/${getters.uid}/todos`)
+        .doc(id).collection(`comments/${getters.uid}/message`).add({ message:message, id:id});
+        commit("addComment", { message });
   }
 };
 
