@@ -7,7 +7,6 @@
           <span class="headline" v-else>EditToTask</span>
         </v-card-title>
         <v-form ref="form" lazy-validation>
-          <v-card-text>
             <v-container v-if="!this.$route.params.id">
               <v-row>
                 <!-- タスク入力エリア -->
@@ -134,7 +133,6 @@
                 </v-col>
               </v-row>
             </v-container>
-          </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
             <nuxt-link to="/">
