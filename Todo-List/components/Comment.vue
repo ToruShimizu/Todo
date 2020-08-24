@@ -20,7 +20,7 @@
         </v-flex>
       </v-layout>
       <v-row dense>
-        <v-col cols="12">
+        <v-col cols="12" v-for='(message,i) in comments' :key='i'>
           <v-card>
             <v-card-title>{{message}}</v-card-title>
           </v-card>
@@ -31,11 +31,16 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   data() {
     return {
       message: "",
     };
+  },
+  computed: {
+        ...mapState(["comments"]),
   },
   methods: {
       addComment() {
