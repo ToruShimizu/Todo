@@ -60,13 +60,15 @@
         <nuxt-link to="/">
           <v-btn color="blue darken-1" text>Cancel</v-btn>
         </nuxt-link>
-        <v-btn color="blue darken-1" text @click="saveTask">Save</v-btn>
+        <v-btn color="blue darken-1" text @click="addTask">Save</v-btn>
       </v-card-actions>
     </v-form>
   </v-card>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   props: {
     task: {
@@ -91,6 +93,23 @@ export default {
     return {
       datePicker: false,
     };
+  },
+  methods: {
+    addTask() {
+      if (!this.task.title) {
+        this.$refs.form.validate();
+        return;
+      }
+      if (this.$route.params.id) {
+        this.addTask({ task: this.task });
+        console.log("addTask");
+      }
+      this.$router.push({ path: "/" });
+      this.task.title = "";
+      this.task.detail = "";
+      this.task.date = [new Date().toISOString().substr(0, 10)];
+    },
+    ...mapActions(["addTask"]),
   },
 };
 </script>
