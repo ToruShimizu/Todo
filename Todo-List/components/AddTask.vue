@@ -21,7 +21,7 @@
           <v-col cols="12" sm="6" md="6">
             <v-dialog
               ref="dialog"
-              v-model="modal"
+              v-model="datePicker"
               :return-value.sync="task.date"
               persistent
               width="290px"
@@ -38,7 +38,7 @@
               </template>
               <v-date-picker v-model="task.date" scrollable range>
                 <v-spacer></v-spacer>
-                <v-btn text color="primary" @click="modal = false">Cancel</v-btn>
+                <v-btn text color="primary" @click="datePicker = false">Cancel</v-btn>
                 <v-btn text color="primary" @click="$refs.dialog.save(task.date)">OK</v-btn>
               </v-date-picker>
             </v-dialog>
@@ -86,6 +86,11 @@ export default {
       type: Array,
       default: () => [(v) => !!v || "タイトルは必須入力です"],
     },
+  },
+  data() {
+    return {
+      datePicker: false,
+    };
   },
 };
 </script>
