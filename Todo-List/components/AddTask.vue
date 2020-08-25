@@ -43,6 +43,16 @@
                     </v-date-picker>
                   </v-dialog>
                 </v-col>
+                <!-- 詳細入力エリア -->
+                <v-col cols="12">
+                  <v-text-field
+                    v-model="task.detail"
+                    label="Add Detail"
+                    prepend-inner-icon="mdi-briefcase-outline"
+                    required
+                    clearable
+                  ></v-text-field>
+                </v-col>
               </v-row>
             </v-container>
           <v-card-actions>
