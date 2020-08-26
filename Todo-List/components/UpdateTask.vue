@@ -98,6 +98,25 @@ export default {
   components: {
     Comment,
   },
+  props: {
+    task: {
+      type: Object,
+      default: () => ({
+        title: "",
+        detail: "",
+        date: [new Date().toISOString().substr(0, 10)],
+        done: false,
+      }),
+    },
+    validate: {
+      type: Boolean,
+      default: true,
+    },
+    titleRules: {
+      type: Array,
+      default: () => [(v) => !!v || "タイトルは必須入力です"],
+    },
+  },
   data() {
     return {};
   },
