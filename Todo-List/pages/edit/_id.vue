@@ -38,6 +38,7 @@ export default {
       },
       validate: true,
       titleRules: [(v) => !!v || "タイトルは必須入力です"],
+      datePicker: false,
       modal: false,
       taskDialog: true,
       menu: false,

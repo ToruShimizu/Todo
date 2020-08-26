@@ -80,6 +80,10 @@ export default {
         done: false,
       }),
     },
+    datePicker: {
+      type: Boolean,
+      default: false,
+    },
     validate: {
       type: Boolean,
       default: true,
@@ -90,9 +94,7 @@ export default {
     },
   },
   data() {
-    return {
-      datePicker: false,
-    };
+    return {};
   },
   methods: {
     addTask() {
