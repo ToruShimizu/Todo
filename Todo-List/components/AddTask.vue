@@ -67,8 +67,6 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-
 export default {
   props: {
     task: {
@@ -80,6 +78,7 @@ export default {
         done: false,
       }),
     },
+
     datePicker: {
       type: Boolean,
       default: false,
@@ -102,16 +101,13 @@ export default {
         this.$refs.form.validate();
         return;
       }
-      if (this.$route.params.id) {
-        this.addTask({ task: this.task });
-        console.log("addTask");
-      }
+      this.$store.dispatch("addTask", { task: this.task });
+      console.log("addTask");
       this.$router.push({ path: "/" });
       this.task.title = "";
       this.task.detail = "";
       this.task.date = [new Date().toISOString().substr(0, 10)];
     },
-    ...mapActions(["addTask"]),
   },
 };
 </script>
