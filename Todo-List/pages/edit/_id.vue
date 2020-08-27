@@ -1,15 +1,17 @@
 <template>
   <v-row justify="center">
     <v-dialog v-model="taskDialog" persistent max-width="600px">
-     <AddTask/>
+      <AddTask />
+      <UpdateTask />
     </v-dialog>
   </v-row>
 </template>
 
 <script>
 import { mapActions } from "vuex";
-import AddTask from "@/components/AddTask"
-import Comment from "@/components/Comment"
+import AddTask from "@/components/AddTask";
+import UpdateTask from "@/components/UpdateTask";
+import Comment from "@/components/Comment";
 export default {
   components: {
     AddTask,
