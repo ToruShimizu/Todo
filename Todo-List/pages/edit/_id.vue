@@ -2,7 +2,7 @@
   <v-row justify="center">
     <v-dialog v-model="taskDialog" persistent max-width="600px">
       <AddTask v-if="!this.$route.params.id" />
-      <UpdateTask v-else />
+      <UpdateTask v-else :task='this.task'/>
     </v-dialog>
   </v-row>
 </template>
