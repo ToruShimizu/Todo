@@ -84,7 +84,7 @@
         <nuxt-link to="/">
           <v-btn color="blue darken-1" text>Cancel</v-btn>
         </nuxt-link>
-        <v-btn color="blue darken-1" text @click="saveTask">Save</v-btn>
+        <v-btn color="blue darken-1" text @click="updateTask">Save</v-btn>
       </v-card-actions>
     </v-form>
     <Comment />
@@ -122,9 +122,71 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      editTitle: false,
+      editDate: false,
+      editDetail: false,
+    };
+  },
+  computed: {
+    dateRangeText() {
+      const date = this.task.task.date;
+      return Object.values(date).join("~");
+    },
   },
   methods: {
+    updateTask() {
+      if (!this.task.title) {
+        this.$refs.form.validate();
+        return;
+      }
+      if (this.$route.params.id) {
+        this.$store.dispatch("updateTask", {
+          id: this.$route.params.id,
+          task: this.task,
+        });
+        this.$router.push({ path: "/" });
+        console.log("updateTask");
+      }
+      this.$router.push({ path: "/" });
+      this.task.title = "";
+      this.task.detail = "";
+      this.task.date = [new Date().toISOString().substr(0, 10)];
+    },
+    editingTitle() {
+      this.editTitle = true;
+      this.task.title = this.task.task.title;
+      this.$nextTick(() => {
+        this.$refs.focusTitle.focus();
+      });
+      console.log(this.task.title);
+    },
+    editingDate() {
+      this.editDate = true;
+      this.task.date = this.task.task.date;
+      this.$nextTick(() => {
+        this.$refs.focusDate.focus();
+      });
+    },
+    editingDetail() {
+      this.editDetail = true;
+      this.task.detail = this.task.task.detail;
+      this.$nextTick(() => {
+        this.$refs.focusDetail.focus();
+      });
+    },
+    saveEditTitle() {
+      this.editTitle = false;
+      this.task.task.title = this.task.title;
+    },
+    saveEditDate() {
+      this.editDate = false;
+      this.task.task.date = this.task.date;
+    },
+    saveEditDetail() {
+      this.editDetail = false;
+      this.task.task.detail = this.task.detail;
+    },
     ...mapActions([]),
   },
 };
