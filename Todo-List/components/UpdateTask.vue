@@ -80,6 +80,7 @@
           <v-col cols="12">
             <AddComment />
           </v-col>
+          <Comment/>
         </v-row>
       </v-container>
       <v-card-actions>
@@ -96,9 +97,11 @@
 <script>
 import { mapActions } from "vuex";
 import AddComment from "@/components/AddComment";
+import Comment from "@/components/Comment";
 export default {
   components: {
     AddComment,
+    Comment
   },
   props: {
     task: {
