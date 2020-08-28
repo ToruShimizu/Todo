@@ -1,14 +1,6 @@
 <template>
   <v-card max-width="400" class="mx-auto">
     <v-container>
-          <v-text-field
-            hide-details
-            v-model="message"
-            prepend-inner-icon="mdi-message-text-outline"
-            label="Add Comment"
-            clearable
-            @keypress.enter='addComment'
-          ></v-text-field>
       <v-row dense>
         <v-col cols="12" v-for='(message,i) in comments' :key='i'>
           <v-card>
@@ -22,8 +14,12 @@
 
 <script>
 import { mapState } from "vuex";
+import { AddComment } from 'vuex'
 
 export default {
+  components: {
+    AddComment
+  },
   data() {
     return {
       message: "",
