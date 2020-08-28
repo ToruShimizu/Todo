@@ -77,6 +77,9 @@
               ref="focusDetail"
             ></v-text-field>
           </v-col>
+          <v-col cols="12">
+            <AddComment />
+          </v-col>
         </v-row>
       </v-container>
       <v-card-actions>
@@ -87,16 +90,15 @@
         <v-btn color="blue darken-1" text @click="updateTask">Save</v-btn>
       </v-card-actions>
     </v-form>
-    <Comment />
   </v-card>
 </template>
 
 <script>
 import { mapActions } from "vuex";
-import Comment from "@/components/Comment";
+import AddComment from "@/components/AddComment";
 export default {
   components: {
-    Comment,
+    AddComment,
   },
   props: {
     task: {
