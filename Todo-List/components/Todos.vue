@@ -29,43 +29,37 @@
       <v-divider />
       <v-divider />
       <v-row justify="center">
-        <v-col cols="8">
-          <v-text-field
-            flat
-            solo-inverted
-            hide-details
-            v-model="searchTask"
-            @input="taskFilter='searchTask'"
-            prepend-inner-icon="mdi-magnify"
-            label="Search"
-            clearable
-          ></v-text-field>
-        </v-col>
+        <v-col cols="8"></v-col>
       </v-row>
-      <v-list>
-        <v-list-item v-for="todo in todosFiltered" :key="todo.id">
-          <!-- 完了、未完了切り替えチェックボックス -->
-          <v-btn icon>
-            <v-icon
-              :color="(!todo.done && 'grey') || 'primary'"
-              @click="doneTask(todo)"
-            >mdi-check-circle-outline</v-icon>
-          </v-btn>
-          <v-list-item-content>
-            <v-list-item-title :class="(todo.done && 'grey--text') || 'primary--text'" class="ml-2">
-              <nuxt-link
-                :to="{ name: 'edit-id',params:{
+      <v-slide-y-transition class="py-0" group tag="v-list">
+        <v-list v-for="(todo) in todosFiltered" :key="todo.id">
+          <v-list-item>
+            <!-- 完了、未完了切り替えチェックボックス -->
+            <v-btn icon>
+              <v-icon
+                :color="(!todo.done && 'grey') || 'primary'"
+                @click="doneTask(todo)"
+              >mdi-check-circle-outline</v-icon>
+            </v-btn>
+            <v-list-item-content>
+              <v-list-item-title
+                :class="(todo.done && 'grey--text') || 'primary--text'"
+                class="ml-2"
+              >
+                <nuxt-link
+                  :to="{ name: 'edit-id',params:{
               id: todo.id}}"
-              >{{ todo.task.title }}</nuxt-link>
-            </v-list-item-title>
-            <!-- 編集用のテキストエリア -->
-          </v-list-item-content>
-          <!-- 削除ボタン -->
-          <v-btn icon>
-            <v-icon @click="removeTask(todo.id)">mdi-delete-outline</v-icon>
-          </v-btn>
-        </v-list-item>
-      </v-list>
+                >{{ todo.task.title }}</nuxt-link>
+              </v-list-item-title>
+              <!-- 編集用のテキストエリア -->
+            </v-list-item-content>
+            <!-- 削除ボタン -->
+            <v-btn icon>
+              <v-icon @click="removeTask(todo.id)">mdi-delete-outline</v-icon>
+            </v-btn>
+          </v-list-item>
+        </v-list>
+      </v-slide-y-transition>
     </v-card>
   </v-container>
 </template>
