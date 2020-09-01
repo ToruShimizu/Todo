@@ -1,11 +1,11 @@
 <template>
   <!-- 完了、未完了のタブ切り替え -->
   <v-tabs>
-    <v-tab @click="taskFilter = 'all'">All:{{ todos.length }}</v-tab>
+    <v-tab @click="selectTaskFilter = 'all'">All:{{ todos.length }}</v-tab>
     <v-divider vertical />
-    <v-tab @click="taskFilter = 'active'" class>remaining:{{ remainingTodos }}</v-tab>
+    <v-tab @click="selectTaskFilter = 'active'" class>remaining:{{ remainingTodos }}</v-tab>
     <v-divider vertical />
-    <v-tab @click="taskFilter = 'done'">
+    <v-tab @click="selectTaskFilter = 'done'">
       complete: {{ completedTodos }}/{{todos.length}}
       <!-- 完了率の表示 -->
       <v-progress-circular
@@ -23,12 +23,20 @@
 import { mapState, mapGetters } from "vuex";
 
 export default {
-  data() {
-    return {
-      searchTask: "",
-    };
+  props: {
+    taskFilter: {
+      type: String,
+    },
   },
   computed: {
+    selectTaskFilter: {
+      get: function () {
+        return this.taskfilter;
+      },
+      set: function (value) {
+        this.$emit("update:filterdTask", value);
+      },
+    },
     ...mapGetters([
       "completedTodos",
       "progress",

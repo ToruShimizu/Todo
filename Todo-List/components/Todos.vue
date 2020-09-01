@@ -25,7 +25,7 @@
     <v-divider class="mt-4" />
 
     <v-card v-if="todos.length > 0">
-      <FilteredTask :todos="this.todos" />
+      <FilteredTask @update:filterdTask="taskFilter = $event" />
       <v-divider />
       <v-divider />
       <v-row justify="center">
@@ -78,10 +78,10 @@ export default {
   components: {
     FilteredTask,
   },
+
   data() {
     return {
       taskFilter: "all",
-      searchTask: "",
     };
   },
   computed: {
