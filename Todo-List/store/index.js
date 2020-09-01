@@ -90,7 +90,7 @@ export const actions = {
   // firestoreからデータを取り出す
   async fetchTodos({ getters, commit }) {
     commit("initTodos");
-    const snapShot = await db.collection(`users/${getters.uid}/todos`).get();
+    const snapShot = await db.collection(`users/${getters.uid}/todos`).orderBy('created','desc').get();
     snapShot.forEach(doc =>
       commit("addTodos", { id: doc.id, task: doc.data() })
     );
