@@ -27,12 +27,16 @@
     <v-card v-if="todos.length > 0">
       <FilteredTask @update:filterdTask="taskFilter = $event" />
       <v-divider />
-      <v-divider />
       <v-row justify="center">
         <v-col cols="8"></v-col>
       </v-row>
       <v-slide-y-transition class="py-0" group tag="v-list">
-        <v-list v-for="(todo) in todosFiltered" :key="todo.id">
+
+        <v-list v-for="(todo,i) in todosFiltered" :key="todo.id">
+              <v-divider
+            v-if="i !== 0"
+            :key="`${i}-divider`"
+          ></v-divider>
           <v-list-item>
             <!-- 完了、未完了切り替えチェックボックス -->
             <v-btn icon>
