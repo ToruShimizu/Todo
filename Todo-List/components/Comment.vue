@@ -1,21 +1,26 @@
 <template>
-    <v-container>
-      <v-row dense>
-        <v-col cols="12" v-for="(message,i) in comments" :key="i">
-          <v-card max-width="400" class="mx-auto">
-            <v-card-title>{{message}}</v-card-title>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
+  <v-list subheader>
+    <v-list-item v-for="(item,i) in comments" :key="i">
+      <v-list-item-content>
+        <v-list-item-icon v-if="photoURL">
+          <v-avatar size="50">
+            <img :src="photoURL" />
+          </v-avatar>
+        </v-list-item-icon>
+        <v-list-item-title>{{userName}}さんがコメントしました</v-list-item-title>
+        <v-text-field :value="item"/>
+      </v-list-item-content>
+    </v-list-item>
+  </v-list>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 
 export default {
   computed: {
     ...mapState(["comments"]),
+    ...mapGetters(["userName", "photoURL", "userEmail"]),
   },
 };
 </script>
