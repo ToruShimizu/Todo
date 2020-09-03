@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="mt-12">
     <v-col cols="12" sm="12" md="12">
       <v-card width="400px" class="mx-auto mt-5 text-center">
         <v-card-title>
@@ -50,7 +50,7 @@
               clearable
             />
             <v-text-field
-              v-bind:type="showPassword ? 'text' : 'Password'"
+              :type="showPassword ? 'text' : 'Password'"
               prepend-inner-icon="mdi-lock"
               v-bind:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
               label="Password(6文字以上)"
@@ -96,7 +96,7 @@ export default {
     };
   },
   methods: {
-   testLogin() {
+    testLogin() {
       this.$store.dispatch("login", {
         email: "test@example.com",
         password: "testUser",
@@ -107,27 +107,22 @@ export default {
         this.$refs.form.validate();
         return;
       }
-     this.$store.dispatch("login", {
-        email: this.userEmail,
-        password: this.userPassword,
-      });
-
-    },
-    async createUser() {
-      if (this.emailRules && this.passwordRules) {
-        this.$refs.form.validate();
-        return;
-      }
-      await this.$store.dispatch("createUser", {
-        userEmail: this.userEmail,
-        userPassword: this.userPassword,
-      });
-      alert("Successfully created user");
       this.$store.dispatch("login", {
         email: this.userEmail,
         password: this.userPassword,
       });
-      this.$router.push("/");
+    },
+    createUser() {
+      if (this.emailRules && this.passwordRules) {
+        this.$refs.form.validate();
+        return;
+      }
+      this.$store.dispatch("createUser", {
+        userEmail: this.userEmail,
+        userPassword: this.userPassword,
+      });
+      console.log("create");
+      alert("Successfully created user");
     },
     ...mapActions(["googleLogin"]),
   },
