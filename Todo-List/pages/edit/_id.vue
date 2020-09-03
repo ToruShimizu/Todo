@@ -1,8 +1,8 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="taskDialog" persistent max-width="600px">
+    <v-dialog v-model="taskDialog" persistent max-width="600px" transition="scroll-y-transition">
       <AddTask v-if="!this.$route.params.id" />
-      <UpdateTask v-else :task='this.task'/>
+      <UpdateTask v-else :task="this.task" />
     </v-dialog>
   </v-row>
 </template>
@@ -50,8 +50,6 @@ export default {
       this.task.date = [new Date().toISOString().substr(0, 10)];
       this.taskDialog = false;
     },
-
   },
 };
 </script>
-
