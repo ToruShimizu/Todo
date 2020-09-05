@@ -28,38 +28,44 @@
       <FilteredTask @update:filterdTask="taskFilter = $event" />
       <v-divider />
       <v-row justify="center">
-        <v-col cols="8"></v-col>
+        <v-col cols="8">
+          <v-layout>
+            <SearchTask :search.sync="searchTask" />
+            <v-spacer />
+            <SortByTask
+              :handleAscTodos="ascTodos"
+              :handleDescTodos="descTodos"
+            />
+          </v-layout>
+        </v-col>
       </v-row>
-      <SortByTask :handleAscTodos="ascTodos" :handleDescTodos="descTodos" />
+
       <v-slide-y-transition class="py-0" group tag="v-list">
         <v-list v-for="(todo, i) in todoList" :key="todo.id">
           <v-divider v-if="i !== 0" :key="`${i}-divider`"></v-divider>
           <v-list-item>
             <!-- 完了、未完了切り替えチェックボックス -->
             <v-btn icon @click="doneTask(todo)">
-              <v-icon
-                :color="(!todo.done && 'grey') || 'primary'"
-
+              <v-icon :color="(!todo.done && 'grey') || 'primary'"
                 >mdi-check-circle-outline</v-icon
               >
             </v-btn>
             <v-list-item-content>
-                <nuxt-link
-                  :to="{
-                    name: 'edit-id',
-                    params: {
-                      id: todo.id
-                    }
-                  }"
-                  >
-              <v-list-item-title
-                :class="(todo.done && 'grey--text') || 'primary--text'"
-                class="ml-2"
+              <nuxt-link
+                :to="{
+                  name: 'edit-id',
+                  params: {
+                    id: todo.id
+                  }
+                }"
               >
-                  {{ todo.task.title }}
-              </v-list-item-title>
-                  </nuxt-link
+                <v-list-item-title
+                  :class="(todo.done && 'grey--text') || 'primary--text'"
+                  class="ml-2"
                 >
+                  {{ todo.task.title }}
+                </v-list-item-title>
+              </nuxt-link>
               <!-- 編集用のテキストエリア -->
             </v-list-item-content>
             <!-- 削除ボタン -->
@@ -77,22 +83,25 @@
 import { mapState, mapGetters } from "vuex";
 import FilteredTask from "@/components/FilteredTask";
 import SortByTask from "@/components/SortByTask";
+import SearchTask from "@/components/SearchTask";
 
 export default {
   components: {
     FilteredTask,
-    SortByTask
+    SortByTask,
+    SearchTask
   },
 
   data() {
     return {
       taskFilter: "all",
-      sortTask: 1
+      sortTask: 1,
+      searchTask: ""
     };
   },
   computed: {
     todoList() {
-      return this.sortByTask();
+      return this.searchTasks();
     },
 
     // タスク検索
@@ -136,6 +145,19 @@ export default {
           break;
         default:
       }
+    },
+    searchTasks() {
+      let arr = [];
+      let data = this.todos;
+      data.forEach(el => {
+        if (
+          el.task.title.toLowerCase().indexOf(this.searchTask.toLowerCase()) >=
+          0
+        ) {
+          arr.push(el);
+        }
+      });
+      return arr;
     }
   }
 };
