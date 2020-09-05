@@ -8,10 +8,17 @@
           :value="false"
           class="ml-2"
           @click="sortAscTodos"
+          v-if="isActive"
         >
           <v-icon>mdi-arrow-up</v-icon>
         </v-btn>
-        <v-btn depressed color="grey-lighten" :value="true" @click="sortDescTodos">
+        <v-btn
+          depressed
+          color="grey-lighten"
+          :value="true"
+          @click="sortDescTodos"
+          v-else
+        >
           <v-icon>mdi-arrow-down</v-icon>
         </v-btn>
       </v-btn-toggle>
@@ -39,8 +46,8 @@ export default {
   },
   data() {
     return {
-
-  }
+      isActive: true
+    };
   },
   computed: {
     //   selectTaskFilter: {
@@ -54,10 +61,12 @@ export default {
   },
   methods: {
     sortAscTodos() {
-      this.handleAscTodos()
+      this.handleAscTodos();
+      this.isActive = false;
     },
     sortDescTodos() {
-      this.handleDescTodos()
+      this.handleDescTodos();
+      this.isActive = true;
     }
   }
 };
