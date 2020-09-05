@@ -71,17 +71,19 @@
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
                 <v-icon
-                  color="red"
                   v-if="task.date > todo.task.date"
                   v-bind="attrs"
                   v-on="on"
+                  :class="(todo.done && 'grey--text') || 'red--text'"
                   >mdi-alert-outline</v-icon
                 >
               </template>
               <span>Expired</span>
             </v-tooltip>
             <v-list-item-content>
-              <v-list-item-title>
+              <v-list-item-title
+                :class="(todo.done && 'grey--text') || 'brack--text'"
+              >
                 {{ todo.task.date }}
               </v-list-item-title>
               <!-- 編集用のテキストエリア -->
@@ -165,15 +167,17 @@ export default {
       switch (this.taskFilter) {
         case "all":
           return this.todos;
+
           break;
         case "active":
           return this.todos.filter(todo => !todo.done);
+
           break;
         case "done":
           return this.todos.filter(todo => todo.done);
+
           break;
         default:
-          return;
       }
     },
     searchTasks() {
@@ -188,8 +192,7 @@ export default {
         }
       });
       return arr;
-    },
-    date() {}
+    }
   }
 };
 </script>
