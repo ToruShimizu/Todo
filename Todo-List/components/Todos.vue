@@ -3,7 +3,7 @@
     <v-layout>
       <v-flex>
         <!-- トータルtodos表示 -->
-        <h2 class="display-1 grey--text pl-4">
+        <h2 class="display-1 grey--text pl-4" @click="end()">
           totalTodos:&nbsp;
           <v-fade-transition leave-absolute>
             <span :key="`todos-${todos.length}`">{{ todos.length }}</span>
@@ -66,12 +66,31 @@
                   {{ todo.task.title }}
                 </v-list-item-title>
               </nuxt-link>
+            </v-list-item-content>
+
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon
+                  color="red"
+                  v-if="task.date > todo.task.date"
+                  v-bind="attrs"
+                  v-on="on"
+                  >mdi-alert-outline</v-icon
+                >
+              </template>
+              <span>Expired</span>
+            </v-tooltip>
+            <v-list-item-content>
+              <v-list-item-title>
+                {{ todo.task.date }}
+              </v-list-item-title>
               <!-- 編集用のテキストエリア -->
             </v-list-item-content>
-            <!-- 削除ボタン -->
+
             <v-btn icon>
               <v-icon @click="removeTask(todo.id)">mdi-delete-outline</v-icon>
             </v-btn>
+            <!-- 削除ボタン -->
           </v-list-item>
         </v-list>
       </v-slide-y-transition>
@@ -86,6 +105,17 @@ import SortByTask from "@/components/SortByTask";
 import SearchTask from "@/components/SearchTask";
 
 export default {
+  props: {
+    task: {
+      type: Object,
+      default: () => ({
+        title: "",
+        detail: "",
+        date: new Date().toISOString(),
+        done: false
+      })
+    }
+  },
   components: {
     FilteredTask,
     SortByTask,
@@ -101,9 +131,8 @@ export default {
   },
   computed: {
     todoList() {
-      return this.searchTasks();
+      return this.todosFiltered();
     },
-
     // タスク検索
     ...mapGetters(["todosCount"]),
     ...mapState(["todos"])
@@ -144,6 +173,7 @@ export default {
           return this.todos.filter(todo => todo.done);
           break;
         default:
+          return;
       }
     },
     searchTasks() {
@@ -158,12 +188,13 @@ export default {
         }
       });
       return arr;
-    }
+    },
+    date() {}
   }
 };
 </script>
 
-<style scoped>
+<style>
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
