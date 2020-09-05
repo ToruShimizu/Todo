@@ -1,6 +1,5 @@
 <template>
-  <v-row justify="center">
-    <v-col cols="8">
+
       <v-btn-toggle mandatory>
         <v-btn
           depressed
@@ -22,8 +21,7 @@
           <v-icon>mdi-arrow-down</v-icon>
         </v-btn>
       </v-btn-toggle>
-    </v-col>
-  </v-row>
+
 </template>
 
 <script>
