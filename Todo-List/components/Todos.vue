@@ -11,7 +11,7 @@
         </h2>
       </v-flex>
       <v-flex>
-        <nuxt-link :to="{ name: 'edit-id', }">
+        <nuxt-link :to="{ name: 'edit-id' }">
           <v-btn color="primary" dark class="hidden-xs-only">
             <v-icon>mdi-pen-plus</v-icon>Add
           </v-btn>
@@ -30,20 +30,18 @@
       <v-row justify="center">
         <v-col cols="8"></v-col>
       </v-row>
+      <SortByTask :handleAscTodos="ascTodos" :handleDescTodos="descTodos" />
       <v-slide-y-transition class="py-0" group tag="v-list">
-
-        <v-list v-for="(todo,i) in todosFiltered" :key="todo.id">
-              <v-divider
-            v-if="i !== 0"
-            :key="`${i}-divider`"
-          ></v-divider>
+        <v-list v-for="(todo, i) in todoList" :key="todo.id">
+          <v-divider v-if="i !== 0" :key="`${i}-divider`"></v-divider>
           <v-list-item>
             <!-- 完了、未完了切り替えチェックボックス -->
             <v-btn icon>
               <v-icon
                 :color="(!todo.done && 'grey') || 'primary'"
                 @click="doneTask(todo)"
-              >mdi-check-circle-outline</v-icon>
+                >mdi-check-circle-outline</v-icon
+              >
             </v-btn>
             <v-list-item-content>
               <v-list-item-title
@@ -51,9 +49,14 @@
                 class="ml-2"
               >
                 <nuxt-link
-                  :to="{ name: 'edit-id',params:{
-              id: todo.id}}"
-                >{{ todo.task.title }}</nuxt-link>
+                  :to="{
+                    name: 'edit-id',
+                    params: {
+                      id: todo.id
+                    }
+                  }"
+                  >{{ todo.task.title }}</nuxt-link
+                >
               </v-list-item-title>
               <!-- 編集用のテキストエリア -->
             </v-list-item-content>
@@ -71,36 +74,28 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 import FilteredTask from "@/components/FilteredTask";
+import SortByTask from "@/components/SortByTask";
 
 export default {
   components: {
     FilteredTask,
+    SortByTask
   },
 
   data() {
     return {
       taskFilter: "all",
+      sortTask: 1
     };
   },
   computed: {
-    todosFiltered() {
-      // 完了状態の絞り込み
-      switch (this.taskFilter) {
-        case "all":
-          return this.todos;
-          break;
-        case "active":
-          return this.todos.filter((todo) => !todo.done);
-          break;
-        case "done":
-          return this.todos.filter((todo) => todo.done);
-          break;
-        default:
-      }
-      // タスク検索
+    todoList() {
+      return this.sortByTask();
     },
+
+    // タスク検索
     ...mapGetters(["todosCount"]),
-    ...mapState(["todos"]),
+    ...mapState(["todos"])
   },
   methods: {
     removeTask(id) {
@@ -110,7 +105,37 @@ export default {
     doneTask(todo) {
       this.$store.dispatch("doneTask", { todo });
     },
-  },
+    sortByTask() {
+      return this.todos.sort((a, b) => {
+        return a.task.title < b.task.title
+          ? -this.sortTask
+          : a.task.title > b.task.title
+          ? this.sortTask
+          : 0;
+      });
+    },
+    ascTodos() {
+      this.sortTask = 1;
+    },
+    descTodos() {
+      this.sortTask = -1;
+    },
+    todosFiltered() {
+      // 完了状態の絞り込み
+      switch (this.taskFilter) {
+        case "all":
+          return this.todos;
+          break;
+        case "active":
+          return this.todos.filter(todo => !todo.done);
+          break;
+        case "done":
+          return this.todos.filter(todo => todo.done);
+          break;
+        default:
+      }
+    }
+  }
 };
 </script>
 
