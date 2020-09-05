@@ -1,6 +1,11 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="taskDialog" persistent max-width="600px" transition="scroll-y-transition">
+    <v-dialog
+      v-model="taskDialog"
+      persistent
+      max-width="600px"
+      transition="scroll-y-transition"
+    >
       <AddTask v-if="!this.$route.params.id" />
       <UpdateTask v-else :task="this.task" />
     </v-dialog>
@@ -14,7 +19,7 @@ import Comment from "@/components/Comment";
 export default {
   components: {
     AddTask,
-    Comment,
+    Comment
   },
   created() {
     // ルートのパラメーターにタスクのIdが含まれているか
@@ -35,12 +40,12 @@ export default {
         title: "",
         detail: "",
         date: [new Date().toISOString().substr(0, 10)],
-        done: false,
+        done: false
       },
       validate: true,
-      titleRules: [(v) => !!v || "タイトルは必須入力です"],
+      titleRules: [v => !!v || "タイトルは必須入力です"],
       datePicker: false,
-      taskDialog: true,
+      taskDialog: true
     };
   },
   methods: {
@@ -49,7 +54,7 @@ export default {
       this.task.detail = "";
       this.task.date = [new Date().toISOString().substr(0, 10)];
       this.taskDialog = false;
-    },
-  },
+    }
+  }
 };
 </script>
