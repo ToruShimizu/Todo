@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-container mt-12>
-      <todos />
+      <Todos />
     </v-container>
   </v-app>
 </template>
