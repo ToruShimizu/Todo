@@ -36,18 +36,14 @@
           <v-divider v-if="i !== 0" :key="`${i}-divider`"></v-divider>
           <v-list-item>
             <!-- 完了、未完了切り替えチェックボックス -->
-            <v-btn icon>
+            <v-btn icon @click="doneTask(todo)">
               <v-icon
                 :color="(!todo.done && 'grey') || 'primary'"
-                @click="doneTask(todo)"
+
                 >mdi-check-circle-outline</v-icon
               >
             </v-btn>
             <v-list-item-content>
-              <v-list-item-title
-                :class="(todo.done && 'grey--text') || 'primary--text'"
-                class="ml-2"
-              >
                 <nuxt-link
                   :to="{
                     name: 'edit-id',
@@ -55,9 +51,15 @@
                       id: todo.id
                     }
                   }"
-                  >{{ todo.task.title }}</nuxt-link
-                >
+                  >
+              <v-list-item-title
+                :class="(todo.done && 'grey--text') || 'primary--text'"
+                class="ml-2"
+              >
+                  {{ todo.task.title }}
               </v-list-item-title>
+                  </nuxt-link
+                >
               <!-- 編集用のテキストエリア -->
             </v-list-item-content>
             <!-- 削除ボタン -->
@@ -139,7 +141,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
