@@ -19,29 +19,35 @@
           </v-col>
           <!-- 日付入力エリア -->
           <v-col cols="12" sm="6" md="6">
-            <v-dialog
-              ref="dialog"
-              v-model="datePicker"
+            <v-menu
+              ref="menu"
+              v-model="dateMenu"
+              :close-on-content-click="false"
               :return-value.sync="task.date"
-              persistent
-              width="290px"
+              transition="scale-transition"
+              offset-y
+              min-width="290px"
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
                   v-model="task.date"
-                  label="Picker in dialog"
-                  prepend-inner-icon="mdi-calendar-today"
+                  label="Picker in menu"
+                  prepend-icon="mdi-calendar-today"
                   readonly
                   v-bind="attrs"
                   v-on="on"
                 ></v-text-field>
               </template>
-              <v-date-picker v-model="task.date" scrollable range>
+              <v-date-picker v-model="task.date" no-title scrollable>
                 <v-spacer></v-spacer>
-                <v-btn text color="primary" @click="datePicker = false">Cancel</v-btn>
-                <v-btn text color="primary" @click="$refs.dialog.save(task.date)">OK</v-btn>
+                <v-btn text color="primary" @click="dateMenu = false"
+                  >Cancel</v-btn
+                >
+                <v-btn text color="primary" @click="$refs.menu.save(task.date)"
+                  >OK</v-btn
+                >
               </v-date-picker>
-            </v-dialog>
+            </v-menu>
           </v-col>
           <!-- 詳細入力エリア -->
           <v-col cols="12">
@@ -74,26 +80,28 @@ export default {
       default: () => ({
         title: "",
         detail: "",
-        date: [new Date().toISOString().substr(0, 10)],
-        done: false,
-      }),
+        date: new Date().toISOString().substr(0, 10),
+        done: false
+      })
     },
 
     datePicker: {
       type: Boolean,
-      default: false,
+      default: false
     },
     validate: {
       type: Boolean,
-      default: true,
+      default: true
     },
     titleRules: {
       type: Array,
-      default: () => [(v) => !!v || "タイトルは必須入力です"],
-    },
+      default: () => [v => !!v || "タイトルは必須入力です"]
+    }
   },
   data() {
-    return {};
+    return {
+      dateMenu: false
+    };
   },
   methods: {
     addTask() {
@@ -107,9 +115,7 @@ export default {
       this.task.title = "";
       this.task.detail = "";
       this.task.date = [new Date().toISOString().substr(0, 10)];
-    },
-  },
+    }
+  }
 };
 </script>
-
-
