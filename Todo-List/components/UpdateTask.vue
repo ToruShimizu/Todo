@@ -6,81 +6,64 @@
     <v-form ref="form" lazy-validation>
       <v-container>
         <v-row>
-          <v-col cols="12" v-show="!editTitle">
-            <p @click="editingTitle">
-              <v-icon>mdi-pencil-outline</v-icon>
-              {{task.task.title}}
-            </p>
-          </v-col>
           <!-- タスク編集エリア -->
-          <v-col cols="12" v-show="editTitle">
+          <v-col cols="12">
             <v-text-field
               v-model="task.title"
               label="Edit Task"
               prepend-inner-icon="mdi-pencil-outline"
-              @blur="saveEditTitle"
-              ref="focusTitle"
               :rules="titleRules"
               clearable
             />
           </v-col>
           <!-- 日付編集エリア -->
-          <v-col cols="12" sm="6" md="6" v-show="!editDate">
-            <p @click="editingDate">
-              <v-icon>mdi-calendar-today</v-icon>
-              {{dateRangeText}}
-            </p>
-          </v-col>
 
-          <v-col cols="12" sm="6" md="6" v-show="editDate">
-            <v-dialog
-              ref="dialog"
-              v-model="datePicker"
+          <v-col cols="12" sm="6" md="6">
+            <v-menu
+              ref="menu"
+              v-model="updateDateMenu"
+              :close-on-content-click="false"
               :return-value.sync="task.date"
-              persistent
-              width="290px"
+              transition="scale-transition"
+              offset-y
+              min-width="290px"
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
                   v-model="task.date"
-                  label="Picker in dialog"
-                  prepend-inner-icon="mdi-calendar-today"
+                  label="Picker in menu"
+                  prepend-icon="mdi-calendar-today"
                   readonly
                   v-bind="attrs"
                   v-on="on"
-                  @blur="saveEditDate"
-                  ref="focusDate"
                 ></v-text-field>
               </template>
-              <v-date-picker v-model="task.date" scrollable range>
+              <v-date-picker v-model="task.date" no-title scrollable>
                 <v-spacer></v-spacer>
-                <v-btn text color="primary" @click="datePicker = false">Cancel</v-btn>
-                <v-btn text color="primary" @click="$refs.dialog.save(task.date)">OK</v-btn>
+                <v-btn text color="primary" @click="updateDateMenu = false"
+                  >Cancel</v-btn
+                >
+                <v-btn text color="primary" @click="$refs.menu.save(task.date)"
+                  >OK</v-btn
+                >
               </v-date-picker>
-            </v-dialog>
+            </v-menu>
           </v-col>
           <!-- 詳細編集エリア -->
-          <v-col cols="12" v-show="!editDetail">
-            <p @click="editingDetail">
-              <v-icon>mdi-briefcase-outline</v-icon>
-              {{task.task.detail}}
-            </p>
-          </v-col>
-          <v-col cols="12" v-show="editDetail">
+
+          <v-col cols="12">
             <v-text-field
               v-model="task.detail"
               label="Edit Detail"
               prepend-inner-icon="mdi-briefcase-outline"
               required
               clearable
-              @blur="saveEditDetail"
-              ref="focusDetail"
             ></v-text-field>
           </v-col>
           <v-col cols="12">
             <AddComment />
           </v-col>
-          <Comment/>
+          <Comment />
         </v-row>
       </v-container>
       <v-card-actions>
@@ -110,45 +93,34 @@ export default {
         title: "",
         detail: "",
         date: [new Date().toISOString().substr(0, 10)],
-        done: false,
-      }),
-    },
-    datePicker: {
-      type: Boolean,
-      default: false,
+        done: false
+      })
     },
     validate: {
       type: Boolean,
-      default: true,
+      default: true
     },
     titleRules: {
       type: Array,
-      default: () => [(v) => !!v || "タイトルは必須入力です"],
-    },
+      default: () => [v => !!v || "タイトルは必須入力です"]
+    }
   },
   data() {
     return {
-      editTitle: false,
-      editDate: false,
-      editDetail: false,
+      updateDateMenu: false
     };
   },
-  computed: {
-    dateRangeText() {
-      const date = this.task.task.date;
-      return Object.values(date).join("~");
-    },
-  },
+  computed: {},
   methods: {
     updateTask() {
-      if (!this.task.title) {
+      if (!this.task.task.title) {
         this.$refs.form.validate();
         return;
       }
       if (this.$route.params.id) {
         this.$store.dispatch("updateTask", {
           id: this.$route.params.id,
-          task: this.task,
+          task: this.task
         });
         this.$router.push({ path: "/" });
         console.log("updateTask");
@@ -157,43 +129,7 @@ export default {
       this.task.title = "";
       this.task.detail = "";
       this.task.date = [new Date().toISOString().substr(0, 10)];
-    },
-    editingTitle() {
-      this.editTitle = true;
-      this.task.title = this.task.task.title;
-      this.$nextTick(() => {
-        this.$refs.focusTitle.focus();
-      });
-      console.log(this.task.title);
-    },
-    editingDate() {
-      this.editDate = true;
-      this.task.date = this.task.task.date;
-      this.$nextTick(() => {
-        this.$refs.focusDate.focus();
-      });
-    },
-    editingDetail() {
-      this.editDetail = true;
-      this.task.detail = this.task.task.detail;
-      this.$nextTick(() => {
-        this.$refs.focusDetail.focus();
-      });
-    },
-    saveEditTitle() {
-      this.editTitle = false;
-      this.task.task.title = this.task.title;
-    },
-    saveEditDate() {
-      this.editDate = false;
-      this.task.task.date = this.task.date;
-    },
-    saveEditDetail() {
-      this.editDetail = false;
-      this.task.task.detail = this.task.detail;
-    },
-    ...mapActions([]),
-  },
+    }
+  }
 };
 </script>
-
