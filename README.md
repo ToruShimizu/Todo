@@ -8,4 +8,5 @@ Vuetify "1.11.2"
 
 ## Author
 
+・ Github: @Toru Shimizu
 ## License
