@@ -7,11 +7,11 @@
           color="grey-lighten"
           :value="false"
           class="ml-2"
-          @click="ascTodos"
+          @click="sortAscTodos"
         >
           <v-icon>mdi-arrow-up</v-icon>
         </v-btn>
-        <v-btn depressed color="grey-lighten" :value="true" @click="descTodos">
+        <v-btn depressed color="grey-lighten" :value="true" @click="sortDescTodos">
           <v-icon>mdi-arrow-down</v-icon>
         </v-btn>
       </v-btn-toggle>
@@ -24,30 +24,40 @@ export default {
   props: {
     todos: {
       type: Array
+    },
+    sortTask: {
+      type: Number
+    },
+    handleAscTodos: {
+      type: Function,
+      required: true
+    },
+    handleDescTodos: {
+      type: Function,
+      required: true
     }
   },
   data() {
     return {
-      sortOrder: 1
-    };
+
+  }
   },
   computed: {
-    SortByTask() {
-      return this.todos.sort((a, b) => {
-        return a.task.title < b.task.title
-          ? -this.sortOrder
-          : a.task.title > b.task.title
-          ? this.sortOrder
-          : 0;
-      });
-    }
+    //   selectTaskFilter: {
+    //   get: function () {
+    //     return this.taskfilter;
+    //   },
+    //   set: function (value) {
+    //     this.$emit("update:filterdTask", value);
+    //   },
+    // },
   },
   methods: {
-    ascTodos() {
-      this.sortOrder = 1;
+    sortAscTodos() {
+      this.handleAscTodos()
     },
-    descTodos() {
-      this.sortOrder = -1;
+    sortDescTodos() {
+      this.handleDescTodos()
     }
   }
 };
