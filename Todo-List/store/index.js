@@ -125,6 +125,24 @@ export const actions = {
       alert("更新に失敗しました");
     }
   },
+  async updatePassword({ commit }, payload) {
+    const user = firebase.auth().currentUser;
+    const credential = firebase.auth.EmailAuthProvider.credential(
+      payload.email,
+      payload.password
+    );
+    try {
+      await user.reauthenticateWithCredential(credential);
+    } catch {
+      console.log("error");
+    }
+    try {
+      await user.updatePassword(payload.newPassword);
+    } catch {
+      alert("パスワードを変更しました");
+      alert("ログイン画面に移ります");
+    }
+  },
 
   async passwordReset({ commit }, payload) {
     // 送信されるメールを日本語に変換
