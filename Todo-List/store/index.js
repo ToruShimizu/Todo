@@ -72,11 +72,16 @@ export const actions = {
   // アカウントなしでログイン
   // FIXME エラーを返すようにする
   async login({ commit }, payload) {
-    await firebase
-      .auth()
-      .signInWithEmailAndPassword(payload.email, payload.password);
-    // サインイン成功後にトップページに遷移する
-    alert("ようこそ" + payload.email + "さん");
+    try {
+      await firebase
+        .auth()
+        .signInWithEmailAndPassword(payload.email, payload.password);
+      // サインイン成功後にトップページに遷移する
+      alert("ようこそ" + payload.email + "さん");
+      this.$router.push({ path: "/" });
+    } catch {
+      alert("ログインに失敗しました");
+    }
   },
   // ログアウト
   logout() {
@@ -85,10 +90,15 @@ export const actions = {
   },
   // ユーザー作成
   async createUser({ commit }, payload) {
-    await firebase
-      .auth()
-      .createUserWithEmailAndPassword(payload.email, payload.password);
-    alert("create");
+    try {
+      await firebase
+        .auth()
+        .createUserWithEmailAndPassword(payload.email, payload.password);
+      alert("ユーザー" + payload.email + "さんが新規作成されました");
+    } catch {
+      alert("作成に失敗しました");
+      return;
+    }
   },
 
   // firestoreからデータを取り出す
