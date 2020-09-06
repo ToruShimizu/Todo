@@ -46,8 +46,8 @@ export const mutations = {
     todo.done = !todo.done;
   },
   addComments(state, { message }) {
-    state.comments.push(message)
-  },
+    state.comments.push(message);
+  }
   // addMessage(state, { id,message }) {
   //   message.id = id
   // }
@@ -72,11 +72,11 @@ export const actions = {
   // アカウントなしでログイン
   // FIXME エラーを返すようにする
   async login({ commit }, payload) {
-      await firebase
+    await firebase
       .auth()
       .signInWithEmailAndPassword(payload.email, payload.password);
-      // サインイン成功後にトップページに遷移する
-      alert("ようこそ" + payload.email + "さん");
+    // サインイン成功後にトップページに遷移する
+    alert("ようこそ" + payload.email + "さん");
   },
   // ログアウト
   logout() {
@@ -85,12 +85,19 @@ export const actions = {
   },
   // ユーザー作成
   async createUser({ commit }, payload) {
-   await firebase.auth().createUserWithEmailAndPassword(payload.userEmail, payload.userPassword)
+    await firebase
+      .auth()
+      .createUserWithEmailAndPassword(payload.email, payload.password);
+    alert("create");
   },
+
   // firestoreからデータを取り出す
   async fetchTodos({ getters, commit }) {
     commit("initTodos");
-    const snapShot = await db.collection(`users/${getters.uid}/todos`).orderBy('created','desc').get();
+    const snapShot = await db
+      .collection(`users/${getters.uid}/todos`)
+      .orderBy("created", "desc")
+      .get();
     snapShot.forEach(doc =>
       commit("addTodos", { id: doc.id, task: doc.data() })
     );
@@ -144,19 +151,26 @@ export const actions = {
       });
     commit("doneTask", { todo });
   },
-  async addComment({getters, commit}, { id,message }) {
-      await db
-        .collection(`users/${getters.uid}/todos`)
-        .doc(id).collection(`comments/${getters.uid}/message`).add({message:message}).then(doc => {
-          commit("addComments", { id:doc.id,message });
-        });
+  async addComment({ getters, commit }, { id, message }) {
+    await db
+      .collection(`users/${getters.uid}/todos`)
+      .doc(id)
+      .collection(`comments/${getters.uid}/message`)
+      .add({ message: message })
+      .then(doc => {
+        commit("addComments", { id: doc.id, message });
+      });
   },
   async fetchComments({ getters, commit }) {
-    const snapShot = await db.collection(`users/${getters.uid}/todos`).doc().collection(`comments/${getters.uid}/message`).get();
+    const snapShot = await db
+      .collection(`users/${getters.uid}/todos`)
+      .doc()
+      .collection(`comments/${getters.uid}/message`)
+      .get();
     snapShot.forEach(doc =>
       commit("addComments", { id: doc.id, message: doc.data() })
     );
-  },
+  }
 };
 
 export const getters = {
