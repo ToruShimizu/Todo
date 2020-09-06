@@ -75,13 +75,6 @@ export default {
         email: this.userEmail,
         password: this.userPassword,
       });
-
-      await this.$store.dispatch("login", {
-        email: this.userEmail,
-        password: this.userPassword,
-      });
-      this.userEmail = "";
-      this.userPassword = "";
     },
   },
 };
