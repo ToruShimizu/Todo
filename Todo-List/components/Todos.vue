@@ -32,10 +32,7 @@
           <v-layout>
             <SearchTask :search.sync="searchTask" />
             <v-spacer />
-            <SortByTask
-              :handleAscTodos="ascTodos"
-              :handleDescTodos="descTodos"
-            />
+            <SortByTask :handleAscTodos="ascTodos" :handleDescTodos="descTodos" />
           </v-layout>
         </v-col>
       </v-row>
@@ -46,9 +43,7 @@
           <v-list-item>
             <!-- 完了、未完了切り替えチェックボックス -->
             <v-btn icon @click="doneTask(todo)">
-              <v-icon :color="(!todo.done && 'grey') || 'primary'"
-                >mdi-check-circle-outline</v-icon
-              >
+              <v-icon :color="(!todo.done && 'grey') || 'primary'">mdi-check-circle-outline</v-icon>
             </v-btn>
             <v-list-item-content>
               <nuxt-link
@@ -62,29 +57,24 @@
                 <v-list-item-title
                   :class="(todo.done && 'grey--text') || 'primary--text'"
                   class="ml-2"
-                >
-                  {{ todo.task.title }}
-                </v-list-item-title>
+                >{{ todo.task.title }}</v-list-item-title>
               </nuxt-link>
             </v-list-item-content>
 
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on, attrs }">
-                <v-icon
-                  v-if="task.date > todo.task.date"
-                  v-bind="attrs"
-                  v-on="on"
-                  :class="(todo.done && 'grey--text') || 'red--text'"
-                  >mdi-alert-outline</v-icon
-                >
-              </template>
-              <span>Expired</span>
-            </v-tooltip>
             <v-list-item-content>
-              <v-list-item-title
-                :class="(todo.done && 'grey--text') || 'brack--text'"
-              >
-                {{ todo.task.date }}
+              <v-list-item-title :class="(todo.done && 'grey--text') || 'brack--text'">
+                〜{{ todo.task.date }}
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon
+                      v-if="task.date > todo.task.date"
+                      v-bind="attrs"
+                      v-on="on"
+                      :class="(todo.done && 'grey--text') || 'red--text'"
+                    >mdi-alert-outline</v-icon>
+                  </template>
+                  <span>Expired</span>
+                </v-tooltip>
               </v-list-item-title>
               <!-- 編集用のテキストエリア -->
             </v-list-item-content>
@@ -114,21 +104,21 @@ export default {
         title: "",
         detail: "",
         date: new Date().toISOString(),
-        done: false
-      })
-    }
+        done: false,
+      }),
+    },
   },
   components: {
     FilteredTask,
     SortByTask,
-    SearchTask
+    SearchTask,
   },
 
   data() {
     return {
       taskFilter: "all",
       sortTask: 1,
-      searchTask: ""
+      searchTask: "",
     };
   },
   computed: {
@@ -137,7 +127,7 @@ export default {
     },
     // タスク検索
     ...mapGetters(["todosCount"]),
-    ...mapState(["todos"])
+    ...mapState(["todos"]),
   },
   methods: {
     removeTask(id) {
@@ -170,11 +160,11 @@ export default {
 
           break;
         case "active":
-          return this.todos.filter(todo => !todo.done);
+          return this.todos.filter((todo) => !todo.done);
 
           break;
         case "done":
-          return this.todos.filter(todo => todo.done);
+          return this.todos.filter((todo) => todo.done);
 
           break;
         default:
@@ -183,7 +173,7 @@ export default {
     searchTasks() {
       let arr = [];
       let data = this.todos;
-      data.forEach(el => {
+      data.forEach((el) => {
         if (
           el.task.title.toLowerCase().indexOf(this.searchTask.toLowerCase()) >=
           0
@@ -192,8 +182,8 @@ export default {
         }
       });
       return arr;
-    }
-  }
+    },
+  },
 };
 </script>
 
