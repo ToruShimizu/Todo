@@ -53,8 +53,8 @@ export default {
     };
   },
   methods: {
-    async passwordReset() {
-      await this.$store.dispatch("passwordReset", this.userEmail);
+    passwordReset() {
+      this.$store.dispatch("passwordReset", this.userEmail);
     },
   },
 };
