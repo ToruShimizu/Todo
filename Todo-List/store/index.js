@@ -70,7 +70,6 @@ export const actions = {
     });
   },
   // アカウントなしでログイン
-  // FIXME エラーを返すようにする
   async login({ commit }, payload) {
     try {
       await firebase
@@ -89,7 +88,7 @@ export const actions = {
     auth.signOut();
   },
   // ユーザー作成
-  async createUser({ commit }, payload) {
+  async createUser({ dispatch, commit }, payload) {
     try {
       await firebase
         .auth()
@@ -99,6 +98,7 @@ export const actions = {
       alert("作成に失敗しました");
       return;
     }
+    dispatch("login", payload);
   },
 
   // firestoreからデータを取り出す
