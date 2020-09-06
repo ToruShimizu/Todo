@@ -38,7 +38,6 @@
         </v-card-title>
         <v-card-text>
           <v-form @submit.prevent="createUser" ref="form" lazy-validation>
-     
             <v-text-field
               prepend-inner-icon="mdi-email"
               label="Email"
@@ -54,14 +53,13 @@
               :rules="[passwordRules.required, passwordRules.min]"
               @click:append="showPassword = !showPassword"
               v-model="userPassword"
-              clearable
             />
 
             <v-card-actions>
               <v-btn @click="login" color="primary">
                 <v-icon left>mdi-login-variant</v-icon>ログイン
               </v-btn>
-              <v-spacer/>
+              <v-spacer />
               <nuxt-link to="/signUp">
                 <v-btn type="submit" color="success">
                   <v-icon left>mdi-account-plus</v-icon>新規作成はこちら
@@ -103,12 +101,8 @@ export default {
         password: "testUser",
       });
     },
-    login() {
-      if (this.emailRules && this.passwordRules) {
-        this.$refs.form.validate();
-        return;
-      }
-      this.$store.dispatch("login", {
+    async login() {
+      await this.$store.dispatch("login", {
         email: this.userEmail,
         password: this.userPassword,
       });

@@ -82,7 +82,6 @@ export default {
       });
       this.userEmail = "";
       this.userPassword = "";
-      this.$router.push({ path: "/" });
     },
   },
 };
