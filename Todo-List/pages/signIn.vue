@@ -54,7 +54,6 @@
               @click:append="showPassword = !showPassword"
               v-model="userPassword"
             />
-
             <v-card-actions>
               <v-btn @click="login" color="primary">
                 <v-icon left>mdi-login-variant</v-icon>ログイン
@@ -101,8 +100,8 @@ export default {
         password: "testUser",
       });
     },
-    async login() {
-      await this.$store.dispatch("login", {
+    login() {
+      this.$store.dispatch("login", {
         email: this.userEmail,
         password: this.userPassword,
       });
@@ -116,8 +115,6 @@ export default {
         userEmail: this.userEmail,
         userPassword: this.userPassword,
       });
-      this.userName = "";
-      this.userPassword = "";
     },
     ...mapActions(["googleLogin"]),
   },
