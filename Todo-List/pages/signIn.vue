@@ -38,10 +38,7 @@
         </v-card-title>
         <v-card-text>
           <v-form @submit.prevent="createUser" ref="form" lazy-validation>
-            <p>
-              ○○○@example.comとすることで、
-              <br />サンプルのメールアドレスを作成できます。
-            </p>
+     
             <v-text-field
               prepend-inner-icon="mdi-email"
               label="Email"
@@ -57,15 +54,19 @@
               :rules="[passwordRules.required, passwordRules.min]"
               @click:append="showPassword = !showPassword"
               v-model="userPassword"
+              clearable
             />
 
             <v-card-actions>
-              <v-btn type="submit" color="success">
-                <v-icon left>mdi-account-plus</v-icon>新規作成
-              </v-btn>
               <v-btn @click="login" color="primary">
                 <v-icon left>mdi-login-variant</v-icon>ログイン
               </v-btn>
+              <v-spacer/>
+              <nuxt-link to="/signUp">
+                <v-btn type="submit" color="success">
+                  <v-icon left>mdi-account-plus</v-icon>新規作成はこちら
+                </v-btn>
+              </nuxt-link>
             </v-card-actions>
           </v-form>
         </v-card-text>
@@ -121,8 +122,8 @@ export default {
         userEmail: this.userEmail,
         userPassword: this.userPassword,
       });
-      console.log("create");
-      alert("Successfully created user");
+      this.userName = "";
+      this.userPassword = "";
     },
     ...mapActions(["googleLogin"]),
   },
