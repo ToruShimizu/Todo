@@ -100,6 +100,18 @@ export const actions = {
     }
     dispatch("login", payload);
   },
+  async passwordReset({ commit }, payload) {
+    // 送信されるメールを日本語に変換
+    let emailAddress = payload
+
+    auth.languageCode = 'ja';
+    try {
+      await  auth.sendPasswordResetEmail(emailAddress)
+      }
+    catch {
+      alert('送信に失敗しました')
+    }
+  },
 
   // firestoreからデータを取り出す
   async fetchTodos({ getters, commit }) {
