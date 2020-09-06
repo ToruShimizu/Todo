@@ -63,7 +63,7 @@
 
             <v-list-item-content>
               <v-list-item-title :class="(todo.done && 'grey--text') || 'brack--text'">
-                〜{{ todo.task.date }}
+                ~{{ todo.task.date }}
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on, attrs }">
                     <v-icon
