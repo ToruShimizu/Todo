@@ -22,7 +22,7 @@
               clearable
             />
             <v-text-field
-              prepend-inner-icon="mdi-email"
+              prepend-inner-icon="mdi-email-outline"
               label="Email"
               v-model="userEmail"
               :rules="emailRules"
@@ -30,7 +30,7 @@
             />
             <v-text-field
               :type="showPassword ? 'text' : 'Password'"
-              prepend-inner-icon="mdi-lock"
+              prepend-inner-icon="mdi-lock-outline"
               v-bind:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
               label="Password(6文字以上)"
               :rules="[passwordRules.required, passwordRules.min]"

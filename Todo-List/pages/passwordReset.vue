@@ -12,7 +12,7 @@
               <br />パスワード再設定のURLが送信されます。
             </p>
             <v-text-field
-              prepend-inner-icon="mdi-email"
+              prepend-inner-icon="mdi-email-outline"
               label="Email"
               v-model="userEmail"
               :rules="emailRules"
