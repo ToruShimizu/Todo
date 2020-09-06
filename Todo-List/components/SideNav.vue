@@ -21,7 +21,7 @@
     </v-list-item>
     <v-row justify="center">
       <v-dialog v-model="userDialog" persistent max-width="600px" transition="scroll-y-transition">
-        <UpdateUser :userName="this.userName" @close-edit-user="closeEditUser"/>
+        <UpdateUser @close-edit-user="closeEditUser"/>
       </v-dialog>
     </v-row>
     <v-divider></v-divider>
