@@ -54,6 +54,10 @@
               @click:append="showPassword = !showPassword"
               v-model="userPassword"
             />
+            <nuxt-link to="/passwordReset">
+
+            <p>パスワードを忘れた方はこちら</p>
+            </nuxt-link>
             <v-card-actions>
               <v-btn @click="login" color="primary">
                 <v-icon left>mdi-login-variant</v-icon>ログイン
