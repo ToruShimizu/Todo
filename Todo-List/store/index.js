@@ -90,26 +90,40 @@ export const actions = {
   // ユーザー作成
   async createUser({ dispatch, commit }, payload) {
     try {
-      await firebase
-        .auth()
-        .createUserWithEmailAndPassword(payload.email, payload.password);
-      alert("ユーザー" + payload.email + "さんが新規作成されました");
+      const newUser = await auth.createUserWithEmailAndPassword(
+        payload.email,
+        payload.password
+      );
+
+      await newUser.user.updateProfile({
+        displayName: payload.userName
+      });
+      alert("作成に成功しました");
+      alert("このままログインします");
     } catch {
       alert("作成に失敗しました");
       return;
     }
     dispatch("login", payload);
+
+    // await auth.createUserWithEmailAndPassword(payload.email, payload.password).user.updateProfile({
+    //         displayName: payload.userName,
+    //       });
+
+    // dispatch("login",{payload});
+    // console.log(payload)
+    // console.log(payload.email)
   },
+
   async passwordReset({ commit }, payload) {
     // 送信されるメールを日本語に変換
-    let emailAddress = payload
+    let emailAddress = payload;
 
-    auth.languageCode = 'ja';
+    auth.languageCode = "ja";
     try {
-      await  auth.sendPasswordResetEmail(emailAddress)
-      }
-    catch {
-      alert('送信に失敗しました')
+      await auth.sendPasswordResetEmail(emailAddress);
+    } catch {
+      alert("送信に失敗しました");
     }
   },
 
