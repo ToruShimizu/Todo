@@ -32,7 +32,7 @@
                 <v-text-field
                   v-model="task.date"
                   label="Picker in menu"
-                  prepend-icon="mdi-calendar-today"
+                  prepend-inner-icon="mdi-calendar-today"
                   readonly
                   v-bind="attrs"
                   v-on="on"

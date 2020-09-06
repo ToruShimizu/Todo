@@ -18,7 +18,7 @@
           </v-col>
           <!-- 日付編集エリア -->
 
-          <v-col cols="12" sm="6" md="6">
+          <v-col cols="12">
             <v-menu
               ref="menu"
               v-model="updateDateMenu"
@@ -32,7 +32,7 @@
                 <v-text-field
                   v-model="task.date"
                   label="Picker in menu"
-                  prepend-icon="mdi-calendar-today"
+                  prepend-inner-icon="mdi-calendar-today"
                   readonly
                   v-bind="attrs"
                   v-on="on"
@@ -92,7 +92,7 @@ export default {
       default: () => ({
         title: "",
         detail: "",
-        date: [new Date().toISOString().substr(0, 10)],
+        date: new Date().toISOString().substr(0, 10),
         done: false
       })
     },

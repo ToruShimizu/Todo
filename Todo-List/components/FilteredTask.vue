@@ -1,11 +1,11 @@
 <template>
   <!-- 完了、未完了のタブ切り替え -->
   <v-tabs>
-    <v-tab @click="selectTaskFilter = 'all'">All:{{ todos.length }}</v-tab>
+    <v-tab @click="selectedTaskFilter = 'all'">All:{{ todos.length }}</v-tab>
     <v-divider vertical />
-    <v-tab @click="selectTaskFilter = 'active'" class>remaining:{{ remainingTodos }}</v-tab>
+    <v-tab @click="selectedTaskFilter = 'active'" class>remaining:{{ remainingTodos }}</v-tab>
     <v-divider vertical />
-    <v-tab @click="selectTaskFilter = 'done'">
+    <v-tab @click="selectedTaskFilter = 'done'">
       complete: {{ completedTodos }}/{{todos.length}}
       <!-- 完了率の表示 -->
       <v-progress-circular
@@ -29,7 +29,7 @@ export default {
     },
   },
   computed: {
-    selectTaskFilter: {
+    selectedTaskFilter: {
       get: function () {
         return this.taskfilter;
       },
