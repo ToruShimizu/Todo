@@ -114,6 +114,17 @@ export const actions = {
     // console.log(payload)
     // console.log(payload.email)
   },
+  async updateUser({ commit }, payload) {
+    let user = firebase.auth().currentUser;
+    try {
+      await user.updateProfile({
+        displayName: payload.userName
+      });
+      alert("成功しました");
+    } catch {
+      alert("更新に失敗しました");
+    }
+  },
 
   async passwordReset({ commit }, payload) {
     // 送信されるメールを日本語に変換
