@@ -79,8 +79,8 @@ export default {
     };
   },
   methods: {
-    async createUser() {
-      await this.$store.dispatch("createUser", {
+    createUser() {
+      this.$store.dispatch("createUser", {
         email: this.userEmail,
         password: this.userPassword,
         userName: this.userName,
