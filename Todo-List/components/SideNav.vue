@@ -15,13 +15,19 @@
             <v-list-item @click="openEditUser">
               <v-list-item-title>ユーザー情報編集</v-list-item-title>
             </v-list-item>
+            <v-list-item @click="openEditPassword">
+              <v-list-item-title>パスワード変更</v-list-item-title>
+            </v-list-item>
           </v-list>
         </v-menu>
       </v-list-item-content>
     </v-list-item>
     <v-row justify="center">
       <v-dialog v-model="userDialog" persistent max-width="600px" transition="scroll-y-transition">
-        <UpdateUser :userName="this.userName" @close-edit-user="closeEditUser"/>
+        <UpdateUser @close-edit-user="closeEditUser"/>
+      </v-dialog>
+      <v-dialog v-model="passwordDialog" persistent max-width="600px" transition="scroll-y-transition">
+        <UpdatePassword @close-edit-password="closeEditPassword"/>
       </v-dialog>
     </v-row>
     <v-divider></v-divider>
@@ -57,13 +63,16 @@
 <script>
 import { mapGetters } from "vuex";
 import UpdateUser from "@/components/UpdateUser";
+import UpdatePassword from "@/components/UpdatePassword";
 export default {
   components: {
     UpdateUser,
+    UpdatePassword
   },
   data() {
     return {
       userDialog: false,
+      passwordDialog: false
     };
   },
   computed: {
@@ -75,6 +84,12 @@ export default {
     },
     closeEditUser() {
       this.userDialog = false;
+    },
+    openEditPassword() {
+      this.passwordDialog = true;
+    },
+    closeEditPassword() {
+      this.passwordDialog = false;
     },
   },
 };
