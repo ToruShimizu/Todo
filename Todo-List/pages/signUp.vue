@@ -15,6 +15,13 @@
               <br />サンプルのメールアドレスで作成することができます。
             </p>
             <v-text-field
+              prepend-inner-icon="mdi-card-account-details-outline"
+              label="Name"
+              v-model="userName"
+              :rules="nameRules"
+              clearable
+            />
+            <v-text-field
               prepend-inner-icon="mdi-email"
               label="Email"
               v-model="userEmail"
@@ -56,6 +63,7 @@ export default {
     return {
       userEmail: "",
       userPassword: "",
+      userName: "",
       showPassword: false,
       validate: true,
       emailRules: [
@@ -67,6 +75,7 @@ export default {
         required: (v) => !!v || "パスワードは必須です",
         min: (v) => v.length >= 6 || "6文字以上で入力してください",
       },
+      nameRules: [(v) => !!v || "名前は必須です"],
     };
   },
   methods: {
@@ -74,6 +83,7 @@ export default {
       await this.$store.dispatch("createUser", {
         email: this.userEmail,
         password: this.userPassword,
+        userName: this.userName,
       });
     },
   },
