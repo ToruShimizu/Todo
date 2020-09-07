@@ -157,6 +157,26 @@ export const actions = {
       alert("送信に失敗しました");
     }
   },
+  async deleteLoginUser({ commit }, payload) {
+    const user = firebase.auth().currentUser;
+    const credential = firebase.auth.EmailAuthProvider.credential(
+      payload.email,
+      payload.password
+    );
+    // 最初に再認証してから変更処理を行う
+    try {
+      await user.reauthenticateWithCredential(credential);
+    } catch {
+      console.log("error");
+    }
+    // パスワード変更処理
+    try {
+      await user.delete();
+      alert("ユーザー情報を削除しました");
+    } catch {
+      console.log("error");
+    }
+  },
 
   // firestoreからTodosのデータを取り出す
   async fetchTodos({ getters, commit }) {

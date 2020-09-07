@@ -21,6 +21,9 @@
             <v-list-item @click="openEditPassword">
               <v-list-item-title>パスワード変更</v-list-item-title>
             </v-list-item>
+            <v-list-item @click="openDeleteUser">
+              <v-list-item-title>アカウント削除</v-list-item-title>
+            </v-list-item>
           </v-list>
         </v-menu>
       </v-list-item-content>
@@ -44,6 +47,14 @@
         transition="scroll-y-transition"
       >
         <UpdateEmailAddress @close-edit-email-address="closeEditEmailAddress" />
+      </v-dialog>
+      <v-dialog
+        v-model="deleteUserDialog"
+        persistent
+        max-width="600px"
+        transition="scroll-y-transition"
+      >
+        <DeleteLoginUser @close-delete-user="closeDeleteUser" />
       </v-dialog>
     </v-row>
     <v-divider></v-divider>
@@ -81,17 +92,20 @@ import { mapGetters } from "vuex";
 import UpdateUser from "@/components/UpdateUser";
 import UpdatePassword from "@/components/UpdatePassword";
 import UpdateEmailAddress from "@/components/UpdateEmailAddress";
+import DeleteLoginUser from "@/components/DeleteLoginUser";
 export default {
   components: {
     UpdateUser,
     UpdatePassword,
     UpdateEmailAddress,
+    DeleteLoginUser,
   },
   data() {
     return {
       userDialog: false,
       passwordDialog: false,
       emailAddressDialog: false,
+      deleteUserDialog: false,
     };
   },
   computed: {
@@ -115,6 +129,12 @@ export default {
     },
     closeEditEmailAddress() {
       this.emailAddressDialog = false;
+    },
+    openDeleteUser() {
+      this.deleteUserDialog = true;
+    },
+    closeDeleteUser() {
+      this.deleteUserDialog = false;
     },
   },
 };
