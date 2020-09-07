@@ -125,6 +125,16 @@ export const actions = {
       alert("更新に失敗しました");
     }
   },
+  async updateEmailAddress({ commit }, payload) {
+    const user = firebase.auth().currentUser;
+    try {
+      await user.updateEmail(payload.newEmailAddress)
+      alert("新しいメールアドレスの登録が完了しました")
+    }
+    catch {
+      alert("新しいメールアドレスの登録に失敗しました")
+    }
+  },
   async updatePassword({ commit }, payload) {
     const user = firebase.auth().currentUser;
     const credential = firebase.auth.EmailAuthProvider.credential(
