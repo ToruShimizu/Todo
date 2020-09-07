@@ -15,6 +15,9 @@
             <v-list-item @click="openEditUser">
               <v-list-item-title>ユーザー情報編集</v-list-item-title>
             </v-list-item>
+            <v-list-item @click="openEditEmailAddress">
+              <v-list-item-title>メールアドレス変更</v-list-item-title>
+            </v-list-item>
             <v-list-item @click="openEditPassword">
               <v-list-item-title>パスワード変更</v-list-item-title>
             </v-list-item>
@@ -24,10 +27,23 @@
     </v-list-item>
     <v-row justify="center">
       <v-dialog v-model="userDialog" persistent max-width="600px" transition="scroll-y-transition">
-        <UpdateUser @close-edit-user="closeEditUser"/>
+        <UpdateUser @close-edit-user="closeEditUser" />
       </v-dialog>
-      <v-dialog v-model="passwordDialog" persistent max-width="600px" transition="scroll-y-transition">
-        <UpdatePassword @close-edit-password="closeEditPassword"/>
+      <v-dialog
+        v-model="passwordDialog"
+        persistent
+        max-width="600px"
+        transition="scroll-y-transition"
+      >
+        <UpdatePassword @close-edit-password="closeEditPassword" />
+      </v-dialog>
+      <v-dialog
+        v-model="emailAddressDialog"
+        persistent
+        max-width="600px"
+        transition="scroll-y-transition"
+      >
+        <UpdateEmailAddress @close-edit-email-address="closeEditEmailAddress" />
       </v-dialog>
     </v-row>
     <v-divider></v-divider>
@@ -64,15 +80,18 @@
 import { mapGetters } from "vuex";
 import UpdateUser from "@/components/UpdateUser";
 import UpdatePassword from "@/components/UpdatePassword";
+import UpdateEmailAddress from "@/components/UpdateEmailAddress";
 export default {
   components: {
     UpdateUser,
-    UpdatePassword
+    UpdatePassword,
+    UpdateEmailAddress,
   },
   data() {
     return {
       userDialog: false,
-      passwordDialog: false
+      passwordDialog: false,
+      emailAddressDialog: false,
     };
   },
   computed: {
@@ -90,6 +109,12 @@ export default {
     },
     closeEditPassword() {
       this.passwordDialog = false;
+    },
+    openEditEmailAddress() {
+      this.emailAddressDialog = true;
+    },
+    closeEditEmailAddress() {
+      this.emailAddressDialog = false;
     },
   },
 };
