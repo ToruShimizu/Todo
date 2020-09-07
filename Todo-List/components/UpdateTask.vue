@@ -9,7 +9,7 @@
           <!-- タスク編集エリア -->
           <v-col cols="12">
             <v-text-field
-              v-model="task.title"
+              v-model="task.task.title"
               label="Edit Task"
               prepend-inner-icon="mdi-pencil-outline"
               :rules="titleRules"
@@ -23,14 +23,14 @@
               ref="menu"
               v-model="updateDateMenu"
               :close-on-content-click="false"
-              :return-value.sync="task.date"
+              :return-value.sync="task.task.date"
               transition="scale-transition"
               offset-y
               min-width="290px"
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
-                  v-model="task.date"
+                  v-model="task.task.date"
                   label="Picker in menu"
                   prepend-inner-icon="mdi-calendar-today"
                   readonly
@@ -38,12 +38,12 @@
                   v-on="on"
                 ></v-text-field>
               </template>
-              <v-date-picker v-model="task.date" no-title scrollable>
+              <v-date-picker v-model="task.task.date" no-title scrollable>
                 <v-spacer></v-spacer>
                 <v-btn text color="primary" @click="updateDateMenu = false"
                   >Cancel</v-btn
                 >
-                <v-btn text color="primary" @click="$refs.menu.save(task.date)"
+                <v-btn text color="primary" @click="$refs.menu.save(task.task.date)"
                   >OK</v-btn
                 >
               </v-date-picker>
@@ -53,7 +53,7 @@
 
           <v-col cols="12">
             <v-text-field
-              v-model="task.detail"
+              v-model="task.task.detail"
               label="Edit Detail"
               prepend-inner-icon="mdi-briefcase-outline"
               required
@@ -120,7 +120,7 @@ export default {
       if (this.$route.params.id) {
         this.$store.dispatch("updateTask", {
           id: this.$route.params.id,
-          task: this.task
+          task: this.task.task
         });
         this.$router.push({ path: "/" });
         console.log("updateTask");
