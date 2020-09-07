@@ -48,9 +48,6 @@ export const mutations = {
   addComments(state, { message }) {
     state.comments.push(message);
   }
-  // addMessage(state, { id,message }) {
-  //   message.id = id
-  // }
 };
 
 export const actions = {
@@ -69,14 +66,14 @@ export const actions = {
       alert("Hello, " + result.user.displayName + "!");
     });
   },
-  // アカウントなしでログイン
+  // メールアドレスとパスワードでログイン
   async login({ commit }, payload) {
     try {
       await firebase
         .auth()
         .signInWithEmailAndPassword(payload.email, payload.password);
-      // サインイン成功後にトップページに遷移する
       alert("ようこそ" + payload.email + "さん");
+      // サインイン成功後にトップページに遷移する
       this.$router.push({ path: "/" });
     } catch {
       alert("ログインに失敗しました");
@@ -87,7 +84,7 @@ export const actions = {
     alert("ログアウトしました");
     auth.signOut();
   },
-  // ユーザー作成
+  // ユーザー作成してからそのままログインする
   async createUser({ dispatch, commit }, payload) {
     try {
       const newUser = await auth.createUserWithEmailAndPassword(
@@ -105,15 +102,8 @@ export const actions = {
       return;
     }
     dispatch("login", payload);
-
-    // await auth.createUserWithEmailAndPassword(payload.email, payload.password).user.updateProfile({
-    //         displayName: payload.userName,
-    //       });
-
-    // dispatch("login",{payload});
-    // console.log(payload)
-    // console.log(payload.email)
   },
+  // ユーザー情報の更新
   async updateUser({ commit }, payload) {
     let user = firebase.auth().currentUser;
     try {
@@ -125,27 +115,30 @@ export const actions = {
       alert("更新に失敗しました");
     }
   },
+  // メールアドレスの変更
   async updateEmailAddress({ commit }, payload) {
     const user = firebase.auth().currentUser;
     try {
-      await user.updateEmail(payload.newEmailAddress)
-      alert("新しいメールアドレスの登録が完了しました")
-    }
-    catch {
-      alert("新しいメールアドレスの登録に失敗しました")
+      await user.updateEmail(payload.newEmailAddress);
+      alert("新しいメールアドレスの登録が完了しました");
+    } catch {
+      alert("新しいメールアドレスの登録に失敗しました");
     }
   },
+  // パスワードの変更
   async updatePassword({ commit }, payload) {
     const user = firebase.auth().currentUser;
     const credential = firebase.auth.EmailAuthProvider.credential(
       payload.email,
       payload.password
     );
+    // 最初に再認証してから変更処理を行う
     try {
       await user.reauthenticateWithCredential(credential);
     } catch {
       console.log("error");
     }
+    // パスワード変更処理
     try {
       await user.updatePassword(payload.newPassword);
     } catch {
@@ -153,11 +146,10 @@ export const actions = {
       alert("ログイン画面に移ります");
     }
   },
-
+  // パスワードの再登録
   async passwordReset({ commit }, payload) {
+    const emailAddress = payload;
     // 送信されるメールを日本語に変換
-    let emailAddress = payload;
-
     auth.languageCode = "ja";
     try {
       await auth.sendPasswordResetEmail(emailAddress);
@@ -166,7 +158,7 @@ export const actions = {
     }
   },
 
-  // firestoreからデータを取り出す
+  // firestoreからTodosのデータを取り出す
   async fetchTodos({ getters, commit }) {
     commit("initTodos");
     const snapShot = await db
