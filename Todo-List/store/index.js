@@ -198,8 +198,8 @@ export const actions = {
     };
     if (getters.uid) {
       await db
-        .collection(`users/${getters.uid}/todos`)
-        .add(task)
+      .collection(`users/${getters.uid}/todos`)
+      .add(task)
     }
   },
   // タスク更新
@@ -239,6 +239,18 @@ export const actions = {
       .collection(`comments/${getters.uid}/message`)
       .add({ message: message })
   },
+  async fetchComments({ getters, commit }) {
+    const snapShot = await db.collection(`users/${getters.uid}/todos`).get();
+    snapShot.forEach(async doc => {
+      const subCollection = await doc.ref
+        .collection(`comments/${getters.uid}/message`)
+        .get();
+      subCollection.forEach(doc => {
+        console.log(doc.data());
+        commit("addComments", { id: doc.id, message: doc.data() });
+      });
+    });
+  }
 };
 
 export const getters = {

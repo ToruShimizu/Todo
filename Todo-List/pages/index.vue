@@ -20,6 +20,7 @@ export default {
       if (user) {
         this.setLoginUser(user);
         this.fetchTodos();
+        this.fetchComments();
         if (this.$router.currentRoute.name === "signIn") this.$router.push("/");
       } else {
         this.deleteLoginUser();
@@ -32,6 +33,7 @@ export default {
       "setLoginUser",
       "deleteLoginUser",
       "fetchTodos",
+      "fetchComments"
     ]),
   },
 };
