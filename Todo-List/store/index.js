@@ -239,16 +239,6 @@ export const actions = {
       .collection(`comments/${getters.uid}/message`)
       .add({ message: message })
   },
-  async fetchComments({ getters, commit }) {
-    const snapShot = await db
-      .collection(`users/${getters.uid}/todos`)
-      .doc()
-      .collection(`comments/${getters.uid}/message`)
-      .get();
-    snapShot.forEach(doc =>
-      commit("addComments", { id: doc.id, message: doc.data() })
-    );
-  }
 };
 
 export const getters = {
