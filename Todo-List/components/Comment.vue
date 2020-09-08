@@ -1,6 +1,6 @@
 <template>
   <v-list subheader>
-    <v-list-item v-for="(comment,i) in comments" :key="i">
+    <v-list-item v-for="comment in comments" :key="comment.id">
       <v-list-item-content>
         <v-list-item-icon v-if="photoURL">
           <v-avatar size="50">
@@ -8,7 +8,12 @@
           </v-avatar>
         </v-list-item-icon>
         <v-list-item-title>{{userName}}さんがコメントしました</v-list-item-title>
-        <v-text-field v-model="comment.message.message" />
+        <v-layout>
+          <v-text-field v-model="comment.message.message" />
+          <v-btn icon @click="removeComment(comment.id)">
+            <v-icon>mdi-delete-outline</v-icon>
+          </v-btn>
+        </v-layout>
       </v-list-item-content>
     </v-list-item>
   </v-list>
@@ -21,6 +26,12 @@ export default {
   computed: {
     ...mapState(["comments"]),
     ...mapGetters(["userName", "photoURL", "userEmail"]),
+  },
+  methods: {
+    removeComment(id) {
+      if (!confirm("Are you sure?")) return;
+      this.$store.dispatch("removeComment", { id });
+    },
   },
 };
 </script>
