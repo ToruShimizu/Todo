@@ -28,9 +28,7 @@ export const mutations = {
     state.todos.push(todo);
   },
   // タスク追加
-  addTask(state, { id, todo }) {
-    todo.id = id;
-  },
+
   // タスク削除
   removeTask(state, { id }) {
     const index = state.todos.findIndex(todo => todo.id === id);
@@ -202,10 +200,6 @@ export const actions = {
       await db
         .collection(`users/${getters.uid}/todos`)
         .add(task)
-        .then(doc => {
-          commit("addTask", { id: doc.id, todo });
-          console.log(doc.id);
-        });
     }
   },
   // タスク更新
@@ -244,9 +238,6 @@ export const actions = {
       .doc(id)
       .collection(`comments/${getters.uid}/message`)
       .add({ message: message })
-      .then(doc => {
-        commit("addComments", { id: doc.id, message });
-      });
   },
   async fetchComments({ getters, commit }) {
     const snapShot = await db
