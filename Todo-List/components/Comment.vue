@@ -1,6 +1,6 @@
 <template>
   <v-list subheader>
-    <v-list-item v-for="(item,i) in comments" :key="i">
+    <v-list-item v-for="(comment,i) in comments" :key="i">
       <v-list-item-content>
         <v-list-item-icon v-if="photoURL">
           <v-avatar size="50">
@@ -8,7 +8,7 @@
           </v-avatar>
         </v-list-item-icon>
         <v-list-item-title>{{userName}}さんがコメントしました</v-list-item-title>
-        <v-text-field :value="item"/>
+        <v-text-field :value="comment"/>
       </v-list-item-content>
     </v-list-item>
   </v-list>

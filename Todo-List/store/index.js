@@ -45,8 +45,8 @@ export const mutations = {
   doneTask(state, { todo }) {
     todo.done = !todo.done;
   },
-  addComments(state, { message }) {
-    state.comments.push(message);
+  addComments(state, comment) {
+    state.comments.push(comment);
   }
 };
 
