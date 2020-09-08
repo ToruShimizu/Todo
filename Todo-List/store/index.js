@@ -45,6 +45,10 @@ export const mutations = {
   },
   addComments(state, comment) {
     state.comments.push(comment);
+  },
+  removeComment(state, { id }) {
+    const index = state.comments.findIndex(comment => comment.id === id);
+    state.comments.splice(index, 1);
   }
 };
 
@@ -237,7 +241,19 @@ export const actions = {
       .collection(`users/${getters.uid}/todos`)
       .doc(id)
       .collection(`comments/${getters.uid}/message`)
-      .add({ message: message })
+      .add({ message: message });
+  },
+  async removeComment({ getters, commit }, { id }) {
+    if (getters.uid) {
+      const snapShot = await db.collection(`users/${getters.uid}/todos`).get();
+      snapShot.forEach(async doc => {
+        await doc.ref
+          .collection(`comments/${getters.uid}/message`)
+          .doc(id)
+          .delete();
+        commit("removeComment", { id });
+      });
+    }
   },
   async fetchComments({ getters, commit }) {
     const snapShot = await db.collection(`users/${getters.uid}/todos`).get();
