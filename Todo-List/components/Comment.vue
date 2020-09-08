@@ -8,7 +8,7 @@
           </v-avatar>
         </v-list-item-icon>
         <v-list-item-title>{{userName}}さんがコメントしました</v-list-item-title>
-        <v-text-field :value="comment"/>
+        <v-text-field v-model="comment.message.message" />
       </v-list-item-content>
     </v-list-item>
   </v-list>
