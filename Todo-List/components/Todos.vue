@@ -123,7 +123,10 @@ export default {
   },
   computed: {
     todoList() {
-      return this.todosFiltered();
+      // FIXME: 複数メソッドの実行ができるようにする
+      return this.todosFiltered()
+
+
     },
     // タスク検索
     ...mapGetters(["todosCount"]),

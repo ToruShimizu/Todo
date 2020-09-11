@@ -11,6 +11,7 @@
               <v-icon>mdi-pencil</v-icon>
             </v-btn>
           </template>
+          <!-- FIXME: コンポーネント化するか検討中 -->
           <v-list>
             <v-list-item @click="openEditUser">
               <v-list-item-title>ユーザー情報編集</v-list-item-title>
@@ -112,6 +113,7 @@ export default {
     ...mapGetters(["userName", "photoURL", "userEmail"]),
   },
   methods: {
+    // FIXME:switch文に書き直す
     openEditUser() {
       this.userDialog = true;
     },

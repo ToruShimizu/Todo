@@ -1,5 +1,5 @@
 <template>
-
+    <!-- FIXME: セレクトボタンでソートする項目を選択する -->
       <v-btn-toggle mandatory>
         <v-btn
           depressed

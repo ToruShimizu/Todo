@@ -255,6 +255,7 @@ export const actions = {
       });
     }
   },
+  // FIXME: id指定してログインユーザーのコメントを表示
   async fetchComments({ getters, commit }) {
     const snapShot = await db.collection(`users/${getters.uid}/todos`).get();
     snapShot.forEach(async doc => {
