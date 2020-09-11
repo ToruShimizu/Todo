@@ -109,16 +109,6 @@ export default {
         password: this.userPassword,
       });
     },
-    createUser() {
-      if (this.emailRules && this.passwordRules) {
-        this.$refs.form.validate();
-        return;
-      }
-      this.$store.dispatch("createUser", {
-        userEmail: this.userEmail,
-        userPassword: this.userPassword,
-      });
-    },
     ...mapActions(["googleLogin"]),
   },
 };
