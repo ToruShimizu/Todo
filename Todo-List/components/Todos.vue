@@ -124,9 +124,7 @@ export default {
   computed: {
     todoList() {
       // FIXME: 複数メソッドの実行ができるようにする
-      return this.todosFiltered()
-
-
+      return this.searchTasks(),this.sortByTask(),this.todosFiltered()
     },
     // タスク検索
     ...mapGetters(["todosCount"]),
@@ -142,9 +140,9 @@ export default {
     },
     sortByTask() {
       return this.todos.sort((a, b) => {
-        return a.task.title < b.task.title
+        return a.task.date < b.task.date
           ? -this.sortTask
-          : a.task.title > b.task.title
+          : a.task.date > b.task.date
           ? this.sortTask
           : 0;
       });
@@ -180,7 +178,9 @@ export default {
         if (
           el.task.title.toLowerCase().indexOf(this.searchTask.toLowerCase()) >=
           0
-        ) {
+        )
+        console.log(el.task.title)
+        {
           arr.push(el);
         }
       });
