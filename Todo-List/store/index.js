@@ -49,6 +49,9 @@ export const mutations = {
   removeComment(state, { id }) {
     const index = state.comments.findIndex(comment => comment.id === id);
     state.comments.splice(index, 1);
+  },
+  initComments(state) {
+    state.comments = []
   }
 };
 
@@ -219,12 +222,12 @@ export const actions = {
     }
   },
   // 完了、未完了切り替え
-  async doneTask({ getters, commit }, { todo }) {
+  async doneTask({ getters, commit }, {todo,id} ) {
     await db
       .collection(`users/${getters.uid}/todos`)
-      .doc(todo.id)
+      .doc(id)
       .update({
-        done: !todo.done
+        done: !todo.task.done
       });
     commit("doneTask", { todo });
   },
@@ -249,6 +252,7 @@ export const actions = {
   },
   // FIXME: id指定してログインユーザーのコメントを表示
   async fetchComments({ getters, commit }) {
+    commit("initComments")
     const snapShot = await db.collection(`users/${getters.uid}/todos`).get();
     snapShot.forEach(async doc => {
       const subCollection = await doc.ref
