@@ -9,7 +9,7 @@
           <v-form ref="form" lazy-validation @submit.prevent="createUser">
             <v-text-field
               prepend-inner-icon="mdi-card-account-details-outline"
-              label="Name"
+              label="名前を変更する"
               v-model="updateUserName"
               :rules="nameRules"
               clearable

@@ -3,7 +3,7 @@
     <v-layout>
       <v-flex>
         <!-- トータルtodos表示 -->
-        <h2 class="display-1 grey--text pl-4" @click="end()">
+        <h2 class="display-1 grey--text pl-4">
           totalTodos:&nbsp;
           <v-fade-transition leave-absolute>
             <span :key="`todos-${todos.length}`">{{ todos.length }}</span>
@@ -13,7 +13,7 @@
       <v-flex>
         <nuxt-link :to="{ name: 'edit-id' }">
           <v-btn color="primary" dark class="hidden-xs-only">
-            <v-icon>mdi-pen-plus</v-icon>Add
+            <v-icon>mdi-pen-plus</v-icon>タスクを追加する
           </v-btn>
           <v-btn color="primary" dark class="hidden-sm-and-up">
             <v-icon>mdi-pen-plus</v-icon>
@@ -54,16 +54,19 @@
                   }
                 }"
               >
-                <v-list-item-title
-                  :class="(todo.done && 'grey--text') || 'primary--text'"
-                  class="ml-2"
-                >{{ todo.task.title }}</v-list-item-title>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-list-item-title
+                      v-bind="attrs"
+                      v-on="on"
+                      :class="(todo.done && 'grey--text') || 'primary--text'"
+                      class="ml-2"
+                    >{{ todo.task.title }}</v-list-item-title>
+                  </template>
+                  <span>詳細を開く</span>
+                </v-tooltip>
               </nuxt-link>
             </v-list-item-content>
-
-            <v-list-item-content>
-              <v-list-item-title :class="(todo.done && 'grey--text') || 'brack--text'">
-                ~{{ todo.task.date }}
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on, attrs }">
                     <v-icon
@@ -73,14 +76,13 @@
                       :class="(todo.done && 'grey--text') || 'red--text'"
                     >mdi-alert-outline</v-icon>
                   </template>
-                  <span>Expired</span>
+                  <span>期限が切れています</span>
                 </v-tooltip>
-              </v-list-item-title>
               <!-- 編集用のテキストエリア -->
-            </v-list-item-content>
+
 
             <v-btn icon>
-              <v-icon @click="removeTask(todo.id)">mdi-delete-outline</v-icon>
+              <v-icon @click="removeTask(todo)">mdi-delete-outline</v-icon>
             </v-btn>
             <!-- 削除ボタン -->
           </v-list-item>
@@ -124,19 +126,19 @@ export default {
   computed: {
     todoList() {
       // FIXME: 複数メソッドの実行ができるようにする
-      return this.searchTasks(),this.sortByTask(),this.todosFiltered()
+      return this.searchTasks(), this.sortByTask(), this.todosFiltered();
     },
     // タスク検索
     ...mapGetters(["todosCount"]),
     ...mapState(["todos"]),
   },
   methods: {
-    removeTask(id) {
-      if (!confirm("Are you sure?")) return;
-      this.$store.dispatch("removeTask", { id });
+    removeTask(todo) {
+      if (!confirm(todo.task.title + 'を削除しますか？')) return;
+      this.$store.dispatch("removeTask", { id:todo.id });
     },
     doneTask(todo) {
-      this.$store.dispatch("doneTask", { todo });
+      this.$store.dispatch("doneTask",  {todo:todo,id: todo.id} );
     },
     sortByTask() {
       return this.todos.sort((a, b) => {
@@ -179,7 +181,7 @@ export default {
           el.task.title.toLowerCase().indexOf(this.searchTask.toLowerCase()) >=
           0
         )
-        console.log(el.task.title)
+          console.log(el.task.title);
         {
           arr.push(el);
         }

@@ -12,7 +12,7 @@
           <v-col cols="12" sm="6" md="6">
             <v-text-field
               v-model="task.title"
-              label="タスク"
+              label="タスクを入力する"
               prepend-inner-icon="mdi-pencil-outline"
               @keydown.enter="addTask"
               :rules="titleRules"
@@ -33,7 +33,7 @@
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
                   v-model="task.date"
-                  label="いつまでに？"
+                  label="日付を入力する"
                   prepend-inner-icon="mdi-calendar-today"
                   readonly
                   v-bind="attrs"
@@ -55,7 +55,7 @@
           <v-col cols="12">
             <v-text-field
               v-model="task.detail"
-              label="タスクの詳細"
+              label="タスクの詳細を入力する"
               prepend-inner-icon="mdi-briefcase-outline"
               required
               clearable

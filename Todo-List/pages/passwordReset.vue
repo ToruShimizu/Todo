@@ -13,7 +13,7 @@
             </p>
             <v-text-field
               prepend-inner-icon="mdi-email-outline"
-              label="Email"
+              label="登録されているメールアドレス"
               v-model="userEmail"
               :rules="emailRules"
               clearable
