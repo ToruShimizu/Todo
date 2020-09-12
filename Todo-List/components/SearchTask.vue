@@ -6,7 +6,7 @@
         hide-details
         v-model="innerSearchTask"
         prepend-inner-icon="mdi-magnify"
-        label="Search"
+        label="タスクを検索する"
         clearable
       ></v-text-field>
 

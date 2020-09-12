@@ -1,7 +1,10 @@
 <template>
+<v-app>
+    <v-col cols="12" sm="12" md="12">
+
   <v-card>
     <v-card-title>
-      <span class="headline">EditToTask</span>
+      <span class="headline">タスク詳細×編集</span>
     </v-card-title>
     <v-form ref="form" lazy-validation>
       <v-container>
@@ -10,7 +13,7 @@
           <v-col cols="12">
             <v-text-field
               v-model="task.task.title"
-              label="Edit Task"
+              label="タスクを編集する"
               prepend-inner-icon="mdi-pencil-outline"
               :rules="titleRules"
               clearable
@@ -31,7 +34,7 @@
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
                   v-model="task.task.date"
-                  label="Picker in menu"
+                  label="日付を変更する"
                   prepend-inner-icon="mdi-calendar-today"
                   readonly
                   v-bind="attrs"
@@ -54,7 +57,7 @@
           <v-col cols="12">
             <v-text-field
               v-model="task.task.detail"
-              label="Edit Detail"
+              label="タスクの詳細を編集する"
               prepend-inner-icon="mdi-briefcase-outline"
               required
               clearable
@@ -75,6 +78,9 @@
       </v-card-actions>
     </v-form>
   </v-card>
+    </v-col>
+  </v-app>
+
 </template>
 
 <script>

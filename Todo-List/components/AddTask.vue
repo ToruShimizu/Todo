@@ -1,7 +1,9 @@
 <template>
+<v-app>
+    <v-col cols="12" sm="12" md="12">
   <v-card>
     <v-card-title>
-      <span class="headline">AddToTask</span>
+      <span class="headline">タスクの追加</span>
     </v-card-title>
     <v-form ref="form" lazy-validation>
       <v-container>
@@ -10,7 +12,7 @@
           <v-col cols="12" sm="6" md="6">
             <v-text-field
               v-model="task.title"
-              label="Add Task"
+              label="タスク"
               prepend-inner-icon="mdi-pencil-outline"
               @keydown.enter="addTask"
               :rules="titleRules"
@@ -31,7 +33,7 @@
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
                   v-model="task.date"
-                  label="Picker in menu"
+                  label="いつまでに？"
                   prepend-inner-icon="mdi-calendar-today"
                   readonly
                   v-bind="attrs"
@@ -53,7 +55,7 @@
           <v-col cols="12">
             <v-text-field
               v-model="task.detail"
-              label="Add Detail"
+              label="タスクの詳細"
               prepend-inner-icon="mdi-briefcase-outline"
               required
               clearable
@@ -70,6 +72,8 @@
       </v-card-actions>
     </v-form>
   </v-card>
+  </v-col>
+  </v-app>
 </template>
 
 <script>

@@ -3,7 +3,7 @@
     hide-details
     v-model="message"
     prepend-inner-icon="mdi-message-text-outline"
-    label="Add Comment"
+    label="コメント"
     clearable
     @keypress.enter="addComment"
   ></v-text-field>

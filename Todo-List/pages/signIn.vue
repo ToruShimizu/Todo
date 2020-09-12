@@ -31,7 +31,7 @@
             style="border-color:#979797;"
             tile
             @click="testLogin"
-          >アカウントなしでログイン</v-btn>
+          >テストユーザーでログイン</v-btn>
         </v-card-text>
         <v-card-title>
           <h2>ログインまたは新規作成</h2>
@@ -40,7 +40,7 @@
           <v-form @submit.prevent="createUser" ref="form" lazy-validation>
             <v-text-field
               prepend-inner-icon="mdi-email-outline"
-              label="Email"
+              label="メールアドレス"
               v-model="userEmail"
               :rules="emailRules"
               clearable
@@ -49,7 +49,7 @@
               :type="showPassword ? 'text' : 'Password'"
               prepend-inner-icon="mdi-lock-outline"
               v-bind:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-              label="Password(6文字以上)"
+              label="パスワード(6文字以上)"
               :rules="[passwordRules.required, passwordRules.min]"
               @click:append="showPassword = !showPassword"
               v-model="userPassword"
