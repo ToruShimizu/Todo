@@ -69,12 +69,10 @@ export const actions = {
     });
   },
   // メールアドレスとパスワードでログイン
-  async login({ commit }, payload) {
+  async login({ commit }, { email, password, userName }) {
     try {
-      await firebase
-        .auth()
-        .signInWithEmailAndPassword(payload.email, payload.password);
-      alert("ようこそ" + payload.email + "さん");
+      await firebase.auth().signInWithEmailAndPassword(email, password);
+      alert("ようこそ" + userName + "さん");
       // サインイン成功後にトップページに遷移する
       this.$router.push({ path: "/" });
     } catch {
@@ -87,97 +85,93 @@ export const actions = {
     auth.signOut();
   },
   // ユーザー作成してからそのままログインする
-  async createUser({ dispatch, commit }, payload) {
+  async createUser({ dispatch, commit }, { email, password, userName }) {
     try {
       const newUser = await auth.createUserWithEmailAndPassword(
-        payload.email,
-        payload.password
+        email,
+        password
       );
-
       await newUser.user.updateProfile({
-        displayName: payload.userName
+        displayName: userName
       });
       alert("作成に成功しました");
       alert("このままログインします");
-    } catch {
+      dispatch("login", { email, password, userName });
+    } catch (err) {
       alert("作成に失敗しました");
-      return;
+      console.log(err);
     }
-    dispatch("login", payload);
   },
   // ユーザー情報の更新
-  async updateUser({ commit }, payload) {
-    let user = firebase.auth().currentUser;
+  // FIXME:ユーザーのstate更新
+  async updateUser({ commit }, { userName }) {
+    let user = await firebase.auth().currentUser;
     try {
       await user.updateProfile({
-        displayName: payload.userName
+        displayName: userName
       });
       alert("成功しました");
-    } catch {
+    } catch (err) {
       alert("更新に失敗しました");
+      console.log(err);
     }
   },
   // メールアドレスの変更
-  async updateEmailAddress({ commit }, payload) {
+  // FIXME:ユーザーstate更新
+  async updateEmailAddress({ commit }, { email }) {
     const user = firebase.auth().currentUser;
     try {
-      await user.updateEmail(payload.newEmailAddress);
+      await user.updateEmail(email);
       alert("新しいメールアドレスの登録が完了しました");
-    } catch {
+    } catch (err) {
       alert("新しいメールアドレスの登録に失敗しました");
+      console.log(err);
     }
   },
   // パスワードの変更
-  async updatePassword({ commit }, payload) {
-    const user = firebase.auth().currentUser;
-    const credential = firebase.auth.EmailAuthProvider.credential(
-      payload.email,
-      payload.password
+  async updatePassword({ commit }, {email, password, newPassword}) {
+    const user = await firebase.auth().currentUser;
+    const credential = await firebase.auth.EmailAuthProvider.credential(
+      email,
+      password
     );
     // 最初に再認証してから変更処理を行う
     try {
       await user.reauthenticateWithCredential(credential);
-    } catch {
-      console.log("error");
-    }
-    // パスワード変更処理
-    try {
-      await user.updatePassword(payload.newPassword);
-    } catch {
+      await user.updatePassword(newPassword);
+
       alert("パスワードを変更しました");
       alert("ログイン画面に移ります");
+    } catch (err) {
+      console.log(err);
     }
+    // パスワード変更処理
   },
   // パスワードの再登録
-  async passwordReset({ commit }, payload) {
-    const emailAddress = payload;
-    // 送信されるメールを日本語に変換
-    auth.languageCode = "ja";
+  async passwordReset({ commit }, {email}) {
     try {
-      await auth.sendPasswordResetEmail(emailAddress);
+      // 送信されるメールを日本語に変換
+      auth.languageCode = "ja";
+      await auth.sendPasswordResetEmail(email);
     } catch {
       alert("送信に失敗しました");
     }
   },
-  async deleteLoginUser({ commit }, payload) {
-    const user = firebase.auth().currentUser;
-    const credential = firebase.auth.EmailAuthProvider.credential(
-      payload.email,
-      payload.password
-    );
+  async deleteLoginUser({ commit }, { email, password }) {
     // 最初に再認証してから変更処理を行う
     try {
+      const user = await firebase.auth().currentUser;
+      const credential = await firebase.auth.EmailAuthProvider.credential(
+        email,
+        password
+      );
       await user.reauthenticateWithCredential(credential);
-    } catch {
-      console.log("error");
-    }
-    // パスワード変更処理
-    try {
       await user.delete();
       alert("ユーザー情報を削除しました");
-    } catch {
-      console.log("error");
+    } catch (err) {
+      console.log(err);
     }
+    commit("logout");
   },
 
   // firestoreからTodosのデータを取り出す
@@ -201,9 +195,7 @@ export const actions = {
       created: firebase.firestore.FieldValue.serverTimestamp()
     };
     if (getters.uid) {
-      await db
-      .collection(`users/${getters.uid}/todos`)
-      .add(task)
+      await db.collection(`users/${getters.uid}/todos`).add(task);
     }
   },
   // タスク更新
