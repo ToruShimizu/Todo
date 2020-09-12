@@ -40,7 +40,7 @@
           <v-form @submit.prevent="createUser" ref="form" lazy-validation>
             <v-text-field
               prepend-inner-icon="mdi-email-outline"
-              label="メールアドレス"
+              label="メールアドレスを入力する"
               v-model="userEmail"
               :rules="emailRules"
               clearable
@@ -49,7 +49,7 @@
               :type="showPassword ? 'text' : 'Password'"
               prepend-inner-icon="mdi-lock-outline"
               v-bind:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-              label="パスワード(6文字以上)"
+              label="パスワードを入力する(6文字以上)"
               :rules="[passwordRules.required, passwordRules.min]"
               @click:append="showPassword = !showPassword"
               v-model="userPassword"
