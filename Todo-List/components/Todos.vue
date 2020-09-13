@@ -37,10 +37,12 @@
         :headers="headers"
         :items="todoList"
         :items-per-page="itemsPerPage"
+        :search="searchTask"
         :page.sync="page"
         hide-default-footer
         @page-count="pageCount = $event"
       >
+
         <template v-slot:item.task.title="{ item }">
           <v-btn icon @click="doneTask(item)">
             <v-icon :color="(!item.task.done && 'grey') || 'primary'">mdi-check-circle-outline</v-icon>
@@ -140,7 +142,7 @@ export default {
   computed: {
     todoList() {
       // FIXME: 複数メソッドの実行ができるようにする
-      return this.todosFiltered(),this.searchTasks()
+      return this.todosFiltered()
     },
     // タスク検索
     ...mapGetters(["todosCount"]),
