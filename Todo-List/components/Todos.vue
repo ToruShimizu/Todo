@@ -132,7 +132,7 @@ export default {
         { text: "期限", value: "task.date" },
         { text: "削除", value: "remove", sortable: false },
       ],
-      itemsPerPage: 5,
+      itemsPerPage: 7,
       page: 1,
       pageCount: 0,
     };
