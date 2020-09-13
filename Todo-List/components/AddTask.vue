@@ -33,7 +33,7 @@
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
                   v-model="task.date"
-                  label="日付を入力する"
+                  label="期限を入力する"
                   prepend-inner-icon="mdi-calendar-today"
                   readonly
                   v-bind="attrs"
