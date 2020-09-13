@@ -1,50 +1,52 @@
 <template>
-    <!-- FIXME: セレクトボタンでソートする項目を選択する -->
-      <v-btn-toggle mandatory>
-        <v-btn
-          depressed
-          color="grey-lighten"
-          :value="false"
-          class="ml-2"
-          @click="sortAscTodos"
-          v-if="isActive"
-        >
-          <v-icon>mdi-arrow-up</v-icon>
-        </v-btn>
-        <v-btn
-          depressed
-          color="grey-lighten"
-          :value="true"
-          @click="sortDescTodos"
-          v-else
-        >
-          <v-icon>mdi-arrow-down</v-icon>
-        </v-btn>
-      </v-btn-toggle>
-
+  <!-- FIXME: セレクトボタンでソートする項目を選択する -->
+  <div>
+    <v-layout>
+      <v-flex>
+        <v-select :items="items" label="Solo field" solo></v-select>
+      </v-flex>
+      <v-flex>
+        <v-btn-toggle mandatory>
+          <v-btn
+            depressed
+            color="grey-lighten"
+            :value="false"
+            class="ml-2"
+            @click="sortAscTodos"
+            v-if="isActive"
+          >
+            <v-icon>mdi-arrow-up</v-icon>
+          </v-btn>
+          <v-btn depressed color="grey-lighten" :value="true" @click="sortDescTodos" v-else>
+            <v-icon>mdi-arrow-down</v-icon>
+          </v-btn>
+        </v-btn-toggle>
+      </v-flex>
+    </v-layout>
+  </div>
 </template>
 
 <script>
 export default {
   props: {
     todos: {
-      type: Array
+      type: Array,
     },
     sortTask: {
-      type: Number
+      type: Number,
     },
     handleAscTodos: {
       type: Function,
-      required: true
+      required: true,
     },
     handleDescTodos: {
       type: Function,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
-      isActive: true
+      isActive: true,
     };
   },
   computed: {
@@ -65,7 +67,7 @@ export default {
     sortDescTodos() {
       this.handleDescTodos();
       this.isActive = true;
-    }
-  }
+    },
+  },
 };
 </script>
