@@ -14,14 +14,18 @@ export const mutations = {
   // ログインユーザー情報の取得
   setLoginUser(state, user) {
     state.login_user = user;
+    console.log("setLoginUser");
   },
   // ログインユーザー情報の削除
   deleteLoginUser(state) {
     state.login_user = null;
+    console.log("deleteLoginUser");
+
   },
   // データを初期化する
   initTodos(state) {
     state.todos = [];
+    console.log("initTodos");
   },
   // 取り出したデータを格納
   addTodos(state, task) {
@@ -51,14 +55,22 @@ export const mutations = {
     state.comments.splice(index, 1);
   },
   initComments(state) {
-    state.comments = []
+    state.comments = [];
   }
 };
 
 export const actions = {
   // ログインユーザー情報の取得
-  setLoginUser({ commit }, user) {
-    commit("setLoginUser", user);
+ async setLoginUser({ commit,dispatch} ) {
+   await firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        commit("setLoginUser",user)
+        if (this.$router.currentRoute.name === "signIn") this.$router.push("/");
+      } else {
+        dispatch("deleteLoginUser");
+        this.$router.push("signIn");
+      }
+    });
   },
   // ログインユーザー情報の削除
   deleteLoginUser({ commit }) {
@@ -83,12 +95,14 @@ export const actions = {
     }
   },
   // ログアウト
-  logout() {
+  async logout({ commit }) {
+    await auth.signOut();
     alert("ログアウトしました");
-    auth.signOut();
+    console.log("logout");
+    commit("deleteLoginUser");
   },
   // ユーザー作成してからそのままログインする
-  async createUser({ dispatch, commit }, { email, password, userName }) {
+  async createUser({ dispatch }, { email, password, userName }) {
     try {
       const newUser = await auth.createUserWithEmailAndPassword(
         email,
@@ -104,10 +118,11 @@ export const actions = {
       alert("作成に失敗しました");
       console.log(err);
     }
+    dispatch("setLoginUser")
   },
   // ユーザー情報の更新
   // FIXME:ユーザーのstate更新
-  async updateUser({ commit }, { userName }) {
+  async updateUser({ dispatch }, { userName }) {
     let user = await firebase.auth().currentUser;
     try {
       await user.updateProfile({
@@ -118,6 +133,7 @@ export const actions = {
       alert("更新に失敗しました");
       console.log(err);
     }
+    dispatch("setLoginUser")
   },
   // メールアドレスの変更
   // FIXME:ユーザーstate更新
@@ -130,9 +146,10 @@ export const actions = {
       alert("新しいメールアドレスの登録に失敗しました");
       console.log(err);
     }
+    dispatch("setLoginUser")
   },
   // パスワードの変更
-  async updatePassword({ commit }, {email, password, newPassword}) {
+  async updatePassword({ commit }, { email, password, newPassword }) {
     const user = await firebase.auth().currentUser;
     const credential = await firebase.auth.EmailAuthProvider.credential(
       email,
@@ -150,7 +167,7 @@ export const actions = {
     // パスワード変更処理
   },
   // パスワードの再登録
-  async passwordReset({ commit }, {email}) {
+  async passwordReset({ commit }, { email }) {
     try {
       // 送信されるメールを日本語に変換
       auth.languageCode = "ja";
@@ -173,7 +190,6 @@ export const actions = {
     } catch (err) {
       console.log(err);
     }
-    commit("logout");
   },
 
   // firestoreからTodosのデータを取り出す
@@ -184,10 +200,8 @@ export const actions = {
       .orderBy("created", "desc")
       .get();
     snapShot.forEach(doc => {
-      commit("addTodos", { id: doc.id, task: doc.data() })
-    }
-
-    );
+      commit("addTodos", { id: doc.id, task: doc.data() });
+    });
   },
   // タスク追加
   async addTask({ getters, commit }, todo) {
@@ -223,7 +237,7 @@ export const actions = {
     }
   },
   // 完了、未完了切り替え
-  async doneTask({ getters, commit }, {todo,id} ) {
+  async doneTask({ getters, commit }, { todo, id }) {
     await db
       .collection(`users/${getters.uid}/todos`)
       .doc(id)
@@ -235,7 +249,8 @@ export const actions = {
   async addComment({ getters, commit }, { id, message }) {
     if (getters.uid) {
       await db
-        .collection(`users/${getters.uid}/todos`).doc(id)
+        .collection(`users/${getters.uid}/todos`)
+        .doc(id)
         .collection(`comments/${getters.uid}/message`)
         .add({ message: message });
     }
@@ -254,18 +269,18 @@ export const actions = {
   },
   // FIXME: id指定してログインユーザーのコメントを表示
   async fetchComments({ getters, commit }) {
-    commit("initComments")
+    commit("initComments");
     const snapShot = await db.collection(`users/${getters.uid}/todos`).get();
     snapShot.forEach(async doc => {
-      console.log('collectionId:' + doc.ref.id);
+      console.log("collectionId:" + doc.ref.id);
       const subCollection = await doc.ref
         .collection(`comments/${getters.uid}/message`)
         .get();
-        subCollection.forEach(doc => {
-          console.log('subId:',doc.id);
-          commit("addComments", { message: doc.data() ,id:doc.id});
-        });
+      subCollection.forEach(doc => {
+        console.log("subId:", doc.id);
+        commit("addComments", { message: doc.data(), id: doc.id });
       });
+    });
   }
 };
 
@@ -279,7 +294,8 @@ export const getters = {
   uid: state => (state.login_user ? state.login_user.uid : null),
   // idを返す関数
   getTaskById: state => id => state.todos.find(todo => todo.id === id),
-  getCommentById: state => id => state.comments.find(comment => comment.id === id),
+  getCommentById: state => id =>
+    state.comments.find(comment => comment.id === id),
 
   // タスク総数のカウント
   todosCount(state) {
