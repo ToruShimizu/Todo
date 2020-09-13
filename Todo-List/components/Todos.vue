@@ -29,7 +29,7 @@
       <v-divider />
       <v-row justify="center">
         <v-col cols="8">
-            <SearchTask :search.sync="searchTask" />
+          <SearchTask :search.sync="searchTask" />
         </v-col>
       </v-row>
 
@@ -42,7 +42,6 @@
         hide-default-footer
         @page-count="pageCount = $event"
       >
-
         <template v-slot:item.task.title="{ item }">
           <v-btn icon @click="doneTask(item)">
             <v-icon :color="(!item.task.done && 'grey') || 'primary'">mdi-check-circle-outline</v-icon>
@@ -122,7 +121,6 @@ export default {
   data() {
     return {
       taskFilter: "all",
-      sortTask: 1,
       searchTask: "",
       headers: [
         {
@@ -142,7 +140,7 @@ export default {
   computed: {
     todoList() {
       // FIXME: 複数メソッドの実行ができるようにする
-      return this.todosFiltered()
+      return this.todosFiltered();
     },
     // タスク検索
     ...mapGetters(["todosCount"]),
@@ -155,21 +153,6 @@ export default {
     },
     doneTask(todo) {
       this.$store.dispatch("doneTask", { todo: todo, id: todo.id });
-    },
-    sortByTask() {
-      return this.todos.sort((a, b) => {
-        return a.task.date < b.task.date
-          ? -this.sortTask
-          : a.task.date > b.task.date
-          ? this.sortTask
-          : 0;
-      });
-    },
-    ascTodos() {
-      this.sortTask = 1;
-    },
-    descTodos() {
-      this.sortTask = -1;
     },
     todosFiltered() {
       // 完了状態の絞り込み
@@ -188,21 +171,6 @@ export default {
           break;
         default:
       }
-    },
-    searchTasks() {
-      let arr = [];
-      let data = this.todos;
-      data.forEach((el) => {
-        if (
-          el.task.title.toLowerCase().indexOf(this.searchTask.toLowerCase()) >=
-          0
-        )
-          console.log(el.task.title);
-        {
-          arr.push(el);
-        }
-      });
-      return arr;
     },
   },
 };
