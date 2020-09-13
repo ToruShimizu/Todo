@@ -20,7 +20,6 @@ export const mutations = {
   deleteLoginUser(state) {
     state.login_user = null;
     console.log("deleteLoginUser");
-
   },
   // データを初期化する
   initTodos(state) {
@@ -30,6 +29,7 @@ export const mutations = {
   // 取り出したデータを格納
   addTodos(state, task) {
     state.todos.push(task);
+    console.log("addTodos");
   },
   // タスク追加
 
@@ -37,11 +37,13 @@ export const mutations = {
   removeTask(state, { id }) {
     const index = state.todos.findIndex(todo => todo.id === id);
     state.todos.splice(index, 1);
+    console.log("removeTask");
   },
   updateTask(state, { id, task }) {
     // インデックスを取得
     const index = state.todos.findIndex(todo => todo.id === id);
     state.todos[index] = task;
+    console.log("updateTask");
   },
   // 完了、未完了切り替え
   doneTask(state, { todo }) {
@@ -49,22 +51,25 @@ export const mutations = {
   },
   addComments(state, message) {
     state.comments.push(message);
+    console.log("addComments");
   },
   removeComment(state, { id }) {
     const index = state.comments.findIndex(comment => comment.id === id);
     state.comments.splice(index, 1);
+    console.log("removeComment");
   },
   initComments(state) {
     state.comments = [];
+    console.log("initComments");
   }
 };
 
 export const actions = {
   // ログインユーザー情報の取得
- async setLoginUser({ commit,dispatch} ) {
-   await firebase.auth().onAuthStateChanged((user) => {
+  async setLoginUser({ commit, dispatch }) {
+    await firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        commit("setLoginUser",user)
+        commit("setLoginUser", user);
         if (this.$router.currentRoute.name === "signIn") this.$router.push("/");
       } else {
         dispatch("deleteLoginUser");
@@ -118,7 +123,7 @@ export const actions = {
       alert("作成に失敗しました");
       console.log(err);
     }
-    dispatch("setLoginUser")
+    dispatch("setLoginUser");
   },
   // ユーザー情報の更新
   // FIXME:ユーザーのstate更新
@@ -133,7 +138,7 @@ export const actions = {
       alert("更新に失敗しました");
       console.log(err);
     }
-    dispatch("setLoginUser")
+    dispatch("setLoginUser");
   },
   // メールアドレスの変更
   // FIXME:ユーザーstate更新
@@ -146,7 +151,7 @@ export const actions = {
       alert("新しいメールアドレスの登録に失敗しました");
       console.log(err);
     }
-    dispatch("setLoginUser")
+    dispatch("setLoginUser");
   },
   // パスワードの変更
   async updatePassword({ commit }, { email, password, newPassword }) {
