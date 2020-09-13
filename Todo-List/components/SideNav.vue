@@ -2,7 +2,7 @@
   <v-container>
     <v-list-item>
       <v-list-item-content>
-        <v-list-item-title class="title grey--text text--darken-2">Login User</v-list-item-title>
+        <v-list-item-title class="title grey--text text--darken-2">ログインユーザー</v-list-item-title>
       </v-list-item-content>
       <v-list-item-content>
         <v-menu open-on-hover down offset-y>
@@ -67,21 +67,15 @@
           </v-avatar>
         </v-list-item-icon>
       </v-list-item-content>
-      <v-list-item-content>
+      <v-list-item-content v-if="$store.state.login_user">
         <v-list-item-title class="title grey--text text--darken-2">
           <v-icon>mdi-account-outline</v-icon>
           {{userName}}
         </v-list-item-title>
       </v-list-item-content>
-      <v-list-item-content>
-        <v-list-item-title class="title grey--text text--darken-2">
-          <v-icon>mdi-email-outline</v-icon>
-          {{userEmail}}
-        </v-list-item-title>
-      </v-list-item-content>
       <v-list-item>
         <v-list-item-content v-if="!$store.state.login_user">
-          <v-list-item-title>Not Login</v-list-item-title>
+          <v-list-item-title>ログインユーザーはいません</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>
