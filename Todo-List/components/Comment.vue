@@ -10,7 +10,7 @@
         <v-list-item-title>{{userName}}さんがコメントしました</v-list-item-title>
         <v-layout>
           <v-text-field v-model="comment.message.message" />
-          <v-btn icon @click="removeComment(comment.id)">
+          <v-btn icon @click="removeComment(comment)">
             <v-icon>mdi-delete-outline</v-icon>
           </v-btn>
         </v-layout>
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters,mapActions } from "vuex";
 
 export default {
   computed: {
@@ -28,9 +28,9 @@ export default {
     ...mapGetters(["userName", "photoURL", "userEmail"]),
   },
   methods: {
-    removeComment(id) {
+    removeComment(comment) {
       if (!confirm("Are you sure?")) return;
-      this.$store.dispatch("removeComment", { id });
+      this.$store.dispatch("removeComment", { id:comment.id });
     },
   },
 };
