@@ -21,8 +21,8 @@ export default {
     },
   },
   created() {
-    this.setLoginUser();
-    this.fetchTodos();
+    this.fetchTodos(),
+    this.setLoginUser(),
     this.fetchComments();
     if (this.$router.currentRoute.name === "signIn") this.$router.push("/");
   },
