@@ -70,7 +70,7 @@
       <v-list-item-content v-if="$store.state.login_user">
         <v-list-item-title class="title grey--text text--darken-2">
           <v-icon>mdi-account-outline</v-icon>
-          {{userName}}
+          {{$store.state.login_user.displayName}}
         </v-list-item-title>
       </v-list-item-content>
       <v-list-item>
