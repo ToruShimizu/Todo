@@ -37,55 +37,64 @@
         </v-col>
       </v-row>
 
-      <v-slide-y-transition class="py-0" group tag="v-list">
-        <v-list v-for="(todo, i) in todoList" :key="todo.id">
-          <v-divider v-if="i !== 0" :key="`${i}-divider`"></v-divider>
-          <v-list-item>
-            <!-- 完了、未完了切り替えチェックボックス -->
-            <v-btn icon @click="doneTask(todo)">
-              <v-icon :color="(!todo.task.done && 'grey') || 'primary'">mdi-check-circle-outline</v-icon>
-            </v-btn>
-            <v-list-item-content>
-              <nuxt-link
-                :to="{
+      <v-data-table
+        :headers="headers"
+        :items="todoList"
+        :items-per-page="itemsPerPage"
+        :page.sync="page"
+        hide-default-footer
+        @page-count="pageCount = $event"
+      >
+        <template v-slot:item.task.title="{ item }">
+          <v-btn icon @click="doneTask(item)">
+            <v-icon :color="(!item.task.done && 'grey') || 'primary'">mdi-check-circle-outline</v-icon>
+          </v-btn>
+          <nuxt-link
+            :to="{
                   name: 'edit-id',
                   params: {
-                    id: todo.id
+                    id: item.id
                   }
                 }"
-              >
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-list-item-title
-                      v-bind="attrs"
-                      v-on="on"
-                      :class="(todo.task.done && 'grey--text') || 'primary--text'"
-                      class="ml-2"
-                    >{{ todo.task.title }}</v-list-item-title>
-                  </template>
-                  <span>詳細を開く</span>
-                </v-tooltip>
-              </nuxt-link>
-            </v-list-item-content>
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-icon
-                      v-if="task.date > todo.task.date"
-                      v-bind="attrs"
-                      v-on="on"
-                      :class="(todo.task.done && 'grey--text') || 'red--text'"
-                    >mdi-alert-outline</v-icon>
-                  </template>
-                  <span>期限が切れています</span>
-                </v-tooltip>
-              <!-- 編集用のテキストエリア -->
-            <v-btn icon>
-              <v-icon @click="removeTask(todo)">mdi-delete-outline</v-icon>
-            </v-btn>
-            <!-- 削除ボタン -->
-          </v-list-item>
-        </v-list>
-      </v-slide-y-transition>
+          >
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <tr
+                  v-bind="attrs"
+                  v-on="on"
+                  :class="(item.task.done && 'grey--text') || 'primary--text'"
+                  class="ml-2"
+                >{{ item.task.title }}</tr>
+              </template>
+              <span>{{item.task.title}}の詳細を開く</span>
+            </v-tooltip>
+          </nuxt-link>
+        </template>
+        <template v-slot:item.task.date="{ item }">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <tr :class="(item.task.done && 'grey--text') || 'black--text'">
+                {{item.task.date}}
+                <v-icon
+                  v-if="task.date > item.task.date"
+                  v-bind="attrs"
+                  v-on="on"
+                  :class="(item.task.done && 'grey--text') || 'red--text'"
+                >mdi-alert-outline</v-icon>
+              </tr>
+            </template>
+            <span>期限が切れています</span>
+          </v-tooltip>
+        </template>
+        <template v-slot:item.remove="{ item }">
+          <v-btn icon>
+            <v-icon @click="removeTask(item)">mdi-delete-outline</v-icon>
+          </v-btn>
+        </template>
+      </v-data-table>
+      <div class="text-center py-2">
+        <v-pagination v-model="page" :length="pageCount" />
+      </div>
     </v-card>
   </v-container>
 </template>
@@ -119,6 +128,19 @@ export default {
       taskFilter: "all",
       sortTask: 1,
       searchTask: "",
+      headers: [
+        {
+          text: "タスク",
+          align: "start",
+          sortable: false,
+          value: "task.title",
+        },
+        { text: "期限", value: "task.date" },
+        { text: "削除", value: "remove", sortable: false },
+      ],
+      itemsPerPage: 5,
+      page: 1,
+      pageCount: 0,
     };
   },
   computed: {
@@ -132,11 +154,11 @@ export default {
   },
   methods: {
     removeTask(todo) {
-      if (!confirm(todo.task.title + 'を削除しますか？')) return;
-      this.$store.dispatch("removeTask", { id:todo.id });
+      if (!confirm(todo.task.title + "を削除しますか？")) return;
+      this.$store.dispatch("removeTask", { id: todo.id });
     },
     doneTask(todo) {
-      this.$store.dispatch("doneTask",  {todo:todo, id: todo.id} );
+      this.$store.dispatch("doneTask", { todo: todo, id: todo.id });
     },
     sortByTask() {
       return this.todos.sort((a, b) => {
