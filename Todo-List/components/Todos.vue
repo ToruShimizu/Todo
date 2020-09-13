@@ -88,6 +88,22 @@
             <v-icon @click="removeTask(item)">mdi-delete-outline</v-icon>
           </v-btn>
         </template>
+        <template v-slot:item.autoRemove="{ item }">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-layout>
+                <v-switch
+                  @change="toggleRemoveSwitch(item)"
+                  :input-value="item.task.autoRemoveSwitch"
+                  :label="item.task.autoRemoveSwitch ? 'on' :  'off'"
+                ></v-switch>
+                <v-icon v-if="item.task.autoRemoveSwitchIcon" v-bind="attrs"
+                  v-on="on">mdi-delete-clock-outline</v-icon>
+              </v-layout>
+            </template>
+            <span>〇〇時間後に自動で削除されます</span>
+          </v-tooltip>
+        </template>
       </v-data-table>
       <div class="text-center py-2">
         <v-pagination v-model="page" :length="pageCount" />
@@ -110,6 +126,8 @@ export default {
         detail: "",
         date: new Date().toISOString(),
         done: false,
+        autoRemoveSwitch: false,
+        autoRemoveSwitchIcon: false,
       }),
     },
   },
@@ -131,6 +149,7 @@ export default {
         },
         { text: "期限", value: "task.date" },
         { text: "削除", value: "remove", sortable: false },
+        { text: "自動削除", value: "autoRemove", sortable: false },
       ],
       itemsPerPage: 7,
       page: 1,
@@ -151,8 +170,41 @@ export default {
       if (!confirm(todo.task.title + "を削除しますか？")) return;
       this.$store.dispatch("removeTask", { id: todo.id });
     },
+    toggleRemoveSwitch(todo) {
+      this.$store.dispatch("toggleRemoveSwitch", { todo: todo, id: todo.id });
+      if (todo.task.done === true && todo.task.autoRemoveSwitch === false) {
+        setTimeout(
+          function () {
+            if (confirm(todo.task.title + "を削除しますか？")) {
+              this.$store.dispatch("removeTask", { id: todo.id });
+            } else {
+                this.$store.dispatch("toggleRemoveSwitch", {
+                todo: todo,
+                id: todo.id,
+              });
+            }
+          }.bind(this),
+          4000
+        );
+      }
+    },
     doneTask(todo) {
       this.$store.dispatch("doneTask", { todo: todo, id: todo.id });
+      if (todo.task.done === false && todo.task.autoRemoveSwitch === true) {
+        setTimeout(
+          function () {
+            if (confirm(todo.task.title + "を削除しますか？")) {
+              this.$store.dispatch("removeTask", { id: todo.id });
+            } else {
+              this.$store.dispatch("toggleRemoveSwitch", {
+                todo: todo,
+                id: todo.id,
+              });
+            }
+          }.bind(this),
+          5000
+        );
+      }
     },
     todosFiltered() {
       // 完了状態の絞り込み
