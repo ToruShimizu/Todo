@@ -43,7 +43,7 @@
           <v-list-item>
             <!-- 完了、未完了切り替えチェックボックス -->
             <v-btn icon @click="doneTask(todo)">
-              <v-icon :color="(!todo.done && 'grey') || 'primary'">mdi-check-circle-outline</v-icon>
+              <v-icon :color="(!todo.task.done && 'grey') || 'primary'">mdi-check-circle-outline</v-icon>
             </v-btn>
             <v-list-item-content>
               <nuxt-link
@@ -59,7 +59,7 @@
                     <v-list-item-title
                       v-bind="attrs"
                       v-on="on"
-                      :class="(todo.done && 'grey--text') || 'primary--text'"
+                      :class="(todo.task.done && 'grey--text') || 'primary--text'"
                       class="ml-2"
                     >{{ todo.task.title }}</v-list-item-title>
                   </template>
@@ -73,14 +73,12 @@
                       v-if="task.date > todo.task.date"
                       v-bind="attrs"
                       v-on="on"
-                      :class="(todo.done && 'grey--text') || 'red--text'"
+                      :class="(todo.task.done && 'grey--text') || 'red--text'"
                     >mdi-alert-outline</v-icon>
                   </template>
                   <span>期限が切れています</span>
                 </v-tooltip>
               <!-- 編集用のテキストエリア -->
-
-
             <v-btn icon>
               <v-icon @click="removeTask(todo)">mdi-delete-outline</v-icon>
             </v-btn>
@@ -138,7 +136,7 @@ export default {
       this.$store.dispatch("removeTask", { id:todo.id });
     },
     doneTask(todo) {
-      this.$store.dispatch("doneTask",  {todo:todo,id: todo.id} );
+      this.$store.dispatch("doneTask",  {todo:todo, id: todo.id} );
     },
     sortByTask() {
       return this.todos.sort((a, b) => {

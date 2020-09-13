@@ -45,7 +45,7 @@ export const mutations = {
   },
   // 完了、未完了切り替え
   doneTask(state, { todo }) {
-    todo.done = !todo.done;
+    todo.task.done = !todo.task.done;
   },
   addComments(state, message) {
     state.comments.push(message);
@@ -303,7 +303,7 @@ export const getters = {
   },
   // 完了タスクのカウント
   completedTodos(state) {
-    return state.todos.filter(todo => todo.done).length;
+    return state.todos.filter(todo => todo.task.done).length;
   },
   // タスクの完了率
   progress(state, getters) {
