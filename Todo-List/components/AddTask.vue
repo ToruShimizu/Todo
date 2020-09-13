@@ -85,7 +85,9 @@ export default {
         title: "",
         detail: "",
         date: new Date().toISOString().substr(0, 10),
-        done: false
+        done: false,
+        autoRemoveSwitch: false,
+        autoRemoveSwitchIcon: false
       })
     },
 

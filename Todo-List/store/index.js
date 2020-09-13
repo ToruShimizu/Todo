@@ -49,6 +49,10 @@ export const mutations = {
   doneTask(state, { todo }) {
     todo.task.done = !todo.task.done;
   },
+  toggleRemoveSwitch(state, { todo }) {
+    todo.task.autoRemoveSwitch = !todo.task.autoRemoveSwitch;
+    todo.task.autoRemoveSwitchIcon = !todo.task.autoRemoveSwitchIcon;
+  },
   addComments(state, message) {
     state.comments.push(message);
     console.log("addComments");
@@ -215,6 +219,8 @@ export const actions = {
       detail: todo.task.detail,
       date: todo.task.date,
       done: false,
+      autoRemoveSwitch: false,
+      autoRemoveSwitchIcon: false,
       created: firebase.firestore.FieldValue.serverTimestamp()
     };
     if (getters.uid) {
@@ -250,6 +256,16 @@ export const actions = {
         done: !todo.task.done
       });
     commit("doneTask", { todo });
+  },
+  async toggleRemoveSwitch({ getters, commit }, { todo, id }) {
+    await db
+      .collection(`users/${getters.uid}/todos`)
+      .doc(id)
+      .update({
+        autoRemoveSwitch: !todo.task.autoRemoveSwitch,
+        autoRemoveEditing: !todo.task.autoRemoveEditing
+      });
+    commit("toggleRemoveSwitch", { todo });
   },
   async addComment({ getters, commit }, { id, message }) {
     if (getters.uid) {
