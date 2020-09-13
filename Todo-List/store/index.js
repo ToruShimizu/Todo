@@ -24,8 +24,8 @@ export const mutations = {
     state.todos = [];
   },
   // 取り出したデータを格納
-  addTodos(state, todo) {
-    state.todos.push(todo);
+  addTodos(state, task) {
+    state.todos.push(task);
   },
   // タスク追加
 
@@ -43,8 +43,8 @@ export const mutations = {
   doneTask(state, { todo }) {
     todo.done = !todo.done;
   },
-  addComments(state, comment) {
-    state.comments.push(comment);
+  addComments(state, message) {
+    state.comments.push(message);
   },
   removeComment(state, { id }) {
     const index = state.comments.findIndex(comment => comment.id === id);
@@ -142,7 +142,6 @@ export const actions = {
     try {
       await user.reauthenticateWithCredential(credential);
       await user.updatePassword(newPassword);
-
       alert("パスワードを変更しました");
       alert("ログイン画面に移ります");
     } catch (err) {
@@ -184,8 +183,10 @@ export const actions = {
       .collection(`users/${getters.uid}/todos`)
       .orderBy("created", "desc")
       .get();
-    snapShot.forEach(doc =>
+    snapShot.forEach(doc => {
       commit("addTodos", { id: doc.id, task: doc.data() })
+    }
+
     );
   },
   // タスク追加
@@ -232,11 +233,12 @@ export const actions = {
     commit("doneTask", { todo });
   },
   async addComment({ getters, commit }, { id, message }) {
-    await db
-      .collection(`users/${getters.uid}/todos`)
-      .doc(id)
-      .collection(`comments/${getters.uid}/message`)
-      .add({ message: message });
+    if (getters.uid) {
+      await db
+        .collection(`users/${getters.uid}/todos`).doc(id)
+        .collection(`comments/${getters.uid}/message`)
+        .add({ message: message });
+    }
   },
   async removeComment({ getters, commit }, { id }) {
     if (getters.uid) {
@@ -255,14 +257,15 @@ export const actions = {
     commit("initComments")
     const snapShot = await db.collection(`users/${getters.uid}/todos`).get();
     snapShot.forEach(async doc => {
+      console.log('collectionId:' + doc.ref.id);
       const subCollection = await doc.ref
         .collection(`comments/${getters.uid}/message`)
         .get();
-      subCollection.forEach(doc => {
-        console.log(doc.data());
-        commit("addComments", { id: doc.id, message: doc.data() });
+        subCollection.forEach(doc => {
+          console.log('subId:',doc.id);
+          commit("addComments", { message: doc.data() ,id:doc.id});
+        });
       });
-    });
   }
 };
 
@@ -276,6 +279,7 @@ export const getters = {
   uid: state => (state.login_user ? state.login_user.uid : null),
   // idを返す関数
   getTaskById: state => id => state.todos.find(todo => todo.id === id),
+  getCommentById: state => id => state.comments.find(comment => comment.id === id),
 
   // タスク総数のカウント
   todosCount(state) {
