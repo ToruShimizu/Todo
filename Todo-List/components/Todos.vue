@@ -162,11 +162,11 @@ export default {
 
           break;
         case "active":
-          return this.todos.filter((todo) => !todo.done);
+          return this.todos.filter((todo) => !todo.task.done);
 
           break;
         case "done":
-          return this.todos.filter((todo) => todo.done);
+          return this.todos.filter((todo) => todo.task.done);
 
           break;
         default:
