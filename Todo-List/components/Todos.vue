@@ -29,11 +29,7 @@
       <v-divider />
       <v-row justify="center">
         <v-col cols="8">
-          <v-layout>
             <SearchTask :search.sync="searchTask" />
-            <v-spacer />
-            <SortByTask :handleAscTodos="ascTodos" :handleDescTodos="descTodos" />
-          </v-layout>
         </v-col>
       </v-row>
 
@@ -102,7 +98,6 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 import FilteredTask from "@/components/FilteredTask";
-import SortByTask from "@/components/SortByTask";
 import SearchTask from "@/components/SearchTask";
 
 export default {
@@ -119,7 +114,6 @@ export default {
   },
   components: {
     FilteredTask,
-    SortByTask,
     SearchTask,
   },
 
@@ -146,7 +140,7 @@ export default {
   computed: {
     todoList() {
       // FIXME: 複数メソッドの実行ができるようにする
-      return this.searchTasks(), this.sortByTask(), this.todosFiltered();
+      return this.todosFiltered(),this.searchTasks()
     },
     // タスク検索
     ...mapGetters(["todosCount"]),
