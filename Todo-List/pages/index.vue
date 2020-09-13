@@ -15,25 +15,23 @@ export default {
   components: {
     Todos,
   },
+  props: {
+    searchTask: {
+      type: String,
+    },
+  },
   created() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.setLoginUser(user);
-        this.fetchTodos();
-        this.fetchComments();
-        if (this.$router.currentRoute.name === "signIn") this.$router.push("/");
-      } else {
-        this.deleteLoginUser();
-        this.$router.push("signIn");
-      }
-    });
+    this.setLoginUser();
+    this.fetchTodos();
+    this.fetchComments();
+    if (this.$router.currentRoute.name === "signIn") this.$router.push("/");
   },
   methods: {
     ...mapActions([
       "setLoginUser",
       "deleteLoginUser",
       "fetchTodos",
-      "fetchComments"
+      "fetchComments",
     ]),
   },
 };
