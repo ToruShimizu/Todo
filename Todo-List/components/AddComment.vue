@@ -19,11 +19,11 @@ export default {
     };
   },
   computed: {
-    ...mapState(["comments"]),
+    ...mapState("modules/todos", ["comments"]),
   },
   methods: {
     addComment() {
-      this.$store.dispatch("addComment", {
+      this.$store.dispatch("modules/todos/addComment", {
         id: this.$route.params.id,
         message: this.message,
       });

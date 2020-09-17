@@ -24,13 +24,13 @@ import { mapState, mapGetters,mapActions } from "vuex";
 
 export default {
   computed: {
-    ...mapState(["comments"]),
+    ...mapState("modules/todos/",["comments"]),
     ...mapGetters(["userName", "photoURL", "userEmail"]),
   },
   methods: {
     removeComment(comment) {
       if (!confirm("Are you sure?")) return;
-      this.$store.dispatch("removeComment", { id:comment.id });
+      this.$store.dispatch("modules/todos/removeComment", { id:comment.id });
     },
   },
 };

@@ -60,21 +60,21 @@
     </v-row>
     <v-divider></v-divider>
     <v-list dense nav>
-      <v-list-item-content v-if="$store.state.login_user">
+      <v-list-item-content v-if="this.login_user">
         <v-list-item-icon v-if="photoURL">
           <v-avatar size="50">
             <img :src="photoURL" />
           </v-avatar>
         </v-list-item-icon>
       </v-list-item-content>
-      <v-list-item-content v-if="$store.state.login_user">
+      <v-list-item-content v-if="this.login_user">
         <v-list-item-title class="title grey--text text--darken-2">
           <v-icon>mdi-account-outline</v-icon>
-          {{$store.state.login_user.displayName}}
+          {{userName}}
         </v-list-item-title>
       </v-list-item-content>
       <v-list-item>
-        <v-list-item-content v-if="!$store.state.login_user">
+        <v-list-item-content v-if="!this.login_user">
           <v-list-item-title>ログインユーザーはいません</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -83,7 +83,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import UpdateUser from "@/components/UpdateUser";
 import UpdatePassword from "@/components/UpdatePassword";
 import UpdateEmailAddress from "@/components/UpdateEmailAddress";
@@ -104,7 +104,11 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["userName", "photoURL", "userEmail"]),
+    userName() {
+      return this.userName
+    },
+    ...mapGetters("modules/auth", ["userName", "photoURL", "userEmail"]),
+    ...mapState("modules/auth", ["login_user"]),
   },
   methods: {
     // FIXME:switch文に書き直す
