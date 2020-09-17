@@ -21,18 +21,24 @@ export default {
     },
   },
   created() {
-    this.fetchTodos(),
-    this.setLoginUser(),
-    this.fetchComments();
-    if (this.$router.currentRoute.name === "signIn") this.$router.push("/");
+    firebase.auth().onAuthStateChanged((user) => {
+      const { displayName,uid,email } = user
+      const loginUser = { displayName,uid,email }
+      if ( loginUser ) {
+        this.setLoginUser( loginUser );
+        this.fetchTodos();
+        if (this.$router.currentRoute.name === "signIn")
+          this.$router.push({ name: "/" });
+      } else {
+        this.deleteLoginUser();
+        this.$router.push({ name: "signIn" });
+      }
+    });
+
   },
   methods: {
-    ...mapActions([
-      "setLoginUser",
-      "deleteLoginUser",
-      "fetchTodos",
-      "fetchComments",
-    ]),
+    ...mapActions("modules/auth", ["setLoginUser", "deleteLoginUser"]),
+    ...mapActions("modules/todos", ["fetchTodos", "fetchComments"]),
   },
 };
 </script>
