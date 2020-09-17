@@ -97,8 +97,11 @@
                   :input-value="item.task.autoRemoveSwitch"
                   :label="item.task.autoRemoveSwitch ? 'on' :  'off'"
                 ></v-switch>
-                <v-icon v-if="item.task.autoRemoveSwitchIcon" v-bind="attrs"
-                  v-on="on">mdi-delete-clock-outline</v-icon>
+                <v-icon
+                  v-if="item.task.autoRemoveSwitchIcon"
+                  v-bind="attrs"
+                  v-on="on"
+                >mdi-delete-clock-outline</v-icon>
               </v-layout>
             </template>
             <span>〇〇時間後に自動で削除されます</span>
@@ -162,23 +165,26 @@ export default {
       return this.todosFiltered();
     },
     // タスク検索
-    ...mapGetters(["todosCount"]),
-    ...mapState(["todos"]),
+    ...mapGetters("modules/todos", ["todosCount"]),
+    ...mapState("modules/todos", ["todos"]),
   },
   methods: {
     removeTask(todo) {
       if (!confirm(todo.task.title + "を削除しますか？")) return;
-      this.$store.dispatch("removeTask", { id: todo.id });
+      this.$store.dispatch("modules/todos/removeTask", { id: todo.id });
     },
     toggleRemoveSwitch(todo) {
-      this.$store.dispatch("toggleRemoveSwitch", { todo: todo, id: todo.id });
+      this.$store.dispatch("modules/todos/toggleRemoveSwitch", {
+        todo: todo,
+        id: todo.id,
+      });
       if (todo.task.done === true && todo.task.autoRemoveSwitch === false) {
         setTimeout(
           function () {
             if (confirm(todo.task.title + "を削除しますか？")) {
-              this.$store.dispatch("removeTask", { id: todo.id });
+              this.$store.dispatch("modules/todos/removeTask", { id: todo.id });
             } else {
-                this.$store.dispatch("toggleRemoveSwitch", {
+              this.$store.dispatch("modules/todos/toggleRemoveSwitch", {
                 todo: todo,
                 id: todo.id,
               });
@@ -189,14 +195,17 @@ export default {
       }
     },
     doneTask(todo) {
-      this.$store.dispatch("doneTask", { todo: todo, id: todo.id });
+      this.$store.dispatch("modules/todos/doneTask", {
+        todo: todo,
+        id: todo.id,
+      });
       if (todo.task.done === false && todo.task.autoRemoveSwitch === true) {
         setTimeout(
           function () {
             if (confirm(todo.task.title + "を削除しますか？")) {
-              this.$store.dispatch("removeTask", { id: todo.id });
+              this.$store.dispatch("modules/todos/removeTask", { id: todo.id });
             } else {
-              this.$store.dispatch("toggleRemoveSwitch", {
+              this.$store.dispatch("modules/todos/toggleRemoveSwitch", {
                 todo: todo,
                 id: todo.id,
               });

@@ -3,12 +3,11 @@
     <v-navigation-drawer v-model="drawer" app clipped>
       <SideNav />
     </v-navigation-drawer>
-
     <v-app-bar color="indigo darken-2" dark app clipped-left>
       <v-app-bar-nav-icon @click="drawer=!drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>ToDo</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-items v-if="$store.state.login_user">
+      <v-toolbar-items v-if="this.login_user">
         <v-icon @click="logout">mdi-logout-variant</v-icon>
       </v-toolbar-items>
     </v-app-bar>
@@ -16,7 +15,7 @@
 </template>
 
 <script>
-import { mapActions,} from "vuex";
+import { mapActions, mapState } from "vuex";
 import SideNav from "@/components/SideNav";
 
 export default {
@@ -29,7 +28,8 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["logout"]),
+    ...mapActions("modules/auth", ["logout"]),
+    ...mapState("modules/auth", ["login_user"]),
   },
 };
 </script>

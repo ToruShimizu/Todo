@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     updateEmailAddress() {
-      this.$store.dispatch("updateEmailAddress",
+      this.$store.dispatch("modules/auth/updateEmailAddress",
         {email:this.newEmailAddress}
       );
     },

@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     passwordReset() {
-      this.$store.dispatch("passwordReset", this.userEmail);
+      this.$store.dispatch("modules/auth/passwordReset", this.userEmail);
     },
   },
 };

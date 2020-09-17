@@ -124,7 +124,7 @@ export default {
         return;
       }
       if (this.$route.params.id) {
-        this.$store.dispatch("updateTask", {
+        this.$store.dispatch("modules/auth/updateTask", {
           id: this.$route.params.id,
           task: this.task.task
         });

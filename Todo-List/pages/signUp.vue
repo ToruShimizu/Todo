@@ -80,7 +80,7 @@ export default {
   },
   methods: {
     createUser() {
-      this.$store.dispatch("createUser", {
+      this.$store.dispatch("modules/auth/createUser", {
         email: this.userEmail,
         password: this.userPassword,
         userName: this.userName,
