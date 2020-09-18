@@ -5,13 +5,7 @@ const state = () => ({
   todos: [],
   comments: []
 });
-
 const mutations = {
-  // データを初期化する
-  initTodos(state) {
-    state.todos = [];
-    console.log("initTodos");
-  },
   // 取り出したデータを格納
   addTodos(state, task) {
     state.todos.push(task);
@@ -48,17 +42,12 @@ const mutations = {
     state.comments.splice(index, 1);
     console.log("removeComment");
   },
-  initComments(state) {
-    state.comments = [];
-    console.log("initComments");
-  }
 };
 
 const actions = {
   // firestoreからTodosのデータを取り出す
   async fetchTodos({ state, getters, commit }) {
     console.log(getters.userUid);
-    commit("initTodos");
     const snapShot = await db
       .collection(`users/${getters.userUid}/todos`)
       .orderBy("created", "desc")
@@ -147,7 +136,6 @@ const actions = {
   },
   // FIXME: id指定してログインユーザーのコメントを表示
   async fetchComments({ getters, commit }) {
-    commit("initComments");
     const snapShot = await db
       .collection(`users/${getters.userUid}/todos`)
       .get();
