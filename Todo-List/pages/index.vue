@@ -21,9 +21,9 @@ export default {
     },
   },
   created() {
-    firebase.auth().onAuthStateChanged((user) => {
-      const { displayName,uid,email } = user
-      const loginUser = { displayName,uid,email }
+    // FIXME:actionに書く
+    firebase.auth().onAuthStateChanged((loginUser) => {
+
       if ( loginUser ) {
         this.setLoginUser( loginUser );
         this.fetchTodos();
