@@ -161,7 +161,6 @@ export default {
   },
   computed: {
     todoList() {
-      // FIXME: 複数メソッドの実行ができるようにする
       return this.todosFiltered();
     },
     // タスク検索
@@ -173,6 +172,7 @@ export default {
       if (!confirm(todo.task.title + "を削除しますか？")) return;
       this.$store.dispatch("modules/todos/removeTask", { id: todo.id });
     },
+    // FIXME:アーカイブに移す
     toggleRemoveSwitch(todo) {
       this.$store.dispatch("modules/todos/toggleRemoveSwitch", {
         todo: todo,
@@ -184,6 +184,7 @@ export default {
             if (confirm(todo.task.title + "を削除しますか？")) {
               this.$store.dispatch("modules/todos/removeTask", { id: todo.id });
             } else {
+              // FIXME: setTimeoutを解除する
               this.$store.dispatch("modules/todos/toggleRemoveSwitch", {
                 todo: todo,
                 id: todo.id,
@@ -199,12 +200,14 @@ export default {
         todo: todo,
         id: todo.id,
       });
+      // FIXME:アーカイブに移す
       if (todo.task.done === false && todo.task.autoRemoveSwitch === true) {
         setTimeout(
           function () {
             if (confirm(todo.task.title + "を削除しますか？")) {
               this.$store.dispatch("modules/todos/removeTask", { id: todo.id });
             } else {
+              // FIXME:setTimeoutを解除する
               this.$store.dispatch("modules/todos/toggleRemoveSwitch", {
                 todo: todo,
                 id: todo.id,
