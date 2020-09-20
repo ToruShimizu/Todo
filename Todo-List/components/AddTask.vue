@@ -66,7 +66,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <nuxt-link to="/">
-          <v-btn color="blue darken-1" text>Cancel</v-btn>
+          <v-btn color="blue darken-1" text @click="$emit('close-add-task')">Cancel</v-btn>
         </nuxt-link>
         <v-btn color="blue darken-1" text @click="addTask">Save</v-btn>
       </v-card-actions>

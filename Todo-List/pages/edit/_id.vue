@@ -6,8 +6,8 @@
       max-width="600px"
       transition="scroll-y-transition"
     >
-      <AddTask v-if="!this.$route.params.id" />
-      <UpdateTask v-else :task="this.task" />
+      <AddTask v-if="!this.$route.params.id" @close-add-task="closeTaskDialog"/>
+      <UpdateTask v-else :task="this.task" @close-update-task="closeTaskDialog"/>
     </v-dialog>
   </v-row>
 </template>
