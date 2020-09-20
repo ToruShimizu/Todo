@@ -12,6 +12,7 @@ import { mapActions } from "vuex";
 import firebase from "firebase";
 
 export default {
+  middleware: "authenticated",
   components: {
     Todos,
   },
@@ -21,20 +22,7 @@ export default {
     },
   },
   created() {
-    // FIXME:actionに書く
-    firebase.auth().onAuthStateChanged((loginUser) => {
-
-      if ( loginUser ) {
-        this.setLoginUser( loginUser );
-        this.fetchTodos();
-        if (this.$router.currentRoute.name === "signIn")
-          this.$router.push({ name: "/" });
-      } else {
-        this.deleteLoginUser();
-        this.$router.push({ name: "signIn" });
-      }
-    });
-
+    this.fetchTodos();
   },
   methods: {
     ...mapActions("modules/auth", ["setLoginUser", "deleteLoginUser"]),
