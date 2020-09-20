@@ -9,7 +9,6 @@
 <script>
 import Todos from "@/components/Todos";
 export default {
-  middleware: "authenticated",
   components: {
     Todos,
   },
