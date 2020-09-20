@@ -12,6 +12,7 @@
 import Header from "@/components/Header";
 
 export default {
+  middleware: "authenticated",
   components: {
     Header,
   },
