@@ -51,7 +51,6 @@ const actions = {
   async logout({ commit }) {
     await auth.signOut();
     alert("ログアウトしました");
-    this.$router.push({ path: "signIn" });
     console.log("logout");
     commit("deleteLoginUser");
   },
