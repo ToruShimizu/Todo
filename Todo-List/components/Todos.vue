@@ -42,7 +42,7 @@
         hide-default-footer
         @page-count="pageCount = $event"
       >
-        <template v-slot:item.task.title="{ item }">
+        <template v-slot:[`item.task.title`]="{ item }">
           <v-btn icon @click="doneTask(item)">
             <v-icon :color="(!item.task.done && 'grey') || 'primary'">mdi-check-circle-outline</v-icon>
           </v-btn>
@@ -67,7 +67,7 @@
             </v-tooltip>
           </nuxt-link>
         </template>
-        <template v-slot:item.task.date="{ item }">
+        <template v-slot:[`item.task.date`]="{ item }">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <tr :class="(item.task.done && 'grey--text') || 'black--text'">
@@ -83,12 +83,12 @@
             <span>期限が切れています</span>
           </v-tooltip>
         </template>
-        <template v-slot:item.remove="{ item }">
+        <template v-slot:[`item.remove`]="{ item }">
           <v-btn icon>
             <v-icon @click="removeTask(item)">mdi-delete-outline</v-icon>
           </v-btn>
         </template>
-        <template v-slot:item.autoRemove="{ item }">
+        <template v-slot:[`item.autoRemove`]="{ item }">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <v-layout>
