@@ -11,6 +11,7 @@ export default function({ store, redirect }) {
         uid: user.uid
       };
       store.dispatch("modules/auth/setLoginUser", userInfo);
+      store.dispatch("modules/todos/fetchTodos");
     } else {
       return redirect("/signIn")
 
