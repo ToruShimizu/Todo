@@ -7,12 +7,11 @@ const state = () => ({
 });
 const mutations = {
   // 取り出したデータを格納
-  addTodos(state, task) {
-    state.todos.push(task);
-    console.log("addTodos");
-  },
   // タスク追加
-
+  addTask(state, { id, task }) {
+    task.id = id;
+    state.todos.push({ task });
+  },
   // タスク削除
   removeTask(state, { id }) {
     const index = state.todos.findIndex(todo => todo.id === id);
@@ -41,19 +40,20 @@ const mutations = {
     const index = state.comments.findIndex(comment => comment.id === id);
     state.comments.splice(index, 1);
     console.log("removeComment");
-  },
+  }
 };
 
 const actions = {
   // firestoreからTodosのデータを取り出す
-  async fetchTodos({ state, getters, commit }) {
+  async fetchTodos({ getters, commit }) {
     console.log(getters.userUid);
     const snapShot = await db
       .collection(`users/${getters.userUid}/todos`)
       .orderBy("created", "desc")
       .get();
     snapShot.forEach(doc => {
-      commit("addTodos", { id: doc.id, task: doc.data() });
+      commit("addTask", { id: doc.id, task: doc.data() });
+      console.log(doc.data());
     });
   },
   // タスク追加
@@ -69,6 +69,7 @@ const actions = {
     };
     if (getters.userUid) {
       await db.collection(`users/${getters.userUid}/todos`).add(task);
+      commit("addTask",{task})
     }
   },
   // タスク更新
