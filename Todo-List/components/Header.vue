@@ -27,9 +27,11 @@ export default {
       drawer: null,
     };
   },
+  computed: {
+    ...mapState("modules/auth", ["login_user"]),
+  },
   methods: {
     ...mapActions("modules/auth", ["logout"]),
-    ...mapState("modules/auth", ["login_user"]),
   },
 };
 </script>
