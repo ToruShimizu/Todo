@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <v-app>
+    <header>
     <v-navigation-drawer v-model="drawer" app clipped>
       <SideNav />
     </v-navigation-drawer>
@@ -11,7 +12,8 @@
         <v-icon @click="logout">mdi-logout-variant</v-icon>
       </v-toolbar-items>
     </v-app-bar>
-  </div>
+    </header>
+  </v-app>
 </template>
 
 <script>
@@ -36,3 +38,6 @@ export default {
 };
 </script>
 
+<style>
+
+</style>
