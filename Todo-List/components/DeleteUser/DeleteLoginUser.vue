@@ -14,23 +14,23 @@
         <v-card-text>
           <v-form ref="form" lazy-validation @submit.prevent="deleteUser">
             <v-text-field
+              v-model="loginUserEmail"
               prepend-inner-icon="mdi-email-outline"
               label="登録されているメールアドレス"
-              v-model="loginUserEmail"
               :rules="emailRules"
               clearable
             />
             <v-text-field
+              v-model="loginUserPassword"
               :type="showPassword ? 'text' : 'Password'"
               prepend-inner-icon="mdi-lock-outline"
-              v-bind:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
               label="現在のPassword(6文字以上)"
               :rules="[passwordRules.required, passwordRules.min]"
               @click:append="showPassword = !showPassword"
-              v-model="loginUserPassword"
             />
             <v-card-actions>
-              <v-btn @click="deleteLoginUser" color="success">
+              <v-btn color="success" @click="deleteLoginUser">
                 <v-icon left>mdi-account</v-icon>SAVE
               </v-btn>
               <v-spacer></v-spacer>

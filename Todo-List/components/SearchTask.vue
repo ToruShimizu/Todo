@@ -1,9 +1,9 @@
 <template>
   <v-text-field
+    v-model="innerSearchTask"
     flat
     solo-inverted
     hide-details
-    v-model="innerSearchTask"
     prepend-inner-icon="mdi-magnify"
     label="タスクを検索する"
     clearable
@@ -15,6 +15,7 @@ export default {
   props: {
     searchTask: {
       type: String,
+      // required: true,
     },
   },
   computed: {

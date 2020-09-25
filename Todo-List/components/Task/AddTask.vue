@@ -14,9 +14,9 @@
                   v-model="task.title"
                   label="タスクを入力する"
                   prepend-inner-icon="mdi-pencil-outline"
-                  @keydown.enter="addTask"
                   :rules="titleRules"
                   clearable
+                  @keydown.enter="addTask"
                 />
               </v-col>
               <!-- 日付入力エリア -->

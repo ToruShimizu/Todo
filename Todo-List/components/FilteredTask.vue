@@ -3,7 +3,7 @@
   <v-tabs>
     <v-tab @click="selectedTaskFilter = 'all'">全て:{{ todos.length }}</v-tab>
     <v-divider vertical />
-    <v-tab @click="selectedTaskFilter = 'active'" class
+    <v-tab @click="selectedTaskFilter = 'active'"
       >未完了:{{ remainingTodos }}</v-tab
     >
     <v-divider vertical />
@@ -29,6 +29,7 @@ export default {
   props: {
     taskFilter: {
       type: String,
+      // required: true,
     },
   },
   computed: {

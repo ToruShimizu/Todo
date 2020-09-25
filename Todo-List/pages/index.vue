@@ -14,10 +14,5 @@ export default {
   components: {
     Todos,
   },
-  props: {
-    searchTask: {
-      type: String,
-    },
-  },
 }
 </script>

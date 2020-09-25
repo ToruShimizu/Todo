@@ -1,7 +1,7 @@
 <template>
   <v-text-field
-    hide-details
     v-model="message"
+    hide-details
     prepend-inner-icon="mdi-message-text-outline"
     label="コメントを追加する"
     clearable
