@@ -7,7 +7,9 @@
             <img :src="photoURL" />
           </v-avatar>
         </v-list-item-icon>
-        <v-list-item-title>{{userName}}さんがコメントしました</v-list-item-title>
+        <v-list-item-title>
+          {{ userName }}さんがコメントしました
+        </v-list-item-title>
         <v-layout>
           <v-text-field v-model="comment.message.message" />
           <v-btn icon @click="removeComment(comment)">
@@ -20,18 +22,18 @@
 </template>
 
 <script>
-import { mapState, mapGetters,mapActions } from "vuex";
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapState("modules/todos/",["comments"]),
-    ...mapGetters(["userName", "photoURL", "userEmail"]),
+    ...mapState('modules/todos/', ['comments']),
+    ...mapGetters(['userName', 'photoURL', 'userEmail']),
   },
   methods: {
     removeComment(comment) {
-      if (!confirm("Are you sure?")) return;
-      this.$store.dispatch("modules/todos/removeComment", { id:comment.id });
+      if (!confirm('Are you sure?')) return
+      this.$store.dispatch('modules/todos/removeComment', { id: comment.id })
     },
   },
-};
+}
 </script>

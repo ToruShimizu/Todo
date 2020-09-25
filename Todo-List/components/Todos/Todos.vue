@@ -32,7 +32,6 @@
           <SearchTask :search.sync="searchTask" />
         </v-col>
       </v-row>
-
       <v-data-table
         :headers="headers"
         :items="todoList"
@@ -44,26 +43,32 @@
       >
         <template v-slot:[`item.task.title`]="{ item }">
           <v-btn icon @click="doneTask(item)">
-            <v-icon :color="(!item.task.done && 'grey') || 'primary'">mdi-check-circle-outline</v-icon>
+            <v-icon :color="(!item.task.done && 'grey') || 'primary'"
+              >mdi-check-circle-outline</v-icon
+            >
           </v-btn>
           <nuxt-link
             :to="{
-                  name: 'edit-id',
-                  params: {
-                    id: item.id
-                  }
-                }"
+              name: 'edit-id',
+              params: {
+                id: item.id,
+              },
+            }"
           >
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
                 <tr
                   v-bind="attrs"
-                  v-on="on"
                   :class="(item.task.done && 'grey--text') || 'primary--text'"
                   class="ml-2"
-                >{{ item.task.title }}</tr>
+                  v-on="on"
+                >
+                  {{
+                    item.task.title
+                  }}
+                </tr>
               </template>
-              <span>{{item.task.title}}の詳細を開く</span>
+              <span>{{ item.task.title }}の詳細を開く</span>
             </v-tooltip>
           </nuxt-link>
         </template>
@@ -71,13 +76,16 @@
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <tr :class="(item.task.done && 'grey--text') || 'black--text'">
-                {{item.task.date}}
+                {{
+                  item.task.date
+                }}
                 <v-icon
                   v-if="task.date > item.task.date"
                   v-bind="attrs"
-                  v-on="on"
                   :class="(item.task.done && 'grey--text') || 'red--text'"
-                >mdi-alert-outline</v-icon>
+                  v-on="on"
+                  >mdi-alert-outline</v-icon
+                >
               </tr>
             </template>
             <span>期限が切れています</span>
@@ -93,15 +101,16 @@
             <template v-slot:activator="{ on, attrs }">
               <v-layout>
                 <v-switch
-                  @change="toggleRemoveSwitch(item)"
                   :input-value="item.task.autoRemoveSwitch"
-                  :label="item.task.autoRemoveSwitch ? 'on' :  'off'"
+                  :label="item.task.autoRemoveSwitch ? 'on' : 'off'"
+                  @change="toggleRemoveSwitch(item)"
                 ></v-switch>
                 <v-icon
                   v-if="item.task.autoRemoveSwitchIcon"
                   v-bind="attrs"
                   v-on="on"
-                >mdi-delete-clock-outline</v-icon>
+                  >mdi-delete-clock-outline</v-icon
+                >
               </v-layout>
             </template>
             <span>〇〇時間後に自動で削除されます</span>
@@ -116,17 +125,21 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
-import FilteredTask from "@/components/FilteredTask";
-import SearchTask from "@/components/SearchTask";
+import { mapState, mapGetters } from 'vuex'
+import FilteredTask from '@/components/FilteredTask'
+import SearchTask from '@/components/SearchTask'
 
 export default {
+  components: {
+    FilteredTask,
+    SearchTask,
+  },
   props: {
     task: {
       type: Object,
       default: () => ({
-        title: "",
-        detail: "",
+        title: '',
+        detail: '',
         date: new Date().toISOString(),
         done: false,
         autoRemoveSwitch: false,
@@ -134,110 +147,107 @@ export default {
       }),
     },
   },
-  components: {
-    FilteredTask,
-    SearchTask,
-  },
 
   data() {
     return {
-      taskFilter: "all",
-      searchTask: "",
+      taskFilter: 'all',
+      searchTask: '',
       headers: [
         {
-          text: "タスク",
-          align: "start",
+          text: 'タスク',
+          align: 'start',
           sortable: false,
-          value: "task.title",
+          value: 'task.title',
         },
-        { text: "期限", value: "task.date" },
-        { text: "削除", value: "remove", sortable: false },
-        { text: "自動削除", value: "autoRemove", sortable: false },
+        { text: '期限', value: 'task.date' },
+        { text: '削除', value: 'remove', sortable: false },
+        { text: '自動削除', value: 'autoRemove', sortable: false },
       ],
       itemsPerPage: 7,
       page: 1,
       pageCount: 0,
-    };
+    }
   },
   computed: {
     todoList() {
-      return this.todosFiltered();
+      return this.todosFiltered()
     },
     // タスク検索
-    ...mapGetters("modules/todos", ["todosCount"]),
-    ...mapState("modules/todos", ["todos"]),
+    ...mapGetters('modules/todos', ['todosCount']),
+    ...mapState('modules/todos', ['todos']),
   },
   methods: {
     removeTask(todo) {
-      if (!confirm(todo.task.title + "を削除しますか？")) return;
-      this.$store.dispatch("modules/todos/removeTask", { id: todo.id });
+      if (!confirm(todo.task.title + 'を削除しますか？')) return
+      this.$store.dispatch('modules/todos/removeTask', { id: todo.id })
     },
     // FIXME:アーカイブに移す
     toggleRemoveSwitch(todo) {
-      this.$store.dispatch("modules/todos/toggleRemoveSwitch", {
-        todo: todo,
+      this.$store.dispatch('modules/todos/toggleRemoveSwitch', {
+        todo,
         id: todo.id,
-      });
+      })
       if (todo.task.done === true && todo.task.autoRemoveSwitch === false) {
         setTimeout(
           function () {
-            if (confirm(todo.task.title + "を削除しますか？")) {
-              this.$store.dispatch("modules/todos/removeTask", { id: todo.id });
+            if (confirm(todo.task.title + 'を削除しますか？')) {
+              this.$store.dispatch('modules/todos/removeTask', { id: todo.id })
             } else {
               // FIXME: setTimeoutを解除する
-              this.$store.dispatch("modules/todos/toggleRemoveSwitch", {
-                todo: todo,
+              this.$store.dispatch('modules/todos/toggleRemoveSwitch', {
+                todo,
                 id: todo.id,
-              });
+              })
             }
           }.bind(this),
           4000
-        );
+        )
       }
     },
     doneTask(todo) {
-      this.$store.dispatch("modules/todos/doneTask", {
-        todo: todo,
+      this.$store.dispatch('modules/todos/doneTask', {
+        todo,
         id: todo.id,
-      });
+      })
       // FIXME:アーカイブに移す
       if (todo.task.done === false && todo.task.autoRemoveSwitch === true) {
         setTimeout(
           function () {
-            if (confirm(todo.task.title + "を削除しますか？")) {
-              this.$store.dispatch("modules/todos/removeTask", { id: todo.id });
+            if (confirm(todo.task.title + 'を削除しますか？')) {
+              this.$store.dispatch('modules/todos/removeTask', { id: todo.id })
             } else {
               // FIXME:setTimeoutを解除する
-              this.$store.dispatch("modules/todos/toggleRemoveSwitch", {
-                todo: todo,
+              this.$store.dispatch('modules/todos/toggleRemoveSwitch', {
+                todo,
                 id: todo.id,
-              });
+              })
             }
           }.bind(this),
           5000
-        );
+        )
       }
     },
     todosFiltered() {
       // 完了状態の絞り込み
+      let returnvalue
       switch (this.taskFilter) {
-        case "all":
-          return this.todos;
+        case 'all':
+          returnvalue = this.todos
+          break
+        case 'active':
+          returnvalue = this.todos.filter((todo) => !todo.task.done)
 
-          break;
-        case "active":
-          return this.todos.filter((todo) => !todo.task.done);
+          break
+        case 'done':
+          returnvalue = this.todos.filter((todo) => todo.task.done)
 
-          break;
-        case "done":
-          return this.todos.filter((todo) => todo.task.done);
-
-          break;
+          break
         default:
       }
+      return returnvalue
     },
   },
-};
+}
 </script>
 
 <style>

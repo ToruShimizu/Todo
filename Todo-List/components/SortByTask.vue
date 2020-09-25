@@ -17,7 +17,13 @@
           >
             <v-icon>mdi-arrow-up</v-icon>
           </v-btn>
-          <v-btn depressed color="grey-lighten" :value="true" @click="sortDescTodos" v-else>
+          <v-btn
+            depressed
+            color="grey-lighten"
+            :value="true"
+            @click="sortDescTodos"
+            v-else
+          >
             <v-icon>mdi-arrow-down</v-icon>
           </v-btn>
         </v-btn-toggle>
@@ -30,24 +36,24 @@
 export default {
   props: {
     todos: {
-      type: Array,
+      type: Array
     },
     sortTask: {
-      type: Number,
+      type: Number
     },
     handleAscTodos: {
       type: Function,
-      required: true,
+      required: true
     },
     handleDescTodos: {
       type: Function,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
-      isActive: true,
-    };
+      isActive: true
+    }
   },
   computed: {
     //   selectTaskFilter: {
@@ -61,13 +67,13 @@ export default {
   },
   methods: {
     sortAscTodos() {
-      this.handleAscTodos();
-      this.isActive = false;
+      this.handleAscTodos()
+      this.isActive = false
     },
     sortDescTodos() {
-      this.handleDescTodos();
-      this.isActive = true;
-    },
-  },
-};
+      this.handleDescTodos()
+      this.isActive = true
+    }
+  }
+}
 </script>

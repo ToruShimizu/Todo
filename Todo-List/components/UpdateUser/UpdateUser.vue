@@ -8,14 +8,14 @@
         <v-card-text>
           <v-form ref="form" lazy-validation @submit.prevent="createUser">
             <v-text-field
+              v-model="updateUserName"
               prepend-inner-icon="mdi-card-account-details-outline"
               label="名前を変更する"
-              v-model="updateUserName"
               :rules="nameRules"
               clearable
             />
             <v-card-actions>
-              <v-btn @click="updateUser" color="success">
+              <v-btn color="success" @click="updateUser">
                 <v-icon left>mdi-account</v-icon>SAVE
               </v-btn>
               <v-spacer></v-spacer>
@@ -34,18 +34,17 @@
 export default {
   data() {
     return {
-      updateUserName: "",
+      updateUserName: '',
       validate: true,
-      nameRules: [(v) => !!v || "名前は必須です"],
-    };
+      nameRules: [(v) => !!v || '名前は必須です'],
+    }
   },
   methods: {
     updateUser() {
-      this.$store.dispatch("modules/auth/updateUser", {
+      this.$store.dispatch('modules/auth/updateUser', {
         userName: this.updateUserName,
-      });
+      })
     },
   },
-};
+}
 </script>
-
