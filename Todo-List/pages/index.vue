@@ -7,8 +7,10 @@
 </template>
 
 <script>
-import Todos from "@/components/Todos";
+import Todos from '@/components/Todos/Todos'
 export default {
+  middleware: 'authenticated',
+
   components: {
     Todos,
   },
@@ -17,6 +19,5 @@ export default {
       type: String,
     },
   },
-};
+}
 </script>
-

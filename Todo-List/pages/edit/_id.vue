@@ -6,57 +6,65 @@
       max-width="600px"
       transition="scroll-y-transition"
     >
-      <AddTask v-if="!this.$route.params.id" @close-add-task="closeTaskDialog"/>
-      <UpdateTask v-else :task="this.task" @close-update-task="closeTaskDialog"/>
+      <AddTask
+        v-if="!this.$route.params.id"
+        @close-add-task="closeTaskDialog"
+      />
+      <UpdateTask
+        v-else
+        :task="this.task"
+        @close-update-task="closeTaskDialog"
+      />
     </v-dialog>
   </v-row>
 </template>
 
 <script>
-import AddTask from "@/components/AddTask";
-import UpdateTask from "@/components/UpdateTask";
-import Comment from "@/components/Comment";
+import AddTask from '@/components/Task/AddTask'
+import UpdateTask from '@/components/Task/UpdateTask'
 export default {
   components: {
     AddTask,
-    Comment
+    UpdateTask,
   },
   created() {
     // ルートのパラメーターにタスクのIdが含まれているか
-    if (!this.$route.params.id) return;
+    if (!this.$route.params.id) return
     // 引数にタスクのIdを渡すことで該当のタスクを取得
-    const task = this.$store.getters['modules/todos/getTaskById'](this.$route.params.id);
+    const task = this.$store.getters['modules/todos/getTaskById'](
+      this.$route.params.id
+    )
     if (task) {
       // 取得できれば格納
-      this.task = task;
+      this.task = task
     } else {
       // できなければ一覧ページへ遷移
-      this.$router.push({ path: "/" });
+      this.$router.push({ path: '/' })
     }
   },
   data() {
     return {
       task: {
-        title: "",
-        detail: "",
+        title: '',
+        detail: '',
         date: [new Date().toISOString().substr(0, 10)],
         done: false,
         autoRemoveSwitch: false,
-        autoRemoveSwitchIcon: false
+        autoRemoveSwitchIcon: false,
       },
       validate: true,
-      titleRules: [v => !!v || "タイトルは必須入力です"],
+      titleRules: [(v) => !!v || 'タイトルは必須入力です'],
       datePicker: false,
-      taskDialog: true
-    };
+      taskDialog: true,
+    }
   },
   methods: {
     closeTaskDialog() {
-      this.task.title = "";
-      this.task.detail = "";
-      this.task.date = [new Date().toISOString().substr(0, 10)];
-      this.taskDialog = false;
-    }
-  }
-};
+      this.task.title = ''
+      this.task.detail = ''
+      this.task.date = [new Date().toISOString().substr(0, 10)]
+      this.taskDialog = false
+    },
+  },
+}
 </script>

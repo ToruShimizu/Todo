@@ -3,10 +3,12 @@
   <v-tabs>
     <v-tab @click="selectedTaskFilter = 'all'">全て:{{ todos.length }}</v-tab>
     <v-divider vertical />
-    <v-tab @click="selectedTaskFilter = 'active'" class>未完了:{{ remainingTodos }}</v-tab>
+    <v-tab @click="selectedTaskFilter = 'active'" class
+      >未完了:{{ remainingTodos }}</v-tab
+    >
     <v-divider vertical />
     <v-tab @click="selectedTaskFilter = 'done'">
-      完了: {{ completedTodos }}/{{todos.length}}
+      完了: {{ completedTodos }}/{{ todos.length }}
       <!-- 完了率の表示 -->
       <v-progress-circular
         :value="progress"
@@ -14,13 +16,14 @@
         :size="45"
         class="ml-1"
         color="success"
-      >{{progress}}</v-progress-circular>
+        >{{ progress }}</v-progress-circular
+      >
     </v-tab>
   </v-tabs>
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   props: {
@@ -30,22 +33,22 @@ export default {
   },
   computed: {
     selectedTaskFilter: {
-      get: function () {
-        return this.taskfilter;
+      get() {
+        return this.taskfilter
       },
-      set: function (value) {
-        this.$emit("update:filterdTask", value);
+      set(value) {
+        this.$emit('update:filterdTask', value)
       },
     },
-    ...mapGetters("modules/todos", [
-      "completedTodos",
-      "progress",
-      "remainingTodos",
-      "todosCount",
+    ...mapGetters('modules/todos', [
+      'completedTodos',
+      'progress',
+      'remainingTodos',
+      'todosCount',
     ]),
-    ...mapState("modules/todos/", ["todos"]),
+    ...mapState('modules/todos/', ['todos']),
   },
-};
+}
 </script>
 
 <style>
@@ -54,4 +57,3 @@ export default {
   display: none !important;
 }
 </style>
-

@@ -12,14 +12,14 @@
               <br />パスワード再設定のURLが送信されます。
             </p>
             <v-text-field
+              v-model="userEmail"
               prepend-inner-icon="mdi-email-outline"
               label="登録されているメールアドレス"
-              v-model="userEmail"
               :rules="emailRules"
               clearable
             />
             <v-card-actions>
-              <v-btn @click="passwordReset" color="success">
+              <v-btn color="success" @click="passwordReset">
                 <v-icon left>mdi-email-send</v-icon>送信
               </v-btn>
               <v-spacer></v-spacer>
@@ -37,26 +37,22 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-
 export default {
   data() {
     return {
-      userEmail: "",
-
+      userEmail: '',
       validate: true,
       emailRules: [
-        (v) => !!v || "メールアドレスは必須です",
+        (v) => !!v || 'メールアドレスは必須です',
         (v) =>
-          /.+@.+\..+/.test(v) || "正しいメールアドレスの形式で入力してください",
+          /.+@.+\..+/.test(v) || '正しいメールアドレスの形式で入力してください',
       ],
-    };
+    }
   },
   methods: {
     passwordReset() {
-      this.$store.dispatch("modules/auth/passwordReset", this.userEmail);
+      this.$store.dispatch('modules/auth/passwordReset', this.userEmail)
     },
   },
-};
+}
 </script>
-
