@@ -39,5 +39,7 @@ export default {
 </script>
 
 <style>
-
+.v-application--wrap{
+  min-height: 10vh;
+}
 </style>
