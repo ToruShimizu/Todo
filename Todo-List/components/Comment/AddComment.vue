@@ -10,25 +10,25 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex'
 
 export default {
   data() {
     return {
-      message: "",
-    };
+      message: '',
+    }
   },
   computed: {
-    ...mapState("modules/todos", ["comments"]),
+    ...mapState('modules/todos', ['comments']),
   },
   methods: {
     addComment() {
-      this.$store.dispatch("modules/todos/addComment", {
+      this.$store.dispatch('modules/todos/addComment', {
         id: this.$route.params.id,
         message: this.message,
-      });
-      this.message = "";
+      })
+      this.message = ''
     },
   },
-};
+}
 </script>
