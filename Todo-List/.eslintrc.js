@@ -10,7 +10,8 @@ module.exports = {
   extends: [
     '@nuxtjs',
     'standard',
-    'plugin:nuxt/recommended',
+    'prettier',
+    'prettier/vue',
     "eslint:recommended",
     "plugin:prettier/recommended"
   ],
@@ -22,16 +23,15 @@ module.exports = {
     'vue/max-attributes-per-line': 'off',
     "semi": [2, "never"],
     // "prettier.semi":false,
-    "prettier/prettier": ["error", { "semi": false }]
-
+    "prettier/prettier": ["error", { "semi": false }],
+    "dot-notation": [2, {"allowPattern": "^[a-z]+(_[a-z]+)+$"}],
     "no-console": "off",
 
 
     // 文字列はシングルクオートのみ
     "quotes": [2, "single"],
     singleQuote: true,
-    trailingComma: 'none',
+    trailingComma: true,
     printWidth: 100
   }
   }
-

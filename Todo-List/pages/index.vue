@@ -1,22 +1,18 @@
 <template>
   <v-app>
-    <v-container mt-12>
+    <v-container>
       <Todos />
     </v-container>
   </v-app>
 </template>
 
 <script>
-import Todos from "@/components/Todos";
+import Todos from '@/components/Todos/Todos'
 export default {
+  middleware: 'authenticated',
+
   components: {
     Todos,
   },
-  props: {
-    searchTask: {
-      type: String,
-    },
-  },
-};
+}
 </script>
-

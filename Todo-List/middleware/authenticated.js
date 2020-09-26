@@ -1,6 +1,7 @@
 import { auth } from '../plugins/firebase'
 
 export default function ({ store, redirect, route }) {
+
   if (store.state.modules.auth.login_user) return
   auth.onAuthStateChanged((user) => {
     if (user) {
@@ -17,7 +18,9 @@ export default function ({ store, redirect, route }) {
       } else {
         return redirect('/signIn')
       }
+      store.dispatch('modules/todos/fetchTodos')
+    } else {
+      return redirect('/signIn')
     }
   })
 }
-

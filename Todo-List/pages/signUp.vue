@@ -15,30 +15,30 @@
               <br />サンプルのメールアドレスで作成することができます。
             </p>
             <v-text-field
+              v-model="userName"
               prepend-inner-icon="mdi-card-account-details-outline"
               label="名前を入力する"
-              v-model="userName"
               :rules="nameRules"
               clearable
             />
             <v-text-field
+              v-model="userEmail"
               prepend-inner-icon="mdi-email-outline"
               label="メールアドレスを入力する"
-              v-model="userEmail"
               :rules="emailRules"
               clearable
             />
             <v-text-field
+              v-model="userPassword"
               :type="showPassword ? 'text' : 'Password'"
               prepend-inner-icon="mdi-lock-outline"
-              v-bind:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
               label="パスワードを入力する(6文字以上)"
               :rules="[passwordRules.required, passwordRules.min]"
               @click:append="showPassword = !showPassword"
-              v-model="userPassword"
             />
             <v-card-actions>
-              <v-btn @click="createUser" color="success">
+              <v-btn color="success" @click="createUser">
                 <v-icon left>mdi-account-plus</v-icon>新規作成
               </v-btn>
               <v-spacer></v-spacer>
@@ -56,37 +56,34 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-
 export default {
   data() {
     return {
-      userEmail: "",
-      userPassword: "",
-      userName: "",
+      userEmail: '',
+      userPassword: '',
+      userName: '',
       showPassword: false,
       validate: true,
       emailRules: [
-        (v) => !!v || "メールアドレスは必須です",
+        (v) => !!v || 'メールアドレスは必須です',
         (v) =>
-          /.+@.+\..+/.test(v) || "正しいメールアドレスの形式で入力してください",
+          /.+@.+\..+/.test(v) || '正しいメールアドレスの形式で入力してください',
       ],
       passwordRules: {
-        required: (v) => !!v || "パスワードは必須です",
-        min: (v) => v.length >= 6 || "6文字以上で入力してください",
+        required: (v) => !!v || 'パスワードは必須です',
+        min: (v) => v.length >= 6 || '6文字以上で入力してください',
       },
-      nameRules: [(v) => !!v || "名前は必須です"],
-    };
+      nameRules: [(v) => !!v || '名前は必須です'],
+    }
   },
   methods: {
     createUser() {
-      this.$store.dispatch("modules/auth/createUser", {
+      this.$store.dispatch('modules/auth/createUser', {
         email: this.userEmail,
         password: this.userPassword,
         userName: this.userName,
-      });
+      })
     },
   },
-};
+}
 </script>
-
