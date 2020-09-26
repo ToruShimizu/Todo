@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-container mt-12>
+    <v-container>
       <Todos />
     </v-container>
   </v-app>
