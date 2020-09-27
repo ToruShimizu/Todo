@@ -36,7 +36,7 @@
           </v-btn>
         </v-card-text>
         <v-card-title>
-          <h2>ログインまたは新規作成</h2>
+          <h2>ログイン</h2>
         </v-card-title>
         <v-card-text>
           <v-form ref="form" lazy-validation @submit.prevent="createUser">
