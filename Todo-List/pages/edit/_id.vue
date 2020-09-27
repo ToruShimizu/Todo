@@ -30,13 +30,14 @@ export default {
   },
   created() {
     // ルートのパラメーターにタスクのIdが含まれているか
-    if (!this.$route.params.id)
-    console.log('idがありません');
+    if (!this.$route.params.id) {
+
+      console.log('idがありません');
     return
+    }
     // 引数にタスクのIdを渡すことで該当のタスクを取得
     const id = this.$route.params.id
-    const task = this.getTaskById(this.$route.params.id
-    )
+    const task = this.$store.getters["modules/todos/getTaskById"]()
     if (task) {
       // 取得できれば格納
       console.log('格納できました',task);
@@ -44,6 +45,7 @@ export default {
     } else {
       // できなければ一覧ページへ遷移
       console.log('格納できませんでした');
+      console.log(task);
       this.$router.push({ path: '/' })
     }
   },
