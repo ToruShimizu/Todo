@@ -143,7 +143,9 @@ const getters = {
     return rootGetters['modules/auth/uid']
   },
   // idを返す関数
-  getTaskById: (state) => (id) => state.todos.find((todo) => todo.id === id),
+  // getTaskById: (state) => (id) => state.todos.find((todo) => todo.id === id),
+  getTaskById: (state) => (id) => {return state.todos.find(todo => todo.id === id)},
+
   getCommentById: (state) => (id) =>
     state.comments.find((comment) => comment.id === id),
 
