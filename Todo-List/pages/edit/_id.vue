@@ -22,6 +22,7 @@
 <script>
 import AddTask from '@/components/Task/AddTask'
 import UpdateTask from '@/components/Task/UpdateTask'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     AddTask,
@@ -29,18 +30,25 @@ export default {
   },
   created() {
     // ルートのパラメーターにタスクのIdが含まれているか
-    if (!this.$route.params.id) return
+    if (!this.$route.params.id)
+    console.log('idがありません');
+    return
     // 引数にタスクのIdを渡すことで該当のタスクを取得
-    const task = this.$store.getters['modules/todos/getTaskById'](
-      this.$route.params.id
+    const id = this.$route.params.id
+    const task = this.getTaskById(this.$route.params.id
     )
     if (task) {
       // 取得できれば格納
+      console.log('格納できました',task);
       this.task = task
     } else {
       // できなければ一覧ページへ遷移
+      console.log('格納できませんでした');
       this.$router.push({ path: '/' })
     }
+  },
+  computed: {
+    ...mapGetters('modules/todos',['getTaskById'])
   },
   data() {
     return {
