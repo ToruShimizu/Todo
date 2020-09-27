@@ -51,7 +51,7 @@
             :to="{
               name: 'edit-id',
               params: {
-                id: item.id,
+                id: item.task.id,
               },
             }"
           >
@@ -177,9 +177,9 @@ export default {
     ...mapState('modules/todos', ['todos']),
   },
   methods: {
-    removeTask(todo) {
-      if (!confirm(todo.task.title + 'を削除しますか？')) return
-      this.$store.dispatch('modules/todos/removeTask', { id: todo.id })
+    removeTask(item) {
+      if (!confirm(item.task.title + 'を削除しますか？')) return
+      this.$store.dispatch('modules/todos/removeTask', { id: item.task.id })
     },
     // FIXME:アーカイブに移す
     toggleRemoveSwitch(todo) {
@@ -204,22 +204,22 @@ export default {
         )
       }
     },
-    doneTask(todo) {
+    doneTask(item) {
       this.$store.dispatch('modules/todos/doneTask', {
-        todo,
-        id: todo.id,
+        item,
+        id: item.task.id,
       })
       // FIXME:アーカイブに移す
-      if (todo.task.done === false && todo.task.autoRemoveSwitch === true) {
+      if (item.task.done === false && item.task.autoRemoveSwitch === true) {
         setTimeout(
           function () {
-            if (confirm(todo.task.title + 'を削除しますか？')) {
-              this.$store.dispatch('modules/todos/removeTask', { id: todo.id })
+            if (confirm(item.task.title + 'を削除しますか？')) {
+              this.$store.dispatch('modules/todos/removeTask', { id: item.id })
             } else {
               // FIXME:setTimeoutを解除する
               this.$store.dispatch('modules/todos/toggleRemoveSwitch', {
-                todo,
-                id: todo.id,
+                item,
+                id: item.id,
               })
             }
           }.bind(this),

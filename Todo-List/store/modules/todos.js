@@ -24,8 +24,8 @@ const mutations = {
     console.log('updateTask')
   },
   // 完了、未完了切り替え
-  doneTask(state, { todo }) {
-    todo.task.done = !todo.task.done
+  doneTask(state, { item }) {
+    item.task.done = !item.task.done
   },
   toggleRemoveSwitch(state, { todo }) {
     todo.task.autoRemoveSwitch = !todo.task.autoRemoveSwitch
@@ -52,7 +52,7 @@ const actions = {
       .get()
     snapShot.forEach((doc) => {
       commit('addTask', { id: doc.id, task: doc.data() })
-      console.log(doc.data())
+      // console.log(doc.data())
     })
   },
   // タスク追加
@@ -86,11 +86,11 @@ const actions = {
     }
   },
   // 完了、未完了切り替え
-  async doneTask({ getters, commit }, { todo, id }) {
+  async doneTask({ getters, commit }, { item, id }) {
     await db.collection(`users/${getters.userUid}/todos`).doc(id).update({
-      done: !todo.task.done,
+      done: !item.task.done,
     })
-    commit('doneTask', { todo })
+    commit('doneTask', { item })
   },
   async toggleRemoveSwitch({ getters, commit }, { todo, id }) {
     await db.collection(`users/${getters.userUid}/todos`).doc(id).update({
