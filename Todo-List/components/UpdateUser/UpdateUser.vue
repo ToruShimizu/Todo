@@ -41,11 +41,7 @@ export default {
   },
   methods: {
     updateUser() {
-<<<<<<< HEAD:Todo-List/components/UpdateUser/UpdateUser.vue
-      this.$store.dispatch('modules/auth/updateUser', {
-=======
       this.$store.dispatch("modules/auth/updateUser", {
->>>>>>> #87ModuleDivision2:Todo-List/components/UpdateUser.vue
         userName: this.updateUserName,
       })
     },

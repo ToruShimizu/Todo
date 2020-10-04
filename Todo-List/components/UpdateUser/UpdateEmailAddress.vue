@@ -49,15 +49,9 @@ export default {
   },
   methods: {
     updateEmailAddress() {
-<<<<<<< HEAD:Todo-List/components/UpdateUser/UpdateEmailAddress.vue
-      this.$store.dispatch('modules/auth/updateEmailAddress', {
-        email: this.newEmailAddress,
-      })
-=======
       this.$store.dispatch("modules/auth/updateEmailAddress",
         {email:this.newEmailAddress}
       );
->>>>>>> #87ModuleDivision2:Todo-List/components/UpdateEmailAddress.vue
     },
   },
 }
