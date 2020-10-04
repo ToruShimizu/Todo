@@ -13,13 +13,13 @@ const mutations = {
   },
   // タスク削除
   removeTask(state, { id }) {
-    const index = state.todos.findIndex((todo) => todo.id === id)
+    const index = state.todos.findIndex((todo) => todo.task.id === id)
     state.todos.splice(index, 1)
     console.log('removeTask')
   },
   updateTask(state, { id, task }) {
     // インデックスを取得
-    const index = state.todos.findIndex((todo) => todo.id === id)
+    const index = state.todos.findIndex((todo) => todo.task.id === id)
     state.todos[index] = task
     console.log('updateTask')
   },
@@ -144,7 +144,7 @@ const getters = {
   },
   // idを返す関数
   // getTaskById: (state) => (id) => state.todos.find((todo) => todo.id === id),
-  getTaskById: (state) => (id) => {return state.todos.find(todo => todo.id === id)},
+  getTaskById: (state) => (id) => {return state.todos.find(todo => todo.task.id === id)},
 
   getCommentById: (state) => (id) =>
     state.comments.find((comment) => comment.id === id),
