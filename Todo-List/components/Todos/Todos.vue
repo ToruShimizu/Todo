@@ -51,7 +51,7 @@
             :to="{
               name: 'edit-id',
               params: {
-                id: item.id,
+                id: item.task.id,
               },
             }"
           >
