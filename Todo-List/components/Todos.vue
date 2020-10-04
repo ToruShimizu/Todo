@@ -145,16 +145,16 @@ export default {
       return this.todosFiltered()
     },
     // タスク検索
-    ...mapGetters(["todosCount"]),
-    ...mapState(["todos"]),
+    ...mapGetters('modules/todos',["todosCount"]),
+    ...mapState('modules/todos',["todos"]),
   },
   methods: {
     removeTask(todo) {
       if (!confirm(todo.task.title + "を削除しますか？")) return;
-      this.$store.dispatch("removeTask", { id: todo.id });
+      this.$store.dispatch("modules/todos/removeTask", { id: todo.id });
     },
     doneTask(todo) {
-      this.$store.dispatch("doneTask", { todo: todo, id: todo.id });
+      this.$store.dispatch("modules/todos/doneTask", { todo: todo, id: todo.id });
     },
     sortByTask() {
       return this.todos.sort((a, b) => {

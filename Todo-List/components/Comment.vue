@@ -24,8 +24,8 @@ import { mapState, mapGetters,mapActions } from "vuex";
 
 export default {
   computed: {
-    ...mapState(["comments"]),
-    ...mapGetters(["userName", "photoURL", "userEmail"]),
+    ...mapState("modules/todos",["comments"]),
+    ...mapGetters("modules/auth",["userName", "photoURL", "userEmail"]),
   },
   methods: {
     removeComment(comment) {

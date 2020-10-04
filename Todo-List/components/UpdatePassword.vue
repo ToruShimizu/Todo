@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     updatePassword() {
-      this.$store.dispatch("updatePassword", {
+      this.$store.dispatch("modules/auth/updatePassword", {
         newPassword: this.updateUserPassword,
         email: this.loginUserPassword,
         password: this.loginUserPassword,

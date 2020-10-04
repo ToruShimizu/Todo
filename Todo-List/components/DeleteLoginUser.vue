@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     deleteLoginUser() {
-      this.$store.dispatch("deleteLoginUser", {
+      this.$store.dispatch("modules/todosdeleteLoginUser", {
         email: this.loginUserPassword,
         password: this.loginUserPassword,
       });

@@ -113,7 +113,7 @@ export default {
         this.$refs.form.validate();
         return;
       }
-      this.$store.dispatch("addTask", { task: this.task });
+      this.$store.dispatch("modules/todos/addTask", { task: this.task });
       console.log("addTask");
       this.$router.push({ path: "/" });
       this.task.title = "";

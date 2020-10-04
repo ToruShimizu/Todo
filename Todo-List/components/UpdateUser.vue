@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     updateUser() {
-      this.$store.dispatch("updateUser", {
+      this.$store.dispatch("modules/auth/updateUser", {
         userName: this.updateUserName,
       });
     },
