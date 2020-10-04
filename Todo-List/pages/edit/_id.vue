@@ -1,8 +1,5 @@
 <template>
   <v-row justify="center">
-    <div>
-      {{todo(1)}}
-    </div>
     <v-dialog
       v-model="taskDialog"
       persistent
@@ -43,7 +40,7 @@ export default {
     }
     // 引数にタスクのIdを渡すことで該当のタスクを取得
     const id = this.$route.params.id
-    const task = this.todo(id)
+    const task = this.getTaskById(id)
     if (task) {
       // 取得できれば格納
       console.log('格納できました',task);
@@ -54,13 +51,13 @@ export default {
       this.$router.push({ path: '/' })
     }
   },
-  mounted() {
+    mounted() {
     const id = this.$route.params.id
-    console.log("id",this.todo(id))
-    console.log(id);
+    console.log("id",this.getTaskById(id))
   },
   computed: {
-    ...mapGetters('modules/todos',{todo:'getTaskById'})
+        ...mapGetters('modules/todos',['getTaskById'])
+
   },
   data() {
     return {
