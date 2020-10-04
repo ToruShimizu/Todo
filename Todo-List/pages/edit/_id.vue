@@ -20,9 +20,10 @@
 </template>
 
 <script>
-import AddTask from '@/components/Task/AddTask'
-import UpdateTask from '@/components/Task/UpdateTask'
-import { mapGetters } from 'vuex'
+import AddTask from "@/components/AddTask";
+import UpdateTask from "@/components/UpdateTask";
+import Comment from "@/components/Comment";
+import { mapGetters } from "vuex"
 export default {
   components: {
     AddTask,
@@ -30,6 +31,9 @@ export default {
   },
   computed: {
 
+  },
+  computed: {
+    ...mapGetters('modules/todos',["getTaskById"])
   },
   created() {
     // ルートのパラメーターにタスクのIdが含まれているか
@@ -39,8 +43,7 @@ export default {
     return
     }
     // 引数にタスクのIdを渡すことで該当のタスクを取得
-    const id = this.$route.params.id
-    const task = this.getTaskById(id)
+    const task = this.getTaskById(this.$route.params.id);
     if (task) {
       // 取得できれば格納
       console.log('格納できました',task);

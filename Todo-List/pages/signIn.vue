@@ -100,18 +100,18 @@ export default {
   },
   methods: {
     testLogin() {
-      this.$store.dispatch('modules/auth/login', {
-        email: 'test@example.com',
-        password: 'testUser',
-      })
+      this.$store.dispatch("modules/auth/login", {
+        email: "test@example.com",
+        password: "testUser",
+      });
     },
     login() {
-      this.$store.dispatch('modules/auth/login', {
+      this.$store.dispatch("modules/auth/login", {
         email: this.userEmail,
         password: this.userPassword,
       })
     },
-    ...mapActions('modules/auth', ['googleLogin']),
+    ...mapActions('modules/auth',["googleLogin"]),
   },
 }
 </script>

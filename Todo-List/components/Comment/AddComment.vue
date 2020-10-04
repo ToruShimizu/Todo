@@ -19,11 +19,19 @@ export default {
     }
   },
   computed: {
+<<<<<<< HEAD:Todo-List/components/Comment/AddComment.vue
     ...mapState('modules/todos', ['comments']),
   },
   methods: {
     addComment() {
       this.$store.dispatch('modules/todos/addComment', {
+=======
+    ...mapState("modules/todos",["comments"]),
+  },
+  methods: {
+    addComment() {
+      this.$store.dispatch("modules/todos/addComment", {
+>>>>>>> #87ModuleDivision2:Todo-List/components/AddComment.vue
         id: this.$route.params.id,
         message: this.message,
       })

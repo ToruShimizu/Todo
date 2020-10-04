@@ -70,7 +70,11 @@ export default {
   },
   methods: {
     updatePassword() {
+<<<<<<< HEAD:Todo-List/components/UpdateUser/UpdatePassword.vue
       this.$store.dispatch('modules/auth/updatePassword', {
+=======
+      this.$store.dispatch("modules/auth/updatePassword", {
+>>>>>>> #87ModuleDivision2:Todo-List/components/UpdatePassword.vue
         newPassword: this.updateUserPassword,
         email: this.loginUserPassword,
         password: this.loginUserPassword,

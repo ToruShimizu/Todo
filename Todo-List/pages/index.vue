@@ -15,15 +15,31 @@ export default {
     Todos,
   },
   created() {
-    if (this.todos.length === 0) {
-      this.fetchTodos()
-    }
-  },
-  computed: {
-    ...mapState('modules/todos', ['todos']),
+      firebase.auth().onAuthStateChanged((user) => {
+      const { displayName,uid,email } = user
+      const loginUser = { displayName,uid,email }
+      if ( loginUser ) {
+        this.setLoginUser( loginUser );
+        this.fetchTodos();
+        if (this.$router.currentRoute.name === "signIn")
+          this.$router.push({ name: "/" });
+      } else {
+        this.deleteLoginUser();
+        this.$router.push({ name: "signIn" });
+      }
+    });
   },
   methods: {
-    ...mapActions('modules/todos', ['fetchTodos']),
+    ...mapActions('modules/auth',[
+      "setLoginUser",
+      "deleteLoginUser",
+
+    ]),
+    ...mapActions('modules/todos',[
+
+      "fetchTodos",
+      "fetchComments",
+    ]),
   },
 }
 </script>
