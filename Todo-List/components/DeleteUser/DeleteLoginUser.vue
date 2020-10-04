@@ -65,13 +65,8 @@ export default {
     }
   },
   methods: {
-<<<<<<< HEAD:Todo-List/components/DeleteUser/DeleteLoginUser.vue
-    deleteUser() {
-      this.$store.dispatch('modules/auth/deleteUser', {
-=======
     deleteLoginUser() {
       this.$store.dispatch("modules/todosdeleteLoginUser", {
->>>>>>> #87ModuleDivision2:Todo-List/components/DeleteLoginUser.vue
         email: this.loginUserPassword,
         password: this.loginUserPassword,
       })
