@@ -20,9 +20,9 @@
 </template>
 
 <script>
-import AddTask from "@/components/AddTask";
-import UpdateTask from "@/components/UpdateTask";
-import Comment from "@/components/Comment";
+import AddTask from "@/components/Task/AddTask";
+import UpdateTask from "@/components/Task/UpdateTask";
+import Comment from "@/components/Comment/Comment";
 import { mapGetters } from "vuex"
 export default {
   components: {
