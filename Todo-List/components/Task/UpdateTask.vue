@@ -129,7 +129,7 @@ export default {
         return
       }
       if (this.$route.params.id) {
-        this.$store.dispatch('modules/auth/updateTask', {
+        this.$store.dispatch('modules/todos/updateTask', {
           id: this.$route.params.id,
           task: this.task.task,
         })
