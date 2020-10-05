@@ -2,6 +2,7 @@ import firebase, { db } from '~/plugins/firebase'
 
 const state = () => ({
   todos: [],
+  editTodo: null,
   comments: [],
 })
 const mutations = {
@@ -16,6 +17,12 @@ addTodos(state, {id,task}) {
   state.todos.push({task});
   console.log("addTodos");
 },
+editTodo(state,todo) {
+  state.editTodo = todo
+  console.log("edit",todo);
+},
+// タスク追加
+
 // タスク削除
 removeTask(state, { id }) {
   const index = state.todos.findIndex(todo => todo.id === id);
@@ -71,6 +78,9 @@ async addTask({ getters, commit }, todo) {
     await db.collection(`users/${getters.userUid}/todos`).add(task);
   }
   commit("addTodos",{task})
+},
+editTodo({ commit } ,todo) {
+commit("editTodo",{todo})
 },
 // タスク更新
 async updateTask({ getters, commit }, { id, task }) {
