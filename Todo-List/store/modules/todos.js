@@ -11,12 +11,11 @@ const mutations = {
   console.log("initTodos");
 },
 // 取り出したデータを格納
-addTodos(state, task) {
-  state.todos.push(task);
+addTodos(state, {id,task}) {
+  task.id = id
+  state.todos.push({task});
   console.log("addTodos");
 },
-// タスク追加
-
 // タスク削除
 removeTask(state, { id }) {
   const index = state.todos.findIndex(todo => todo.id === id);
@@ -71,6 +70,7 @@ async addTask({ getters, commit }, todo) {
   if (getters.userUid) {
     await db.collection(`users/${getters.userUid}/todos`).add(task);
   }
+  commit("addTodos",{task})
 },
 // タスク更新
 async updateTask({ getters, commit }, { id, task }) {
