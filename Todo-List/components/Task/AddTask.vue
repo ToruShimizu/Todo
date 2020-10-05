@@ -91,8 +91,6 @@ export default {
         detail: '',
         date: new Date().toISOString().substr(0, 10),
         done: false,
-        autoRemoveSwitch: false,
-        autoRemoveSwitchIcon: false,
       }),
     },
     validate: {
