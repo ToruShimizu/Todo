@@ -11,7 +11,7 @@
               <!-- タスク編集エリア -->
               <v-col cols="12">
                 <v-text-field
-                  v-model="task.task.title"
+                v-model="editTitle"
                   label="タスクを変更する"
                   prepend-inner-icon="mdi-pencil-outline"
                   :rules="titleRules"
@@ -25,14 +25,14 @@
                   ref="menu"
                   v-model="updateDateMenu"
                   :close-on-content-click="false"
-                  :return-value.sync="task.task.date"
+                  :return-value.sync="editDate"
                   transition="scale-transition"
                   offset-y
                   min-width="290px"
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
-                      v-model="task.task.date"
+                      v-model="editDate"
                       label="期限を変更する"
                       prepend-inner-icon="mdi-calendar-today"
                       readonly
@@ -40,7 +40,7 @@
                       v-on="on"
                     ></v-text-field>
                   </template>
-                  <v-date-picker v-model="task.task.date" no-title scrollable>
+                  <v-date-picker v-model="editDate" no-title scrollable>
                     <v-spacer></v-spacer>
                     <v-btn text color="primary" @click="updateDateMenu = false"
                       >Cancel</v-btn
@@ -48,7 +48,7 @@
                     <v-btn
                       text
                       color="primary"
-                      @click="$refs.menu.save(task.task.date)"
+                      @click="$refs.menu.save(editDate)"
                       >OK</v-btn
                     >
                   </v-date-picker>
@@ -58,7 +58,7 @@
 
               <v-col cols="12">
                 <v-text-field
-                  v-model="task.task.detail"
+                  v-model="editDetail"
                   label="タスクの詳細を変更する"
                   prepend-inner-icon="mdi-briefcase-outline"
                   required
@@ -92,12 +92,16 @@
 <script>
 import AddComment from '@/components/Comment/AddComment'
 import Comment from '@/components/Comment/Comment'
+import { mapGetters,mapState } from 'vuex'
 export default {
   components: {
     AddComment,
     Comment,
   },
   props: {
+    todo: {
+      type:Object
+    },
     task: {
       type: Object,
       default: () => ({
@@ -121,22 +125,47 @@ export default {
       updateDateMenu: false,
     }
   },
-  computed: {},
+  computed: {
+    editTitle: {
+      get: function() {
+        return this.todo.task.title
+      },
+      set: function(todo) {
+        this.$emit('input', todo) // おやでは @input に書いたメソッドがよばれる。引数にvalue
+      },
+        },
+    editDate: {
+      get: function() {
+        return this.todo.task.date
+      },
+      set: function(todo) {
+        this.$emit('input', todo) // おやでは @input に書いたメソッドがよばれる。引数にvalue
+      },
+        },
+    editDetail: {
+      get: function() {
+        return this.todo.task.detail
+      },
+      set: function(todo) {
+        this.$emit('input', todo) // おやでは @input に書いたメソッドがよばれる。引数にvalue
+      },
+        },
+    ...mapGetters('modules/todos',['getTaskById']),
+    ...mapState('modules/todos',['editTodo'])
+  },
   methods: {
     updateTask() {
-      if (!this.task.task.title) {
+      if (!this.todo.task.title) {
         this.$refs.form.validate()
         return
       }
       if (this.$route.params.id) {
         this.$store.dispatch('modules/todos/updateTask', {
           id: this.$route.params.id,
-          task: this.task.task,
+          task: this.todo.task,
         })
-        this.$router.push({ path: '/' })
         console.log('updateTask')
       }
-      this.$router.push({ path: '/' })
       this.task.title = ''
       this.task.detail = ''
       this.task.date = [new Date().toISOString().substr(0, 10)]
