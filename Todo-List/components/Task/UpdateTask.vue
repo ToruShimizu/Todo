@@ -11,7 +11,7 @@
               <!-- タスク編集エリア -->
               <v-col cols="12">
                 <v-text-field
-                v-model="editTitle"
+                  v-model="editTitle"
                   label="タスクを変更する"
                   prepend-inner-icon="mdi-pencil-outline"
                   :rules="titleRules"
@@ -19,7 +19,6 @@
                 />
               </v-col>
               <!-- 日付編集エリア -->
-
               <v-col cols="12">
                 <v-menu
                   ref="menu"
@@ -40,7 +39,7 @@
                       v-on="on"
                     ></v-text-field>
                   </template>
-                  <v-date-picker v-model="editDate" no-title scrollable>
+                  <v-date-picker  no-title scrollable>
                     <v-spacer></v-spacer>
                     <v-btn text color="primary" @click="updateDateMenu = false"
                       >Cancel</v-btn
@@ -55,7 +54,6 @@
                 </v-menu>
               </v-col>
               <!-- 詳細編集エリア -->
-
               <v-col cols="12">
                 <v-text-field
                   v-model="editDetail"
@@ -73,14 +71,12 @@
           </v-container>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <nuxt-link to="/">
               <v-btn
                 color="blue darken-1"
                 text
                 @click="$emit('close-update-task')"
                 >Cancel</v-btn
               >
-            </nuxt-link>
             <v-btn color="blue darken-1" text @click="updateTask">Save</v-btn>
           </v-card-actions>
         </v-form>
@@ -92,7 +88,7 @@
 <script>
 import AddComment from '@/components/Comment/AddComment'
 import Comment from '@/components/Comment/Comment'
-import { mapGetters,mapState } from 'vuex'
+import { mapState,mapMutations,mapGetters, } from 'vuex'
 export default {
   components: {
     AddComment,
@@ -101,6 +97,9 @@ export default {
   props: {
     todo: {
       type:Object
+    },
+    id: {
+      type: String
     },
     task: {
       type: Object,
@@ -127,49 +126,44 @@ export default {
   },
   computed: {
     editTitle: {
-      get: function() {
-        return this.todo.task.title
+      get () {
+        return this.editTodo.task.title
       },
-      set: function(todo) {
-        this.$emit('input', todo) // おやでは @input に書いたメソッドがよばれる。引数にvalue
-      },
-        },
+      set(val) {
+        this.updateTitle(val)
+      }
+    },
     editDate: {
-      get: function() {
-        return this.todo.task.date
+      get () {
+        return this.editTodo.task.date
       },
-      set: function(todo) {
-        this.$emit('input', todo) // おやでは @input に書いたメソッドがよばれる。引数にvalue
-      },
-        },
+      set(val) {
+        this.updateDate(val)
+      }
+    },
     editDetail: {
-      get: function() {
-        return this.todo.task.detail
+      get () {
+        return this.editTodo.task.detail
       },
-      set: function(todo) {
-        this.$emit('input', todo) // おやでは @input に書いたメソッドがよばれる。引数にvalue
-      },
-        },
+      set(val) {
+        this.updateDetail(val)
+      }
+    },
     ...mapGetters('modules/todos',['getTaskById']),
     ...mapState('modules/todos',['editTodo'])
   },
   methods: {
     updateTask() {
-      if (!this.todo.task.title) {
+      if (!this.editTodo.task.title) {
         this.$refs.form.validate()
         return
       }
-      if (this.$route.params.id) {
-        this.$store.dispatch('modules/todos/updateTask', {
-          id: this.$route.params.id,
-          task: this.todo.task,
-        })
-        console.log('updateTask')
-      }
-      this.task.title = ''
-      this.task.detail = ''
-      this.task.date = [new Date().toISOString().substr(0, 10)]
+      this.$store.dispatch('modules/todos/updateTask', {
+          id: this.editTodo.task.id,
+          task: this.editTodo.task
+      })
     },
+    ...mapMutations('modules/todos',['updateTitle','updateDate','updateDetail']),
   },
 }
 </script>

@@ -12,6 +12,7 @@ const mutations = {
   console.log("initTodos");
 },
 // 取り出したデータを格納
+// タスク追加
 addTodos(state, {id,task}) {
   task.id = id
   state.todos.push({task});
@@ -19,9 +20,17 @@ addTodos(state, {id,task}) {
 },
 editTodo(state,todo) {
   state.editTodo = todo
-  console.log("edit",todo);
+  console.log("edit",state.editTodo);
 },
-// タスク追加
+updateTitle(state,val) {
+  state.editTodo.task.title = val
+},
+updateDate(state,val) {
+  state.editTodo.task.date = val
+},
+updateDetail(state,val) {
+  state.editTodo.task.detail = val
+},
 
 // タスク削除
 removeTask(state, { id }) {
@@ -31,7 +40,7 @@ removeTask(state, { id }) {
 },
 updateTask(state, { id, task }) {
   // インデックスを取得
-  const index = state.todos.findIndex(todo => todo.id === id);
+  const index = state.todos.findIndex(todo => todo.task.id === id);
   state.todos[index] = task;
   console.log("updateTask");
 },
