@@ -34,7 +34,7 @@ updateDetail(state,val) {
 
 // タスク削除
 removeTask(state, { id }) {
-  const index = state.todos.findIndex(todo => todo.id === id);
+  const index = state.todos.findIndex(todo => todo.task.id === id);
   state.todos.splice(index, 1);
   console.log("removeTask");
 },
