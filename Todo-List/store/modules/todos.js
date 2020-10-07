@@ -89,7 +89,7 @@ async addTask({ getters, commit }, todo) {
   commit("addTodos",{task})
 },
 editTodo({ commit } ,todo) {
-commit("editTodo",{todo})
+commit("editTodo",todo)
 },
 // タスク更新
 async updateTask({ getters, commit }, { id, task }) {
