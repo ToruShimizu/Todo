@@ -69,7 +69,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <nuxt-link to="/">
-              <v-btn color="blue darken-1" text @click="$emit('close-add-task')"
+              <v-btn color="blue darken-1" text @click="closeAddTask"
                 >Cancel</v-btn
               >
             </nuxt-link>
@@ -119,7 +119,11 @@ export default {
       this.task.title = ''
       this.task.detail = ''
       this.task.date = [new Date().toISOString().substr(0, 10)]
+      this.closeAddTask()
     },
+    closeAddTask() {
+      this.$emit('close-add-task')
+    }
   },
 }
 </script>

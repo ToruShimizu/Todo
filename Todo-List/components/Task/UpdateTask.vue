@@ -73,7 +73,7 @@
                 <v-btn
                   color="blue darken-1"
                   text
-                  @click="$emit('close-update-task')"
+                  @click="closeUpdateTask"
                   >Cancel</v-btn
                 >
               <v-btn color="blue darken-1" text @click="updateTask">Save</v-btn>
@@ -161,6 +161,10 @@ export default {
           id: this.editTodo.task.id,
           task: this.editTodo.task
       })
+      this.closeUpdateTask()
+    },
+    closeUpdateTask() {
+      this.$emit('close-update-task')
     },
     ...mapMutations('modules/todos',['updateTitle','updateDate','updateDetail']),
   },
