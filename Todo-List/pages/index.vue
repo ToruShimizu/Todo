@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Todos from '@/components/Todos'
+import Todos from '@/components/Todos/Todos'
 import { mapState, mapActions } from 'vuex'
 export default {
   middleware: 'authenticated',
@@ -15,16 +15,27 @@ export default {
     Todos,
   },
   created() {
-        this.fetchTodos();
+    this.fetchTodos();
   },
+  data() {
+    return {
+      task: {
+        title: '',
+        detail: '',
+        date: [new Date().toISOString().substr(0, 10)],
+        done: false,
+      },
+      validate: true,
+      titleRules: [(v) => !!v || 'タイトルは必須入力です'],
+      datePicker: false,
+    }
+    },
   methods: {
     ...mapActions('modules/auth',[
       "setLoginUser",
       "deleteLoginUser",
-
     ]),
     ...mapActions('modules/todos',[
-
       "fetchTodos",
       "fetchComments",
     ]),
