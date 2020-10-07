@@ -2,6 +2,7 @@ import firebase, { db } from '~/plugins/firebase'
 
 const state = () => ({
   todos: [],
+  editTodo: null,
   comments: [],
 })
 const mutations = {
@@ -11,11 +12,26 @@ const mutations = {
   console.log("initTodos");
 },
 // 取り出したデータを格納
+// タスク追加
 addTodos(state, {id,task}) {
   task.id = id
   state.todos.push({task});
   console.log("addTodos");
 },
+editTodo(state,todo) {
+  state.editTodo = todo
+  console.log("edit",state.editTodo);
+},
+updateTitle(state,val) {
+  state.editTodo.task.title = val
+},
+updateDate(state,val) {
+  state.editTodo.task.date = val
+},
+updateDetail(state,val) {
+  state.editTodo.task.detail = val
+},
+
 // タスク削除
 removeTask(state, { id }) {
   const index = state.todos.findIndex(todo => todo.id === id);
@@ -24,7 +40,7 @@ removeTask(state, { id }) {
 },
 updateTask(state, { id, task }) {
   // インデックスを取得
-  const index = state.todos.findIndex(todo => todo.id === id);
+  const index = state.todos.findIndex(todo => todo.task.id === id);
   state.todos[index] = task;
   console.log("updateTask");
 },
@@ -71,6 +87,9 @@ async addTask({ getters, commit }, todo) {
     await db.collection(`users/${getters.userUid}/todos`).add(task);
   }
   commit("addTodos",{task})
+},
+editTodo({ commit } ,todo) {
+commit("editTodo",todo)
 },
 // タスク更新
 async updateTask({ getters, commit }, { id, task }) {
