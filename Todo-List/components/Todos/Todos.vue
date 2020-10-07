@@ -11,14 +11,21 @@
         </h2>
       </v-flex>
       <v-flex>
-        <nuxt-link :to="{ name: 'edit-id' }">
-          <v-btn color="primary" dark class="hidden-xs-only">
-            <v-icon>mdi-pen-plus</v-icon>タスクを追加する
-          </v-btn>
-          <v-btn color="primary" dark class="hidden-sm-and-up">
-            <v-icon>mdi-pen-plus</v-icon>
-          </v-btn>
-        </nuxt-link>
+        <v-dialog
+        v-model="taskDialog"
+        persistent
+        max-width="600px"
+        transition="scroll-y-transition"
+        >
+          <AddTask @close-add-task="closeTaskDialog"/>
+        </v-dialog>
+
+        <v-btn color="primary" dark class="hidden-xs-only" @click="openAddTask">
+          <v-icon>mdi-pen-plus</v-icon>タスクを追加する
+        </v-btn>
+        <v-btn color="primary" dark class="hidden-sm-and-up">
+          <v-icon>mdi-pen-plus</v-icon>
+        </v-btn>
       </v-flex>
     </v-layout>
 
@@ -42,35 +49,39 @@
         @page-count="pageCount = $event"
       >
         <template v-slot:[`item.task.title`]="{ item }">
+                <v-dialog
+                v-model="updateTaskDialog"
+                persistent
+                max-width="600px"
+                transition="scroll-y-transition"
+                >
+                <UpdateTask
+                :todo="item"
+                :updateTaskDialog="updateTaskDialog"
+                  @close-update-task="closeUpdateTask()"
+                />
+                </v-dialog>
           <v-btn icon @click="doneTask(item)">
             <v-icon :color="(!item.task.done && 'grey') || 'primary'"
               >mdi-check-circle-outline</v-icon
             >
           </v-btn>
-          <nuxt-link
-            :to="{
-              name: 'edit-id',
-              params: {
-                id: item.task.id,
-              },
-            }"
-          >
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
-                <tr
-                  v-bind="attrs"
-                  :class="(item.task.done && 'grey--text') || 'primary--text'"
-                  class="ml-2"
-                  v-on="on"
-                >
-                  {{
-                    item.task.title
-                  }}
-                </tr>
+                  <tr
+                    v-bind="attrs"
+                    :class="(item.task.done && 'grey--text') || 'primary--text'"
+                    class="ml-2"
+                    v-on="on"
+                    @click="openUpdateTask(item)"
+                  >
+                    {{
+                      item.task.title
+                    }}
+                  </tr>
               </template>
               <span>{{ item.task.title }}の詳細を開く</span>
             </v-tooltip>
-          </nuxt-link>
         </template>
         <template v-slot:[`item.task.date`]="{ item }">
           <v-tooltip bottom>
@@ -128,11 +139,15 @@
 import { mapState, mapGetters } from 'vuex'
 import FilteredTask from '@/components/FilteredTask'
 import SearchTask from '@/components/SearchTask'
+import AddTask from '@/components/Task/AddTask'
+import UpdateTask from '@/components/Task/UpdateTask'
 
 export default {
   components: {
     FilteredTask,
     SearchTask,
+    AddTask,
+    UpdateTask,
   },
   props: {
     task: {
@@ -142,8 +157,6 @@ export default {
         detail: '',
         date: new Date().toISOString(),
         done: false,
-        autoRemoveSwitch: false,
-        autoRemoveSwitchIcon: false,
       }),
     },
   },
@@ -152,6 +165,8 @@ export default {
     return {
       taskFilter: 'all',
       searchTask: '',
+      taskDialog: false,
+      updateTaskDialog:false,
       headers: [
         {
           text: 'タスク',
@@ -161,7 +176,6 @@ export default {
         },
         { text: '期限', value: 'task.date' },
         { text: '削除', value: 'remove', sortable: false },
-        { text: '自動削除', value: 'autoRemove', sortable: false },
       ],
       itemsPerPage: 7,
       page: 1,
@@ -181,7 +195,7 @@ export default {
       if (!confirm(item.task.title + 'を削除しますか？')) return
       this.$store.dispatch('modules/todos/removeTask', { id: item.task.id })
     },
-    // FIXME:アーカイブに移す
+     // FIXME:アーカイブに移す
     toggleRemoveSwitch(todo) {
       this.$store.dispatch('modules/todos/toggleRemoveSwitch', {
         todo,
@@ -209,7 +223,7 @@ export default {
         item,
         id: item.task.id,
       })
-      // FIXME:アーカイブに移す
+         // FIXME:アーカイブに移す
       if (item.task.done === false && item.task.autoRemoveSwitch === true) {
         setTimeout(
           function () {
@@ -226,6 +240,21 @@ export default {
           5000
         )
       }
+    },
+    openAddTask() {
+      this.taskDialog = true
+    },
+    openUpdateTask(todo) {
+      this.$store.dispatch('modules/todos/editTodo',todo)
+      this.updateTaskDialog = true
+    },
+    closeTaskDialog() {
+      this.task.title = ''
+      this.task.detail = ''
+      this.taskDialog = false
+    },
+    closeUpdateTask(item) {
+      this.updateTaskDialog = false
     },
     todosFiltered() {
       // 完了状態の絞り込み
