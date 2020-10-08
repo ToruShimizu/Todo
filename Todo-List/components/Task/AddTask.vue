@@ -115,10 +115,9 @@ export default {
       }
       this.$store.dispatch('modules/todos/addTask', { task: this.task })
       console.log('addTask')
-      this.$router.push({ path: '/' })
       this.task.title = ''
       this.task.detail = ''
-      this.task.date = [new Date().toISOString().substr(0, 10)]
+      this.task.date = new Date().toISOString().substr(0, 10)
       this.closeAddTask()
     },
     closeAddTask() {
