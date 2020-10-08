@@ -11,6 +11,7 @@
                 <!-- タスク編集エリア -->
                 <v-col cols="12">
                   <v-text-field
+                    v-model="editTitle"
                     label="タスクを変更する"
                     prepend-inner-icon="mdi-pencil-outline"
                     :rules="titleRules"
