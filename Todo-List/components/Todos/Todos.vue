@@ -12,12 +12,12 @@
       </v-flex>
       <v-flex>
         <v-dialog
-        v-model="taskDialog"
-        persistent
-        max-width="600px"
-        transition="scroll-y-transition"
+          v-model="taskDialog"
+          persistent
+          max-width="600px"
+          transition="scroll-y-transition"
         >
-          <AddTask @close-add-task="closeTaskDialog"/>
+          <AddTask @close-add-task="closeTaskDialog" />
         </v-dialog>
 
         <v-btn color="primary" dark class="hidden-xs-only" @click="openAddTask">
@@ -48,84 +48,72 @@
         hide-default-footer
         @page-count="pageCount = $event"
       >
-        <template v-slot:[`item.task.title`]="{ item }">
-          <v-dialog
-          v-model="updateTaskDialog"
-          persistent
-          max-width="600px"
-          transition="scroll-y-transition"
-          >
-          <UpdateTask
-          :todo="item"
-          :updateTaskDialog="updateTaskDialog"
-            @close-update-task="closeUpdateTask()"
-          />
-          </v-dialog>
-          <v-btn icon @click="doneTask(item)">
-            <v-icon :color="(!item.task.done && 'grey') || 'primary'"
-              >mdi-check-circle-outline</v-icon
-            >
-          </v-btn>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on, attrs }">
-                  <tr
-                    v-bind="attrs"
-                    :class="(item.task.done && 'grey--text') || 'primary--text'"
-                    class="ml-2"
-                    v-on="on"
-                    @click="openUpdateTask(item)"
-                  >
-                    {{
-                      item.task.title
-                    }}
-                  </tr>
-              </template>
-              <span>{{ item.task.title }}の詳細を開く</span>
-            </v-tooltip>
-        </template>
-        <template v-slot:[`item.task.date`]="{ item }">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <tr :class="(item.task.done && 'grey--text') || 'black--text'">
-                {{
-                  item.task.date
-                }}
-                <v-icon
-                  v-if="task.date > item.task.date"
-                  v-bind="attrs"
-                  :class="(item.task.done && 'grey--text') || 'red--text'"
-                  v-on="on"
-                  >mdi-alert-outline</v-icon
+        <template v-slot:body="props">
+          <tbody name="list" is="transition-group">
+            <template>
+              <tr class="row" v-for="(todo, index) in props.items" :key="index">
+                <v-dialog
+                  v-model="updateTaskDialog"
+                  persistent
+                  max-width="600px"
+                  transition="scroll-y-transition"
                 >
+                  <UpdateTask
+                    :todo="todo"
+                    :updateTaskDialog="updateTaskDialog"
+                    @close-update-task="closeUpdateTask()"
+                  />
+                </v-dialog>
+                <td>
+                  <v-btn icon @click="doneTask(todo)">
+                    <v-icon :color="(!todo.task.done && 'grey') || 'primary'"
+                      >mdi-check-circle-outline</v-icon
+                    >
+                  </v-btn>
+                </td>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <td
+                      v-bind="attrs"
+                      :class="
+                        (todo.task.done && 'grey--text') || 'primary--text'
+                      "
+                      class="ml-2"
+                      v-on="on"
+                      @click="openUpdateTask(todo)"
+                    >
+                      {{ todo.task.title }}
+                    </td>
+                  </template>
+                  <span>{{ todo.task.title }}の詳細を開く</span>
+                </v-tooltip>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <td
+                      :class="(todo.task.done && 'grey--text') || 'black--text'"
+                    >
+                      {{ todo.task.date }}
+                      <v-icon
+                        v-if="task.date > todo.task.date"
+                        v-bind="attrs"
+                        :class="(todo.task.done && 'grey--text') || 'red--text'"
+                        v-on="on"
+                        >mdi-alert-outline</v-icon
+                      >
+                    </td>
+                  </template>
+                  <span>期限が切れています</span>
+                </v-tooltip>
+                <td>
+                  <v-btn icon>
+                    <v-icon @click="removeTask(todo)"
+                      >mdi-delete-outline</v-icon
+                    >
+                  </v-btn>
+                </td>
               </tr>
             </template>
-            <span>期限が切れています</span>
-          </v-tooltip>
-        </template>
-        <template v-slot:[`item.remove`]="{ item }">
-          <v-btn icon>
-            <v-icon @click="removeTask(item)">mdi-delete-outline</v-icon>
-          </v-btn>
-        </template>
-        <template v-slot:[`item.autoRemove`]="{ item }">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-layout>
-                <v-switch
-                  :input-value="item.task.autoRemoveSwitch"
-                  :label="item.task.autoRemoveSwitch ? 'on' : 'off'"
-                  @change="toggleRemoveSwitch(item)"
-                ></v-switch>
-                <v-icon
-                  v-if="item.task.autoRemoveSwitchIcon"
-                  v-bind="attrs"
-                  v-on="on"
-                  >mdi-delete-clock-outline</v-icon
-                >
-              </v-layout>
-            </template>
-            <span>〇〇時間後に自動で削除されます</span>
-          </v-tooltip>
+          </tbody>
         </template>
       </v-data-table>
       <div class="text-center py-2">
@@ -166,11 +154,11 @@ export default {
       taskFilter: 'all',
       searchTask: '',
       taskDialog: false,
-      updateTaskDialog:false,
+      updateTaskDialog: false,
       headers: [
+        { text: '状態', align: 'start', sortable: false, value: 'task.done' },
         {
           text: 'タスク',
-          align: 'start',
           sortable: false,
           value: 'task.title',
         },
@@ -195,7 +183,7 @@ export default {
       if (!confirm(todo.task.title + 'を削除しますか？')) return
       this.$store.dispatch('modules/todos/removeTask', { id: todo.task.id })
     },
-     // FIXME:アーカイブに移す
+    // FIXME:アーカイブに移す
     toggleRemoveSwitch(todo) {
       this.$store.dispatch('modules/todos/toggleRemoveSwitch', {
         todo,
@@ -223,7 +211,7 @@ export default {
         todo,
         id: todo.task.id,
       })
-         // FIXME:アーカイブに移す
+      // FIXME:アーカイブに移す
       if (todo.task.done === false && todo.task.autoRemoveSwitch === true) {
         setTimeout(
           function () {
@@ -245,7 +233,7 @@ export default {
       this.taskDialog = true
     },
     openUpdateTask(todo) {
-      this.$store.dispatch('modules/todos/editTodo',todo)
+      this.$store.dispatch('modules/todos/editTodo', todo)
       this.updateTaskDialog = true
     },
     closeTaskDialog() {
@@ -280,18 +268,26 @@ export default {
 </script>
 
 <style>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s;
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.8s
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+.list-enter,
+.list-leave-to {
   opacity: 0;
+  transform: translateY(100%)
+}
+.list-move {
+  transition: transform 0.5s
+}
+.row {
+  display: table-row
 }
 a {
-  text-decoration: none;
+  text-decoration: none
 }
 /* Vuetifyの仕様上スタイルが適用されてしまうため非表示にする */
 .v-slide-group__prev {
-  display: none !important;
+  display: none !important
 }
 </style>
