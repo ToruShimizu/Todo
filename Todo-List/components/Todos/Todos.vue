@@ -49,18 +49,18 @@
         @page-count="pageCount = $event"
       >
         <template v-slot:[`item.task.title`]="{ item }">
-                <v-dialog
-                v-model="updateTaskDialog"
-                persistent
-                max-width="600px"
-                transition="scroll-y-transition"
-                >
-                <UpdateTask
-                :todo="item"
-                :updateTaskDialog="updateTaskDialog"
-                  @close-update-task="closeUpdateTask()"
-                />
-                </v-dialog>
+          <v-dialog
+          v-model="updateTaskDialog"
+          persistent
+          max-width="600px"
+          transition="scroll-y-transition"
+          >
+          <UpdateTask
+          :todo="item"
+          :updateTaskDialog="updateTaskDialog"
+            @close-update-task="closeUpdateTask()"
+          />
+          </v-dialog>
           <v-btn icon @click="doneTask(item)">
             <v-icon :color="(!item.task.done && 'grey') || 'primary'"
               >mdi-check-circle-outline</v-icon
@@ -191,9 +191,9 @@ export default {
     ...mapState('modules/todos', ['todos']),
   },
   methods: {
-    removeTask(item) {
-      if (!confirm(item.task.title + 'を削除しますか？')) return
-      this.$store.dispatch('modules/todos/removeTask', { id: item.task.id })
+    removeTask(todo) {
+      if (!confirm(todo.task.title + 'を削除しますか？')) return
+      this.$store.dispatch('modules/todos/removeTask', { id: todo.task.id })
     },
      // FIXME:アーカイブに移す
     toggleRemoveSwitch(todo) {
@@ -218,22 +218,22 @@ export default {
         )
       }
     },
-    doneTask(item) {
+    doneTask(todo) {
       this.$store.dispatch('modules/todos/doneTask', {
-        item,
-        id: item.task.id,
+        todo,
+        id: todo.task.id,
       })
          // FIXME:アーカイブに移す
-      if (item.task.done === false && item.task.autoRemoveSwitch === true) {
+      if (todo.task.done === false && todo.task.autoRemoveSwitch === true) {
         setTimeout(
           function () {
-            if (confirm(item.task.title + 'を削除しますか？')) {
-              this.$store.dispatch('modules/todos/removeTask', { id: item.id })
+            if (confirm(todo.task.title + 'を削除しますか？')) {
+              this.$store.dispatch('modules/todos/removeTask', { id: todo.id })
             } else {
               // FIXME:setTimeoutを解除する
               this.$store.dispatch('modules/todos/toggleRemoveSwitch', {
-                item,
-                id: item.id,
+                todo,
+                id: todo.id,
               })
             }
           }.bind(this),
