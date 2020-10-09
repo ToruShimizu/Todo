@@ -11,7 +11,7 @@
           {{ userName }}さんがコメントしました
         </v-list-item-title>
         <v-layout>
-          <v-text-field v-model="comment.message.message" />
+          <v-text-field v-model="comment.message" />
           <v-btn icon @click="removeComment(comment)">
             <v-icon>mdi-delete-outline</v-icon>
           </v-btn>
