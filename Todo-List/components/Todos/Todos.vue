@@ -51,7 +51,7 @@
         <template v-slot:body="props">
           <tbody name="list" is="transition-group">
             <template>
-              <tr class="row" v-for="(todo, index) in props.items" :key="index">
+              <tr v-for="(todo, index) in props.items" :key="index">
                 <v-dialog
                   v-model="updateTaskDialog"
                   persistent
@@ -280,7 +280,7 @@ export default {
 .list-move {
   transition: transform 0.5s
 }
-.row {
+tr {
   display: table-row
 }
 a {
