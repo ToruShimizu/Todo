@@ -19,13 +19,13 @@ export default {
     }
   },
   computed: {
-    ...mapState("modules/todos",["comments"]),
+    ...mapState("modules/todos",["comments","editTodo"]),
   },
   methods: {
     addComment() {
       this.$store.dispatch("modules/todos/addComment", {
-        id: this.$route.params.id,
-        message: this.message,
+        id: this.editTodo.task.id,
+        message: this.message
       })
       this.message = ''
     },
