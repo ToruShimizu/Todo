@@ -89,7 +89,7 @@ import { mapGetters, mapState } from 'vuex'
 import UpdateUser from '@/components/UpdateUser/UpdateUser'
 import UpdatePassword from '@/components/UpdateUser/UpdatePassword'
 import UpdateEmailAddress from '@/components/UpdateUser/UpdateEmailAddress'
-import DeleteLoginUser from '@/components/DeleteUser/DeleteLoginUser'
+import DeleteLoginUser from '@/components/DeleteUser/DeleteUser'
 export default {
   components: {
     UpdateUser,
