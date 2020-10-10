@@ -118,7 +118,7 @@ const actions = {
         .collection(`users/${getters.userUid}/todos`)
         .doc(id)
         .collection(`comments/${getters.userUid}/message`)
-        .add({ message: message })
+        .add({ message })
     }
   },
   async removeComment({ getters, commit }, { id }) {
@@ -160,7 +160,7 @@ const getters = {
   },
   // タスクの完了率
   progress(state, getters) {
-    let completed = (getters.completedTodos / state.todos.length) * 100
+    const completed = (getters.completedTodos / state.todos.length) * 100
     return completed.toFixed()
   },
   // 未完了タスクのカウント

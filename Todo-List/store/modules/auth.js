@@ -1,5 +1,4 @@
-import firebase from '~/plugins/firebase'
-import { auth } from '~/plugins/firebase'
+import firebase, { auth } from '~/plugins/firebase'
 
 // initial state
 const state = () => ({
@@ -75,7 +74,7 @@ const actions = {
   // ユーザー情報の更新
   // FIXME:ユーザーのstate更新
   async updateUser({ dispatch }, { userName }) {
-    let user = await firebase.auth().currentUser
+    const user = await firebase.auth().currentUser
     try {
       await user.updateProfile({
         displayName: userName
@@ -89,7 +88,7 @@ const actions = {
   },
   // メールアドレスの変更
   // FIXME:ユーザーstate更新
-  async updateEmailAddress({ commit }, { email }) {
+  async updateEmailAddress({ commit, dispatch }, { email }) {
     const user = firebase.auth().currentUser
     try {
       await user.updateEmail(email)
@@ -125,7 +124,7 @@ const actions = {
       alert('送信に失敗しました')
     }
   },
-  async deleteLoginUser({ commit }, { email, password }) {
+  async deleteUser({ commit }, { email, password }) {
     // 最初に再認証してから変更処理を行う
     try {
       const user = await firebase.auth().currentUser

@@ -74,9 +74,9 @@
 </template>
 
 <script>
+import { mapState, mapMutations, mapGetters } from 'vuex'
 import AddComment from '@/components/Comment/AddComment'
 import Comment from '@/components/Comment/Comment'
-import { mapState, mapMutations, mapGetters } from 'vuex'
 export default {
   components: {
     AddComment,

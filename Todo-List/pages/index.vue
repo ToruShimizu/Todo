@@ -7,8 +7,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import Todos from '@/components/Todos/Todos'
-import { mapState, mapActions } from 'vuex'
 export default {
   middleware: 'authenticated',
   components: {
