@@ -44,15 +44,14 @@ export default {
       validate: true,
       emailRules: [
         (v) => !!v || 'メールアドレスは必須です',
-        (v) =>
-          /.+@.+\..+/.test(v) || '正しいメールアドレスの形式で入力してください',
-      ],
+        (v) => /.+@.+\..+/.test(v) || '正しいメールアドレスの形式で入力してください'
+      ]
     }
   },
   methods: {
     passwordReset() {
-      this.$store.dispatch("modules/auth/passwordReset", this.userEmail);
-    },
-  },
+      this.$store.dispatch('modules/auth/passwordReset', this.userEmail)
+    }
+  }
 }
 </script>

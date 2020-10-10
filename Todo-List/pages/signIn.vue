@@ -89,29 +89,28 @@ export default {
       validate: true,
       emailRules: [
         (v) => !!v || 'メールアドレスは必須です',
-        (v) =>
-          /.+@.+\..+/.test(v) || '正しいメールアドレスの形式で入力してください',
+        (v) => /.+@.+\..+/.test(v) || '正しいメールアドレスの形式で入力してください'
       ],
       passwordRules: {
         required: (v) => !!v || 'パスワードは必須です',
-        min: (v) => v.length >= 6 || '6文字以上で入力してください',
-      },
+        min: (v) => v.length >= 6 || '6文字以上で入力してください'
+      }
     }
   },
   methods: {
     testLogin() {
-      this.$store.dispatch("modules/auth/login", {
-        email: "test@example.com",
-        password: "testUser",
-      });
-    },
-    login() {
-      this.$store.dispatch("modules/auth/login", {
-        email: this.userEmail,
-        password: this.userPassword,
+      this.$store.dispatch('modules/auth/login', {
+        email: 'test@example.com',
+        password: 'testUser'
       })
     },
-    ...mapActions('modules/auth',["googleLogin"]),
-  },
+    login() {
+      this.$store.dispatch('modules/auth/login', {
+        email: this.userEmail,
+        password: this.userPassword
+      })
+    },
+    ...mapActions('modules/auth', ['googleLogin'])
+  }
 }
 </script>

@@ -12,10 +12,10 @@ import { mapState, mapActions } from 'vuex'
 export default {
   middleware: 'authenticated',
   components: {
-    Todos,
+    Todos
   },
   created() {
-    this.fetchTodos();
+    this.fetchTodos()
   },
   data() {
     return {
@@ -23,22 +23,16 @@ export default {
         title: '',
         detail: '',
         date: [new Date().toISOString().substr(0, 10)],
-        done: false,
+        done: false
       },
       validate: true,
       titleRules: [(v) => !!v || 'タイトルは必須入力です'],
-      datePicker: false,
+      datePicker: false
     }
-    },
-  methods: {
-    ...mapActions('modules/auth',[
-      "setLoginUser",
-      "deleteLoginUser",
-    ]),
-    ...mapActions('modules/todos',[
-      "fetchTodos",
-      "fetchComments",
-    ]),
   },
+  methods: {
+    ...mapActions('modules/auth', ['setLoginUser', 'deleteLoginUser']),
+    ...mapActions('modules/todos', ['fetchTodos', 'fetchComments'])
+  }
 }
 </script>

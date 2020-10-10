@@ -1,7 +1,6 @@
 import { auth } from '../plugins/firebase'
 
 export default function ({ store, redirect, route }) {
-
   if (store.state.modules.auth.login_user) return
   auth.onAuthStateChanged((user) => {
     if (user) {
@@ -9,7 +8,7 @@ export default function ({ store, redirect, route }) {
         displayName: user.displayName,
         email: user.email,
         photoURL: user.photoURL,
-        uid: user.uid,
+        uid: user.uid
       }
       store.dispatch('modules/auth/setLoginUser', userInfo)
       store.dispatch('modules/todos/fetchTodos')

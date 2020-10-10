@@ -21,19 +21,19 @@ import { mapActions, mapState } from 'vuex'
 import SideNav from '@/components/SideNav'
 export default {
   components: {
-    SideNav,
+    SideNav
   },
   data() {
     return {
-      drawer: null,
+      drawer: null
     }
   },
   computed: {
-    ...mapState('modules/auth', ['login_user']),
+    ...mapState('modules/auth', ['login_user'])
   },
   methods: {
-    ...mapActions('modules/auth', ['logout']),
-  },
+    ...mapActions('modules/auth', ['logout'])
+  }
 }
 </script>
 

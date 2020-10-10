@@ -36,15 +36,15 @@ export default {
     return {
       updateUserName: '',
       validate: true,
-      nameRules: [(v) => !!v || '名前は必須です'],
+      nameRules: [(v) => !!v || '名前は必須です']
     }
   },
   methods: {
     updateUser() {
-      this.$store.dispatch("modules/auth/updateUser", {
-        userName: this.updateUserName,
+      this.$store.dispatch('modules/auth/updateUser', {
+        userName: this.updateUserName
       })
-    },
-  },
+    }
+  }
 }
 </script>

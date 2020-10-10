@@ -55,22 +55,21 @@ export default {
       showPassword: false,
       emailRules: [
         (v) => !!v || 'メールアドレスは必須です',
-        (v) =>
-          /.+@.+\..+/.test(v) || '正しいメールアドレスの形式で入力してください',
+        (v) => /.+@.+\..+/.test(v) || '正しいメールアドレスの形式で入力してください'
       ],
       passwordRules: {
         required: (v) => !!v || 'パスワードは必須です',
-        min: (v) => v.length >= 6 || '6文字以上で入力してください',
-      },
+        min: (v) => v.length >= 6 || '6文字以上で入力してください'
+      }
     }
   },
   methods: {
     deleteLoginUser() {
-      this.$store.dispatch("modules/todosdeleteLoginUser", {
+      this.$store.dispatch('modules/todosdeleteLoginUser', {
         email: this.loginUserPassword,
-        password: this.loginUserPassword,
+        password: this.loginUserPassword
       })
-    },
-  },
+    }
+  }
 }
 </script>

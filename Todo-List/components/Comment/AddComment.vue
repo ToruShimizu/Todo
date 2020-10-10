@@ -15,20 +15,20 @@ import { mapState } from 'vuex'
 export default {
   data() {
     return {
-      message: '',
+      message: ''
     }
   },
   computed: {
-    ...mapState("modules/todos",["comments","editTodo"]),
+    ...mapState('modules/todos', ['comments', 'editTodo'])
   },
   methods: {
     addComment() {
-      this.$store.dispatch("modules/todos/addComment", {
+      this.$store.dispatch('modules/todos/addComment', {
         id: this.editTodo.task.id,
         message: this.message
       })
       this.message = ''
-    },
-  },
+    }
+  }
 }
 </script>

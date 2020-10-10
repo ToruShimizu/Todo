@@ -17,13 +17,7 @@
           >
             <v-icon>mdi-arrow-up</v-icon>
           </v-btn>
-          <v-btn
-            depressed
-            color="grey-lighten"
-            :value="true"
-            @click="sortDescTodos"
-            v-else
-          >
+          <v-btn depressed color="grey-lighten" :value="true" @click="sortDescTodos" v-else>
             <v-icon>mdi-arrow-down</v-icon>
           </v-btn>
         </v-btn-toggle>

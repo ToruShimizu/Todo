@@ -66,24 +66,23 @@ export default {
       validate: true,
       emailRules: [
         (v) => !!v || 'メールアドレスは必須です',
-        (v) =>
-          /.+@.+\..+/.test(v) || '正しいメールアドレスの形式で入力してください',
+        (v) => /.+@.+\..+/.test(v) || '正しいメールアドレスの形式で入力してください'
       ],
       passwordRules: {
         required: (v) => !!v || 'パスワードは必須です',
-        min: (v) => v.length >= 6 || '6文字以上で入力してください',
+        min: (v) => v.length >= 6 || '6文字以上で入力してください'
       },
-      nameRules: [(v) => !!v || '名前は必須です'],
+      nameRules: [(v) => !!v || '名前は必須です']
     }
   },
   methods: {
     createUser() {
-      this.$store.dispatch("modules/auth/createUser", {
+      this.$store.dispatch('modules/auth/createUser', {
         email: this.userEmail,
         password: this.userPassword,
-        userName: this.userName,
+        userName: this.userName
       })
-    },
-  },
+    }
+  }
 }
 </script>

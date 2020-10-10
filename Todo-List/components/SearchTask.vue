@@ -14,9 +14,9 @@
 export default {
   props: {
     searchTask: {
-      type: String,
+      type: String
       // required: true,
-    },
+    }
   },
   computed: {
     innerSearchTask: {
@@ -26,8 +26,8 @@ export default {
       set(value) {
         console.log(value)
         this.$emit('update:search', value)
-      },
-    },
+      }
+    }
     // handleInput: {
     //   get: function() {
     //     return this.taskfilter;
@@ -36,6 +36,6 @@ export default {
     //     this.$emit("update:filterdTask", value);
     //   }
     // }
-  },
+  }
 }
 </script>

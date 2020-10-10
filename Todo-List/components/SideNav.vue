@@ -32,12 +32,7 @@
       </v-list-item-content>
     </v-list-item>
     <v-row justify="center">
-      <v-dialog
-        v-model="userDialog"
-        persistent
-        max-width="600px"
-        transition="scroll-y-transition"
-      >
+      <v-dialog v-model="userDialog" persistent max-width="600px" transition="scroll-y-transition">
         <UpdateUser @close-edit-user="closeEditUser" />
       </v-dialog>
       <v-dialog
@@ -100,14 +95,14 @@ export default {
     UpdateUser,
     UpdatePassword,
     UpdateEmailAddress,
-    DeleteLoginUser,
+    DeleteLoginUser
   },
   data() {
     return {
       userDialog: false,
       passwordDialog: false,
       emailAddressDialog: false,
-      deleteUserDialog: false,
+      deleteUserDialog: false
     }
   },
   computed: {
@@ -115,7 +110,7 @@ export default {
       return this.userName
     },
     ...mapGetters('modules/auth', ['userName', 'photoURL', 'userEmail']),
-    ...mapState('modules/auth', ['login_user']),
+    ...mapState('modules/auth', ['login_user'])
   },
   methods: {
     // FIXME:switch文に書き直す
@@ -142,7 +137,7 @@ export default {
     },
     closeDeleteUser() {
       this.deleteUserDialog = false
-    },
-  },
+    }
+  }
 }
 </script>

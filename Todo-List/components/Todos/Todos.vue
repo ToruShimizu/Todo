@@ -75,9 +75,7 @@
                   <template v-slot:activator="{ on, attrs }">
                     <td
                       v-bind="attrs"
-                      :class="
-                        (todo.task.done && 'grey--text') || 'primary--text'
-                      "
+                      :class="(todo.task.done && 'grey--text') || 'primary--text'"
                       class="ml-2"
                       v-on="on"
                       @click="openUpdateTask(todo)"
@@ -89,9 +87,7 @@
                 </v-tooltip>
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on, attrs }">
-                    <td
-                      :class="(todo.task.done && 'grey--text') || 'black--text'"
-                    >
+                    <td :class="(todo.task.done && 'grey--text') || 'black--text'">
                       {{ todo.task.date }}
                       <v-icon
                         v-if="task.date > todo.task.date"
@@ -106,9 +102,7 @@
                 </v-tooltip>
                 <td>
                   <v-btn icon>
-                    <v-icon @click="removeTask(todo)"
-                      >mdi-delete-outline</v-icon
-                    >
+                    <v-icon @click="removeTask(todo)">mdi-delete-outline</v-icon>
                   </v-btn>
                 </td>
               </tr>
@@ -135,7 +129,7 @@ export default {
     FilteredTask,
     SearchTask,
     AddTask,
-    UpdateTask,
+    UpdateTask
   },
   props: {
     task: {
@@ -144,9 +138,9 @@ export default {
         title: '',
         detail: '',
         date: new Date().toISOString(),
-        done: false,
-      }),
-    },
+        done: false
+      })
+    }
   },
 
   data() {
@@ -160,14 +154,14 @@ export default {
         {
           text: 'タスク',
           sortable: false,
-          value: 'task.title',
+          value: 'task.title'
         },
         { text: '期限', value: 'task.date' },
-        { text: '削除', value: 'remove', sortable: false },
+        { text: '削除', value: 'remove', sortable: false }
       ],
       itemsPerPage: 7,
       page: 1,
-      pageCount: 0,
+      pageCount: 0
     }
   },
   computed: {
@@ -176,7 +170,7 @@ export default {
     },
     // タスク検索
     ...mapGetters('modules/todos', ['todosCount']),
-    ...mapState('modules/todos', ['todos']),
+    ...mapState('modules/todos', ['todos'])
   },
   methods: {
     removeTask(todo) {
@@ -187,7 +181,7 @@ export default {
     toggleRemoveSwitch(todo) {
       this.$store.dispatch('modules/todos/toggleRemoveSwitch', {
         todo,
-        id: todo.id,
+        id: todo.id
       })
       if (todo.task.done === true && todo.task.autoRemoveSwitch === false) {
         setTimeout(
@@ -198,7 +192,7 @@ export default {
               // FIXME: setTimeoutを解除する
               this.$store.dispatch('modules/todos/toggleRemoveSwitch', {
                 todo,
-                id: todo.id,
+                id: todo.id
               })
             }
           }.bind(this),
@@ -209,7 +203,7 @@ export default {
     doneTask(todo) {
       this.$store.dispatch('modules/todos/doneTask', {
         todo,
-        id: todo.task.id,
+        id: todo.task.id
       })
       // FIXME:アーカイブに移す
       if (todo.task.done === false && todo.task.autoRemoveSwitch === true) {
@@ -221,7 +215,7 @@ export default {
               // FIXME:setTimeoutを解除する
               this.$store.dispatch('modules/todos/toggleRemoveSwitch', {
                 todo,
-                id: todo.id,
+                id: todo.id
               })
             }
           }.bind(this),
@@ -262,32 +256,32 @@ export default {
         default:
       }
       return returnvalue
-    },
-  },
+    }
+  }
 }
 </script>
 
 <style>
 .list-enter-active,
 .list-leave-active {
-  transition: all 0.8s
+  transition: all 0.8s;
 }
 .list-enter,
 .list-leave-to {
   opacity: 0;
-  transform: translateY(100%)
+  transform: translateY(100%);
 }
 .list-move {
-  transition: transform 0.5s
+  transition: transform 0.5s;
 }
 tr {
-  display: table-row
+  display: table-row;
 }
 a {
-  text-decoration: none
+  text-decoration: none;
 }
 /* Vuetifyの仕様上スタイルが適用されてしまうため非表示にする */
 .v-slide-group__prev {
-  display: none !important
+  display: none !important;
 }
 </style>

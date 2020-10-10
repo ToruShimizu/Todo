@@ -42,15 +42,8 @@
                   </template>
                   <v-date-picker v-model="task.date" no-title scrollable>
                     <v-spacer></v-spacer>
-                    <v-btn text color="primary" @click="dateMenu = false"
-                      >Cancel</v-btn
-                    >
-                    <v-btn
-                      text
-                      color="primary"
-                      @click="$refs.menu.save(task.date)"
-                      >OK</v-btn
-                    >
+                    <v-btn text color="primary" @click="dateMenu = false">Cancel</v-btn>
+                    <v-btn text color="primary" @click="$refs.menu.save(task.date)">OK</v-btn>
                   </v-date-picker>
                 </v-menu>
               </v-col>
@@ -69,9 +62,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <nuxt-link to="/">
-              <v-btn color="blue darken-1" text @click="closeAddTask"
-                >Cancel</v-btn
-              >
+              <v-btn color="blue darken-1" text @click="closeAddTask">Cancel</v-btn>
             </nuxt-link>
             <v-btn color="blue darken-1" text @click="addTask">Save</v-btn>
           </v-card-actions>
@@ -90,21 +81,21 @@ export default {
         title: '',
         detail: '',
         date: new Date().toISOString().substr(0, 10),
-        done: false,
-      }),
+        done: false
+      })
     },
     validate: {
       type: Boolean,
-      default: true,
+      default: true
     },
     titleRules: {
       type: Array,
-      default: () => [(v) => !!v || 'タイトルは必須入力です'],
-    },
+      default: () => [(v) => !!v || 'タイトルは必須入力です']
+    }
   },
   data() {
     return {
-      dateMenu: false,
+      dateMenu: false
     }
   },
   methods: {
@@ -123,6 +114,6 @@ export default {
     closeAddTask() {
       this.$emit('close-add-task')
     }
-  },
+  }
 }
 </script>

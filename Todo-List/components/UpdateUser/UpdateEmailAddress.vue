@@ -6,11 +6,7 @@
           <h2>メールアドレス変更</h2>
         </v-card-title>
         <v-card-text>
-          <v-form
-            ref="form"
-            lazy-validation
-            @submit.prevent="updateEmailAddress"
-          >
+          <v-form ref="form" lazy-validation @submit.prevent="updateEmailAddress">
             <v-text-field
               v-model="newEmailAddress"
               prepend-inner-icon="mdi-email-outline"
@@ -42,17 +38,14 @@ export default {
       validate: true,
       emailRules: [
         (v) => !!v || 'メールアドレスは必須です',
-        (v) =>
-          /.+@.+\..+/.test(v) || '正しいメールアドレスの形式で入力してください',
-      ],
+        (v) => /.+@.+\..+/.test(v) || '正しいメールアドレスの形式で入力してください'
+      ]
     }
   },
   methods: {
     updateEmailAddress() {
-      this.$store.dispatch("modules/auth/updateEmailAddress",
-        {email:this.newEmailAddress}
-      );
-    },
-  },
+      this.$store.dispatch('modules/auth/updateEmailAddress', { email: this.newEmailAddress })
+    }
+  }
 }
 </script>

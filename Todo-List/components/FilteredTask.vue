@@ -3,9 +3,7 @@
   <v-tabs>
     <v-tab @click="selectedTaskFilter = 'all'">全て:{{ todos.length }}</v-tab>
     <v-divider vertical />
-    <v-tab @click="selectedTaskFilter = 'active'"
-      >未完了:{{ remainingTodos }}</v-tab
-    >
+    <v-tab @click="selectedTaskFilter = 'active'">未完了:{{ remainingTodos }}</v-tab>
     <v-divider vertical />
     <v-tab @click="selectedTaskFilter = 'done'">
       完了: {{ completedTodos }}/{{ todos.length }}
@@ -28,9 +26,9 @@ import { mapState, mapGetters } from 'vuex'
 export default {
   props: {
     taskFilter: {
-      type: String,
+      type: String
       // required: true,
-    },
+    }
   },
   computed: {
     selectedTaskFilter: {
@@ -39,16 +37,11 @@ export default {
       },
       set(value) {
         this.$emit('update:filterdTask', value)
-      },
+      }
     },
-    ...mapGetters('modules/todos',[
-      "completedTodos",
-      "progress",
-      "remainingTodos",
-      "todosCount",
-    ]),
-    ...mapState('modules/todos',["todos"]),
-  },
+    ...mapGetters('modules/todos', ['completedTodos', 'progress', 'remainingTodos', 'todosCount']),
+    ...mapState('modules/todos', ['todos'])
+  }
 }
 </script>
 
