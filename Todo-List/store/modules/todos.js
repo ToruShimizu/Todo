@@ -143,19 +143,13 @@ async removeComment({ getters, commit }, { id }) {
   }
 },
 // FIXME: id指定してログインユーザーのコメントを表示
-async fetchComments({ getters, commit }) {
+async fetchComments({ getters, commit }, id ) {
   commit("initComments");
-  const snapShot = await db.collection(`users/${getters.userUid}/todos`).get();
-  snapShot.forEach(async doc => {
-    console.log("collectionId:" + doc.ref.id);
-    const subCollection = await doc.ref
-      .collection(`comments/${getters.uid}/message`)
-      .get();
-    subCollection.forEach(doc => {
-      console.log("subId:", doc.id);
-      commit("addComments", { message: doc.data(), id: doc.id });
+  const snapShot = await db.collection(`users/${getters.userUid}/todos`).doc(id).get();
+  const subCollection = await snapShot.ref.collection(`comments/${getters.userUid}/message`).get()
+  subCollection.forEach(doc => {
+      commit("addComment", { message: doc.data(), id: doc.id });
     });
-  });
 }
 }
 
