@@ -59,9 +59,9 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <AddComment />
+                <AddComment :taskId="this.editTodo.task.id" />
               </v-col>
-              <Comment :editTodo="this.editTodo" />
+              <Comment :taskId="this.editTodo.task.id" />
             </v-row>
           </v-container>
           <v-card-actions>
