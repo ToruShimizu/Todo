@@ -23,12 +23,16 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
+  props: {
+    taskId: {
+      type: String
+    }
+  },
   created() {
-    const id = this.editTodo.task.id
-    this.fetchComments(id)
+    this.fetchComments(this.taskId)
   },
   computed: {
-    ...mapState('modules/todos', ['comments', 'editTodo']),
+    ...mapState('modules/todos', ['comments']),
     ...mapGetters('modules/auth', ['userName', 'photoURL', 'userEmail'])
   },
   methods: {

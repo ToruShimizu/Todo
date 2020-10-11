@@ -13,18 +13,23 @@
 import { mapState } from 'vuex'
 
 export default {
+  props: {
+    taskId: {
+      type: String
+    }
+  },
   data() {
     return {
       message: ''
     }
   },
   computed: {
-    ...mapState('modules/todos', ['comments', 'editTodo'])
+    ...mapState('modules/todos', ['comments'])
   },
   methods: {
     addComment() {
       this.$store.dispatch('modules/todos/addComment', {
-        id: this.editTodo.task.id,
+        id: this.taskId,
         message: this.message
       })
       this.message = ''
