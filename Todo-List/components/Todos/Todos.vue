@@ -59,9 +59,9 @@
                   transition="scroll-y-transition"
                 >
                   <UpdateTask
-                    :editTodo="todo"
+                    :editTodo="editTodo"
                     :updateTaskDialog="updateTaskDialog"
-                    @close-update-task="closeUpdateTask()"
+                    @close-update-task="closeUpdateTask(todo)"
                   />
                 </v-dialog>
                 <td>
@@ -145,6 +145,7 @@ export default {
 
   data() {
     return {
+      cancel: null,
       editTodo: null,
       taskFilter: 'all',
       searchTask: '',
@@ -227,7 +228,8 @@ export default {
     openAddTask() {
       this.taskDialog = true
     },
-    openUpdateTask() {
+    openUpdateTask(todo) {
+      this.editTodo = todo
       this.updateTaskDialog = true
     },
     closeTaskDialog() {
@@ -235,7 +237,7 @@ export default {
       this.task.detail = ''
       this.taskDialog = false
     },
-    closeUpdateTask(item) {
+    closeUpdateTask() {
       this.updateTaskDialog = false
     },
     todosFiltered() {
