@@ -3,7 +3,6 @@ import firebase, { db } from '~/plugins/firebase'
 
 const state = () => ({
   todos: [],
-  editTodo: null,
   comments: []
 })
 const mutations = {
@@ -22,16 +21,6 @@ const mutations = {
     state.editTodo = todo
     console.log('edit', state.editTodo)
   },
-  updateTitle(state, val) {
-    state.editTodo.task.title = val
-  },
-  updateDate(state, val) {
-    state.editTodo.task.date = val
-  },
-  updateDetail(state, val) {
-    state.editTodo.task.detail = val
-  },
-
   // タスク削除
   removeTask(state, { id }) {
     const index = state.todos.findIndex((todo) => todo.task.id === id)

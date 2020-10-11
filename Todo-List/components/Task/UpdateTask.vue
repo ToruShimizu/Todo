@@ -11,7 +11,7 @@
               <!-- タスク編集エリア -->
               <v-col cols="12">
                 <v-text-field
-                  v-model="editTitle"
+                  v-model="editTodo.task.title"
                   label="タスクを変更する"
                   prepend-inner-icon="mdi-pencil-outline"
                   :rules="titleRules"
@@ -24,14 +24,14 @@
                   ref="menu"
                   v-model="updateDateMenu"
                   :close-on-content-click="false"
-                  :return-value.sync="editDate"
+                  :return-value.sync="editTodo.task.date"
                   transition="scale-transition"
                   offset-y
                   min-width="290px"
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
-                      v-model="editDate"
+                      v-model="editTodo.task.date"
                       label="期限を変更する"
                       prepend-inner-icon="mdi-calendar-today"
                       readonly
@@ -42,14 +42,16 @@
                   <v-date-picker no-title scrollable>
                     <v-spacer></v-spacer>
                     <v-btn text color="primary" @click="updateDateMenu = false">Cancel</v-btn>
-                    <v-btn text color="primary" @click="$refs.menu.save(editDate)">OK</v-btn>
+                    <v-btn text color="primary" @click="$refs.menu.save(editTodo.task.date)"
+                      >OK</v-btn
+                    >
                   </v-date-picker>
                 </v-menu>
               </v-col>
               <!-- 詳細編集エリア -->
               <v-col cols="12">
                 <v-text-field
-                  v-model="editDetail"
+                  v-model="editTodo.task.detail"
                   label="タスクの詳細を変更する"
                   prepend-inner-icon="mdi-briefcase-outline"
                   required
@@ -57,9 +59,9 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <AddComment />
+                <AddComment :taskId="this.editTodo.task.id" />
               </v-col>
-              <Comment />
+              <Comment :taskId="this.editTodo.task.id" />
             </v-row>
           </v-container>
           <v-card-actions>
@@ -74,7 +76,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapGetters } from 'vuex'
+import { mapMutations, mapGetters } from 'vuex'
 import AddComment from '@/components/Comment/AddComment'
 import Comment from '@/components/Comment/Comment'
 export default {
@@ -86,8 +88,8 @@ export default {
     todo: {
       type: Object
     },
-    id: {
-      type: String
+    editTodo: {
+      type: Object
     },
     task: {
       type: Object,
@@ -113,32 +115,7 @@ export default {
     }
   },
   computed: {
-    editTitle: {
-      get() {
-        return this.editTodo.task.title
-      },
-      set(val) {
-        this.updateTitle(val)
-      }
-    },
-    editDate: {
-      get() {
-        return this.editTodo.task.date
-      },
-      set(val) {
-        this.updateDate(val)
-      }
-    },
-    editDetail: {
-      get() {
-        return this.editTodo.task.detail
-      },
-      set(val) {
-        this.updateDetail(val)
-      }
-    },
-    ...mapGetters('modules/todos', ['getTaskById']),
-    ...mapState('modules/todos', ['editTodo'])
+    ...mapGetters('modules/todos', ['getTaskById'])
   },
   methods: {
     updateTask() {
@@ -148,7 +125,7 @@ export default {
       }
       this.$store.dispatch('modules/todos/updateTask', {
         id: this.editTodo.task.id,
-        task: this.editTodo.task
+        task: this.editTodo
       })
       this.closeUpdateTask()
     },
