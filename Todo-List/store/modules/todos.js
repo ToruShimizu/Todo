@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid'
 import firebase, { db } from '~/plugins/firebase'
 
 const state = () => ({
@@ -13,8 +14,7 @@ const mutations = {
   },
   // 取り出したデータを格納
   // タスク追加
-  addTodos(state, { id, task }) {
-    task.id = id
+  addTodos(state, { task }) {
     state.todos.push({ task })
     console.log('addTodos')
   },
@@ -71,12 +71,14 @@ const actions = {
       .orderBy('created', 'desc')
       .get()
     snapShot.forEach((doc) => {
-      commit('addTodos', { id: doc.id, task: doc.data() })
+      commit('addTodos', { task: doc.data() })
     })
   },
   // タスク追加
   async addTask({ getters, commit }, todo) {
+    const taskId = uuidv4()
     const task = {
+      id: taskId,
       title: todo.task.title,
       detail: todo.task.detail,
       date: todo.task.date,
@@ -84,7 +86,7 @@ const actions = {
       created: firebase.firestore.FieldValue.serverTimestamp()
     }
     if (getters.userUid) {
-      await db.collection(`users/${getters.userUid}/todos`).add(task)
+      await db.collection(`users/${getters.userUid}/todos`).doc(taskId).set(task)
     }
     commit('addTodos', { task })
   },
