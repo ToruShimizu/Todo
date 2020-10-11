@@ -7,7 +7,7 @@
             <img :src="photoURL" />
           </v-avatar>
         </v-list-item-icon>
-        <v-list-item-title> {{ userName }}さんがコメントしました </v-list-item-title>
+        <v-list-item-title> {{ userName }}さんがコメントしました</v-list-item-title>
         <v-layout>
           <v-text-field v-model="comment.message" />
           <v-btn icon @click="removeComment(comment)">
@@ -23,14 +23,6 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
-  props: {
-    taskId: {
-      type: String
-    }
-  },
-  created() {
-    this.fetchComments(this.taskId)
-  },
   computed: {
     ...mapState('modules/todos', ['comments']),
     ...mapGetters('modules/auth', ['userName', 'photoURL', 'userEmail'])
