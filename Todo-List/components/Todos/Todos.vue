@@ -59,7 +59,7 @@
                   transition="scroll-y-transition"
                 >
                   <UpdateTask
-                    :todo="todo"
+                    :editTodo="todo"
                     :updateTaskDialog="updateTaskDialog"
                     @close-update-task="closeUpdateTask()"
                   />
@@ -145,6 +145,7 @@ export default {
 
   data() {
     return {
+      editTodo: null,
       taskFilter: 'all',
       searchTask: '',
       taskDialog: false,
@@ -226,8 +227,7 @@ export default {
     openAddTask() {
       this.taskDialog = true
     },
-    openUpdateTask(todo) {
-      this.$store.dispatch('modules/todos/editTodo', todo)
+    openUpdateTask() {
       this.updateTaskDialog = true
     },
     closeTaskDialog() {
