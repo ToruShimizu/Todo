@@ -37,8 +37,8 @@ const mutations = {
   doneTask(state, { todo }) {
     todo.task.done = !todo.task.done
   },
-  addComment(state, message) {
-    state.comments.push(message)
+  addComment(state, { message }) {
+    state.comments.push({ message })
     console.log('addComments')
   },
   removeComment(state, { id }) {
@@ -111,6 +111,7 @@ const actions = {
         .collection(`comments/${getters.userUid}/message`)
         .add({ message })
     }
+    commit('addComment', { message })
   },
   async removeComment({ getters, commit }, { id }) {
     if (getters.userUid) {
@@ -127,7 +128,8 @@ const actions = {
     const snapShot = await db.collection(`users/${getters.userUid}/todos`).doc(id).get()
     const subCollection = await snapShot.ref.collection(`comments/${getters.userUid}/message`).get()
     subCollection.forEach((doc) => {
-      commit('addComment', { message: doc.data(), id: doc.id })
+      const message = doc.data()
+      commit('addComment', message)
     })
   }
 }
