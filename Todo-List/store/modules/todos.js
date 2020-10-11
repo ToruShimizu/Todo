@@ -37,8 +37,8 @@ const mutations = {
   doneTask(state, { todo }) {
     todo.task.done = !todo.task.done
   },
-  addComment(state, { message }) {
-    state.comments.push({ message })
+  addComment(state, comment) {
+    state.comments.push(comment)
     console.log('addComments')
   },
   removeComment(state, { id }) {
@@ -104,14 +104,21 @@ const actions = {
     commit('doneTask', { todo })
   },
   async addComment({ getters, commit }, { id, message }) {
+    const commentId = uuidv4()
+    const comment = {
+      message,
+      id: commentId,
+      created: firebase.firestore.FieldValue.serverTimestamp()
+    }
     if (getters.userUid) {
       await db
         .collection(`users/${getters.userUid}/todos`)
         .doc(id)
         .collection(`comments/${getters.userUid}/message`)
-        .add({ message })
+        .doc(commentId)
+        .set(comment)
     }
-    commit('addComment', { message })
+    commit('addComment', comment)
   },
   async removeComment({ getters, commit }, { id }) {
     if (getters.userUid) {
@@ -128,8 +135,8 @@ const actions = {
     const snapShot = await db.collection(`users/${getters.userUid}/todos`).doc(id).get()
     const subCollection = await snapShot.ref.collection(`comments/${getters.userUid}/message`).get()
     subCollection.forEach((doc) => {
-      const message = doc.data()
-      commit('addComment', message)
+      const comment = doc.data()
+      commit('addComment', comment)
     })
   }
 }
