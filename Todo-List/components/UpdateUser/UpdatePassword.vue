@@ -25,12 +25,12 @@
             />
             <v-text-field
               v-model="updateUserPassword"
-              :type="showPassword ? 'text' : 'Password'"
+              :type="showEditPassword ? 'text' : 'Password'"
               prepend-inner-icon="mdi-lock-reset"
               :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
               label="新しいPassword(6文字以上)"
               :rules="[passwordRules.required, passwordRules.min]"
-              @click:append="showPassword = !showPassword"
+              @click:append="showEditPassword = !showEditPassword"
             />
             <v-card-actions>
               <v-btn color="success" @click="updatePassword">
@@ -57,6 +57,7 @@ export default {
       loginUserEmail: '',
       validate: true,
       showPassword: false,
+      showEditPassword: false,
       emailRules: [
         (v) => !!v || 'メールアドレスは必須です',
         (v) => /.+@.+\..+/.test(v) || '正しいメールアドレスの形式で入力してください'
