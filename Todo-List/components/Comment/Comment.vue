@@ -8,7 +8,7 @@
           </v-avatar>
         </v-list-item-icon>
         <v-list-item-title> {{ userName }}さんがコメントしました</v-list-item-title>
-        <v-list-item-title> 投稿日時:{{ comment.created }}</v-list-item-title>
+        <v-list-item-title> 投稿日時:{{ comment.created | dateFilter }}</v-list-item-title>
         <v-layout>
           <v-text-field v-model="comment.message" />
           <v-btn icon @click="removeComment(comment)">
@@ -22,11 +22,17 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
+import moment from 'moment'
 
 export default {
   computed: {
     ...mapState('modules/todos', ['comments']),
     ...mapGetters('modules/auth', ['userName', 'photoURL', 'userEmail'])
+  },
+  filters: {
+    dateFilter(date) {
+      return moment(date).format('YYYY年MM月DD日 HH時mm分ss秒')
+    }
   },
   methods: {
     removeComment(comment) {
