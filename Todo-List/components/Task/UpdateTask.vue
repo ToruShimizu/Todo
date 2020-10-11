@@ -125,7 +125,7 @@ export default {
       }
       this.$store.dispatch('modules/todos/updateTask', {
         id: this.editTodo.task.id,
-        task: this.editTodo
+        task: this.editTodo.task
       })
       this.closeUpdateTask()
     },
