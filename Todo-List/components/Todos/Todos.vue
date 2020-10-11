@@ -229,6 +229,8 @@ export default {
       this.taskDialog = true
     },
     openUpdateTask(todo) {
+      const id = String(todo.task.id)
+      this.$store.dispatch('modules/todos/fetchComments', id)
       this.editTodo = todo
       this.updateTaskDialog = true
     },
