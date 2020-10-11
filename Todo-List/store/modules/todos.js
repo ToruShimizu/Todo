@@ -37,7 +37,7 @@ const mutations = {
   doneTask(state, { todo }) {
     todo.task.done = !todo.task.done
   },
-  addComments(state, message) {
+  addComment(state, message) {
     state.comments.push(message)
     console.log('addComments')
   },
