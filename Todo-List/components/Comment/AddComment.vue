@@ -1,12 +1,14 @@
 <template>
-  <v-text-field
-    v-model="message"
-    hide-details
-    prepend-inner-icon="mdi-message-text-outline"
-    label="コメントを追加する"
-    clearable
-    @keypress.enter="addComment"
-  ></v-text-field>
+  <v-col cols="12">
+    <v-text-field
+      v-model="message"
+      hide-details
+      prepend-inner-icon="mdi-message-text-outline"
+      label="コメントを追加する"
+      clearable
+      @keypress.enter="addComment"
+    ></v-text-field>
+  </v-col>
 </template>
 
 <script>
