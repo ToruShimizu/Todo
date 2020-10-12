@@ -143,12 +143,9 @@ const actions = {
 
 const getters = {
   // uidの取得
-  userUid: (state, getters, rootState, rootGetters) => {
+  userUid: (rootGetters) => {
     return rootGetters['modules/auth/uid']
   },
-  // idを返す関数
-  getTaskById: (state) => (id) => state.todos.find((todo) => todo.id === id),
-  getCommentById: (state) => (id) => state.comments.find((comment) => comment.id === id),
 
   // タスク総数のカウント
   todosCount(state) {
