@@ -11,15 +11,7 @@
         </h2>
       </v-flex>
       <v-flex>
-        <v-dialog
-          v-model="taskDialog"
-          persistent
-          max-width="600px"
-          transition="scroll-y-transition"
-        >
-          <AddTask @close-add-task="closeTaskDialog" />
-        </v-dialog>
-
+        <AddTask @close-add-task="closeAddTask" :taskDialog="this.taskDialog" />
         <v-btn color="primary" dark class="hidden-xs-only" @click="openAddTask">
           <v-icon>mdi-pen-plus</v-icon>タスクを追加する
         </v-btn>
@@ -34,9 +26,9 @@
     <v-card v-if="todos.length > 0">
       <FilteredTask @update:filterdTask="taskFilter = $event" />
       <v-divider />
-    
-          <SearchTask :search.sync="searchTask" />
- 
+
+      <SearchTask :search.sync="searchTask" />
+
       <v-data-table
         :headers="headers"
         :items="todoList"
@@ -50,18 +42,11 @@
           <tbody name="list" is="transition-group">
             <template>
               <tr v-for="(todo, index) in props.items" :key="index">
-                <v-dialog
-                  v-model="updateTaskDialog"
-                  persistent
-                  max-width="600px"
-                  transition="scroll-y-transition"
-                >
-                  <UpdateTask
-                    :editTodo="editTodo"
-                    :updateTaskDialog="updateTaskDialog"
-                    @close-update-task="closeUpdateTask(todo)"
-                  />
-                </v-dialog>
+                <UpdateTask
+                  :editTodo="editTodo"
+                  :updateTaskDialog="updateTaskDialog"
+                  @close-update-task="closeUpdateTask(todo)"
+                />
                 <td>
                   <v-btn icon @click="doneTask(todo)">
                     <v-icon :color="(!todo.task.done && 'grey') || 'primary'"
@@ -226,16 +211,16 @@ export default {
     openAddTask() {
       this.taskDialog = true
     },
+    closeAddTask() {
+      this.task.title = ''
+      this.task.detail = ''
+      this.taskDialog = false
+    },
     openUpdateTask(todo) {
       const id = String(todo.task.id)
       this.$store.dispatch('modules/todos/fetchComments', id)
       this.editTodo = todo
       this.updateTaskDialog = true
-    },
-    closeTaskDialog() {
-      this.task.title = ''
-      this.task.detail = ''
-      this.taskDialog = false
     },
     closeUpdateTask() {
       this.updateTaskDialog = false
