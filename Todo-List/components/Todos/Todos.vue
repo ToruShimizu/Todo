@@ -34,11 +34,9 @@
     <v-card v-if="todos.length > 0">
       <FilteredTask @update:filterdTask="taskFilter = $event" />
       <v-divider />
-      <v-row justify="center">
-        <v-col cols="8">
+    
           <SearchTask :search.sync="searchTask" />
-        </v-col>
-      </v-row>
+ 
       <v-data-table
         :headers="headers"
         :items="todoList"

@@ -1,13 +1,17 @@
 <template>
-  <v-text-field
-    v-model="innerSearchTask"
-    flat
-    solo-inverted
-    hide-details
-    prepend-inner-icon="mdi-magnify"
-    label="タスクを検索する"
-    clearable
-  ></v-text-field>
+  <v-row justify="center">
+    <v-col cols="8">
+      <v-text-field
+        v-model="innerSearchTask"
+        flat
+        solo-inverted
+        hide-details
+        prepend-inner-icon="mdi-magnify"
+        label="タスクを検索する"
+        clearable
+      ></v-text-field>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -15,7 +19,6 @@ export default {
   props: {
     searchTask: {
       type: String
-      // required: true,
     }
   },
   computed: {
@@ -28,14 +31,6 @@ export default {
         this.$emit('update:search', value)
       }
     }
-    // handleInput: {
-    //   get: function() {
-    //     return this.taskfilter;
-    //   },
-    //   set: function(value) {
-    //     this.$emit("update:filterdTask", value);
-    //   }
-    // }
   }
 }
 </script>
