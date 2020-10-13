@@ -1,5 +1,6 @@
 <template>
   <v-dialog
+    v-if="updateTaskDialog"
     v-model="updateTaskDialog"
     persistent
     max-width="600px"
@@ -93,7 +94,8 @@ export default {
       type: Object
     },
     updateTaskDialog: {
-      type: Boolean
+      type: Boolean,
+      default: false
     },
     task: {
       type: Object,
