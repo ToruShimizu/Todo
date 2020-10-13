@@ -143,7 +143,7 @@ const actions = {
 
 const getters = {
   // uidの取得
-  userUid: (rootGetters) => {
+  userUid: (state, getters, rootState, rootGetters) => {
     return rootGetters['modules/auth/uid']
   },
 
