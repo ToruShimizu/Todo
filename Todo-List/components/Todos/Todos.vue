@@ -11,13 +11,11 @@
         </h2>
       </v-flex>
       <v-flex>
-        <AddTask @close-add-task="closeAddTask" :taskDialog="taskDialog" />
-        <v-btn color="primary" dark class="hidden-xs-only" @click="openAddTask">
-          <v-icon>mdi-pen-plus</v-icon>タスクを追加する
-        </v-btn>
-        <v-btn color="primary" dark class="hidden-sm-and-up">
-          <v-icon>mdi-pen-plus</v-icon>
-        </v-btn>
+        <AddTask
+          @close-add-task="closeAddTask"
+          @open-add-task="openAddTask"
+          :taskDialog="taskDialog"
+        />
       </v-flex>
     </v-layout>
 
@@ -128,7 +126,6 @@ export default {
 
   data() {
     return {
-      cancel: null,
       editTodo: null,
       taskFilter: 'all',
       searchTask: '',
@@ -162,51 +159,11 @@ export default {
       if (!confirm(todo.task.title + 'を削除しますか？')) return
       this.$store.dispatch('modules/todos/removeTask', { id: todo.task.id })
     },
-    // FIXME:アーカイブに移す
-    toggleRemoveSwitch(todo) {
-      this.$store.dispatch('modules/todos/toggleRemoveSwitch', {
-        todo,
-        id: todo.id
-      })
-      if (todo.task.done === true && todo.task.autoRemoveSwitch === false) {
-        setTimeout(
-          function () {
-            if (confirm(todo.task.title + 'を削除しますか？')) {
-              this.$store.dispatch('modules/todos/removeTask', { id: todo.id })
-            } else {
-              // FIXME: setTimeoutを解除する
-              this.$store.dispatch('modules/todos/toggleRemoveSwitch', {
-                todo,
-                id: todo.id
-              })
-            }
-          }.bind(this),
-          4000
-        )
-      }
-    },
     doneTask(todo) {
       this.$store.dispatch('modules/todos/doneTask', {
         todo,
         id: todo.task.id
       })
-      // FIXME:アーカイブに移す
-      if (todo.task.done === false && todo.task.autoRemoveSwitch === true) {
-        setTimeout(
-          function () {
-            if (confirm(todo.task.title + 'を削除しますか？')) {
-              this.$store.dispatch('modules/todos/removeTask', { id: todo.id })
-            } else {
-              // FIXME:setTimeoutを解除する
-              this.$store.dispatch('modules/todos/toggleRemoveSwitch', {
-                todo,
-                id: todo.id
-              })
-            }
-          }.bind(this),
-          5000
-        )
-      }
     },
     openAddTask() {
       this.taskDialog = true
