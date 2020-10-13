@@ -64,8 +64,8 @@
                     clearable
                   ></v-text-field>
                 </v-col>
-                <AddComment :taskId="this.editTodo.task.id" />
-                <Comment :taskId="this.editTodo.task.id" />
+                <AddComment :taskId="editTodo.task.id" />
+                <Comment :taskId="editTodo.task.id" />
               </v-row>
             </v-container>
             <v-card-actions>
@@ -81,7 +81,6 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters } from 'vuex'
 import AddComment from '@/components/Comment/AddComment'
 import Comment from '@/components/Comment/Comment'
 export default {
@@ -90,9 +89,6 @@ export default {
     Comment
   },
   props: {
-    todo: {
-      type: Object
-    },
     editTodo: {
       type: Object
     },
@@ -122,9 +118,6 @@ export default {
       updateDateMenu: false
     }
   },
-  computed: {
-    ...mapGetters('modules/todos', ['getTaskById'])
-  },
   methods: {
     updateTask() {
       if (!this.editTodo.task.title) {
@@ -139,8 +132,7 @@ export default {
     },
     closeUpdateTask() {
       this.$emit('close-update-task')
-    },
-    ...mapMutations('modules/todos', ['updateTitle', 'updateDate', 'updateDetail'])
+    }
   }
 }
 </script>
