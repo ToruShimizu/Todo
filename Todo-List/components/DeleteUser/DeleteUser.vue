@@ -30,7 +30,7 @@
               @click:append="showPassword = !showPassword"
             />
             <v-card-actions>
-              <v-btn color="success" @click="deleteLoginUser">
+              <v-btn color="success" @click="deleteUser">
                 <v-icon left>mdi-account</v-icon>SAVE
               </v-btn>
               <v-spacer></v-spacer>
@@ -64,8 +64,8 @@ export default {
     }
   },
   methods: {
-    deleteLoginUser() {
-      this.$store.dispatch('modules/todosdeleteLoginUser', {
+    deleteUser() {
+      this.$store.dispatch('modules/auth/deleteUser', {
         email: this.loginUserPassword,
         password: this.loginUserPassword
       })
