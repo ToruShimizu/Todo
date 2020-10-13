@@ -18,82 +18,12 @@
         />
       </v-flex>
     </v-layout>
-
     <v-divider class="mt-4" />
-
     <v-card v-if="todos.length > 0">
       <FilteredTask @update:filterdTask="taskFilter = $event" />
       <v-divider />
-
       <SearchTask :search.sync="searchTask" />
-
-      <v-data-table
-        :headers="headers"
-        :items="todoList"
-        :items-per-page="itemsPerPage"
-        :search="searchTask"
-        :page.sync="page"
-        hide-default-footer
-        @page-count="pageCount = $event"
-      >
-        <template v-slot:body="props">
-          <tbody name="list" is="transition-group">
-            <template>
-              <tr v-for="(todo, index) in props.items" :key="index">
-                <UpdateTask
-                  :editTodo="editTodo"
-                  :updateTaskDialog="updateTaskDialog"
-                  @close-update-task="closeUpdateTask(todo)"
-                />
-                <td>
-                  <v-btn icon @click="doneTask(todo)">
-                    <v-icon :color="(!todo.task.done && 'grey') || 'primary'"
-                      >mdi-check-circle-outline</v-icon
-                    >
-                  </v-btn>
-                </td>
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <td
-                      v-bind="attrs"
-                      :class="(todo.task.done && 'grey--text') || 'primary--text'"
-                      class="ml-2"
-                      v-on="on"
-                      @click="openUpdateTask(todo)"
-                    >
-                      {{ todo.task.title }}
-                    </td>
-                  </template>
-                  <span>{{ todo.task.title }}の詳細を開く</span>
-                </v-tooltip>
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <td :class="(todo.task.done && 'grey--text') || 'black--text'">
-                      {{ todo.task.date }}
-                      <v-icon
-                        v-if="task.date > todo.task.date"
-                        v-bind="attrs"
-                        :class="(todo.task.done && 'grey--text') || 'red--text'"
-                        v-on="on"
-                        >mdi-alert-outline</v-icon
-                      >
-                    </td>
-                  </template>
-                  <span>期限が切れています</span>
-                </v-tooltip>
-                <td>
-                  <v-btn icon>
-                    <v-icon @click="removeTask(todo)">mdi-delete-outline</v-icon>
-                  </v-btn>
-                </td>
-              </tr>
-            </template>
-          </tbody>
-        </template>
-      </v-data-table>
-      <div class="text-center py-2">
-        <v-pagination v-model="page" :length="pageCount" />
-      </div>
+      <TaskTable :searchTask="searchTask" :todoList="todoList" />
     </v-card>
   </v-container>
 </template>
@@ -102,69 +32,39 @@
 import { mapState, mapGetters } from 'vuex'
 import FilteredTask from '@/components/FilteredTask'
 import SearchTask from '@/components/SearchTask'
+import TaskTable from '@/components/TaskTable'
 import AddTask from '@/components/Task/AddTask'
-import UpdateTask from '@/components/Task/UpdateTask'
 
 export default {
   components: {
     FilteredTask,
     SearchTask,
     AddTask,
-    UpdateTask
+    TaskTable
   },
-  props: {
-    task: {
-      type: Object,
-      default: () => ({
+  props: {},
+
+  data() {
+    return {
+      task: {
         title: '',
         detail: '',
         date: new Date().toISOString(),
         done: false
-      })
-    }
-  },
-
-  data() {
-    return {
-      editTodo: null,
+      },
       taskFilter: 'all',
       searchTask: '',
-      taskDialog: false,
-      updateTaskDialog: false,
-      headers: [
-        { text: '状態', align: 'start', sortable: false, value: 'task.done' },
-        {
-          text: 'タスク',
-          sortable: false,
-          value: 'task.title'
-        },
-        { text: '期限', value: 'task.date' },
-        { text: '削除', value: 'remove', sortable: false }
-      ],
-      itemsPerPage: 7,
-      page: 1,
-      pageCount: 0
+      taskDialog: false
     }
   },
   computed: {
     todoList() {
       return this.todosFiltered()
     },
-    // タスク検索
     ...mapGetters('modules/todos', ['todosCount']),
     ...mapState('modules/todos', ['todos'])
   },
   methods: {
-    removeTask(todo) {
-      if (!confirm(todo.task.title + 'を削除しますか？')) return
-      this.$store.dispatch('modules/todos/removeTask', { id: todo.task.id })
-    },
-    doneTask(todo) {
-      this.$store.dispatch('modules/todos/doneTask', {
-        todo,
-        id: todo.task.id
-      })
-    },
     openAddTask() {
       this.taskDialog = true
     },
@@ -172,15 +72,6 @@ export default {
       this.task.title = ''
       this.task.detail = ''
       this.taskDialog = false
-    },
-    openUpdateTask(todo) {
-      const id = String(todo.task.id)
-      this.$store.dispatch('modules/todos/fetchComments', id)
-      this.editTodo = todo
-      this.updateTaskDialog = true
-    },
-    closeUpdateTask() {
-      this.updateTaskDialog = false
     },
     todosFiltered() {
       // 完了状態の絞り込み
@@ -206,21 +97,6 @@ export default {
 </script>
 
 <style>
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.8s;
-}
-.list-enter,
-.list-leave-to {
-  opacity: 0;
-  transform: translateY(100%);
-}
-.list-move {
-  transition: transform 0.5s;
-}
-tr {
-  display: table-row;
-}
 a {
   text-decoration: none;
 }
