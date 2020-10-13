@@ -23,7 +23,7 @@
       <FilteredTask @update:filterdTask="taskFilter = $event" />
       <v-divider />
       <SearchTask :search.sync="searchTask" />
-      <TaskTable :searchTask="searchTask" :todoList="todoList" />
+      <TaskTable :searchTask="searchTask" :todosFiltered="todosFiltered" />
     </v-card>
   </v-container>
 </template>
@@ -42,8 +42,6 @@ export default {
     AddTask,
     TaskTable
   },
-  props: {},
-
   data() {
     return {
       task: {
@@ -58,8 +56,22 @@ export default {
     }
   },
   computed: {
-    todoList() {
-      return this.todosFiltered()
+    todosFiltered() {
+      // 完了状態の絞り込み
+      let returnvalue
+      switch (this.taskFilter) {
+        case 'all':
+          returnvalue = this.todos
+          break
+        case 'active':
+          returnvalue = this.todos.filter((todo) => !todo.task.done)
+          break
+        case 'done':
+          returnvalue = this.todos.filter((todo) => todo.task.done)
+          break
+        default:
+      }
+      return returnvalue
     },
     ...mapGetters('modules/todos', ['todosCount']),
     ...mapState('modules/todos', ['todos'])
@@ -72,25 +84,6 @@ export default {
       this.task.title = ''
       this.task.detail = ''
       this.taskDialog = false
-    },
-    todosFiltered() {
-      // 完了状態の絞り込み
-      let returnvalue
-      switch (this.taskFilter) {
-        case 'all':
-          returnvalue = this.todos
-          break
-        case 'active':
-          returnvalue = this.todos.filter((todo) => !todo.task.done)
-
-          break
-        case 'done':
-          returnvalue = this.todos.filter((todo) => todo.task.done)
-
-          break
-        default:
-      }
-      return returnvalue
     }
   }
 }
