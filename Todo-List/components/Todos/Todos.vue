@@ -11,7 +11,7 @@
         </h2>
       </v-flex>
       <v-flex>
-        <AddTask @close-add-task="closeAddTask" :taskDialog="this.taskDialog" />
+        <AddTask @close-add-task="closeAddTask" :taskDialog="taskDialog" />
         <v-btn color="primary" dark class="hidden-xs-only" @click="openAddTask">
           <v-icon>mdi-pen-plus</v-icon>タスクを追加する
         </v-btn>
