@@ -2,7 +2,7 @@
   <v-app>
     <v-data-table
       :headers="headers"
-      :items="todoList"
+      :items="todosFiltered"
       :items-per-page="itemsPerPage"
       :search="searchTask"
       :page.sync="page"
@@ -87,7 +87,7 @@ export default {
         done: false
       })
     },
-    todoList: {
+    todosFiltered: {
       type: Array,
       required: true
     },
