@@ -27,7 +27,6 @@ export default {
   props: {
     taskFilter: {
       type: String
-      // required: true,
     }
   },
   computed: {
