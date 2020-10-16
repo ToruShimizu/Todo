@@ -76,7 +76,7 @@
     <v-btn color="primary" dark class="hidden-xs-only" @click="openAddTask">
       <v-icon>mdi-pen-plus</v-icon>タスクを追加する
     </v-btn>
-    <v-btn color="primary" dark class="hidden-sm-and-up">
+    <v-btn color="primary" dark class="hidden-sm-and-up" @click="openAddTask">
       <v-icon>mdi-pen-plus</v-icon>
     </v-btn>
   </v-app>
