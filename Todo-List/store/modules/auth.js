@@ -73,7 +73,7 @@ const actions = {
   },
   // ユーザー情報の更新
   // FIXME:ユーザーのstate更新
-  async updateUser({ dispatch }, { userName }) {
+  async updateUser({ commit }, { userName }) {
     const user = await firebase.auth().currentUser
     try {
       await user.updateProfile({
@@ -84,7 +84,7 @@ const actions = {
       alert('更新に失敗しました')
       console.log(err)
     }
-    dispatch('setLoginUser')
+    commit('setLoginUser', user)
   },
   // メールアドレスの変更
   // FIXME:ユーザーstate更新
@@ -100,7 +100,7 @@ const actions = {
     dispatch('setLoginUser')
   },
   // パスワードの変更
-  async updatePassword({ commit }, { email, password, newPassword }) {
+  async updatePassword({ dispatch }, { email, password, newPassword }) {
     const user = await firebase.auth().currentUser
     const credential = await firebase.auth.EmailAuthProvider.credential(email, password)
     // 最初に再認証してから変更処理を行う
@@ -108,7 +108,7 @@ const actions = {
       await user.reauthenticateWithCredential(credential)
       await user.updatePassword(newPassword)
       alert('パスワードを変更しました')
-      alert('ログイン画面に移ります')
+      dispatch('logout')
     } catch (err) {
       console.log(err)
     }
@@ -132,6 +132,7 @@ const actions = {
       await user.reauthenticateWithCredential(credential)
       await user.delete()
       alert('ユーザー情報を削除しました')
+      commit('deleteLoginUser')
     } catch (err) {
       console.log(err)
     }
