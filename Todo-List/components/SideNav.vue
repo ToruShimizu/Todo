@@ -62,21 +62,21 @@
     </v-row>
     <v-divider></v-divider>
     <v-list dense nav>
-      <v-list-item-content v-if="this.login_user">
+      <v-list-item-content v-if="login_user">
         <v-list-item-icon v-if="photoURL">
           <v-avatar size="50">
             <img :src="photoURL" />
           </v-avatar>
         </v-list-item-icon>
       </v-list-item-content>
-      <v-list-item-content v-if="this.login_user">
+      <v-list-item-content v-if="login_user">
         <v-list-item-title class="title grey--text text--darken-2">
           <v-icon>mdi-account-outline</v-icon>
           {{ userName }}
         </v-list-item-title>
       </v-list-item-content>
       <v-list-item>
-        <v-list-item-content v-if="!this.login_user">
+        <v-list-item-content v-if="!login_user">
           <v-list-item-title>ログインユーザーはいません</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -106,9 +106,6 @@ export default {
     }
   },
   computed: {
-    userName() {
-      return this.userName
-    },
     ...mapGetters('modules/auth', ['userName', 'photoURL', 'userEmail']),
     ...mapState('modules/auth', ['login_user'])
   },
