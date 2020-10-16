@@ -8,6 +8,7 @@
       :page.sync="page"
       hide-default-footer
       @page-count="pageCount = $event"
+      class="elevation-1"
     >
       <template v-slot:body="props">
         <tbody name="list" is="transition-group">
