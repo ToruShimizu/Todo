@@ -1,9 +1,9 @@
 <template>
-  <v-app class="mt-12">
+  <v-app>
     <v-dialog
       v-model="editPasswordDialog"
       persistent
-      max-width="600px"
+      max-width="500px"
       transition="scroll-y-transition"
     >
       <v-col cols="12" sm="12" md="12">
