@@ -1,55 +1,68 @@
 <template>
   <v-app class="mt-12">
-    <v-col cols="12" sm="12" md="12">
-      <v-card width="400px" class="mx-auto mt-5 text-center">
-        <v-card-title>
-          <h2>パスワード変更</h2>
-        </v-card-title>
-        <v-card-text>
-          <v-form ref="form" lazy-validation @submit.prevent="updatePassword">
-            <v-text-field
-              v-model="loginUserEmail"
-              prepend-inner-icon="mdi-email-outline"
-              label="登録されているメールアドレス"
-              :rules="emailRules"
-              clearable
-            />
-            <v-text-field
-              v-model="loginUserPassword"
-              :type="showPassword ? 'text' : 'Password'"
-              prepend-inner-icon="mdi-lock-outline"
-              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-              label="現在のPassword(6文字以上)"
-              :rules="[passwordRules.required, passwordRules.min]"
-              @click:append="showPassword = !showPassword"
-            />
-            <v-text-field
-              v-model="updateUserPassword"
-              :type="showEditPassword ? 'text' : 'Password'"
-              prepend-inner-icon="mdi-lock-reset"
-              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-              label="新しいPassword(6文字以上)"
-              :rules="[passwordRules.required, passwordRules.min]"
-              @click:append="showEditPassword = !showEditPassword"
-            />
-            <v-card-actions>
-              <v-btn color="success" @click="updatePassword">
-                <v-icon left>mdi-account</v-icon>SAVE
-              </v-btn>
-              <v-spacer></v-spacer>
-              <v-btn color="primary" @click="$emit('close-edit-password')">
-                <v-icon left>mdi-login-variant</v-icon>戻る
-              </v-btn>
-            </v-card-actions>
-          </v-form>
-        </v-card-text>
-      </v-card>
-    </v-col>
+    <v-dialog
+      v-model="editPasswordDialog"
+      persistent
+      max-width="600px"
+      transition="scroll-y-transition"
+    >
+      <v-col cols="12" sm="12" md="12">
+        <v-card width="400px" class="mx-auto mt-5 text-center">
+          <v-card-title>
+            <h2>パスワード変更</h2>
+          </v-card-title>
+          <v-card-text>
+            <v-form ref="form" lazy-validation @submit.prevent="updatePassword">
+              <v-text-field
+                v-model="loginUserEmail"
+                prepend-inner-icon="mdi-email-outline"
+                label="登録されているメールアドレス"
+                :rules="emailRules"
+                clearable
+              />
+              <v-text-field
+                v-model="loginUserPassword"
+                :type="showPassword ? 'text' : 'Password'"
+                prepend-inner-icon="mdi-lock-outline"
+                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                label="現在のPassword(6文字以上)"
+                :rules="[passwordRules.required, passwordRules.min]"
+                @click:append="showPassword = !showPassword"
+              />
+              <v-text-field
+                v-model="updateUserPassword"
+                :type="showEditPassword ? 'text' : 'Password'"
+                prepend-inner-icon="mdi-lock-reset"
+                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                label="新しいPassword(6文字以上)"
+                :rules="[passwordRules.required, passwordRules.min]"
+                @click:append="showEditPassword = !showEditPassword"
+              />
+              <v-card-actions>
+                <v-btn color="success" @click="updatePassword">
+                  <v-icon left>mdi-account</v-icon>SAVE
+                </v-btn>
+                <v-spacer></v-spacer>
+                <v-btn color="primary" @click="closeEditPassword">
+                  <v-icon left>mdi-login-variant</v-icon>戻る
+                </v-btn>
+              </v-card-actions>
+            </v-form>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-dialog>
   </v-app>
 </template>
 
 <script>
 export default {
+  components: {},
+  props: {
+    editPasswordDialog: {
+      type: Boolean
+    }
+  },
   data() {
     return {
       updateUserPassword: '',
@@ -72,9 +85,18 @@ export default {
     updatePassword() {
       this.$store.dispatch('modules/auth/updatePassword', {
         newPassword: this.updateUserPassword,
-        email: this.loginUserPassword,
+        email: this.loginUserEmail,
         password: this.loginUserPassword
       })
+      this.updateUserPassword = ''
+      this.loginUserEmail = ''
+      this.loginUserPassword = ''
+    },
+    openEditPassword() {
+      this.$emit('open-edit-password')
+    },
+    closeEditPassword() {
+      this.$emit('close-edit-password')
     }
   }
 }

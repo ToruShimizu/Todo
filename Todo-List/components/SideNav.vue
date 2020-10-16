@@ -32,33 +32,28 @@
       </v-list-item-content>
     </v-list-item>
     <v-row justify="center">
-      <v-dialog v-model="userDialog" persistent max-width="600px" transition="scroll-y-transition">
-        <UpdateUser @close-edit-user="closeEditUser" />
-      </v-dialog>
-      <v-dialog
-        v-model="passwordDialog"
-        persistent
-        max-width="600px"
-        transition="scroll-y-transition"
-      >
-        <UpdatePassword @close-edit-password="closeEditPassword" />
-      </v-dialog>
-      <v-dialog
-        v-model="emailAddressDialog"
-        persistent
-        max-width="600px"
-        transition="scroll-y-transition"
-      >
-        <UpdateEmailAddress @close-edit-email-address="closeEditEmailAddress" />
-      </v-dialog>
-      <v-dialog
-        v-model="deleteUserDialog"
-        persistent
-        max-width="600px"
-        transition="scroll-y-transition"
-      >
-        <DeleteLoginUser @close-delete-user="closeDeleteUser" />
-      </v-dialog>
+      <UpdateUser
+        @open-edit-user="openEditUser"
+        @close-edit-user="closeEditUser"
+        :editUserDialog="editUserDialog"
+      />
+      <UpdatePassword
+        @close-edit-password="closeEditPassword"
+        @open-edit-password="openEditPassword"
+        :editPasswordDialog="editPasswordDialog"
+      />
+
+      <UpdateEmailAddress
+        @close-edit-email-address="closeEditEmailAddress"
+        @open-edit-email-address="openEditEmailAddress"
+        :editEmailAddressDialog="editEmailAddressDialog"
+      />
+
+      <DeleteLoginUser
+        @close-delete-user="closeDeleteUser"
+        @open-delete-user="openDeleteUser"
+        :deleteUserDialog="deleteUserDialog"
+      />
     </v-row>
     <v-divider></v-divider>
     <v-list dense nav>
@@ -99,9 +94,9 @@ export default {
   },
   data() {
     return {
-      userDialog: false,
-      passwordDialog: false,
-      emailAddressDialog: false,
+      editUserDialog: false,
+      editPasswordDialog: false,
+      editEmailAddressDialog: false,
       deleteUserDialog: false
     }
   },
@@ -112,22 +107,22 @@ export default {
   methods: {
     // FIXME:switch文に書き直す
     openEditUser() {
-      this.userDialog = true
+      this.editUserDialog = true
     },
     closeEditUser() {
-      this.userDialog = false
+      this.editUserDialog = false
     },
     openEditPassword() {
-      this.passwordDialog = true
+      this.editPasswordDialog = true
     },
     closeEditPassword() {
-      this.passwordDialog = false
+      this.editPasswordDialog = false
     },
     openEditEmailAddress() {
-      this.emailAddressDialog = true
+      this.editEmailAddressDialog = true
     },
     closeEditEmailAddress() {
-      this.emailAddressDialog = false
+      this.editEmailAddressDialog = false
     },
     openDeleteUser() {
       this.deleteUserDialog = true
