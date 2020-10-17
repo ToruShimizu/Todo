@@ -29,19 +29,25 @@ const actions = {
     commit('deleteLoginUser')
   },
   // Googleログイン
-  async googleLogin() {
-    const provider = new firebase.auth.GoogleAuthProvider()
-    await auth.signInWithPopup(provider).then((result) => {
-      alert('Hello, ' + result.user.displayName + '!')
-    })
+  async googleLogin({ commit }) {
+    try {
+      const provider = new firebase.auth.GoogleAuthProvider()
+      await auth.signInWithPopup(provider).then((result) => {
+        alert('Hello, ' + result.user.displayName + '!')
+        commit('setLoginUser')
+      })
+    } catch (err) {
+      alert('ログインに失敗しました')
+    }
   },
   // メールアドレスとパスワードでログイン
   async login({ commit }, { email, password, userName }) {
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password)
-      alert('ようこそ' + +'さん')
+      alert('ようこそ' + userName + 'さん')
       // サインイン成功後にトップページに遷移する
       this.$router.push({ path: '/' })
+      commit('setLoginUser')
     } catch {
       alert('ログインに失敗しました')
     }
@@ -69,7 +75,6 @@ const actions = {
       alert('作成に失敗しました')
       console.log(err)
     }
-    dispatch('setLoginUser')
   },
   // ユーザー情報の更新
   // FIXME:ユーザーのstate更新
@@ -80,11 +85,11 @@ const actions = {
         displayName: userName
       })
       alert('成功しました')
+      commit('setLoginUser', user)
     } catch (err) {
       alert('更新に失敗しました')
       console.log(err)
     }
-    commit('setLoginUser', user)
   },
   // メールアドレスの変更
   // FIXME:ユーザーstate更新
@@ -93,11 +98,11 @@ const actions = {
     try {
       await user.updateEmail(email)
       alert('新しいメールアドレスの登録が完了しました')
+      commit('setLoginUser')
     } catch (err) {
       alert('新しいメールアドレスの登録に失敗しました')
       console.log(err)
     }
-    dispatch('setLoginUser')
   },
   // パスワードの変更
   async updatePassword({ dispatch }, { email, password, newPassword }) {
@@ -112,7 +117,6 @@ const actions = {
     } catch (err) {
       console.log(err)
     }
-    // パスワード変更処理
   },
   // パスワードの再登録
   async passwordReset({ commit }, { email }) {
@@ -124,6 +128,7 @@ const actions = {
       alert('送信に失敗しました')
     }
   },
+  // ユーザー情報削除
   async deleteUser({ commit }, { email, password }) {
     // 最初に再認証してから変更処理を行う
     try {
