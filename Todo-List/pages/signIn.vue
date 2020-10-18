@@ -64,11 +64,13 @@
                 <v-icon left>mdi-login-variant</v-icon>ログイン
               </v-btn>
               <v-spacer />
-              <nuxt-link to="/signUp">
-                <v-btn type="submit" color="success">
-                  <v-icon left>mdi-account-plus</v-icon>新規作成はこちら
-                </v-btn>
-              </nuxt-link>
+              <v-btn color="success" @click="openCreateUser">
+                <v-icon left>mdi-account-plus</v-icon>新規作成はこちら
+              </v-btn>
+              <CreateUser
+                :createUserDialog="createUserDialog"
+                @close-create-user="closeCreateUser"
+              />
             </v-card-actions>
           </v-form>
         </v-card-text>
@@ -79,14 +81,19 @@
 
 <script>
 import { mapActions } from 'vuex'
+import CreateUser from '@/components/CreateUser/CreateUser'
 
 export default {
+  components: {
+    CreateUser
+  },
   data() {
     return {
       userEmail: '',
       userPassword: '',
       showPassword: false,
       validate: true,
+      createUserDialog: false,
       emailRules: [
         (v) => !!v || 'メールアドレスは必須です',
         (v) => /.+@.+\..+/.test(v) || '正しいメールアドレスの形式で入力してください'
@@ -110,6 +117,12 @@ export default {
         email: this.userEmail,
         password: this.userPassword
       })
+    },
+    openCreateUser() {
+      this.createUserDialog = true
+    },
+    closeCreateUser() {
+      this.createUserDialog = false
     },
     ...mapActions('modules/auth', ['googleLogin'])
   }
