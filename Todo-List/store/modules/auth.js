@@ -84,15 +84,14 @@ const actions = {
         displayName: userName
       })
       alert('成功しました')
-      commit('setLoginUser', user)
+      commit('setLoginUser')
     } catch (err) {
       alert('更新に失敗しました')
       console.log(err)
     }
   },
   // メールアドレスの変更
-  // FIXME:ユーザーstate更新
-  async updateEmailAddress({ commit, dispatch }, { email }) {
+  async updateEmailAddress({ commit }, { email }) {
     const user = firebase.auth().currentUser
     try {
       await user.updateEmail(email)
