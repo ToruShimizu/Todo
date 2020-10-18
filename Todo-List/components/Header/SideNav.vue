@@ -6,30 +6,6 @@
           >ログインユーザー
         </v-list-item-title>
       </v-list-item-content>
-      <v-menu open-on-hover down offset-y>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn v-bind="attrs" v-on="on" x-small>
-            <v-icon>mdi-pencil</v-icon>
-          </v-btn>
-        </template>
-        <!-- FIXME: コンポーネント化するか検討中 -->
-        <v-list :updateUserInfo="updateUserInfo">
-          <v-list-item @click="selectedUpdateUserInfo = 'openUpdateUserName'">
-            <v-list-item-title>ユーザー情報編集</v-list-item-title>
-          </v-list-item>
-          <v-list-item @click="selectedUpdateUserInfo = 'openUpdateEmailAddress'">
-            <v-list-item-title>メールアドレス変更</v-list-item-title>
-          </v-list-item>
-          <v-list-item @click="selectedUpdateUserInfo = 'openUpdatePassword'">
-            <v-list-item-title>パスワード変更</v-list-item-title>
-          </v-list-item>
-          <v-list-item @click="selectedUpdateUserInfo = 'openDeleteUser'">
-            <v-list-item-title>アカウント削除</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </v-list-item>
-    <v-row justify="center">
       <UpdateUser
         @update:selectedUpdateUserName="selectedUpdateUserInfo = $event"
         :updateUserNameDialog="updateUserNameDialog"
@@ -48,19 +24,36 @@
         @update:selectedDeleteUser="selectedUpdateUserInfo = $event"
         :deleteUserDialog="deleteUserDialog"
       />
-    </v-row>
+      <v-menu open-on-hover down offset-y>
+        <v-spacer />
+        <template v-slot:activator="{ on, attrs }">
+          <v-icon v-bind="attrs" v-on="on">mdi-dots-vertical</v-icon>
+        </template>
+        <!-- FIXME: コンポーネント化するか検討中 -->
+        <v-list :updateUserInfo="updateUserInfo">
+          <v-list-item @click="selectedUpdateUserInfo = 'openUpdateUserName'">
+            <v-list-item-title>ユーザー情報編集</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="selectedUpdateUserInfo = 'openUpdateEmailAddress'">
+            <v-list-item-title>メールアドレス変更</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="selectedUpdateUserInfo = 'openUpdatePassword'">
+            <v-list-item-title>パスワード変更</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="selectedUpdateUserInfo = 'openDeleteUser'">
+            <v-list-item-title>アカウント削除</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </v-list-item>
     <v-divider></v-divider>
     <v-list dense nav>
       <v-list-item-content v-if="login_user">
-        <v-list-item-icon v-if="photoURL">
-          <v-avatar size="50">
+        <v-list-item-title class="title grey--text text--darken-2">
+          <v-avatar size="50" v-if="photoURL">
             <img :src="photoURL" />
           </v-avatar>
-        </v-list-item-icon>
-      </v-list-item-content>
-      <v-list-item-content v-if="login_user">
-        <v-list-item-title class="title grey--text text--darken-2">
-          <v-icon>mdi-account-outline</v-icon>
+          <v-icon v-if="!photoURL">mdi-account-outline</v-icon>
           {{ userName }}
         </v-list-item-title>
       </v-list-item-content>
