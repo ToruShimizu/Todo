@@ -101,7 +101,8 @@ export default {
     testLogin() {
       this.$store.dispatch('modules/auth/login', {
         email: 'test@example.com',
-        password: 'testUser'
+        password: 'testUser',
+        userName: 'テストユーザー'
       })
     },
     login() {
