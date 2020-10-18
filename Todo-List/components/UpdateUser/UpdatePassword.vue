@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-dialog
-      v-model="editPasswordDialog"
+      v-model="updatePasswordDialog"
       persistent
       max-width="500px"
       transition="scroll-y-transition"
@@ -43,7 +43,7 @@
                   <v-icon left>mdi-account</v-icon>SAVE
                 </v-btn>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="closeEditPassword">
+                <v-btn color="primary" @click="selectedUpdatePassword = 'closeUpdatePassword'">
                   <v-icon left>mdi-login-variant</v-icon>戻る
                 </v-btn>
               </v-card-actions>
@@ -59,8 +59,21 @@
 export default {
   components: {},
   props: {
-    editPasswordDialog: {
+    updatePasswordDialog: {
       type: Boolean
+    },
+    selectedUpdateUserInfo: {
+      type: String
+    }
+  },
+  computed: {
+    selectedUpdatePassword: {
+      get() {
+        return this.selectedUpdateUserInfo
+      },
+      set(value) {
+        this.$emit('update:selectedUpdatePassword', value)
+      }
     }
   },
   data() {
@@ -91,12 +104,7 @@ export default {
       this.updateUserPassword = ''
       this.loginUserEmail = ''
       this.loginUserPassword = ''
-    },
-    openEditPassword() {
-      this.$emit('open-edit-password')
-    },
-    closeEditPassword() {
-      this.$emit('close-edit-password')
+      this.$emit('update:selectedUpdatePassword', 'closeUpdatePassword')
     }
   }
 }

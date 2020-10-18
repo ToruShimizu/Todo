@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-dialog
-      v-model="editUserDialog"
+      v-model="updateUserDialog"
       persistent
       max-width="400px"
       transition="scroll-y-transition"
@@ -25,7 +25,7 @@
                   <v-icon left>mdi-account</v-icon>SAVE
                 </v-btn>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="closeEditUser">
+                <v-btn color="primary" @click="selectedUpdateUserName = 'closeUpdateUserName'">
                   <v-icon left>mdi-login-variant</v-icon>戻る
                 </v-btn>
               </v-card-actions>
@@ -40,8 +40,21 @@
 <script>
 export default {
   props: {
-    editUserDialog: {
+    updateUserDialog: {
       type: Boolean
+    },
+    selectedUpdateUserInfo: {
+      type: String
+    }
+  },
+  computed: {
+    selectedUpdateUserName: {
+      get() {
+        return this.selectedUpdateUserInfo
+      },
+      set(value) {
+        this.$emit('update:selectedUpdateUserName', value)
+      }
     }
   },
   data() {
@@ -57,13 +70,7 @@ export default {
         userName: this.updateUserName
       })
       this.updateUserName = ''
-      this.closeEditUser()
-    },
-    openEditUser() {
-      this.$emit('open-edit-user')
-    },
-    closeEditUser() {
-      this.$emit('close-edit-user')
+      this.$emit('update:selectedUpdateUserName', 'closeUpdateUserName')
     }
   }
 }
