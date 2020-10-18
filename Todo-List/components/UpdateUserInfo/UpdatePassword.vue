@@ -99,7 +99,7 @@ export default {
   methods: {
     updatePassword() {
       this.$store.dispatch('modules/auth/updatePassword', {
-        newPassword: this.updateUserPassword,
+        updatePassword: this.updateUserPassword,
         email: this.loginUserEmail,
         password: this.loginUserPassword
       })

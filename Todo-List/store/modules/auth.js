@@ -103,13 +103,13 @@ const actions = {
     }
   },
   // パスワードの変更
-  async updatePassword({ dispatch }, { email, password, newPassword }) {
+  async updatePassword({ dispatch }, { email, password, updatePassword }) {
     const user = await firebase.auth().currentUser
     const credential = await firebase.auth.EmailAuthProvider.credential(email, password)
     // 最初に再認証してから変更処理を行う
     try {
       await user.reauthenticateWithCredential(credential)
-      await user.updatePassword(newPassword)
+      await user.updatePassword(updatePassword)
       alert('パスワードを変更しました')
       dispatch('logout')
     } catch (err) {
