@@ -39,7 +39,7 @@
           <h2>ログイン</h2>
         </v-card-title>
         <v-card-text>
-          <v-form ref="form" lazy-validation @submit.prevent="createUser">
+          <v-form ref="form" lazy-validation @submit.prevent="login">
             <v-text-field
               v-model="userEmail"
               prepend-inner-icon="mdi-email-outline"
