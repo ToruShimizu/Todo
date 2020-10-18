@@ -27,7 +27,7 @@
       <v-menu open-on-hover down offset-y>
         <v-spacer />
         <template v-slot:activator="{ on, attrs }">
-          <v-icon v-bind="attrs" v-on="on">mdi-dots-vertical</v-icon>
+          <v-icon v-bind="attrs" v-on="on" v-if="login_user">mdi-dots-vertical</v-icon>
         </template>
         <!-- FIXME: コンポーネント化するか検討中 -->
         <v-list :updateUserInfo="updateUserInfo">

@@ -30,6 +30,8 @@
             outlined
             style="border-color: #979797"
             tile
+            :loading="loadingTestLogin"
+            :disabled="loadingTestLogin"
             @click="testLogin"
           >
             テストユーザーでログイン
@@ -60,7 +62,12 @@
               パスワードを忘れた方はこちら</v-btn
             >
             <v-card-actions>
-              <v-btn color="primary" @click="login">
+              <v-btn
+                color="primary"
+                @click="login"
+                :loading="loadingLogin"
+                :disabled="loadingLogin"
+              >
                 <v-icon left>mdi-login-variant</v-icon>ログイン
               </v-btn>
               <v-spacer />
@@ -93,8 +100,21 @@ export default {
     CreateUser,
     ResetPassword
   },
+  watch: {
+    loader() {
+      const l = this.loader
+      this[l] = !this[l]
+
+      setTimeout(() => (this[l] = false), 3000)
+
+      this.loader = null
+    }
+  },
   data() {
     return {
+      loader: null,
+      loadingTestLogin: false,
+      loadingLogin: false,
       userEmail: '',
       userPassword: '',
       showPassword: false,
@@ -113,6 +133,7 @@ export default {
   },
   methods: {
     testLogin() {
+      this.loader = 'loadingTestLogin'
       this.$store.dispatch('modules/auth/login', {
         email: 'test@example.com',
         password: 'testUser',
@@ -120,6 +141,7 @@ export default {
       })
     },
     login() {
+      this.loader = 'loadingLogin'
       this.$store.dispatch('modules/auth/login', {
         email: this.userEmail,
         password: this.userPassword
@@ -141,3 +163,42 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.custom-loader {
+  animation: loader 1s infinite;
+  display: flex;
+}
+@-moz-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
