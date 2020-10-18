@@ -22,7 +22,12 @@
                   clearable
                 />
                 <v-card-actions>
-                  <v-btn color="success" @click="updateUser">
+                  <v-btn
+                    color="success"
+                    @click="updateUser"
+                    :loading="loadingUpdateUserName"
+                    :disabled="loadingUpdateUserName"
+                  >
                     <v-icon left>mdi-account</v-icon>SAVE
                   </v-btn>
                   <v-spacer></v-spacer>
@@ -49,6 +54,16 @@ export default {
       type: String
     }
   },
+  watch: {
+    loader() {
+      const l = this.loader
+      this[l] = !this[l]
+
+      setTimeout(() => (this[l] = false), 3000)
+
+      this.loader = null
+    }
+  },
   computed: {
     selectedUpdateUserName: {
       get() {
@@ -61,6 +76,8 @@ export default {
   },
   data() {
     return {
+      loader: null,
+      loadingUpdateUserName: false,
       updateUserName: '',
       validate: true,
       nameRules: [(v) => !!v || '名前は必須です']
@@ -68,6 +85,7 @@ export default {
   },
   methods: {
     updateUser() {
+      this.loader = 'loadingUpdateUserName'
       this.$store.dispatch('modules/auth/updateUser', {
         userName: this.updateUserName
       })
