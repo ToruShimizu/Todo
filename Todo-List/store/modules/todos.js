@@ -49,12 +49,12 @@ const mutations = {
 const actions = {
   // firestoreからTodosのデータを取り出す
   async fetchTodos({ getters, commit }) {
-    commit('initTodos')
     const snapShot = await db
       .collection(`users/${getters.userUid}/todos`)
       .orderBy('created', 'desc')
       .get()
-    snapShot.forEach((doc) => {
+    commit('initTodos')
+    snapShot.docs.map((doc) => {
       commit('addTodos', { task: doc.data() })
     })
   },
