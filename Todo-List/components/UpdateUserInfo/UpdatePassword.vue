@@ -40,7 +40,12 @@
                   @click:append="showEditPassword = !showEditPassword"
                 />
                 <v-card-actions>
-                  <v-btn color="success" @click="updatePassword">
+                  <v-btn
+                    color="success"
+                    @click="updatePassword"
+                    :loading="loadingResetPassword"
+                    :disabled="loadingResetPassword"
+                  >
                     <v-icon left>mdi-account</v-icon>SAVE
                   </v-btn>
                   <v-spacer></v-spacer>
@@ -83,6 +88,8 @@ export default {
       updateUserPassword: '',
       loginUserPassword: '',
       loginUserEmail: '',
+      loader: null,
+      loadingResetPassword: false,
       validate: true,
       showPassword: false,
       showEditPassword: false,
@@ -96,8 +103,19 @@ export default {
       }
     }
   },
+  watch: {
+    loader() {
+      const l = this.loader
+      this[l] = !this[l]
+
+      setTimeout(() => (this[l] = false), 3000)
+
+      this.loader = null
+    }
+  },
   methods: {
     updatePassword() {
+      this.loader = 'loadingResetPassword'
       this.$store.dispatch('modules/auth/updatePassword', {
         updatePassword: this.updateUserPassword,
         email: this.loginUserEmail,
