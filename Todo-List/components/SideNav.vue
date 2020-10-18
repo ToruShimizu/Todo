@@ -14,17 +14,17 @@
             </v-btn>
           </template>
           <!-- FIXME: コンポーネント化するか検討中 -->
-          <v-list>
-            <v-list-item @click="openEditUser">
+          <v-list :updateUserInfo="updateUserInfo">
+            <v-list-item @click="selectedUpdateUserInfo = 'openUpdateUserName'">
               <v-list-item-title>ユーザー情報編集</v-list-item-title>
             </v-list-item>
-            <v-list-item @click="openEditEmailAddress">
+            <v-list-item @click="selectedUpdateUserInfo = 'openUpdateEmailAddress'">
               <v-list-item-title>メールアドレス変更</v-list-item-title>
             </v-list-item>
-            <v-list-item @click="openEditPassword">
+            <v-list-item @click="selectedUpdateUserInfo = 'openUpdatePassword'">
               <v-list-item-title>パスワード変更</v-list-item-title>
             </v-list-item>
-            <v-list-item @click="openDeleteUser">
+            <v-list-item @click="selectedUpdateUserInfo = 'openDeleteUser'">
               <v-list-item-title>アカウント削除</v-list-item-title>
             </v-list-item>
           </v-list>
@@ -33,25 +33,21 @@
     </v-list-item>
     <v-row justify="center">
       <UpdateUser
-        @open-edit-user="openEditUser"
-        @close-edit-user="closeEditUser"
-        :editUserDialog="editUserDialog"
+        @update:selectedUpdateUserName="selectedUpdateUserInfo = $event"
+        :updateUserDialog="updateUserDialog"
       />
       <UpdatePassword
-        @close-edit-password="closeEditPassword"
-        @open-edit-password="openEditPassword"
-        :editPasswordDialog="editPasswordDialog"
+        @update:selectedUpdatePassword="selectedUpdateUserInfo = $event"
+        :updatePasswordDialog="updatePasswordDialog"
       />
 
       <UpdateEmailAddress
-        @close-edit-email-address="closeEditEmailAddress"
-        @open-edit-email-address="openEditEmailAddress"
-        :editEmailAddressDialog="editEmailAddressDialog"
+        @update:selectedUpdateEmailAddress="selectedUpdateUserInfo = $event"
+        :updateEmailAddressDialog="updateEmailAddressDialog"
       />
 
       <DeleteLoginUser
-        @close-delete-user="closeDeleteUser"
-        @open-delete-user="openDeleteUser"
+        @update:selectedDeleteUser="selectedUpdateUserInfo = $event"
         :deleteUserDialog="deleteUserDialog"
       />
     </v-row>
@@ -85,6 +81,7 @@ import UpdateUser from '@/components/UpdateUser/UpdateUser'
 import UpdatePassword from '@/components/UpdateUser/UpdatePassword'
 import UpdateEmailAddress from '@/components/UpdateUser/UpdateEmailAddress'
 import DeleteLoginUser from '@/components/DeleteUser/DeleteUser'
+
 export default {
   components: {
     UpdateUser,
@@ -94,41 +91,57 @@ export default {
   },
   data() {
     return {
-      editUserDialog: false,
-      editPasswordDialog: false,
-      editEmailAddressDialog: false,
+      selectedUpdateUserInfo: '',
+      updateUserDialog: false,
+      updatePasswordDialog: false,
+      updateEmailAddressDialog: false,
       deleteUserDialog: false
     }
   },
   computed: {
+    // ユーザー情報編集の選択
+    updateUserInfo() {
+      return this.selectedUserInfo()
+    },
     ...mapGetters('modules/auth', ['userName', 'photoURL', 'userEmail']),
     ...mapState('modules/auth', ['login_user'])
   },
   methods: {
-    // FIXME:switch文に書き直す
-    openEditUser() {
-      this.editUserDialog = true
-    },
-    closeEditUser() {
-      this.editUserDialog = false
-    },
-    openEditPassword() {
-      this.editPasswordDialog = true
-    },
-    closeEditPassword() {
-      this.editPasswordDialog = false
-    },
-    openEditEmailAddress() {
-      this.editEmailAddressDialog = true
-    },
-    closeEditEmailAddress() {
-      this.editEmailAddressDialog = false
-    },
-    openDeleteUser() {
-      this.deleteUserDialog = true
-    },
-    closeDeleteUser() {
-      this.deleteUserDialog = false
+    // ユーザー画面編集の選択
+    selectedUserInfo() {
+      let returnvalue
+      switch (this.selectedUpdateUserInfo) {
+        // ユーザーネームの変更画面の開閉
+        case 'openUpdateUserName':
+          returnvalue = this.updateUserDialog = true
+          break
+        case 'closeUpdateUserName':
+          returnvalue = this.updateUserDialog = false
+          break
+        // パスワード変更画面の開閉
+        case 'openUpdatePassword':
+          returnvalue = this.updateUserPasswordDialog = true
+          break
+        case 'closeUpdatePassword':
+          returnvalue = this.updateUserPasswordDialog = false
+          break
+        // メールアドレス変更画面の開閉
+        case 'openUpdateEmailAddress':
+          returnvalue = this.updateEmailAddressDialog = true
+          break
+        case 'closeUpdateEmailAddress':
+          returnvalue = this.updateEmailAddressDialog = false
+          break
+        // アカウント削除画面の開閉
+        case 'openDeleteUser':
+          returnvalue = this.deleteUserDialog = true
+          break
+        case 'closeDeleteUser':
+          returnvalue = this.deleteUserDialog = false
+          break
+        default:
+      }
+      return returnvalue
     }
   }
 }
