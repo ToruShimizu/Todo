@@ -26,7 +26,12 @@
                   clearable
                 />
                 <v-card-actions>
-                  <v-btn color="success" @click="passwordReset">
+                  <v-btn
+                    color="success"
+                    @click="passwordReset"
+                    :loading="loadingResetPassword"
+                    :disabled="loadingResetPassword"
+                  >
                     <v-icon left>mdi-email-send</v-icon>送信
                   </v-btn>
                   <v-spacer></v-spacer>
@@ -53,6 +58,8 @@ export default {
   data() {
     return {
       userEmail: '',
+      loader: null,
+      loadingResetPassword: false,
       validate: true,
       emailRules: [
         (v) => !!v || 'メールアドレスは必須です',
@@ -60,8 +67,19 @@ export default {
       ]
     }
   },
+  watch: {
+    loader() {
+      const l = this.loader
+      this[l] = !this[l]
+
+      setTimeout(() => (this[l] = false), 3000)
+
+      this.loader = null
+    }
+  },
   methods: {
     passwordReset() {
+      this.loader = 'loadingResetPassword'
       this.$store.dispatch('modules/auth/passwordReset', this.userEmail)
     },
     closeResetPasswprd() {
