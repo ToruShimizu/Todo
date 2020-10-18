@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-dialog
-      v-model="editEmailAddressDialog"
+      v-model="updateEmailAddressDialog"
       persistent
       max-width="400px"
       transition="scroll-y-transition"
@@ -25,7 +25,10 @@
                   <v-icon left>mdi-email-plus</v-icon>SAVE
                 </v-btn>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="$emit('close-edit-email-address')">
+                <v-btn
+                  color="primary"
+                  @click="selectedUpdateEmailAddress = 'closeUpdateEmailAddress'"
+                >
                   <v-icon left>mdi-login-variant</v-icon>戻る
                 </v-btn>
               </v-card-actions>
@@ -40,8 +43,21 @@
 <script>
 export default {
   props: {
-    editEmailAddressDialog: {
+    updateEmailAddressDialog: {
       type: Boolean
+    },
+    selectedUpdateUserInfo: {
+      type: String
+    }
+  },
+  computed: {
+    selectedUpdateEmailAddress: {
+      get() {
+        return this.selectedUpdateUserInfo
+      },
+      set(value) {
+        this.$emit('update:selectedUpdateEmailAddress', value)
+      }
     }
   },
   data() {
@@ -58,13 +74,7 @@ export default {
     updateEmailAddress() {
       this.$store.dispatch('modules/auth/updateEmailAddress', { email: this.newEmailAddress })
       this.newEmailAddress = ''
-      this.closeEditEmailAddress()
-    },
-    openEditEmailAddress() {
-      this.$emit('open-edit-editEmailAdress')
-    },
-    closeEditEmailAddress() {
-      this.$emit('close-edit-editEmailAdress')
+      this.$emit('update:selectedUpdateEmailAddress', 'closeUpdateEmailAddress')
     }
   }
 }

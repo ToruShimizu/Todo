@@ -40,7 +40,7 @@
                   <v-icon left>mdi-account</v-icon>SAVE
                 </v-btn>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="$emit('close-delete-user')">
+                <v-btn color="primary" @click="selectedDeleteUser = 'closeDeleteUser'">
                   <v-icon left>mdi-login-variant</v-icon>戻る
                 </v-btn>
               </v-card-actions>
@@ -57,6 +57,19 @@ export default {
   props: {
     deleteUserDialog: {
       type: Boolean
+    },
+    selectedUpdateUserInfo: {
+      type: String
+    }
+  },
+  computed: {
+    selectedDeleteUser: {
+      get() {
+        return this.selectedUpdateUserInfo
+      },
+      set(value) {
+        this.$emit('update:selectedDeleteUser', value)
+      }
     }
   },
   data() {
@@ -83,13 +96,7 @@ export default {
       })
       this.loginUserEmail = ''
       this.loginUserPassword = ''
-      this.closeDeleteUser()
-    },
-    openDeleteUser() {
-      this.$emit('open-delete-user')
-    },
-    closeDeleteUser() {
-      this.$emit('close-delete-user')
+      this.$emit('update:selectedDeleteUser', 'closeDeleteUser')
     }
   }
 }
