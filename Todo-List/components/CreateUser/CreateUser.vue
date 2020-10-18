@@ -45,7 +45,12 @@
                   @click:append="showPassword = !showPassword"
                 />
                 <v-card-actions>
-                  <v-btn color="success" @click="createUser">
+                  <v-btn
+                    color="success"
+                    @click="createUser"
+                    :loading="loadingCreateUser"
+                    :disabled="loadingCreateUser"
+                  >
                     <v-icon left>mdi-account-plus</v-icon>新規作成
                   </v-btn>
                   <v-spacer></v-spacer>
@@ -74,6 +79,8 @@ export default {
       userEmail: '',
       userPassword: '',
       userName: '',
+      loader: null,
+      loadingCreateUser: false,
       showPassword: false,
       validate: true,
       emailRules: [
@@ -87,8 +94,19 @@ export default {
       nameRules: [(v) => !!v || '名前は必須です']
     }
   },
+  watch: {
+    loader() {
+      const l = this.loader
+      this[l] = !this[l]
+
+      setTimeout(() => (this[l] = false), 3000)
+
+      this.loader = null
+    }
+  },
   methods: {
     createUser() {
+      this.loader = 'loadingCreateUser'
       this.$store.dispatch('modules/auth/createUser', {
         email: this.userEmail,
         password: this.userPassword,
