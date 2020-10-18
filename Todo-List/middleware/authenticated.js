@@ -9,11 +9,10 @@ export default function ({ store, redirect, route }) {
         photoURL: user.photoURL,
         uid: user.uid
       }
+      // ログインユーザーの情報をstateに入れる
       store.dispatch('modules/auth/setLoginUser', userInfo)
-      if (store.state.modules.todos.todos.length === 0) {
-        store.dispatch('modules/todos/fetchTodos')
-        console.log(store.state.modules.todos.todos)
-      }
+      // firestoreかデータを取得する
+      store.dispatch('modules/todos/fetchTodos')
     } else if (route.path === '/signIn') {
       return redirect('/')
     } else {
