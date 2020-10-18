@@ -56,9 +56,9 @@
               :rules="[passwordRules.required, passwordRules.min]"
               @click:append="showPassword = !showPassword"
             />
-            <nuxt-link to="/passwordReset">
-              <p>パスワードを忘れた方はこちら</p>
-            </nuxt-link>
+            <v-btn text color="primary accent-4" @click="openResetPassword">
+              パスワードを忘れた方はこちら</v-btn
+            >
             <v-card-actions>
               <v-btn color="primary" @click="login">
                 <v-icon left>mdi-login-variant</v-icon>ログイン
@@ -71,6 +71,10 @@
                 :createUserDialog="createUserDialog"
                 @close-create-user="closeCreateUser"
               />
+              <ResetPassword
+                :resetPasswordDialog="resetPasswordDialog"
+                @close-reset-password="closeResetPasswprd"
+              />
             </v-card-actions>
           </v-form>
         </v-card-text>
@@ -82,10 +86,12 @@
 <script>
 import { mapActions } from 'vuex'
 import CreateUser from '@/components/CreateUser/CreateUser'
+import ResetPassword from '@/components/ResetPassword/ResetPassword'
 
 export default {
   components: {
-    CreateUser
+    CreateUser,
+    ResetPassword
   },
   data() {
     return {
@@ -94,6 +100,7 @@ export default {
       showPassword: false,
       validate: true,
       createUserDialog: false,
+      resetPasswordDialog: false,
       emailRules: [
         (v) => !!v || 'メールアドレスは必須です',
         (v) => /.+@.+\..+/.test(v) || '正しいメールアドレスの形式で入力してください'
@@ -123,6 +130,12 @@ export default {
     },
     closeCreateUser() {
       this.createUserDialog = false
+    },
+    openResetPassword() {
+      this.resetPasswordDialog = true
+    },
+    closeResetPasswprd() {
+      this.resetPasswordDialog = false
     },
     ...mapActions('modules/auth', ['googleLogin'])
   }
