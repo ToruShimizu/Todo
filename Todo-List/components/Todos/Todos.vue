@@ -30,10 +30,10 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import FilteredTask from '@/components/FilteredTask'
-import SearchTask from '@/components/SearchTask'
-import TaskTable from '@/components/TaskTable'
-import AddTask from '@/components/Task/AddTask'
+import FilteredTask from '@/components/Todos/FilteredTask'
+import SearchTask from '@/components/Todos/SearchTask'
+import TaskTable from '@/components/Todos/TaskTable'
+import AddTask from '@/components/Todos/AddTask'
 
 export default {
   components: {
