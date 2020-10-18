@@ -78,6 +78,8 @@ export default {
     return {
       loginUserPassword: '',
       loginUserEmail: '',
+      loader: null,
+      loadingDeleteUser: false,
       validate: true,
       showPassword: false,
       emailRules: [
@@ -90,8 +92,19 @@ export default {
       }
     }
   },
+  watch: {
+    loader() {
+      const l = this.loader
+      this[l] = !this[l]
+
+      setTimeout(() => (this[l] = false), 3000)
+
+      this.loader = null
+    }
+  },
   methods: {
     deleteUser() {
+      this.loader = 'loadingDeleteUser'
       this.$store.dispatch('modules/auth/deleteUser', {
         email: this.loginUserEmail,
         password: this.loginUserPassword
