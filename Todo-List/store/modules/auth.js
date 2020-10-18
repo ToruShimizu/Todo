@@ -35,6 +35,7 @@ const actions = {
       await auth.signInWithPopup(provider).then((result) => {
         alert('Hello, ' + result.user.displayName + '!')
         commit('setLoginUser')
+        this.$router.push({ path: '/' })
       })
     } catch (err) {
       alert('ログインに失敗しました')
