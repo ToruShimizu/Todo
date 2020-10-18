@@ -22,7 +22,12 @@
                   clearable
                 />
                 <v-card-actions>
-                  <v-btn color="success" @click="updateEmailAddress">
+                  <v-btn
+                    color="success"
+                    @click="updateEmailAddress"
+                    :loading="loadingUpdateEmailAddress"
+                    :disabled="loadingUpdateEmailAddress"
+                  >
                     <v-icon left>mdi-email-plus</v-icon>SAVE
                   </v-btn>
                   <v-spacer></v-spacer>
@@ -52,6 +57,16 @@ export default {
       type: String
     }
   },
+  watch: {
+    loader() {
+      const l = this.loader
+      this[l] = !this[l]
+
+      setTimeout(() => (this[l] = false), 3000)
+
+      this.loader = null
+    }
+  },
   computed: {
     selectedUpdateEmailAddress: {
       get() {
@@ -65,6 +80,8 @@ export default {
   data() {
     return {
       newEmailAddress: '',
+      loader: null,
+      loadingUpdateEmailAddress: false,
       validate: true,
       emailRules: [
         (v) => !!v || 'メールアドレスは必須です',
@@ -74,6 +91,7 @@ export default {
   },
   methods: {
     updateEmailAddress() {
+      this.loader = 'loadingUpdateEmailAddress'
       this.$store.dispatch('modules/auth/updateEmailAddress', { email: this.newEmailAddress })
       this.newEmailAddress = ''
       this.$emit('update:selectedUpdateEmailAddress', 'closeUpdateEmailAddress')
