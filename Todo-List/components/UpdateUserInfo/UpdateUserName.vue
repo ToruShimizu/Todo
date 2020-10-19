@@ -78,16 +78,16 @@ export default {
     return {
       loader: null,
       loadingUpdateUserName: false,
-      updateUserName: '',
+      editUserName: '',
       validate: true,
       nameRules: [(v) => !!v || '名前は必須です']
     }
   },
   methods: {
-    updateUser() {
+    updateUserName() {
       this.loader = 'loadingUpdateUserName'
-      this.$store.dispatch('modules/auth/updateUser', {
-        userName: this.updateUserName
+      this.$store.dispatch('modules/auth/updateUserName', {
+        userName: this.editUserName
       })
       this.updateUserName = ''
       this.$emit('update:selectedUpdateUserName', 'closeUpdateUserName')
