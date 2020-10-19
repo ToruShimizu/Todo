@@ -79,6 +79,10 @@ export default {
   },
   methods: {
     passwordReset() {
+      if (this.userEmail === 'test@example.com') {
+        alert('テストユーザーはパスワードを再設定することはできません')
+        return
+      }
       this.loader = 'loadingResetPassword'
       this.$store.dispatch('modules/auth/passwordReset', this.userEmail)
     },
