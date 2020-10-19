@@ -79,41 +79,54 @@ const actions = {
   // FIXME:ユーザーのstate更新
   async updateUserName({ commit }, { userName }) {
     const user = await firebase.auth().currentUser
-    try {
-      await user.updateProfile({
-        displayName: userName
-      })
-      alert('成功しました')
-      commit('setLoginUser')
-    } catch (err) {
-      alert('更新に失敗しました')
-      console.log(err)
+    console.log(user)
+    if (user.displayName === 'テストユーザー') {
+      alert('テストユーザーは変更できません')
+    } else {
+      try {
+        await user.updateProfile({
+          displayName: userName
+        })
+        alert('成功しました')
+        commit('setLoginUser')
+      } catch (err) {
+        alert('更新に失敗しました')
+        console.log(err)
+      }
     }
   },
   // メールアドレスの変更
   async updateEmailAddress({ commit }, { email }) {
     const user = firebase.auth().currentUser
-    try {
-      await user.updateEmail(email)
-      alert('新しいメールアドレスの登録が完了しました')
-      commit('setLoginUser')
-    } catch (err) {
-      alert('新しいメールアドレスの登録に失敗しました')
-      console.log(err)
+    if (user.email === 'test@example.com') {
+      alert('テストユーザーは変更できません')
+    } else {
+      try {
+        await user.updateEmail(email)
+        alert('新しいメールアドレスの登録が完了しました')
+        commit('setLoginUser')
+      } catch (err) {
+        alert('新しいメールアドレスの登録に失敗しました')
+        console.log(err)
+      }
     }
   },
   // パスワードの変更
   async updatePassword({ dispatch }, { email, password, updatePassword }) {
     const user = await firebase.auth().currentUser
     const credential = await firebase.auth.EmailAuthProvider.credential(email, password)
-    // 最初に再認証してから変更処理を行う
-    try {
-      await user.reauthenticateWithCredential(credential)
-      await user.updatePassword(updatePassword)
-      alert('パスワードを変更しました')
-      dispatch('logout')
-    } catch (err) {
-      console.log(err)
+    if (user.displayName === 'テストユーザー') {
+      alert('テストユーザーは変更できません')
+    } else {
+      // 最初に再認証してから変更処理を行う
+      try {
+        await user.reauthenticateWithCredential(credential)
+        await user.updatePassword(updatePassword)
+        alert('パスワードを変更しました')
+        dispatch('logout')
+      } catch (err) {
+        console.log(err)
+      }
     }
   },
   // パスワードの再登録
@@ -128,16 +141,20 @@ const actions = {
   },
   // ユーザー情報削除
   async deleteUser({ commit }, { email, password }) {
-    // 最初に再認証してから変更処理を行う
-    try {
-      const user = await firebase.auth().currentUser
-      const credential = await firebase.auth.EmailAuthProvider.credential(email, password)
-      await user.reauthenticateWithCredential(credential)
-      await user.delete()
-      alert('ユーザー情報を削除しました')
-      commit('deleteLoginUser')
-    } catch (err) {
-      console.log(err)
+    if (email === 'test@example.com') {
+      alert('テストユーザーは削除できません')
+    } else {
+      // 最初に再認証してから変更処理を行う
+      try {
+        const user = await firebase.auth().currentUser
+        const credential = await firebase.auth.EmailAuthProvider.credential(email, password)
+        await user.reauthenticateWithCredential(credential)
+        await user.delete()
+        alert('ユーザー情報を削除しました')
+        commit('deleteLoginUser')
+      } catch (err) {
+        console.log(err)
+      }
     }
   }
 }
