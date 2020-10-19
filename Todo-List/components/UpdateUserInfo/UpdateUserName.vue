@@ -13,7 +13,7 @@
               <h2>ユーザー情報編集</h2>
             </v-card-title>
             <v-card-text>
-              <v-form ref="form" lazy-validation @submit.prevent="createUser">
+              <v-form ref="form" lazy-validation @submit.prevent="updateUserName">
                 <v-text-field
                   v-model="updateUserName"
                   prepend-inner-icon="mdi-card-account-details-outline"
@@ -24,7 +24,7 @@
                 <v-card-actions>
                   <v-btn
                     color="success"
-                    @click="updateUser"
+                    @click="updateUserName"
                     :loading="loadingUpdateUserName"
                     :disabled="loadingUpdateUserName"
                   >
