@@ -15,7 +15,7 @@
             <v-card-text>
               <v-form ref="form" lazy-validation @submit.prevent="updateUserName">
                 <v-text-field
-                  v-model="updateUserName"
+                  v-model="editUserName"
                   prepend-inner-icon="mdi-card-account-details-outline"
                   label="名前を変更する"
                   :rules="nameRules"
