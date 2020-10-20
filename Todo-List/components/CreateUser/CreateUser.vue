@@ -115,6 +115,7 @@ export default {
     },
     closeCreateUser() {
       this.$emit('close-create-user')
+      this.userEmail = ''
     }
   }
 }

@@ -64,16 +64,7 @@ export default {
       type: String
     }
   },
-  computed: {
-    selectedDeleteUser: {
-      get() {
-        return this.selectedUpdateUserInfo
-      },
-      set(value) {
-        this.$emit('update:selectedDeleteUser', value)
-      }
-    }
-  },
+
   data() {
     return {
       loginUserPassword: '',
@@ -100,6 +91,17 @@ export default {
       setTimeout(() => (this[l] = false), 3000)
 
       this.loader = null
+    }
+  },
+  computed: {
+    selectedDeleteUser: {
+      get() {
+        return this.selectedUpdateUserInfo
+      },
+      set(value) {
+        this.$emit('update:selectedDeleteUser', value)
+        this.loginUserEmail = ''
+      }
     }
   },
   methods: {

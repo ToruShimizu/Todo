@@ -57,6 +57,18 @@ export default {
       type: String
     }
   },
+  data() {
+    return {
+      newEmailAddress: '',
+      loader: null,
+      loadingUpdateEmailAddress: false,
+      validate: true,
+      emailRules: [
+        (v) => !!v || 'メールアドレスは必須です',
+        (v) => /.+@.+\..+/.test(v) || '正しいメールアドレスの形式で入力してください'
+      ]
+    }
+  },
   watch: {
     loader() {
       const l = this.loader
@@ -74,19 +86,8 @@ export default {
       },
       set(value) {
         this.$emit('update:selectedUpdateEmailAddress', value)
+        this.newEmailAddress = ''
       }
-    }
-  },
-  data() {
-    return {
-      newEmailAddress: '',
-      loader: null,
-      loadingUpdateEmailAddress: false,
-      validate: true,
-      emailRules: [
-        (v) => !!v || 'メールアドレスは必須です',
-        (v) => /.+@.+\..+/.test(v) || '正しいメールアドレスの形式で入力してください'
-      ]
     }
   },
   methods: {

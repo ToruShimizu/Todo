@@ -71,6 +71,7 @@ export default {
       },
       set(value) {
         this.$emit('update:selectedUpdateUserName', value)
+        this.editUserName = ''
       }
     }
   },

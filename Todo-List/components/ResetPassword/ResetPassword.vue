@@ -88,6 +88,7 @@ export default {
     },
     closeResetPasswprd() {
       this.$emit('close-reset-password')
+      this.userEmail = ''
     }
   }
 }
