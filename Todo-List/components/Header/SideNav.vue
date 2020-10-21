@@ -25,23 +25,31 @@
         :deleteUserDialog="deleteUserDialog"
       />
       <v-menu open-on-hover down offset-y v-if="login_user">
-        <v-spacer />
         <template v-slot:activator="{ on, attrs }">
           <v-icon v-bind="attrs" v-on="on">mdi-dots-vertical</v-icon>
         </template>
         <!-- FIXME: コンポーネント化するか検討中 -->
         <v-list :updateUserInfo="updateUserInfo">
           <v-list-item @click="selectedUpdateUserInfo = 'openUpdateUserName'">
-            <v-list-item-title>ユーザー情報編集</v-list-item-title>
+            <v-list-item-title
+              ><v-icon> mdi-badge-account-horizontal-outline </v-icon>
+              ユーザー情報編集
+            </v-list-item-title>
           </v-list-item>
           <v-list-item @click="selectedUpdateUserInfo = 'openUpdateEmailAddress'">
-            <v-list-item-title>メールアドレス変更</v-list-item-title>
+            <v-list-item-title>
+              <v-icon>mdi-email-edit-outline </v-icon>メールアドレス変更</v-list-item-title
+            >
           </v-list-item>
           <v-list-item @click="selectedUpdateUserInfo = 'openUpdatePassword'">
-            <v-list-item-title>パスワード変更</v-list-item-title>
-          </v-list-item>
+            <v-list-item-title>
+              <v-icon>mdi-account-key-outline </v-icon>パスワード変更</v-list-item-title
+            ></v-list-item
+          >
           <v-list-item @click="selectedUpdateUserInfo = 'openDeleteUser'">
-            <v-list-item-title>アカウント削除</v-list-item-title>
+            <v-list-item-title
+              ><v-icon> mdi-account-remove-outline </v-icon>アカウント削除</v-list-item-title
+            >
           </v-list-item>
         </v-list>
       </v-menu>
