@@ -129,6 +129,9 @@ export default {
     },
     closeAddTask() {
       this.$emit('close-add-task')
+      this.task.title = ''
+      this.task.date = new Date().toISOString().substr(0, 10)
+      this.task.detail = ''
     }
   }
 }
