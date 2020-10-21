@@ -14,11 +14,6 @@
         <tbody name="list" is="transition-group">
           <template>
             <tr v-for="(todo, index) in props.items" :key="index">
-              <UpdateTask
-                :editTodo="editTodo"
-                :updateTaskDialog="updateTaskDialog"
-                @close-update-task="closeUpdateTask(todo)"
-              />
               <td>
                 <v-btn icon @click="doneTask(todo)">
                   <v-icon :color="(!todo.task.done && 'grey') || 'primary'"
@@ -68,6 +63,11 @@
     <div class="text-center py-2">
       <v-pagination v-model="page" :length="pageCount" />
     </div>
+    <UpdateTask
+      :editTodo="editTodo"
+      :updateTaskDialog="updateTaskDialog"
+      @close-update-task="closeUpdateTask"
+    />
   </v-app>
 </template>
 
