@@ -35,21 +35,9 @@
                 </template>
                 <span>{{ todo.task.title }}の詳細を開く</span>
               </v-tooltip>
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on, attrs }">
-                  <td :class="(todo.task.done && 'grey--text') || 'black--text'">
-                    {{ todo.task.date }}
-                    <v-icon
-                      v-if="task.date > todo.task.date"
-                      v-bind="attrs"
-                      :class="(todo.task.done && 'grey--text') || 'red--text'"
-                      v-on="on"
-                      >mdi-alert-outline</v-icon
-                    >
-                  </td>
-                </template>
-                <span>期限が切れています</span>
-              </v-tooltip>
+              <td :class="(todo.task.done && 'grey--text') || 'black--text'">
+                {{ todo.task.date }}
+              </td>
               <td>
                 <v-btn icon>
                   <v-icon @click="removeTask(todo)">mdi-delete-outline</v-icon>
@@ -112,6 +100,7 @@ export default {
       page: 1,
       pageCount: 0,
       editTodo: null,
+      cancelTodo: null,
       updateTaskDialog: false
     }
   },
@@ -134,6 +123,7 @@ export default {
       this.$store.dispatch('modules/todos/fetchComments', id)
       this.editTodo = todo
       this.updateTaskDialog = true
+      console.log(this.editTodo)
     },
     closeUpdateTask() {
       this.updateTaskDialog = false
