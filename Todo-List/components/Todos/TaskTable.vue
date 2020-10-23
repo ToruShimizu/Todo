@@ -1,19 +1,20 @@
 <template>
   <v-app>
-    <v-data-table
-      :headers="headers"
-      :items="todosFiltered"
-      :items-per-page="itemsPerPage"
-      :search="searchTask"
-      :page.sync="page"
-      hide-default-footer
-      @page-count="pageCount = $event"
-      class="elevation-1"
-    >
-      <template v-slot:body="props">
-        <tbody name="list" is="transition-group">
-          <template>
-            <tr v-for="(todo, index) in props.items" :key="index">
+    <v-card>
+      <v-data-table
+        :headers="headers"
+        :items="todosFiltered"
+        :items-per-page="itemsPerPage"
+        :search="searchTask"
+        :page.sync="page"
+        hide-default-footer
+        @page-count="pageCount = $event"
+        item-key="name"
+        class="elevation-1"
+      >
+        <template v-slot:body="{ items }">
+          <tbody name="list" is="transition-group">
+            <tr v-for="todo in items" :key="todo.task.title">
               <td>
                 <v-btn icon @click="doneTask(todo)">
                   <v-icon :color="(!todo.task.done && 'grey') || 'primary'"
@@ -44,10 +45,10 @@
                 </v-btn>
               </td>
             </tr>
-          </template>
-        </tbody>
-      </template>
-    </v-data-table>
+          </tbody>
+        </template>
+      </v-data-table>
+    </v-card>
     <div class="text-center py-2">
       <v-pagination v-model="page" :length="pageCount" />
     </div>
