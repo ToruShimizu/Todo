@@ -13,7 +13,7 @@
         class="elevation-1"
       >
         <template v-slot:body="{ items }">
-          <tbody name="list" is="transition-group">
+          <tbody name="list" is="transition-group" v-if="items.length > 0">
             <tr v-for="todo in items" :key="todo.task.title">
               <td>
                 <v-btn icon @click="doneTask(todo)">
@@ -44,6 +44,11 @@
                   <v-icon @click="removeTask(todo)">mdi-delete-outline</v-icon>
                 </v-btn>
               </td>
+            </tr>
+          </tbody>
+          <tbody v-else>
+            <tr>
+              <td :colspan="headers.length" style="text-align: center">タスクはありません</td>
             </tr>
           </tbody>
         </template>
