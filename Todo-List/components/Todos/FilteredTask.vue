@@ -14,6 +14,7 @@
         :size="45"
         class="ml-1"
         color="success"
+        v-if="todos.length > 0"
         >{{ progress }}</v-progress-circular
       >
     </v-tab>
