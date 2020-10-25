@@ -24,10 +24,9 @@
                   <!-- 日付入力エリア -->
                   <v-col cols="12" sm="6" md="6">
                     <v-menu
-                      ref="menu"
                       v-model="dateMenu"
                       :close-on-content-click="false"
-                      :return-value.sync="task.date"
+                      :nudge-right="40"
                       transition="scale-transition"
                       offset-y
                       min-width="290px"
@@ -35,18 +34,19 @@
                       <template v-slot:activator="{ on, attrs }">
                         <v-text-field
                           v-model="task.date"
-                          label="期限を入力する"
+                          label="期限を変更する"
                           prepend-inner-icon="mdi-calendar-today"
                           readonly
                           v-bind="attrs"
                           v-on="on"
                         ></v-text-field>
                       </template>
-                      <v-date-picker v-model="task.date" no-title scrollable>
-                        <v-spacer></v-spacer>
-                        <v-btn text color="primary" @click="dateMenu = false">Cancel</v-btn>
-                        <v-btn text color="primary" @click="$refs.menu.save(task.date)">OK</v-btn>
-                      </v-date-picker>
+                      <v-date-picker
+                        v-model="task.date"
+                        @input="dateMenu = false"
+                        no-title
+                        scrollable
+                      ></v-date-picker>
                     </v-menu>
                   </v-col>
                   <!-- 詳細入力エリア -->

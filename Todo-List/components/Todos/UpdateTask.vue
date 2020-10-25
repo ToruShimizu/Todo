@@ -28,10 +28,9 @@
                 <!-- 日付編集エリア -->
                 <v-col cols="12">
                   <v-menu
-                    ref="menu"
                     v-model="updateDateMenu"
                     :close-on-content-click="false"
-                    :return-value.sync="editTodo.task.date"
+                    :nudge-right="40"
                     transition="scale-transition"
                     offset-y
                     min-width="290px"
@@ -46,13 +45,12 @@
                         v-on="on"
                       ></v-text-field>
                     </template>
-                    <v-date-picker no-title scrollable>
-                      <v-spacer></v-spacer>
-                      <v-btn text color="primary" @click="updateDateMenu = false">Cancel</v-btn>
-                      <v-btn text color="primary" @click="$refs.menu.save(editTodo.task.date)"
-                        >OK</v-btn
-                      >
-                    </v-date-picker>
+                    <v-date-picker
+                      v-model="editTodo.task.date"
+                      @input="updateDateMenu = false"
+                      no-title
+                      scrollable
+                    ></v-date-picker>
                   </v-menu>
                 </v-col>
                 <!-- 詳細編集エリア -->
