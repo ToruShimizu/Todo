@@ -27,7 +27,6 @@
                   <td
                     v-bind="attrs"
                     :class="(todo.task.done && 'grey--text') || 'primary--text'"
-                    class="ml-2"
                     v-on="on"
                     @click="openUpdateTask(todo)"
                   >
@@ -36,7 +35,7 @@
                 </template>
                 <span>{{ todo.task.title }}の詳細を開く</span>
               </v-tooltip>
-              <td :class="(todo.task.done && 'grey--text') || 'black--text'">
+              <td :class="(todo.task.done && 'grey--text') || 'black--text'" class="pa-0">
                 {{ todo.task.date }}
               </td>
               <td>
@@ -151,7 +150,7 @@ export default {
 .list-move {
   transition: transform 0.5s;
 }
-tr {
-  display: table-row;
+.v-data-table td {
+  white-space: nowrap;
 }
 </style>
