@@ -44,7 +44,7 @@
     </v-list>
     <v-divider />
 
-    <v-list :updateUserInfo="updateUserInfo">
+    <v-list :updateUserInfo="updateUserInfo" v-if="login_user">
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="title grey--text text--darken-2"
