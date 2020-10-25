@@ -1,8 +1,6 @@
 <template>
   <v-app>
-    <v-container>
-      <Todos />
-    </v-container>
+    <Todos />
   </v-app>
 </template>
 
