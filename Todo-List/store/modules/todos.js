@@ -25,7 +25,7 @@ const mutations = {
   updateTask(state, { id, task }) {
     // インデックスを取得
     const index = state.todos.findIndex((todo) => todo.task.id === id)
-    state.todos[index] = task
+    state.todos[index] = { task }
     console.log('updateTask')
   },
   // 完了、未完了切り替え
