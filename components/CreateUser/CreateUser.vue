@@ -43,6 +43,7 @@
                   label="パスワードを入力する(6文字以上)"
                   :rules="[validRules.passwordRules.required, validRules.passwordRules.regex]"
                   @click:append="showPassword = !showPassword"
+                  counter="72"
                 />
                 <v-card-actions>
                   <v-btn

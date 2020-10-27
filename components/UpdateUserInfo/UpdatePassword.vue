@@ -29,6 +29,7 @@
                   label="現在のPassword(6文字以上)"
                   :rules="[validRules.passwordRules.required, validRules.passwordRules.regex]"
                   @click:append="showPassword = !showPassword"
+                  counter="72"
                 />
                 <v-text-field
                   v-model="updateUserPassword"
@@ -38,6 +39,7 @@
                   label="新しいPassword(6文字以上)"
                   :rules="[validRules.passwordRules.required, validRules.passwordRules.regex]"
                   @click:append="showEditPassword = !showEditPassword"
+                  counter="72"
                 />
                 <v-card-actions>
                   <v-btn

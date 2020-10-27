@@ -57,6 +57,7 @@
               label="パスワードを入力する(6文字以上)"
               :rules="[validRules.passwordRules.required, validRules.passwordRules.regex]"
               @click:append="showPassword = !showPassword"
+              counter="72"
             />
             <v-btn text color="primary accent-4" @click="openResetPassword">
               パスワードを忘れた方はこちら</v-btn
