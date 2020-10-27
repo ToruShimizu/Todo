@@ -7,8 +7,8 @@ const state = () => ({
 
 const mutations = {
   // ログインユーザー情報の取得
-  setLoginUser(state, loginUser) {
-    state.login_user = loginUser
+  setLoginUser(state, userInfo) {
+    state.login_user = userInfo
     console.log('setLoginUser')
   },
   // ログインユーザー情報の削除
@@ -20,9 +20,9 @@ const mutations = {
 
 const actions = {
   // ログインユーザー情報の取得
-  setLoginUser({ commit }, loginUser) {
-    console.log(loginUser)
-    commit('setLoginUser', loginUser)
+  setLoginUser({ commit }, userInfo) {
+    console.log(userInfo)
+    commit('setLoginUser', userInfo)
   },
   // ログインユーザー情報の削除
   deleteLoginUser({ commit }) {
