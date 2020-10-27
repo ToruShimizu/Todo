@@ -60,6 +60,7 @@
       :editTodo="editTodo"
       :updateTaskDialog="updateTaskDialog"
       @close-update-task="closeUpdateTask"
+      @cancel-update-task="cancelUpdateTask"
     />
   </v-app>
 </template>
@@ -131,6 +132,10 @@ export default {
       console.log(this.editTodo)
     },
     closeUpdateTask() {
+      this.updateTaskDialog = false
+    },
+    // FIXME キャンセル時の処理はあとで記述
+    cancelUpdateTask() {
       this.updateTaskDialog = false
     }
   }
