@@ -81,7 +81,7 @@ export default {
       this.$store.dispatch('modules/auth/updateUserName', {
         userName: this.editUserName
       })
-      this.updateUserName = ''
+      this.editUserName = ''
       this.$emit('update:selectedUpdateUserName', 'closeUpdateUserName')
     }
   }
