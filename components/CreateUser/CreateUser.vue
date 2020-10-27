@@ -70,9 +70,10 @@
 
 <script>
 import FormValidation from '@/mixins/FormValidation.vue'
+import LoadingView from '@/mixins/LoadingView.vue'
 
 export default {
-  mixins: [FormValidation],
+  mixins: [FormValidation, LoadingView],
 
   props: {
     createUserDialog: {
@@ -84,20 +85,9 @@ export default {
       userEmail: '',
       userPassword: '',
       userName: '',
-      loader: null,
       loadingCreateUser: false,
       showPassword: false,
       validate: true
-    }
-  },
-  watch: {
-    loader() {
-      const l = this.loader
-      this[l] = !this[l]
-
-      setTimeout(() => (this[l] = false), 3000)
-
-      this.loader = null
     }
   },
   methods: {
