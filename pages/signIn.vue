@@ -96,27 +96,18 @@ import { mapActions } from 'vuex'
 import CreateUser from '@/components/CreateUser/CreateUser'
 import ResetPassword from '@/components/ResetPassword/ResetPassword'
 import FormValidation from '../mixins/FormValidation.vue'
+import LoadingView from '../mixins/LoadingView.vue'
 
 export default {
-  mixins: [FormValidation],
+  mixins: [FormValidation, LoadingView],
 
   components: {
     CreateUser,
     ResetPassword
   },
-  watch: {
-    loader() {
-      const l = this.loader
-      this[l] = !this[l]
 
-      setTimeout(() => (this[l] = false), 3000)
-
-      this.loader = null
-    }
-  },
   data() {
     return {
-      loader: null,
       loadingTestLogin: false,
       loadingLogin: false,
       userEmail: '',
@@ -159,42 +150,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.custom-loader {
-  animation: loader 1s infinite;
-  display: flex;
-}
-@-moz-keyframes loader {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-@-webkit-keyframes loader {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-@-o-keyframes loader {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-@keyframes loader {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-</style>

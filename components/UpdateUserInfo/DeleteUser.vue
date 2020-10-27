@@ -57,8 +57,9 @@
 
 <script>
 import FormValidation from '@/mixins/FormValidation.vue'
+import LoadingView from '@/mixins/LoadingView.vue'
 export default {
-  mixins: [FormValidation],
+  mixins: [FormValidation, LoadingView],
   props: {
     deleteUserDialog: {
       type: Boolean
@@ -72,20 +73,9 @@ export default {
     return {
       loginUserPassword: '',
       loginUserEmail: '',
-      loader: null,
       loadingDeleteUser: false,
       validate: true,
       showPassword: false
-    }
-  },
-  watch: {
-    loader() {
-      const l = this.loader
-      this[l] = !this[l]
-
-      setTimeout(() => (this[l] = false), 3000)
-
-      this.loader = null
     }
   },
   computed: {
