@@ -9,7 +9,7 @@
         <v-toolbar-title>ToDo</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items v-if="this.login_user">
-          <v-icon @click="logout">mdi-logout-variant</v-icon>
+          <v-icon @click="logout"> mdi-account-arrow-right-outline </v-icon>
         </v-toolbar-items>
       </v-app-bar>
     </header>

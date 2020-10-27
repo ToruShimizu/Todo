@@ -33,8 +33,7 @@
             :loading="loadingTestLogin"
             :disabled="loadingTestLogin"
             @click="testLogin"
-          >
-            テストユーザーでログイン
+            ><v-icon>mdi-account-arrow-left-outline </v-icon> テストユーザーでログイン
           </v-btn>
         </v-card-text>
         <v-card-title>
