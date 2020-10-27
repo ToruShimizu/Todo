@@ -22,7 +22,7 @@
                   v-model="userEmail"
                   prepend-inner-icon="mdi-email-outline"
                   label="登録されているメールアドレス"
-                  :rules="emailRules"
+                  :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
                   clearable
                 />
                 <v-card-actions>
@@ -49,7 +49,10 @@
 </template>
 
 <script>
+import FormValidation from '@/mixins/FormValidation.vue'
 export default {
+  mixins: [FormValidation],
+
   props: {
     resetPasswordDialog: {
       type: Boolean
@@ -60,11 +63,7 @@ export default {
       userEmail: '',
       loader: null,
       loadingResetPassword: false,
-      validate: true,
-      emailRules: [
-        (v) => !!v || 'メールアドレスは必須です',
-        (v) => /.+@.+\..+/.test(v) || '正しいメールアドレスの形式で入力してください'
-      ]
+      validate: true
     }
   },
   watch: {

@@ -25,14 +25,14 @@
                   v-model="userName"
                   prepend-inner-icon="mdi-card-account-details-outline"
                   label="名前を入力する"
-                  :rules="nameRules"
+                  :rules="[validRules.nameRules.required]"
                   clearable
                 />
                 <v-text-field
                   v-model="userEmail"
                   prepend-inner-icon="mdi-email-outline"
                   label="メールアドレスを入力する"
-                  :rules="emailRules"
+                  :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
                   clearable
                 />
                 <v-text-field
@@ -41,7 +41,7 @@
                   prepend-inner-icon="mdi-lock-outline"
                   :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                   label="パスワードを入力する(6文字以上)"
-                  :rules="[passwordRules.required, passwordRules.min]"
+                  :rules="[validRules.passwordRules.required, validRules.passwordRules.regex]"
                   @click:append="showPassword = !showPassword"
                 />
                 <v-card-actions>
@@ -68,7 +68,11 @@
 </template>
 
 <script>
+import FormValidation from '@/mixins/FormValidation.vue'
+
 export default {
+  mixins: [FormValidation],
+
   props: {
     createUserDialog: {
       type: Boolean
@@ -82,16 +86,7 @@ export default {
       loader: null,
       loadingCreateUser: false,
       showPassword: false,
-      validate: true,
-      emailRules: [
-        (v) => !!v || 'メールアドレスは必須です',
-        (v) => /.+@.+\..+/.test(v) || '正しいメールアドレスの形式で入力してください'
-      ],
-      passwordRules: {
-        required: (v) => !!v || 'パスワードは必須です',
-        min: (v) => v.length >= 6 || '6文字以上で入力してください'
-      },
-      nameRules: [(v) => !!v || '名前は必須です']
+      validate: true
     }
   },
   watch: {

@@ -46,7 +46,7 @@
               v-model="userEmail"
               prepend-inner-icon="mdi-email-outline"
               label="メールアドレスを入力する"
-              :rules="emailRules"
+              :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
               clearable
             />
             <v-text-field
@@ -55,7 +55,7 @@
               prepend-inner-icon="mdi-lock-outline"
               :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
               label="パスワードを入力する(6文字以上)"
-              :rules="[passwordRules.required, passwordRules.min]"
+              :rules="[validRules.passwordRules.required, validRules.passwordRules.regex]"
               @click:append="showPassword = !showPassword"
             />
             <v-btn text color="primary accent-4" @click="openResetPassword">
@@ -94,8 +94,11 @@
 import { mapActions } from 'vuex'
 import CreateUser from '@/components/CreateUser/CreateUser'
 import ResetPassword from '@/components/ResetPassword/ResetPassword'
+import FormValidation from '../mixins/FormValidation.vue'
 
 export default {
+  mixins: [FormValidation],
+
   components: {
     CreateUser,
     ResetPassword
@@ -120,15 +123,7 @@ export default {
       showPassword: false,
       validate: true,
       createUserDialog: false,
-      resetPasswordDialog: false,
-      emailRules: [
-        (v) => !!v || 'メールアドレスは必須です',
-        (v) => /.+@.+\..+/.test(v) || '正しいメールアドレスの形式で入力してください'
-      ],
-      passwordRules: {
-        required: (v) => !!v || 'パスワードは必須です',
-        min: (v) => v.length >= 6 || '6文字以上で入力してください'
-      }
+      resetPasswordDialog: false
     }
   },
   methods: {

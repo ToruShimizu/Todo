@@ -18,7 +18,7 @@
                   v-model="editUserName"
                   prepend-inner-icon="mdi-card-account-details-outline"
                   label="名前を変更する"
-                  :rules="nameRules"
+                  :rules="[validRules.nameRules.required]"
                   clearable
                 />
                 <v-card-actions>
@@ -45,7 +45,9 @@
 </template>
 
 <script>
+import FormValidation from '@/mixins/FormValidation.vue'
 export default {
+  mixins: [FormValidation],
   props: {
     updateUserNameDialog: {
       type: Boolean
@@ -81,7 +83,6 @@ export default {
       loadingUpdateUserName: false,
       editUserName: '',
       validate: true,
-      nameRules: [(v) => !!v || '名前は必須です']
     }
   },
   methods: {
