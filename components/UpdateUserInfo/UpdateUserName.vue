@@ -20,29 +20,31 @@
                 <v-icon left>mdi-account-outline</v-icon>{{ userName }}さん
               </v-card-text>
             </v-card-title>
-            <v-form ref="form" lazy-validation @submit.prevent="updateUserName">
-              <v-text-field
-                v-model="editUserName"
-                prepend-inner-icon="mdi-card-account-details-outline"
-                label="新しい名前を入力してください"
-                :rules="[validRules.nameRules.required]"
-                clearable
-              />
-              <v-card-actions>
-                <v-btn color="primary" @click="selectedUpdateUserName = 'closeUpdateUserName'">
-                  <v-icon left>mdi-login-variant</v-icon>戻る
-                </v-btn>
-                <v-spacer />
-                <v-btn
-                  color="success"
-                  @click="updateUserName"
-                  :loading="loadingUpdateUserName"
-                  :disabled="loadingUpdateUserName"
-                >
-                  <v-icon left>mdi-account</v-icon>SAVE
-                </v-btn>
-              </v-card-actions>
-            </v-form>
+            <v-card-text>
+              <v-form ref="form" lazy-validation @submit.prevent="updateUserName">
+                <v-text-field
+                  v-model="editUserName"
+                  prepend-inner-icon="mdi-card-account-details-outline"
+                  label="新しい名前を入力してください"
+                  :rules="[validRules.nameRules.required]"
+                  clearable
+                />
+                <v-card-actions>
+                  <v-btn color="primary" @click="selectedUpdateUserName = 'closeUpdateUserName'">
+                    <v-icon left>mdi-login-variant</v-icon>戻る
+                  </v-btn>
+                  <v-spacer />
+                  <v-btn
+                    color="success"
+                    @click="updateUserName"
+                    :loading="loadingUpdateUserName"
+                    :disabled="loadingUpdateUserName"
+                  >
+                    <v-icon left>mdi-account</v-icon>SAVE
+                  </v-btn>
+                </v-card-actions>
+              </v-form>
+            </v-card-text>
           </v-card>
         </v-col>
       </v-app>

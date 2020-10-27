@@ -20,32 +20,34 @@
                 >{{ userEmail }}
               </v-card-text>
             </v-card-title>
-            <v-form ref="form" lazy-validation @submit.prevent="updateEmailAddress">
-              <v-text-field
-                v-model="newEmailAddress"
-                prepend-inner-icon="mdi-email-outline"
-                label="新しいメールアドレスを入力"
-                :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
-                clearable
-              />
-              <v-card-actions>
-                <v-btn
-                  color="primary"
-                  @click="selectedUpdateEmailAddress = 'closeUpdateEmailAddress'"
-                >
-                  <v-icon left>mdi-login-variant</v-icon>戻る
-                </v-btn>
-                <v-spacer />
-                <v-btn
-                  color="success"
-                  @click="updateEmailAddress"
-                  :loading="loadingUpdateEmailAddress"
-                  :disabled="loadingUpdateEmailAddress"
-                >
-                  <v-icon left>mdi-email-plus</v-icon>SAVE
-                </v-btn>
-              </v-card-actions>
-            </v-form>
+            <v-card-text>
+              <v-form ref="form" lazy-validation @submit.prevent="updateEmailAddress">
+                <v-text-field
+                  v-model="newEmailAddress"
+                  prepend-inner-icon="mdi-email-outline"
+                  label="新しいメールアドレスを入力"
+                  :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
+                  clearable
+                />
+                <v-card-actions>
+                  <v-btn
+                    color="primary"
+                    @click="selectedUpdateEmailAddress = 'closeUpdateEmailAddress'"
+                  >
+                    <v-icon left>mdi-login-variant</v-icon>戻る
+                  </v-btn>
+                  <v-spacer />
+                  <v-btn
+                    color="success"
+                    @click="updateEmailAddress"
+                    :loading="loadingUpdateEmailAddress"
+                    :disabled="loadingUpdateEmailAddress"
+                  >
+                    <v-icon left>mdi-email-plus</v-icon>SAVE
+                  </v-btn>
+                </v-card-actions>
+              </v-form>
+            </v-card-text>
           </v-card>
         </v-col>
       </v-app>
