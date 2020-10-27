@@ -8,16 +8,20 @@
     >
       <v-app>
         <v-col cols="12" sm="12" md="12">
-          <v-card width="400px" class="mx-auto mt-5 text-center">
-            <v-card-title>
-              <h2>パスワード変更</h2>
+          <v-card width="400px" class="mx-auto text-center">
+            <v-card-title class="text-center">
+              <!-- FIXME classはscssに記述する -->
+              <h4 class="fill-width">パスワード変更</h4>
             </v-card-title>
             <v-card-text>
+              <v-card-title>
+                <v-card-text>※ 変更完了後にログイン画面に戻ります。 </v-card-text>
+              </v-card-title>
               <v-form ref="form" lazy-validation @submit.prevent="updatePassword">
                 <v-text-field
                   v-model="loginUserEmail"
                   prepend-inner-icon="mdi-email-outline"
-                  label="登録されているメールアドレス"
+                  label="登録されているメールアドレスを入力してください"
                   :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
                   clearable
                 />
@@ -42,6 +46,11 @@
                   counter="72"
                 />
                 <v-card-actions>
+                  <v-btn color="primary" @click="selectedUpdatePassword = 'closeUpdatePassword'">
+                    <v-icon left>mdi-login-variant</v-icon>戻る
+                  </v-btn>
+                  <v-spacer />
+
                   <v-btn
                     color="success"
                     @click="updatePassword"
@@ -49,10 +58,6 @@
                     :disabled="loadingResetPassword"
                   >
                     <v-icon left>mdi-account</v-icon>SAVE
-                  </v-btn>
-                  <v-spacer></v-spacer>
-                  <v-btn color="primary" @click="selectedUpdatePassword = 'closeUpdatePassword'">
-                    <v-icon left>mdi-login-variant</v-icon>戻る
                   </v-btn>
                 </v-card-actions>
               </v-form>
