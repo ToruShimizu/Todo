@@ -1,4 +1,10 @@
 {
+  "CreateUser": {
+    "description": "Auto imported from components/CreateUser/CreateUser.vue"
+  },
+  "LazyCreateUser": {
+    "description": "Auto imported from components/CreateUser/CreateUser.vue"
+  },
   "AddComment": {
     "description": "Auto imported from components/Comment/AddComment.vue"
   },
@@ -11,11 +17,11 @@
   "LazyComment": {
     "description": "Auto imported from components/Comment/Comment.vue"
   },
-  "CreateUser": {
-    "description": "Auto imported from components/CreateUser/CreateUser.vue"
+  "ResetPassword": {
+    "description": "Auto imported from components/ResetPassword/ResetPassword.vue"
   },
-  "LazyCreateUser": {
-    "description": "Auto imported from components/CreateUser/CreateUser.vue"
+  "LazyResetPassword": {
+    "description": "Auto imported from components/ResetPassword/ResetPassword.vue"
   },
   "Header": {
     "description": "Auto imported from components/Header/Header.vue"
@@ -28,12 +34,6 @@
   },
   "LazySideNav": {
     "description": "Auto imported from components/Header/SideNav.vue"
-  },
-  "ResetPassword": {
-    "description": "Auto imported from components/ResetPassword/ResetPassword.vue"
-  },
-  "LazyResetPassword": {
-    "description": "Auto imported from components/ResetPassword/ResetPassword.vue"
   },
   "AddTask": {
     "description": "Auto imported from components/Todos/AddTask.vue"
