@@ -55,13 +55,13 @@ const actions = {
     }
   },
   // メールアドレスとパスワードでログイン
-  async login({ commit }, { email, password, userName }) {
+  async login({ commit }, { email, password }) {
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password)
-      alert('ようこそ' + userName + 'さん')
+      const user = await firebase.auth().currentUser
+      alert('ようこそ' + user.displayName + 'さん')
       // サインイン成功後にトップページに遷移する
       this.$router.push({ path: '/' })
-      commit('setLoginUser')
     } catch {
       alert('ログインに失敗しました')
     }
@@ -82,7 +82,7 @@ const actions = {
       })
       alert('作成に成功しました')
       alert('このままログインします')
-      dispatch('login', { email, password, userName })
+      dispatch('login', { email, password })
     } catch (err) {
       alert('作成に失敗しました')
       console.log(err)
