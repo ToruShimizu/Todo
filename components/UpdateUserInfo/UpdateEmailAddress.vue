@@ -14,16 +14,10 @@
               <h4 class="fill-width">メールアドレス変更</h4>
             </v-card-title>
             <v-card-title>
-<<<<<<< HEAD
               <v-card-text>
                 現在登録されているメールアドレス<br /><v-icon left>mdi-email-outline</v-icon
                 >{{ userEmail }}
               </v-card-text>
-=======
-              <v-card-text> 現在登録されているメールアドレス<br />{{ userEmail }} </v-card-text>
->>>>>>> 8077c14f789f37b1bf213600a9031ebe24e99692
-            </v-card-title>
-
             <v-form ref="form" lazy-validation @submit.prevent="updateEmailAddress">
               <v-text-field
                 v-model="newEmailAddress"

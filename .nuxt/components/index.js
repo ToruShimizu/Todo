@@ -1,9 +1,9 @@
-export { default as CreateUser } from '../../components/CreateUser/CreateUser.vue'
 export { default as AddComment } from '../../components/Comment/AddComment.vue'
 export { default as Comment } from '../../components/Comment/Comment.vue'
-export { default as ResetPassword } from '../../components/ResetPassword/ResetPassword.vue'
+export { default as CreateUser } from '../../components/CreateUser/CreateUser.vue'
 export { default as Header } from '../../components/Header/Header.vue'
 export { default as SideNav } from '../../components/Header/SideNav.vue'
+export { default as ResetPassword } from '../../components/ResetPassword/ResetPassword.vue'
 export { default as AddTask } from '../../components/Todos/AddTask.vue'
 export { default as FilteredTask } from '../../components/Todos/FilteredTask.vue'
 export { default as SearchTask } from '../../components/Todos/SearchTask.vue'
@@ -15,12 +15,12 @@ export { default as UpdateEmailAddress } from '../../components/UpdateUserInfo/U
 export { default as UpdatePassword } from '../../components/UpdateUserInfo/UpdatePassword.vue'
 export { default as UpdateUserName } from '../../components/UpdateUserInfo/UpdateUserName.vue'
 
-export const LazyCreateUser = import('../../components/CreateUser/CreateUser.vue' /* webpackChunkName: "components/CreateUser/CreateUser'}" */).then(c => c.default || c)
 export const LazyAddComment = import('../../components/Comment/AddComment.vue' /* webpackChunkName: "components/Comment/AddComment'}" */).then(c => c.default || c)
 export const LazyComment = import('../../components/Comment/Comment.vue' /* webpackChunkName: "components/Comment/Comment'}" */).then(c => c.default || c)
-export const LazyResetPassword = import('../../components/ResetPassword/ResetPassword.vue' /* webpackChunkName: "components/ResetPassword/ResetPassword'}" */).then(c => c.default || c)
+export const LazyCreateUser = import('../../components/CreateUser/CreateUser.vue' /* webpackChunkName: "components/CreateUser/CreateUser'}" */).then(c => c.default || c)
 export const LazyHeader = import('../../components/Header/Header.vue' /* webpackChunkName: "components/Header/Header'}" */).then(c => c.default || c)
 export const LazySideNav = import('../../components/Header/SideNav.vue' /* webpackChunkName: "components/Header/SideNav'}" */).then(c => c.default || c)
+export const LazyResetPassword = import('../../components/ResetPassword/ResetPassword.vue' /* webpackChunkName: "components/ResetPassword/ResetPassword'}" */).then(c => c.default || c)
 export const LazyAddTask = import('../../components/Todos/AddTask.vue' /* webpackChunkName: "components/Todos/AddTask'}" */).then(c => c.default || c)
 export const LazyFilteredTask = import('../../components/Todos/FilteredTask.vue' /* webpackChunkName: "components/Todos/FilteredTask'}" */).then(c => c.default || c)
 export const LazySearchTask = import('../../components/Todos/SearchTask.vue' /* webpackChunkName: "components/Todos/SearchTask'}" */).then(c => c.default || c)
