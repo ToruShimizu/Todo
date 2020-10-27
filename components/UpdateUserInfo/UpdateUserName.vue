@@ -11,12 +11,12 @@
           <v-card width="400px" class="mx-auto text-center">
             <v-card-title class="text-center">
               <!-- FIXME classはscssに記述する -->
-              <h4 class="fill-width">メールアドレス変更</h4>
+              <h4 class="fill-width">ユーザー名変更</h4>
             </v-card-title>
             <v-card-title>
               <v-card-text>
                 現在登録されているユーザー名<br />
-                <v-icon left>mdi-account-outline</v-icon>{{ userName }}
+                <v-icon left>mdi-account-outline</v-icon>{{ userName }}さん
               </v-card-text>
             </v-card-title>
             <v-form ref="form" lazy-validation @submit.prevent="updateUserName">
