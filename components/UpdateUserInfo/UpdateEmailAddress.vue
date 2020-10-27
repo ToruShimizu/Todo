@@ -18,6 +18,7 @@
                 現在登録されているメールアドレス<br /><v-icon left>mdi-email-outline</v-icon
                 >{{ userEmail }}
               </v-card-text>
+            </v-card-title>
             <v-form ref="form" lazy-validation @submit.prevent="updateEmailAddress">
               <v-text-field
                 v-model="newEmailAddress"
