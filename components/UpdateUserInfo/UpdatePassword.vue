@@ -107,6 +107,10 @@ export default {
   },
   methods: {
     updatePassword() {
+      if (!this.updateUserPassword || !this.loginUserPassword || !this.loginUserEmail) {
+        this.$refs.form.validate()
+        return
+      }
       this.loader = 'loadingResetPassword'
       this.$store.dispatch('modules/auth/updatePassword', {
         updatePassword: this.updateUserPassword,
@@ -116,6 +120,7 @@ export default {
       this.updateUserPassword = ''
       this.loginUserEmail = ''
       this.loginUserPassword = ''
+      this.$refs.form.reset()
       this.$emit('update:selectedUpdatePassword', 'closeUpdatePassword')
     }
   }

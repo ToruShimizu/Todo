@@ -95,15 +95,22 @@ export default {
   methods: {
     createUser() {
       this.loader = 'loadingCreateUser'
+      if (!this.userPassword || !this.userEmail) {
+        this.$refs.form.validate()
+        return
+      }
       this.$store.dispatch('modules/auth/createUser', {
         email: this.userEmail,
         password: this.userPassword,
         userName: this.userName
       })
+      this.$refs.form.reset()
     },
     closeCreateUser() {
       this.$emit('close-create-user')
       this.userEmail = ''
+      this.userPassword = ''
+      this.$refs.form.reset()
     }
   }
 }

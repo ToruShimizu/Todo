@@ -85,11 +85,16 @@ export default {
   },
   methods: {
     updateUserName() {
+      if (!this.editUserName) {
+        this.$refs.form.validate()
+        return
+      }
       this.loader = 'loadingUpdateUserName'
       this.$store.dispatch('modules/auth/updateUserName', {
         userName: this.editUserName
       })
       this.editUserName = ''
+      this.$refs.form.reset()
       this.$emit('update:selectedUpdateUserName', 'closeUpdateUserName')
     }
   }
