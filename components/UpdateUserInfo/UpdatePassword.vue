@@ -13,6 +13,7 @@
               <!-- FIXME classはscssに記述する -->
               <h4 class="fill-width">パスワード変更</h4>
             </v-card-title>
+            <v-divider />
             <v-card-text>
               <v-card-title>
                 <v-card-text>※ 変更完了後にログイン画面に戻ります。 </v-card-text>

@@ -13,6 +13,7 @@
               <!-- FIXME classはscssに記述する -->
               <h4 class="fill-width">アカウント削除</h4>
             </v-card-title>
+            <v-divider />
             <v-card-title>
               <v-card-text>
                 登録されているメールアドレスと

@@ -13,6 +13,7 @@
               <!-- FIXME classはscssに記述する -->
               <h4 class="fill-width">メールアドレス変更</h4>
             </v-card-title>
+            <v-divider />
             <v-card-title>
               <v-card-text>
                 現在登録されているメールアドレス<br /><v-icon left>mdi-email-outline</v-icon
