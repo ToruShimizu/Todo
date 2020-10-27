@@ -26,9 +26,7 @@
                     <v-menu
                       v-model="dateMenu"
                       :close-on-content-click="false"
-                      :nudge-right="40"
                       transition="scale-transition"
-                      offset-y
                       min-width="290px"
                     >
                       <template v-slot:activator="{ on, attrs }">
@@ -45,7 +43,6 @@
                         v-model="task.date"
                         @input="dateMenu = false"
                         no-title
-                        scrollable
                       ></v-date-picker>
                     </v-menu>
                   </v-col>

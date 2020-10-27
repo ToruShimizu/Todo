@@ -30,9 +30,7 @@
                   <v-menu
                     v-model="updateDateMenu"
                     :close-on-content-click="false"
-                    :nudge-right="40"
                     transition="scale-transition"
-                    offset-y
                     min-width="290px"
                   >
                     <template v-slot:activator="{ on, attrs }">
