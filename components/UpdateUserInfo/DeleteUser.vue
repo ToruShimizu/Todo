@@ -11,7 +11,7 @@
           <v-card width="400px" class="mx-auto text-center">
             <v-card-title class="text-center">
               <!-- FIXME classはscssに記述する -->
-              <h4 class="fill-width">パスワード再設定</h4>
+              <h4 class="fill-width">アカウント削除</h4>
             </v-card-title>
             <v-card-title>
               <v-card-text>
