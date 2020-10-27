@@ -9,12 +9,10 @@
       <v-app>
         <v-col cols="12" sm="12" md="12">
           <v-card width="400px" class="mx-auto mt-5 text-center">
-            <v-card-title>
-              <h1>Todo</h1>
+            <v-card-title class="text-center">
+              <h4 class="fill-width">新規作成</h4>
             </v-card-title>
-            <v-card-title>
-              <h2>アカウント新規作成</h2>
-            </v-card-title>
+            <v-divider />
             <v-card-text>
               <v-form ref="form" lazy-validation @submit.prevent="createUser">
                 <p>
@@ -46,6 +44,14 @@
                   counter="72"
                 />
                 <v-card-actions>
+                  <v-btn color="primary" @click="closeCreateUser" class="hidden-xs-only">
+                    <v-icon left>mdi-login-variant</v-icon>ログイン画面へ戻る
+                  </v-btn>
+                  <v-btn color="primary" @click="closeCreateUser" class="hidden-sm-and-up">
+                    <v-icon left>mdi-login-variant</v-icon>戻る
+                  </v-btn>
+                  <v-spacer />
+
                   <v-btn
                     color="success"
                     @click="createUser"
@@ -53,10 +59,6 @@
                     :disabled="loadingCreateUser"
                   >
                     <v-icon left>mdi-account-plus</v-icon>新規作成
-                  </v-btn>
-                  <v-spacer></v-spacer>
-                  <v-btn color="primary" @click="closeCreateUser">
-                    <v-icon left>mdi-login-variant</v-icon>ログイン画面へ戻る
                   </v-btn>
                 </v-card-actions>
               </v-form>
@@ -106,3 +108,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+.fill-width {
+  width: 100%;
+}
+</style>
