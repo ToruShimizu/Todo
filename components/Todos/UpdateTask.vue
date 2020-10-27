@@ -74,7 +74,7 @@
             </v-container>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeUpdateTask">Cancel</v-btn>
+              <v-btn color="blue darken-1" text @click="cancelUpdateTask">Cancel</v-btn>
               <v-btn color="blue darken-1" text @click="updateTask">Save</v-btn>
             </v-card-actions>
           </v-form>
@@ -141,6 +141,9 @@ export default {
     },
     closeUpdateTask() {
       this.$emit('close-update-task')
+    },
+    cancelUpdateTask() {
+      this.$emit('cancel-update-task')
     }
   }
 }
