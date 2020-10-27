@@ -27,6 +27,13 @@
                   clearable
                 />
                 <v-card-actions>
+                  <v-btn color="primary" @click="closeResetPasswprd" class="hidden-sm-and-up">
+                    <v-icon left>mdi-login-variant</v-icon>戻る
+                  </v-btn>
+                  <v-btn color="primary" @click="closeResetPasswprd" class="hidden-xs-only">
+                    <v-icon left>mdi-login-variant</v-icon>ログイン画面へ戻る
+                  </v-btn>
+                  <v-spacer />
                   <v-btn
                     color="success"
                     @click="passwordReset"
@@ -34,13 +41,6 @@
                     :disabled="loadingResetPassword"
                   >
                     <v-icon left>mdi-email-send</v-icon>送信
-                  </v-btn>
-                  <v-spacer></v-spacer>
-                  <v-btn color="primary" @click="closeResetPasswprd" class="hidden-xs-only">
-                    <v-icon left>mdi-login-variant</v-icon>ログイン画面へ戻る
-                  </v-btn>
-                  <v-btn color="primary" @click="closeResetPasswprd" class="hidden-sm-and-up">
-                    <v-icon left>mdi-login-variant</v-icon>戻る
                   </v-btn>
                 </v-card-actions>
               </v-form>
