@@ -8,7 +8,7 @@
     >
       <v-app>
         <v-col cols="12" sm="12" md="12">
-          <v-card width="400px" class="mx-auto text-center">
+          <v-card width="500px" class="mx-auto text-center">
             <v-card-title class="text-center">
               <!-- FIXME classはscssに記述する -->
               <h4 class="fill-width">メールアドレス変更</h4>
