@@ -28,7 +28,7 @@ const actions = {
   deleteLoginUser({ commit }) {
     commit('deleteLoginUser')
   },
-  async onAuthStateChanged({dispatch}) {
+  async onAuthStateChanged({ dispatch }) {
     await auth.onAuthStateChanged((user) => {
       if (user) {
         const userInfo = {
@@ -91,7 +91,7 @@ const actions = {
   // ユーザー情報の更新
   // FIXME:ユーザーのstate更新
   async updateUserName({ dispatch }, { userName }) {
-  const user = await firebase.auth().currentUser
+    const user = await firebase.auth().currentUser
     if (user.displayName === 'テストユーザー') {
       alert('テストユーザーは変更できません')
     } else {

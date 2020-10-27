@@ -11,7 +11,8 @@ const validRules = {
   },
   passwordRules: {
     required: (value) => !!value || 'パスワードは必須です',
-    regex: (value) => /^[\w-]{6,72}$/.test(value) || '半角英数字で6文字以上72文字以下でで入力してください'
+    regex: (value) =>
+      /^[\w-]{6,72}$/.test(value) || '半角英数字で6文字以上72文字以下でで入力してください'
   },
   nameRules: { required: (value) => !!value || '名前は必須です' }
 }
@@ -19,7 +20,7 @@ const validRules = {
 export default {
   data() {
     return {
-      validRules: validRules
+      validRules
     }
   }
 }
