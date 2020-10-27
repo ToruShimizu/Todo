@@ -73,12 +73,12 @@
 <script>
 import FormValidation from '@/mixins/FormValidation.vue'
 import LoadingView from '@/mixins/LoadingView.vue'
-import UserName from '@/mixins/UserInfo/UserName.vue'
-import UserEmail from '@/mixins/UserInfo/UserEmail.vue'
-import UserPassword from '@/mixins/UserInfo/UserPassword.vue'
+import StateUserName from '@/mixins/UserInfo/StateUserName.vue'
+import StateUserEmail from '@/mixins/UserInfo/StateUserEmail.vue'
+import StateUserPassword from '@/mixins/UserInfo/StateUserPassword.vue'
 
 export default {
-  mixins: [FormValidation, LoadingView, UserName, UserEmail, UserPassword],
+  mixins: [FormValidation, LoadingView, StateUserName, StateUserEmail, StateUserPassword],
 
   props: {
     createUserDialog: {
