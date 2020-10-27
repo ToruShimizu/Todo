@@ -8,9 +8,10 @@
     >
       <v-app>
         <v-col cols="12" sm="12" md="12">
-          <v-card width="400px" class="mx-auto mt-5 text-center">
-            <v-card-title>
-              <h2>アカウント削除</h2>
+          <v-card width="400px" class="mx-auto text-center">
+            <v-card-title class="text-center">
+              <!-- FIXME classはscssに記述する -->
+              <h4 class="fill-width">パスワード再設定</h4>
             </v-card-title>
             <v-card-title>
               <v-card-text>
@@ -38,12 +39,12 @@
                   counter="72"
                 />
                 <v-card-actions>
-                  <v-btn color="success" @click="deleteUser">
-                    <v-icon left>mdi-account</v-icon>SAVE
-                  </v-btn>
-                  <v-spacer></v-spacer>
                   <v-btn color="primary" @click="selectedDeleteUser = 'closeDeleteUser'">
                     <v-icon left>mdi-login-variant</v-icon>戻る
+                  </v-btn>
+                  <v-spacer />
+                  <v-btn color="success" @click="deleteUser">
+                    <v-icon left>mdi-account</v-icon>SAVE
                   </v-btn>
                 </v-card-actions>
               </v-form>
