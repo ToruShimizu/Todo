@@ -2,7 +2,10 @@ import firebase, { auth } from '~/plugins/firebase'
 
 // initial state
 const state = () => ({
-  login_user: null
+  login_user: null,
+  userName: null,
+  userEmail: null,
+  userPassword: null
 })
 
 const mutations = {
@@ -15,11 +18,29 @@ const mutations = {
   deleteLoginUser(state) {
     state.login_user = null
     console.log('deleteLoginUser')
+  },
+  mutateUserName(state, userName) {
+    state.userName = userName
+  },
+  mutateUserEmail(state, userEmail) {
+    state.userEmail = userEmail
+  },
+  mutateUserPassword(state, userPassword) {
+    state.userPassword = userPassword
   }
 }
 
 const actions = {
   // ログインユーザー情報の取得
+  commitUserName({ commit }, userName) {
+    commit('mutateUserName', userName)
+  },
+  commitUserEmail({ commit }, userEmail) {
+    commit('mutateUserEmail', userEmail)
+  },
+  commitUserPassword({ commit }, userPassword) {
+    commit('mutateUserPassword', userPassword)
+  },
   setLoginUser({ commit }, userInfo) {
     console.log(userInfo)
     commit('setLoginUser', userInfo)
