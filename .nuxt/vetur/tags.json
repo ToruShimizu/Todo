@@ -1,0 +1,98 @@
+{
+  "CreateUser": {
+    "description": "Auto imported from components/CreateUser/CreateUser.vue"
+  },
+  "LazyCreateUser": {
+    "description": "Auto imported from components/CreateUser/CreateUser.vue"
+  },
+  "ResetPassword": {
+    "description": "Auto imported from components/ResetPassword/ResetPassword.vue"
+  },
+  "LazyResetPassword": {
+    "description": "Auto imported from components/ResetPassword/ResetPassword.vue"
+  },
+  "AddComment": {
+    "description": "Auto imported from components/Comment/AddComment.vue"
+  },
+  "LazyAddComment": {
+    "description": "Auto imported from components/Comment/AddComment.vue"
+  },
+  "Comment": {
+    "description": "Auto imported from components/Comment/Comment.vue"
+  },
+  "LazyComment": {
+    "description": "Auto imported from components/Comment/Comment.vue"
+  },
+  "Header": {
+    "description": "Auto imported from components/Header/Header.vue"
+  },
+  "LazyHeader": {
+    "description": "Auto imported from components/Header/Header.vue"
+  },
+  "SideNav": {
+    "description": "Auto imported from components/Header/SideNav.vue"
+  },
+  "LazySideNav": {
+    "description": "Auto imported from components/Header/SideNav.vue"
+  },
+  "AddTask": {
+    "description": "Auto imported from components/Todos/AddTask.vue"
+  },
+  "LazyAddTask": {
+    "description": "Auto imported from components/Todos/AddTask.vue"
+  },
+  "FilteredTask": {
+    "description": "Auto imported from components/Todos/FilteredTask.vue"
+  },
+  "LazyFilteredTask": {
+    "description": "Auto imported from components/Todos/FilteredTask.vue"
+  },
+  "SearchTask": {
+    "description": "Auto imported from components/Todos/SearchTask.vue"
+  },
+  "LazySearchTask": {
+    "description": "Auto imported from components/Todos/SearchTask.vue"
+  },
+  "TaskTable": {
+    "description": "Auto imported from components/Todos/TaskTable.vue"
+  },
+  "LazyTaskTable": {
+    "description": "Auto imported from components/Todos/TaskTable.vue"
+  },
+  "Todos": {
+    "description": "Auto imported from components/Todos/Todos.vue"
+  },
+  "LazyTodos": {
+    "description": "Auto imported from components/Todos/Todos.vue"
+  },
+  "UpdateTask": {
+    "description": "Auto imported from components/Todos/UpdateTask.vue"
+  },
+  "LazyUpdateTask": {
+    "description": "Auto imported from components/Todos/UpdateTask.vue"
+  },
+  "DeleteUser": {
+    "description": "Auto imported from components/UpdateUserInfo/DeleteUser.vue"
+  },
+  "LazyDeleteUser": {
+    "description": "Auto imported from components/UpdateUserInfo/DeleteUser.vue"
+  },
+  "UpdateEmailAddress": {
+    "description": "Auto imported from components/UpdateUserInfo/UpdateEmailAddress.vue"
+  },
+  "LazyUpdateEmailAddress": {
+    "description": "Auto imported from components/UpdateUserInfo/UpdateEmailAddress.vue"
+  },
+  "UpdatePassword": {
+    "description": "Auto imported from components/UpdateUserInfo/UpdatePassword.vue"
+  },
+  "LazyUpdatePassword": {
+    "description": "Auto imported from components/UpdateUserInfo/UpdatePassword.vue"
+  },
+  "UpdateUserName": {
+    "description": "Auto imported from components/UpdateUserInfo/UpdateUserName.vue"
+  },
+  "LazyUpdateUserName": {
+    "description": "Auto imported from components/UpdateUserInfo/UpdateUserName.vue"
+  }
+}

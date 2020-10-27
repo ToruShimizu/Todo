@@ -1,0 +1,16 @@
+[
+  {
+    "name": "signIn",
+    "path": "/signIn",
+    "component": "/Users/Toru/Desktop/ToDo/pages/signIn.vue",
+    "chunkName": "pages/signIn",
+    "_name": "_ea58f72c"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "/Users/Toru/Desktop/ToDo/pages/index.vue",
+    "chunkName": "pages/index",
+    "_name": "_117ee95a"
+  }
+]
