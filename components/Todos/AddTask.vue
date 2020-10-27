@@ -16,7 +16,7 @@
                       v-model="task.title"
                       label="タスクを入力する"
                       prepend-inner-icon="mdi-pencil-outline"
-                      :rules="titleRules"
+                      :rules="[validRules.titleRules.required]"
                       clearable
                       @keydown.enter="addTask"
                     />
@@ -83,7 +83,9 @@
 </template>
 
 <script>
+import FormValidation from '@/mixins/FormValidation.vue'
 export default {
+  mixins: [FormValidation],
   props: {
     task: {
       type: Object,
@@ -100,10 +102,6 @@ export default {
     validate: {
       type: Boolean,
       default: true
-    },
-    titleRules: {
-      type: Array,
-      default: () => [(v) => !!v || 'タイトルは必須入力です']
     }
   },
   data() {

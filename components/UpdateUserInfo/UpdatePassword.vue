@@ -18,7 +18,7 @@
                   v-model="loginUserEmail"
                   prepend-inner-icon="mdi-email-outline"
                   label="登録されているメールアドレス"
-                  :rules="emailRules"
+                  :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
                   clearable
                 />
                 <v-text-field
@@ -27,7 +27,7 @@
                   prepend-inner-icon="mdi-lock-outline"
                   :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                   label="現在のPassword(6文字以上)"
-                  :rules="[passwordRules.required, passwordRules.min]"
+                  :rules="[validRules.passwordRules.required, validRules.passwordRules.regex]"
                   @click:append="showPassword = !showPassword"
                 />
                 <v-text-field
@@ -36,7 +36,7 @@
                   prepend-inner-icon="mdi-lock-reset"
                   :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                   label="新しいPassword(6文字以上)"
-                  :rules="[passwordRules.required, passwordRules.min]"
+                  :rules="[validRules.passwordRules.required, validRules.passwordRules.regex]"
                   @click:append="showEditPassword = !showEditPassword"
                 />
                 <v-card-actions>
@@ -63,7 +63,9 @@
 </template>
 
 <script>
+import FormValidation from '@/mixins/FormValidation.vue'
 export default {
+  mixins: [FormValidation],
   components: {},
   props: {
     updatePasswordDialog: {
@@ -92,15 +94,7 @@ export default {
       loadingResetPassword: false,
       validate: true,
       showPassword: false,
-      showEditPassword: false,
-      emailRules: [
-        (v) => !!v || 'メールアドレスは必須です',
-        (v) => /.+@.+\..+/.test(v) || '正しいメールアドレスの形式で入力してください'
-      ],
-      passwordRules: {
-        required: (v) => !!v || 'パスワードは必須です',
-        min: (v) => v.length >= 6 || '6文字以上で入力してください'
-      }
+      showEditPassword: false
     }
   },
   watch: {

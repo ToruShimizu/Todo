@@ -18,7 +18,7 @@
                   v-model="newEmailAddress"
                   prepend-inner-icon="mdi-email-outline"
                   label="新しいメールアドレス"
-                  :rules="emailRules"
+                  :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
                   clearable
                 />
                 <v-card-actions>
@@ -48,7 +48,9 @@
 </template>
 
 <script>
+import FormValidation from '@/mixins/FormValidation.vue'
 export default {
+  mixins: [FormValidation],
   props: {
     updateEmailAddressDialog: {
       type: Boolean
@@ -62,11 +64,7 @@ export default {
       newEmailAddress: '',
       loader: null,
       loadingUpdateEmailAddress: false,
-      validate: true,
-      emailRules: [
-        (v) => !!v || 'メールアドレスは必須です',
-        (v) => /.+@.+\..+/.test(v) || '正しいメールアドレスの形式で入力してください'
-      ]
+      validate: true
     }
   },
   watch: {

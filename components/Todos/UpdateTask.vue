@@ -21,7 +21,7 @@
                     v-model="editTodo.task.title"
                     label="タスクを変更する"
                     prepend-inner-icon="mdi-pencil-outline"
-                    :rules="titleRules"
+                    :rules="[validRules.titleRules.required]"
                     clearable
                   />
                 </v-col>
@@ -88,7 +88,10 @@
 import { mapState } from 'vuex'
 import AddComment from '@/components/Comment/AddComment'
 import Comment from '@/components/Comment/Comment'
+import FormValidation from '@/mixins/FormValidation.vue'
+
 export default {
+  mixins: [FormValidation],
   components: {
     AddComment,
     Comment
@@ -113,10 +116,6 @@ export default {
     validate: {
       type: Boolean,
       default: true
-    },
-    titleRules: {
-      type: Array,
-      default: () => [(v) => !!v || 'タイトルは必須入力です']
     }
   },
   data() {
