@@ -134,6 +134,7 @@ export default {
         id: this.editTodo.task.id,
         task: this.editTodo.task
       })
+      this.$refs.form.reset()
       this.closeUpdateTask()
     },
     closeUpdateTask() {

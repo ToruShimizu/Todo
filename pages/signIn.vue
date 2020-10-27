@@ -125,11 +125,16 @@ export default {
       })
     },
     login() {
+      if (!this.userPassword || !this.userEmail) {
+        this.$refs.form.validate()
+        return
+      }
       this.loader = 'loadingLogin'
       this.$store.dispatch('modules/auth/login', {
         email: this.userEmail,
         password: this.userPassword
       })
+      this.$refs.form.reset()
     },
     openCreateUser() {
       this.createUserDialog = true

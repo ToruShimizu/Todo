@@ -76,8 +76,15 @@ export default {
         alert('テストユーザーはパスワードを再設定することはできません')
         return
       }
+      if (!this.userEmail) {
+        if (!this.userEmail) {
+          this.$refs.form.validate()
+          return
+        }
+      }
       this.loader = 'loadingResetPassword'
       this.$store.dispatch('modules/auth/passwordReset', this.userEmail)
+      this.$refs.form.reset()
     },
     closeResetPasswprd() {
       this.$emit('close-reset-password')

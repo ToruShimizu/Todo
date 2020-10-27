@@ -93,6 +93,10 @@ export default {
   },
   methods: {
     deleteUser() {
+      if (!this.loginUserPassword || !this.loginUserEmail) {
+        this.$refs.form.validate()
+        return
+      }
       this.loader = 'loadingDeleteUser'
       this.$store.dispatch('modules/auth/deleteUser', {
         email: this.loginUserEmail,
@@ -100,6 +104,7 @@ export default {
       })
       this.loginUserEmail = ''
       this.loginUserPassword = ''
+      this.$refs.form.reset()
       this.$emit('update:selectedDeleteUser', 'closeDeleteUser')
     }
   }

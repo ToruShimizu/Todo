@@ -88,9 +88,14 @@ export default {
   },
   methods: {
     updateEmailAddress() {
+      if (!this.newEmailAddress) {
+        this.$refs.form.validate()
+        return
+      }
       this.loader = 'loadingUpdateEmailAddress'
       this.$store.dispatch('modules/auth/updateEmailAddress', { email: this.newEmailAddress })
       this.newEmailAddress = ''
+      this.$refs.form.reset()
       this.$emit('update:selectedUpdateEmailAddress', 'closeUpdateEmailAddress')
     }
   }
