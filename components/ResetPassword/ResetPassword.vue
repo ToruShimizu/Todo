@@ -9,9 +9,10 @@
       <v-app>
         <v-col cols="12" sm="12" md="12">
           <v-card width="400px" class="mx-auto mt-5 text-center">
-            <v-card-title>
-              <h2>パスワード再設定</h2>
+            <v-card-title class="text-center">
+              <h4 class="fill-width">パスワード再設定</h4>
             </v-card-title>
+            <v-divider />
             <v-card-text>
               <v-form ref="form" lazy-validation @submit.prevent="passwordReset">
                 <p>
@@ -35,8 +36,11 @@
                     <v-icon left>mdi-email-send</v-icon>送信
                   </v-btn>
                   <v-spacer></v-spacer>
-                  <v-btn color="primary" @click="closeResetPasswprd">
+                  <v-btn color="primary" @click="closeResetPasswprd" class="hidden-xs-only">
                     <v-icon left>mdi-login-variant</v-icon>ログイン画面へ戻る
+                  </v-btn>
+                  <v-btn color="primary" @click="closeResetPasswprd" class="hidden-sm-and-up">
+                    <v-icon left>mdi-login-variant</v-icon>戻る
                   </v-btn>
                 </v-card-actions>
               </v-form>
