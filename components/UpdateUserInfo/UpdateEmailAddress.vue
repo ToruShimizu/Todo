@@ -17,7 +17,7 @@
             <v-card-title>
               <v-card-text>
                 現在登録されているメールアドレス<br /><v-icon left>mdi-email-outline</v-icon
-                >{{ userEmail }}
+                >{{ gettersUserEmail }}
               </v-card-text>
             </v-card-title>
             <v-card-text>
@@ -86,7 +86,7 @@ export default {
         this.newEmailAddress = ''
       }
     },
-    ...mapGetters('modules/auth', ['userEmail'])
+    ...mapGetters('modules/auth', ['gettersUserEmail'])
   },
   methods: {
     updateEmailAddress() {
