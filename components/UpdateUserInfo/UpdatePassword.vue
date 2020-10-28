@@ -105,13 +105,13 @@ export default {
     }
   },
   methods: {
-    updatePassword() {
+    async updatePassword() {
       if (!this.updateUserPassword || !this.getUserPassword || !this.getUserEmail) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingResetPassword'
-      this.$store.dispatch('modules/auth/updatePassword', {
+      await this.$store.dispatch('modules/auth/updatePassword', {
         updatePassword: this.updateUserPassword,
         email: this.getUserEmail,
         password: this.getUserPassword
