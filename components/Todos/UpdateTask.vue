@@ -134,9 +134,11 @@ export default {
       this.closeUpdateTask()
     },
     closeUpdateTask() {
+      this.$refs.form.reset()
       this.$emit('close-update-task')
     },
     cancelUpdateTask() {
+      this.$refs.form.reset()
       this.$emit('cancel-update-task')
     }
   }
