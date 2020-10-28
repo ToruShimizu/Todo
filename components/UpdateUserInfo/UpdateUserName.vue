@@ -17,7 +17,7 @@
             <v-card-title>
               <v-card-text>
                 現在登録されているユーザー名<br />
-                <v-icon left>mdi-account-outline</v-icon>{{ userName }}さん
+                <v-icon left>mdi-account-outline</v-icon>{{ gettersUserName }}さん
               </v-card-text>
             </v-card-title>
             <v-card-text>
@@ -85,7 +85,7 @@ export default {
         this.editUserName = ''
       }
     },
-    ...mapGetters('modules/auth', ['userName'])
+    ...mapGetters('modules/auth', ['gettersUserName'])
   },
   methods: {
     updateUserName() {
