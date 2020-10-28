@@ -59,25 +59,27 @@
 
       <v-divider />
       <v-list-item @click="selectedUpdateUserInfo = 'openUpdateUserName'">
-        <v-list-item-title
-          ><v-icon> mdi-badge-account-horizontal-outline </v-icon>
-          ユーザー名変更
+        <v-list-item-title>
+          <v-btn text>
+            <v-icon> mdi-badge-account-horizontal-outline </v-icon>
+            ユーザー名変更
+          </v-btn>
         </v-list-item-title>
       </v-list-item>
       <v-list-item @click="selectedUpdateUserInfo = 'openUpdateEmailAddress'">
         <v-list-item-title>
-          <v-icon>mdi-email-edit-outline </v-icon>メールアドレス変更</v-list-item-title
-        >
+          <v-btn text> <v-icon>mdi-email-edit-outline </v-icon>メールアドレス変更 </v-btn>
+        </v-list-item-title>
       </v-list-item>
       <v-list-item @click="selectedUpdateUserInfo = 'openUpdatePassword'">
         <v-list-item-title>
-          <v-icon>mdi-account-key-outline </v-icon>パスワード変更</v-list-item-title
-        ></v-list-item
-      >
+          <v-btn text> <v-icon>mdi-account-key-outline </v-icon>パスワード変更 </v-btn>
+        </v-list-item-title>
+      </v-list-item>
       <v-list-item @click="selectedUpdateUserInfo = 'openDeleteUser'">
-        <v-list-item-title
-          ><v-icon> mdi-account-remove-outline </v-icon>アカウント削除</v-list-item-title
-        >
+        <v-list-item-title>
+          <v-btn text> <v-icon> mdi-account-remove-outline </v-icon>アカウント削除 </v-btn>
+        </v-list-item-title>
       </v-list-item>
     </v-list>
   </v-container>
