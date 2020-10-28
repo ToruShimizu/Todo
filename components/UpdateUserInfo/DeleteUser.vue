@@ -44,7 +44,12 @@
                     <v-icon left>mdi-login-variant</v-icon>戻る
                   </v-btn>
                   <v-spacer />
-                  <v-btn color="success" @click="deleteUser">
+                  <v-btn
+                    color="success"
+                    @click="deleteUser"
+                    :loading="loadingDeleteUser"
+                    :disabled="loadingDeleteUser"
+                  >
                     <v-icon left>mdi-account</v-icon>SAVE
                   </v-btn>
                 </v-card-actions>
