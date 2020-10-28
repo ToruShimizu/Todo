@@ -41,14 +41,14 @@
         <v-card-text>
           <v-form ref="form" lazy-validation @submit.prevent="login">
             <v-text-field
-              v-model="userEmail"
+              v-model="getUserEmail"
               prepend-inner-icon="mdi-email-outline"
               label="メールアドレスを入力する"
               :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
               clearable
             />
             <v-text-field
-              v-model="userPassword"
+              v-model="getUserPassword"
               :type="showPassword ? 'text' : 'Password'"
               prepend-inner-icon="mdi-lock-outline"
               :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -93,11 +93,13 @@
 import { mapActions } from 'vuex'
 import FormValidation from '../mixins/FormValidation.vue'
 import LoadingView from '../mixins/LoadingView.vue'
+import StateUserEmail from '../mixins/UserInfo/StateUserEmail'
+import StateUserPassword from '../mixins/UserInfo/StateUserPassword'
 import CreateUser from '@/components/CreateUser/CreateUser'
 import ResetPassword from '@/components/ResetPassword/ResetPassword'
 
 export default {
-  mixins: [FormValidation, LoadingView],
+  mixins: [FormValidation, LoadingView, StateUserEmail, StateUserPassword],
   components: {
     CreateUser,
     ResetPassword
@@ -107,8 +109,6 @@ export default {
     return {
       loadingTestLogin: false,
       loadingLogin: false,
-      userEmail: '',
-      userPassword: '',
       showPassword: false,
       validate: true,
       createUserDialog: false,
@@ -125,14 +125,14 @@ export default {
       })
     },
     login() {
-      if (!this.userPassword || !this.userEmail) {
+      if (!this.getUserPassword || !this.getUserEmail) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingLogin'
       this.$store.dispatch('modules/auth/login', {
-        email: this.userEmail,
-        password: this.userPassword
+        email: this.getUserEmail,
+        password: this.getUserPassword
       })
       this.$refs.form.reset()
     },
