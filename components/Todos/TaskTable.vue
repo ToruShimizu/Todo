@@ -132,12 +132,10 @@ export default {
       console.log(this.editTodo)
     },
     closeUpdateTask() {
-      this.$refs.form.reset()
       this.updateTaskDialog = false
     },
     // FIXME キャンセル時の処理はあとで記述
     cancelUpdateTask() {
-      this.$refs.form.reset()
       this.updateTaskDialog = false
     }
   }
