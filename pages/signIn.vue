@@ -123,16 +123,19 @@ export default {
         userName: 'テストユーザー'
       })
     },
-    login() {
+    async login() {
       if (!this.getUserPassword || !this.getUserEmail) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingLogin'
-      this.$store.dispatch('modules/auth/login', {
+      await this.$store.dispatch('modules/auth/login', {
         email: this.getUserEmail,
         password: this.getUserPassword
       })
+      this.getUserEmail = ''
+      this.getUserPassword = ''
+      this.loader = null
       this.$refs.form.reset()
     },
     openCreateUser() {
