@@ -84,19 +84,23 @@ export default {
       set(value) {
         this.$emit('update:selectedUpdateEmailAddress', value)
         this.getUserEmail = ''
+        this.$refs.form.reset()
       }
     },
     ...mapGetters('modules/auth', ['gettersUserEmail'])
   },
   methods: {
-    updateEmailAddress() {
+    async updateEmailAddress() {
       if (!this.getUserEmail) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingUpdateEmailAddress'
-      this.$store.dispatch('modules/auth/updateEmailAddress', { email: this.getUserEmail })
+      await this.$store.dispatch('modules/auth/updateEmailAddress', {
+        email: this.getUserEmail
+      })
       this.getUserEmail = ''
+      this.loader = null
       this.$refs.form.reset()
       this.$emit('update:selectedUpdateEmailAddress', 'closeUpdateEmailAddress')
     }
