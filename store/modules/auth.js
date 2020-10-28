@@ -73,12 +73,12 @@ const actions = {
     try {
       const provider = new firebase.auth.GoogleAuthProvider()
       await auth.signInWithPopup(provider).then((result) => {
-        alert('Hello, ' + result.user.displayName + '!')
+        alert('ようこそ ' + result.user.displayName + 'さん!')
         commit('setLoginUser')
         this.$router.push({ path: '/' })
       })
     } catch (err) {
-      alert('ログインに失敗しました')
+      alert('ログインに失敗しました。もう一度やり直してください。')
     }
   },
   // メールアドレスとパスワードでログイン
@@ -86,17 +86,17 @@ const actions = {
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password)
       const user = await firebase.auth().currentUser
-      alert('ようこそ' + user.displayName + 'さん')
+      alert('ようこそ' + user.displayName + 'さん!')
       // サインイン成功後にトップページに遷移する
       this.$router.push({ path: '/' })
     } catch {
-      alert('ログインに失敗しました')
+      alert('ログインに失敗しました。もう一度やり直してください。')
     }
   },
   // ログアウト
   async logout({ commit }) {
     await auth.signOut()
-    alert('ログアウトしました')
+    alert('ログアウトしました。')
     console.log('logout')
     commit('deleteLoginUser')
   },
@@ -107,11 +107,10 @@ const actions = {
       await newUser.user.updateProfile({
         displayName: userName
       })
-      alert('作成に成功しました')
-      alert('このままログインします')
+      alert('ユーザーの作成に成功しました。このままログインします。')
       dispatch('login', { email, password })
     } catch (err) {
-      alert('作成に失敗しました')
+      alert('ユーザーの作成に失敗しました。もう一度やり直してください。')
       console.log(err)
     }
   },
@@ -126,11 +125,11 @@ const actions = {
         await user.updateProfile({
           displayName: userName
         })
-        alert('成功しました')
+        alert('ユーザー名の変更が完了しました。')
         console.log(user)
         dispatch('onAuthStateChanged')
       } catch (err) {
-        alert('更新に失敗しました')
+        alert('ユーザー名の変更に失敗しました。もう一度やり直してください。')
         console.log(err)
       }
     }
@@ -143,10 +142,10 @@ const actions = {
     } else {
       try {
         await user.updateEmail(email)
-        alert('新しいメールアドレスの登録が完了しました')
+        alert('新しいメールアドレスの登録が完了しました。')
         dispatch('onAuthStateChanged')
       } catch (err) {
-        alert('新しいメールアドレスの登録に失敗しました')
+        alert('新しいメールアドレスの登録に失敗しました。もう一度やり直してください。')
         console.log(err)
       }
     }
@@ -162,7 +161,7 @@ const actions = {
       try {
         await user.reauthenticateWithCredential(credential)
         await user.updatePassword(updatePassword)
-        alert('パスワードを変更しました')
+        alert('パスワードの変更が完了しました。ログイン画面に戻ります。')
         dispatch('logout')
       } catch (err) {
         console.log(err)
@@ -176,7 +175,7 @@ const actions = {
       auth.languageCode = 'ja'
       await auth.sendPasswordResetEmail(email)
     } catch {
-      alert('送信に失敗しました')
+      alert('送信に失敗しました。もう一度やり直してください。')
     }
   },
   // ユーザー情報削除
@@ -190,7 +189,7 @@ const actions = {
         const credential = await firebase.auth.EmailAuthProvider.credential(email, password)
         await user.reauthenticateWithCredential(credential)
         await user.delete()
-        alert('ユーザー情報を削除しました')
+        alert('ユーザー情報を削除しました。ログイン画面に戻ります。')
         commit('deleteLoginUser')
       } catch (err) {
         console.log(err)
