@@ -108,7 +108,10 @@ const actions = {
         displayName: userName
       })
       alert('ユーザーの作成に成功しました。このままログインします。')
-      dispatch('login', { email, password })
+      await dispatch('login', { email, password })
+      email = null
+      password = null
+      userName = null
     } catch (err) {
       alert('ユーザーの作成に失敗しました。もう一度やり直してください。')
       console.log(err)

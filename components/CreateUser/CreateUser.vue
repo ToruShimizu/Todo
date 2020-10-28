@@ -92,25 +92,26 @@ export default {
     }
   },
   methods: {
-    createUser() {
+    async createUser() {
       this.loader = 'loadingCreateUser'
       if (!this.getUserPassword || !this.getUserEmail) {
         this.$refs.form.validate()
         return
       }
-      this.$store.dispatch('modules/auth/createUser', {
+      await this.$store.dispatch('modules/auth/createUser', {
         email: this.getUserEmail,
         password: this.getUserPassword,
         userName: this.getUserName
       })
+      this.loader = null
       this.$refs.form.reset()
     },
     closeCreateUser() {
-      this.$emit('close-create-user')
       this.getUserName = ''
       this.getUserEmail = ''
       this.getUserPassword = ''
       this.$refs.form.reset()
+      this.$emit('close-create-user')
     }
   }
 }
