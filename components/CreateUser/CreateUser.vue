@@ -3,7 +3,7 @@
     <v-dialog
       v-model="createUserDialog"
       persistent
-      max-width="400px"
+      max-width="500px"
       transition="scroll-y-transition"
     >
       <v-app>
