@@ -82,21 +82,23 @@ export default {
       set(value) {
         this.$emit('update:selectedUpdateUserName', value)
         this.editUserName = ''
+        this.$refs.form.reset()
       }
     },
     ...mapGetters('modules/auth', ['gettersUserName'])
   },
   methods: {
-    updateUserName() {
+    async updateUserName() {
       if (!this.getUserName) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingUpdateUserName'
-      this.$store.dispatch('modules/auth/updateUserName', {
+      await this.$store.dispatch('modules/auth/updateUserName', {
         userName: this.getUserName
       })
       this.getUserName = ''
+      this.loader = null
       this.$refs.form.reset()
       this.$emit('update:selectedUpdateUserName', 'closeUpdateUserName')
     }
