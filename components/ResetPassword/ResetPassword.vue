@@ -85,6 +85,7 @@ export default {
     closeResetPasswprd() {
       this.$emit('close-reset-password')
       this.getUserEmail = ''
+      this.$refs.form.reset()
     }
   }
 }
