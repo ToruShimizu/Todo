@@ -86,7 +86,7 @@ export default {
       },
       set(value) {
         this.$emit('update:selectedDeleteUser', value)
-        this.loginUserEmail = ''
+        this.getUserEmail = ''
         this.$refs.form.reset()
       }
     }
