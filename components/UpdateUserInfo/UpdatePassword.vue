@@ -93,6 +93,8 @@ export default {
       },
       set(value) {
         this.$emit('update:selectedUpdatePassword', value)
+        this.getUserPassword = ''
+        this.$refs.form.reset()
       }
     }
   },
