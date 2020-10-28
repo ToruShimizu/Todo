@@ -19,28 +19,34 @@ const mutations = {
     state.login_user = null
     console.log('deleteLoginUser')
   },
+  // 入力されたユーザー名の更新
   mutateUserName(state, userName) {
     state.userName = userName
   },
+  // 入力されたメールアドレスの更新
   mutateUserEmail(state, userEmail) {
     state.userEmail = userEmail
   },
+  // 入力されたパスワードの更新
   mutateUserPassword(state, userPassword) {
     state.userPassword = userPassword
   }
 }
 
 const actions = {
-  // ログインユーザー情報の取得
+  // 入力されたユーザー名の更新
   commitUserName({ commit }, userName) {
     commit('mutateUserName', userName)
   },
+  // 入力されたメールアドレスの更新
   commitUserEmail({ commit }, userEmail) {
     commit('mutateUserEmail', userEmail)
   },
+  // 入力されたパスワードの更新
   commitUserPassword({ commit }, userPassword) {
     commit('mutateUserPassword', userPassword)
   },
+  // ログインユーザー情報の取得
   setLoginUser({ commit }, userInfo) {
     console.log(userInfo)
     commit('setLoginUser', userInfo)
@@ -194,8 +200,9 @@ const actions = {
 }
 
 const getters = {
-  // ユーザーネームの取得
+  // ユーザー名の取得
   gettersUserName: (state) => (state.login_user ? state.login_user.displayName : ''),
+  // ユーザーのメールアドレスの取得
   gettersUserEmail: (state) => (state.login_user ? state.login_user.email : ''),
   // ユーザー画像の取得
   photoURL: (state) => (state.login_user ? state.login_user.photoURL : ''),
