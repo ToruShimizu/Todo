@@ -20,14 +20,14 @@
             <v-card-text>
               <v-form ref="form" lazy-validation @submit.prevent="updatePassword">
                 <v-text-field
-                  v-model="loginUserEmail"
+                  v-model="getUserEmail"
                   prepend-inner-icon="mdi-email-outline"
                   label="登録されているメールアドレスを入力してください"
                   :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
                   clearable
                 />
                 <v-text-field
-                  v-model="loginUserPassword"
+                  v-model="getUserPassword"
                   :type="showPassword ? 'text' : 'Password'"
                   prepend-inner-icon="mdi-lock-outline"
                   :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -73,8 +73,10 @@
 <script>
 import FormValidation from '@/mixins/FormValidation.vue'
 import LoadingView from '@/mixins/LoadingView.vue'
+import StateUserEmail from '@/mixins/UserInfo/StateUserEmail.vue'
+import StateUserPassword from '@/mixins/UserInfo/StateUserPassword.vue'
 export default {
-  mixins: [FormValidation, LoadingView],
+  mixins: [FormValidation, LoadingView, StateUserEmail, StateUserPassword],
   components: {},
   props: {
     updatePasswordDialog: {
@@ -97,8 +99,6 @@ export default {
   data() {
     return {
       updateUserPassword: '',
-      loginUserPassword: '',
-      loginUserEmail: '',
       loadingResetPassword: false,
       validate: true,
       showPassword: false,
@@ -107,19 +107,19 @@ export default {
   },
   methods: {
     updatePassword() {
-      if (!this.updateUserPassword || !this.loginUserPassword || !this.loginUserEmail) {
+      if (!this.updateUserPassword || !this.getUserPassword || !this.getUserEmail) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingResetPassword'
       this.$store.dispatch('modules/auth/updatePassword', {
         updatePassword: this.updateUserPassword,
-        email: this.loginUserEmail,
-        password: this.loginUserPassword
+        email: this.getUserEmail,
+        password: this.getUserPassword
       })
       this.updateUserPassword = ''
-      this.loginUserEmail = ''
-      this.loginUserPassword = ''
+      this.getUserEmail = ''
+      this.getUserPassword = ''
       this.$refs.form.reset()
       this.$emit('update:selectedUpdatePassword', 'closeUpdatePassword')
     }

@@ -33,11 +33,11 @@
             <img :src="photoURL" />
           </v-avatar>
           <v-icon v-if="!photoURL">mdi-account-outline</v-icon>
-          {{ userName }}
+          {{ gettersUserName }}
         </v-list-item-title>
         <v-list-item-title class="title grey--text text--darken-2">
           <v-icon>mdi-email-outline</v-icon>
-          {{ userEmail }}
+          {{ gettersUserEmail }}
         </v-list-item-title>
       </v-list-item-content>
       <v-list-item>
@@ -111,7 +111,7 @@ export default {
     updateUserInfo() {
       return this.selectedUserInfo()
     },
-    ...mapGetters('modules/auth', ['userName', 'photoURL', 'userEmail']),
+    ...mapGetters('modules/auth', ['gettersUserName', 'photoURL', 'gettersUserEmail']),
     ...mapState('modules/auth', ['login_user'])
   },
   methods: {

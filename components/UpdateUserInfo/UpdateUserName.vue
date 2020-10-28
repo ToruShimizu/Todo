@@ -17,13 +17,13 @@
             <v-card-title>
               <v-card-text>
                 現在登録されているユーザー名<br />
-                <v-icon left>mdi-account-outline</v-icon>{{ userName }}さん
+                <v-icon left>mdi-account-outline</v-icon>{{ gettersUserName }}さん
               </v-card-text>
             </v-card-title>
             <v-card-text>
               <v-form ref="form" lazy-validation @submit.prevent="updateUserName">
                 <v-text-field
-                  v-model="editUserName"
+                  v-model="getUserName"
                   prepend-inner-icon="mdi-card-account-details-outline"
                   label="新しい名前を入力してください"
                   :rules="[validRules.nameRules.required]"
@@ -56,14 +56,23 @@
 import { mapGetters } from 'vuex'
 import FormValidation from '@/mixins/FormValidation.vue'
 import LoadingView from '@/mixins/LoadingView.vue'
+import StateUserName from '@/mixins/UserInfo/StateUserName.vue'
+
 export default {
-  mixins: [FormValidation, LoadingView],
+  mixins: [FormValidation, LoadingView, StateUserName],
+
   props: {
     updateUserNameDialog: {
       type: Boolean
     },
     selectedUpdateUserInfo: {
       type: String
+    }
+  },
+  data() {
+    return {
+      loadingUpdateUserName: false,
+      validate: true
     }
   },
   computed: {
@@ -76,26 +85,19 @@ export default {
         this.editUserName = ''
       }
     },
-    ...mapGetters('modules/auth', ['userName'])
-  },
-  data() {
-    return {
-      loadingUpdateUserName: false,
-      editUserName: '',
-      validate: true
-    }
+    ...mapGetters('modules/auth', ['gettersUserName'])
   },
   methods: {
     updateUserName() {
-      if (!this.editUserName) {
+      if (!this.getUserName) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingUpdateUserName'
       this.$store.dispatch('modules/auth/updateUserName', {
-        userName: this.editUserName
+        userName: this.getUserName
       })
-      this.editUserName = ''
+      this.getUserName = ''
       this.$refs.form.reset()
       this.$emit('update:selectedUpdateUserName', 'closeUpdateUserName')
     }

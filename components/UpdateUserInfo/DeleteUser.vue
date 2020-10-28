@@ -23,14 +23,14 @@
             <v-card-text>
               <v-form ref="form" lazy-validation @submit.prevent="deleteUser">
                 <v-text-field
-                  v-model="loginUserEmail"
+                  v-model="getUserEmail"
                   prepend-inner-icon="mdi-email-outline"
                   label="登録されているメールアドレス"
                   :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
                   clearable
                 />
                 <v-text-field
-                  v-model="loginUserPassword"
+                  v-model="getUserPassword"
                   :type="showPassword ? 'text' : 'Password'"
                   prepend-inner-icon="mdi-lock-outline"
                   :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -60,8 +60,10 @@
 <script>
 import FormValidation from '@/mixins/FormValidation.vue'
 import LoadingView from '@/mixins/LoadingView.vue'
+import StateUserEmail from '@/mixins/UserInfo/StateUserEmail.vue'
+import StateUserPassword from '@/mixins/UserInfo/StateUserPassword.vue'
 export default {
-  mixins: [FormValidation, LoadingView],
+  mixins: [FormValidation, LoadingView, StateUserEmail, StateUserPassword],
   props: {
     deleteUserDialog: {
       type: Boolean
@@ -73,8 +75,6 @@ export default {
 
   data() {
     return {
-      loginUserPassword: '',
-      loginUserEmail: '',
       loadingDeleteUser: false,
       validate: true,
       showPassword: false
@@ -93,17 +93,17 @@ export default {
   },
   methods: {
     deleteUser() {
-      if (!this.loginUserPassword || !this.loginUserEmail) {
+      if (!this.getUserPassword || !this.getUserEmail) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingDeleteUser'
       this.$store.dispatch('modules/auth/deleteUser', {
-        email: this.loginUserEmail,
-        password: this.loginUserPassword
+        email: this.getUserEmail,
+        password: this.getUserPassword
       })
-      this.loginUserEmail = ''
-      this.loginUserPassword = ''
+      this.getUserEmail = ''
+      this.getUserPassword = ''
       this.$refs.form.reset()
       this.$emit('update:selectedDeleteUser', 'closeDeleteUser')
     }
