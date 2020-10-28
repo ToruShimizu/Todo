@@ -124,9 +124,9 @@ export default {
         id: todo.task.id
       })
     },
-    openUpdateTask(todo) {
+    async openUpdateTask(todo) {
       const id = String(todo.task.id)
-      this.$store.dispatch('modules/todos/fetchComments', id)
+      await this.$store.dispatch('modules/todos/fetchComments', id)
       this.editTodo = todo
       this.updateTaskDialog = true
       console.log(this.editTodo)
