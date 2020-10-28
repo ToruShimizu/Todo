@@ -103,16 +103,17 @@ export default {
     }
   },
   methods: {
-    addTask() {
+    async addTask() {
       if (!this.task.title) {
         this.$refs.form.validate()
         return
       }
-      this.$store.dispatch('modules/todos/addTask', { task: this.task })
+      await this.$store.dispatch('modules/todos/addTask', { task: this.task })
       console.log('addTask')
       this.task.title = ''
       this.task.detail = ''
       this.task.date = new Date().toISOString().substr(0, 10)
+      this.$refs.form.reset()
       this.closeAddTask()
     },
     openAddTask() {
