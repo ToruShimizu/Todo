@@ -110,7 +110,6 @@ export default {
       loadingTestLogin: false,
       loadingLogin: false,
       showPassword: false,
-      validate: true,
       createUserDialog: false,
       resetPasswordDialog: false
     }

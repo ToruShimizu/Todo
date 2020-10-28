@@ -73,8 +73,7 @@ export default {
   },
   data() {
     return {
-      loadingUpdateEmailAddress: false,
-      validate: true
+      loadingUpdateEmailAddress: false
     }
   },
   computed: {

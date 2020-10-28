@@ -66,8 +66,7 @@ export default {
   },
   data() {
     return {
-      loadingResetPassword: false,
-      validate: true
+      loadingResetPassword: false
     }
   },
   methods: {

@@ -76,7 +76,6 @@ export default {
   data() {
     return {
       loadingDeleteUser: false,
-      validate: true,
       showPassword: false
     }
   },

@@ -88,8 +88,7 @@ export default {
   data() {
     return {
       loadingCreateUser: false,
-      showPassword: false,
-      validate: true
+      showPassword: false
     }
   },
   methods: {

@@ -71,8 +71,7 @@ export default {
   },
   data() {
     return {
-      loadingUpdateUserName: false,
-      validate: true
+      loadingUpdateUserName: false
     }
   },
   computed: {

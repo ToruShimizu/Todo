@@ -100,7 +100,6 @@ export default {
     return {
       updateUserPassword: '',
       loadingResetPassword: false,
-      validate: true,
       showPassword: false,
       showEditPassword: false
     }

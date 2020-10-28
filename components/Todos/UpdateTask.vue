@@ -110,10 +110,6 @@ export default {
         date: new Date().toISOString().substr(0, 10),
         done: false
       })
-    },
-    validate: {
-      type: Boolean,
-      default: true
     }
   },
   data() {

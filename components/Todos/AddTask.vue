@@ -95,10 +95,6 @@ export default {
     },
     taskDialog: {
       type: Boolean
-    },
-    validate: {
-      type: Boolean,
-      default: true
     }
   },
   data() {
