@@ -40,7 +40,7 @@
                   v-model="updateUserPassword"
                   :type="showEditPassword ? 'text' : 'Password'"
                   prepend-inner-icon="mdi-lock-reset"
-                  :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                  :append-icon="showEditPassword ? 'mdi-eye' : 'mdi-eye-off'"
                   label="新しいPassword(6文字以上)"
                   :rules="[validRules.passwordRules.required, validRules.passwordRules.regex]"
                   @click:append="showEditPassword = !showEditPassword"
