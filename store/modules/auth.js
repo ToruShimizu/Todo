@@ -177,6 +177,7 @@ const actions = {
       // 送信されるメールを日本語に変換
       auth.languageCode = 'ja'
       await auth.sendPasswordResetEmail(email)
+      alert('送信が完了しました。記載されているURLより再登録をお願いします。')
     } catch {
       alert('送信に失敗しました。もう一度やり直してください。')
     }
