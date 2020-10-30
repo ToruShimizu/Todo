@@ -40,7 +40,7 @@
                     :loading="loadingUpdateUserName"
                     :disabled="loadingUpdateUserName"
                   >
-                    <v-icon left>mdi-account</v-icon>SAVE
+                    <v-icon left> mdi-badge-account-horizontal-outline </v-icon>SAVE
                   </v-btn>
                 </v-card-actions>
               </v-form>
