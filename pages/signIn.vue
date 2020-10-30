@@ -5,8 +5,6 @@
         <v-card-title class="text-center">
           <h4 class="fill-width">ログインはこちらから</h4>
         </v-card-title>
-        <v-divider />
-
         <v-card-text>
           <v-btn
             class="fill-width text-capitalize caption"
@@ -34,7 +32,6 @@
             ><v-icon>mdi-account-arrow-left-outline </v-icon> テストユーザーでログイン
           </v-btn>
         </v-card-text>
-        <v-divider />
         <div class="separator separator_login_page">
           <div class="middle_separator">または</div>
         </div>
@@ -139,9 +136,14 @@ export default {
       this.$refs.form.reset()
     },
     openCreateUser() {
+      this.getUserName = ''
+      this.getUserEmail = ''
+      this.getUserPassword = ''
+      this.$refs.form.reset()
       this.createUserDialog = true
     },
     closeCreateUser() {
+      this.$refs.form.reset()
       this.createUserDialog = false
     },
     openResetPassword() {
