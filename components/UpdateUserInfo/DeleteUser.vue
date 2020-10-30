@@ -45,12 +45,12 @@
                   </v-btn>
                   <v-spacer />
                   <v-btn
-                    color="success"
+                    color="error"
                     @click="deleteUser"
                     :loading="loadingDeleteUser"
                     :disabled="loadingDeleteUser"
                   >
-                    <v-icon left>mdi-account</v-icon>SAVE
+                    <v-icon left>mdi-account</v-icon>削除
                   </v-btn>
                 </v-card-actions>
               </v-form>
