@@ -29,8 +29,27 @@
     <v-list dense nav>
       <v-list-item-content v-if="login_user">
         <v-list-item-title class="title grey--text text--darken-2">
-          <v-avatar size="50" v-if="photoURL">
-            <img :src="photoURL" />
+          <v-file-input
+            v-model="userAvatar"
+            accept="image/*"
+            show-size
+            label="画像ファイルをアップロードしてください"
+            prepend-icon="mdi-image"
+            @change="selectUserAvatarFile"
+            style="display: none"
+            ref="image"
+          />
+          <v-avatar max-width="50" max-height="50">
+            <v-img :src="photoURL" v-if="photoURL" @click="selectUserAvatar" :lazy-src="photoURL">
+              <template v-slot:placeholder>
+                <v-row class="fill-height ma-0" align="center" justify="center">
+                  <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                </v-row>
+              </template>
+            </v-img>
+            <v-btn text v-if="!photoURL">
+              <v-icon @click="selectUserAvatar">mdi-account-outline</v-icon>
+            </v-btn>
           </v-avatar>
           <v-icon v-if="!photoURL">mdi-account-outline</v-icon>
           {{ gettersUserName }}
@@ -105,7 +124,8 @@ export default {
       updateUserNameDialog: false,
       updatePasswordDialog: false,
       updateEmailAddressDialog: false,
-      deleteUserDialog: false
+      deleteUserDialog: false,
+      userAvatar: null
     }
   },
   computed: {
@@ -117,6 +137,15 @@ export default {
     ...mapState('modules/auth', ['login_user'])
   },
   methods: {
+    // 画像をクリックしした時にv-file-inputでファイルを選択できるようにする
+    selectUserAvatar() {
+      this.$refs.image.$refs.input.click()
+    },
+    // @changeメソッドでファイルに変換してfirestorageへの追加処理を呼び出す
+    selectUserAvatarFile() {
+      const userAvatarFile = this.userAvatar
+      this.$store.dispatch('modules/auth/uploadUserAvatarFile', userAvatarFile)
+    },
     // ユーザー画面編集の選択
     selectedUserInfo() {
       let returnvalue
