@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-col cols="8">
+    <v-col cols="10" sm="8" md="8">
       <v-text-field
         v-model="innerSearchTask"
         flat
