@@ -1,4 +1,4 @@
-import firebase, { auth } from '~/plugins/firebase'
+import firebase, { auth, storageRef } from '~/plugins/firebase'
 
 // initial state
 const state = () => ({
@@ -117,16 +117,40 @@ const actions = {
       console.log(err)
     }
   },
+  // ユーザープロフィール画像の追加
+  async uploadUserAvatarFile({ getters, commit }, userAvatarFile) {
+    const userInfo = await firebase.auth().currentUser
+    const imageRef = await storageRef.child(`images/${getters.uid}/${userAvatarFile.name}`)
+    const snapShot = await imageRef.put(userAvatarFile)
+    const photoURL = await snapShot.ref.getDownloadURL()
+    try {
+      await userInfo.updateProfile({
+        photoURL
+      })
+      alert('プロフィール画像の変更が完了しました。')
+      // ログインユーザーの情報を更新
+      commit('setLoginUser', userInfo)
+    } catch (err) {
+      alert('画像の変更に失敗しました。もう一度やり直してください。')
+      console.log(err)
+    }
+  },
   // ユーザー情報の更新
   // FIXME:ユーザーのstate更新
-  async updateUserName({ dispatch }, { userName }) {
+  async updateUserName({ dispatch }, { userName, file }) {
+    console.log('auth', file)
     const user = await firebase.auth().currentUser
+    const imageRef = await storageRef.child(`images/${getters.uid}/${file.name}`)
+    const snapShot = await imageRef.put(file)
+    const image = await snapShot.ref.getDownloadURL()
     if (user.displayName === 'テストユーザー') {
       alert('テストユーザーは変更できません')
     } else {
       try {
+        // await dispatch('uploadFile', file)
         await user.updateProfile({
-          displayName: userName
+          displayName: userName,
+          photoURL: image
         })
         alert('ユーザー名の変更が完了しました。')
         console.log(user)
