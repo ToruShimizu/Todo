@@ -20,7 +20,7 @@
                   <br />パスワード再設定のURLが送信されます。
                 </p>
                 <v-text-field
-                  v-model="getUserEmail"
+                  v-model="resetUserPassword.email"
                   prepend-inner-icon="mdi-email-outline"
                   label="登録されているメールアドレス"
                   :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
@@ -55,9 +55,8 @@
 <script>
 import FormValidation from '@/mixins/FormValidation.vue'
 import LoadingView from '@/mixins/LoadingView.vue'
-import StateUserEmail from '@/mixins/UserInfo/StateUserEmail.vue'
 export default {
-  mixins: [FormValidation, LoadingView, StateUserEmail],
+  mixins: [FormValidation, LoadingView],
 
   props: {
     resetPasswordDialog: {
@@ -66,25 +65,28 @@ export default {
   },
   data() {
     return {
+      resetUserPassword: {
+        email: ''
+      },
       loadingResetPassword: false
     }
   },
   methods: {
     passwordReset() {
-      if (this.getUserEmail === 'test@example.com') {
+      if (this.resetUserPassword.email === 'test@example.com') {
         alert('テストユーザーはパスワードを再設定することはできません')
         return
-      } else if (!this.getUserEmail) {
+      } else if (!this.resetUserPassword.email) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingResetPassword'
-      this.$store.dispatch('modules/auth/passwordReset', { email: this.getUserEmail })
+      this.$store.dispatch('modules/auth/passwordReset', { email: this.resetUserPassword.email })
       this.$refs.form.reset()
     },
     closeResetPasswprd() {
       this.$emit('close-reset-password')
-      this.getUserEmail = ''
+      this.resetUserPassword.email = ''
       this.$refs.form.reset()
     }
   }

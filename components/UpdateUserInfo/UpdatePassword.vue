@@ -20,14 +20,14 @@
             <v-card-text>
               <v-form ref="form" lazy-validation @submit.prevent="updatePassword">
                 <v-text-field
-                  v-model="getUserEmail"
+                  v-model="editUserPassword.email"
                   prepend-inner-icon="mdi-email-outline"
                   label="登録されているメールアドレスを入力してください"
                   :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
                   clearable
                 />
                 <v-text-field
-                  v-model="getUserPassword"
+                  v-model="editUserPassword.loginPassword"
                   :type="showPassword ? 'text' : 'Password'"
                   prepend-inner-icon="mdi-lock-outline"
                   :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -37,7 +37,7 @@
                   counter="72"
                 />
                 <v-text-field
-                  v-model="updateUserPassword"
+                  v-model="editUserPassword.newPassword"
                   :type="showEditPassword ? 'text' : 'Password'"
                   prepend-inner-icon="mdi-lock-reset"
                   :append-icon="showEditPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -73,10 +73,9 @@
 <script>
 import FormValidation from '@/mixins/FormValidation.vue'
 import LoadingView from '@/mixins/LoadingView.vue'
-import StateUserEmail from '@/mixins/UserInfo/StateUserEmail.vue'
-import StateUserPassword from '@/mixins/UserInfo/StateUserPassword.vue'
+
 export default {
-  mixins: [FormValidation, LoadingView, StateUserEmail, StateUserPassword],
+  mixins: [FormValidation, LoadingView],
   components: {},
   props: {
     updatePasswordDialog: {
@@ -93,14 +92,20 @@ export default {
       },
       set(value) {
         this.$emit('update:selectedUpdatePassword', value)
-        this.getUserPassword = ''
+        this.editUserPassword.email = ''
+        this.editUserPassword.loginPassword = ''
+        this.editUserPassword.newPassword = ''
         this.$refs.form.reset()
       }
     }
   },
   data() {
     return {
-      updateUserPassword: '',
+      editUserPassword: {
+        email: '',
+        loginPassword: '',
+        newPassword: ''
+      },
       loadingResetPassword: false,
       showPassword: false,
       showEditPassword: false
@@ -108,19 +113,23 @@ export default {
   },
   methods: {
     async updatePassword() {
-      if (!this.updateUserPassword || !this.getUserPassword || !this.getUserEmail) {
+      if (
+        !this.editUserPassword.email ||
+        !this.editUserPassword.loginPassword ||
+        !this.editUserPassword.newPassword
+      ) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingResetPassword'
       await this.$store.dispatch('modules/auth/updatePassword', {
-        updatePassword: this.updateUserPassword,
-        email: this.getUserEmail,
-        password: this.getUserPassword
+        updatePassword: this.editUserPassword.email,
+        email: this.editUserPassword.loginPassword,
+        password: this.editUserPassword
       })
-      this.updateUserPassword = ''
-      this.getUserEmail = ''
-      this.getUserPassword = ''
+      this.editUserPassword.email = ''
+      this.editUserPassword.loginPassword = ''
+      this.editUserPassword.newPassword = ''
       this.$refs.form.reset()
       this.$emit('update:selectedUpdatePassword', 'closeUpdatePassword')
     }

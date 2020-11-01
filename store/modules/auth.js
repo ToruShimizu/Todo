@@ -2,10 +2,7 @@ import firebase, { auth, storageRef } from '~/plugins/firebase'
 
 // initial state
 const state = () => ({
-  login_user: null,
-  userName: null,
-  userEmail: null,
-  userPassword: null
+  login_user: null
 })
 
 const mutations = {
@@ -127,17 +124,18 @@ const actions = {
   async updateUserName({ commit }, { userName, file }) {
     console.log('auth', file)
     const userInfo = await firebase.auth().currentUser
-    const imageRef = await storageRef.child(`images/${getters.uid}/${file.name}`)
-    const snapShot = await imageRef.put(file)
-    const image = await snapShot.ref.getDownloadURL()
+    // 削除し忘れ
+    // const imageRef = await storageRef.child(`images/${getters.uid}/${file.name}`)
+    // const snapShot = await imageRef.put(file)
+    // const image = await snapShot.ref.getDownloadURL()
     if (userInfo.displayName === 'テストユーザー') {
       alert('テストユーザーは変更できません')
     } else {
       try {
         // await dispatch('uploadFile', file)
         await userInfo.updateProfile({
-          displayName: userName,
-          photoURL: image
+          displayName: userName
+          // photoURL: image
         })
         alert('ユーザー名の変更が完了しました。')
         commit('setLoginUser', userInfo)
@@ -193,7 +191,7 @@ const actions = {
     }
   },
   // ユーザー情報削除
-  async deleteUser({ commit }, { email, password }) {
+  async deleteAccount({ commit }, { email, password }) {
     if (email === 'test@example.com') {
       alert('テストユーザーは削除できません')
     } else {
