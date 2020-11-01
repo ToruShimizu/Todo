@@ -124,18 +124,12 @@ const actions = {
   async updateUserName({ commit }, { userName, file }) {
     console.log('auth', file)
     const userInfo = await firebase.auth().currentUser
-    // 削除し忘れ
-    // const imageRef = await storageRef.child(`images/${getters.uid}/${file.name}`)
-    // const snapShot = await imageRef.put(file)
-    // const image = await snapShot.ref.getDownloadURL()
     if (userInfo.displayName === 'テストユーザー') {
       alert('テストユーザーは変更できません')
     } else {
       try {
-        // await dispatch('uploadFile', file)
         await userInfo.updateProfile({
           displayName: userName
-          // photoURL: image
         })
         alert('ユーザー名の変更が完了しました。')
         commit('setLoginUser', userInfo)
