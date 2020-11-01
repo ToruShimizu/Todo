@@ -93,3 +93,4 @@ firebase.js
 #firebase hosting
 node_modules
 .firebase/hosting.ZGlzdA.cache
+.nuxt/routes.json
