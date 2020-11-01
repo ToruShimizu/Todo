@@ -51,7 +51,6 @@
               <v-icon @click="selectUserAvatar">mdi-account-outline</v-icon>
             </v-btn>
           </v-avatar>
-          <v-icon v-if="!photoURL">mdi-account-outline</v-icon>
           {{ gettersUserName }}
         </v-list-item-title>
         <v-list-item-title class="title grey--text text--darken-2">
