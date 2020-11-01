@@ -126,7 +126,7 @@ const actions = {
   // FIXME:ユーザーのstate更新
   async updateUserName({ dispatch }, { userName, file }) {
     console.log('auth', file)
-    const user = await firebase.auth().currentUser
+    const userInfo = await firebase.auth().currentUser
     const imageRef = await storageRef.child(`images/${getters.uid}/${file.name}`)
     const snapShot = await imageRef.put(file)
     const image = await snapShot.ref.getDownloadURL()
@@ -141,7 +141,7 @@ const actions = {
         })
         alert('ユーザー名の変更が完了しました。')
         console.log(user)
-        dispatch('onAuthStateChanged')
+        dispatch('setLoginUser', userInfo)
       } catch (err) {
         alert('ユーザー名の変更に失敗しました。もう一度やり直してください。')
         console.log(err)
@@ -150,14 +150,14 @@ const actions = {
   },
   // メールアドレスの変更
   async updateEmailAddress({ dispatch }, { email }) {
-    const user = firebase.auth().currentUser
+    const userInfo = firebase.auth().currentUser
     if (user.email === 'test@example.com') {
       alert('テストユーザーは変更できません')
     } else {
       try {
         await user.updateEmail(email)
         alert('新しいメールアドレスの登録が完了しました。')
-        dispatch('onAuthStateChanged')
+        dispatch('setLoginUser', userInfo)
       } catch (err) {
         alert('新しいメールアドレスの登録に失敗しました。もう一度やり直してください。')
         console.log(err)
