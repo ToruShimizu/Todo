@@ -48,7 +48,6 @@ const actions = {
   },
   // ログインユーザー情報の取得
   setLoginUser({ commit }, userInfo) {
-    console.log(userInfo)
     commit('setLoginUser', userInfo)
   },
   // ログインユーザー情報の削除
@@ -72,8 +71,9 @@ const actions = {
   async login({ commit }, { email, password }) {
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password)
-      const user = await firebase.auth().currentUser
-      alert('ようこそ' + user.displayName + 'さん!')
+      const userInfo = await firebase.auth().currentUser
+      alert('ようこそ' + userInfo.displayName + 'さん!')
+      commit('setLoginUser', userInfo)
       // サインイン成功後にトップページに遷移する
       this.$router.push({ path: '/' })
     } catch {
@@ -124,24 +124,23 @@ const actions = {
   },
   // ユーザー情報の更新
   // FIXME:ユーザーのstate更新
-  async updateUserName({ dispatch }, { userName, file }) {
+  async updateUserName({ commit }, { userName, file }) {
     console.log('auth', file)
     const userInfo = await firebase.auth().currentUser
     const imageRef = await storageRef.child(`images/${getters.uid}/${file.name}`)
     const snapShot = await imageRef.put(file)
     const image = await snapShot.ref.getDownloadURL()
-    if (user.displayName === 'テストユーザー') {
+    if (userInfo.displayName === 'テストユーザー') {
       alert('テストユーザーは変更できません')
     } else {
       try {
         // await dispatch('uploadFile', file)
-        await user.updateProfile({
+        await userInfo.updateProfile({
           displayName: userName,
           photoURL: image
         })
         alert('ユーザー名の変更が完了しました。')
-        console.log(user)
-        dispatch('setLoginUser', userInfo)
+        commit('setLoginUser', userInfo)
       } catch (err) {
         alert('ユーザー名の変更に失敗しました。もう一度やり直してください。')
         console.log(err)
@@ -149,15 +148,15 @@ const actions = {
     }
   },
   // メールアドレスの変更
-  async updateEmailAddress({ dispatch }, { email }) {
+  async updateEmailAddress({ commit }, { email }) {
     const userInfo = firebase.auth().currentUser
-    if (user.email === 'test@example.com') {
+    if (userInfo.email === 'test@example.com') {
       alert('テストユーザーは変更できません')
     } else {
       try {
-        await user.updateEmail(email)
+        await userInfo.updateEmail(email)
         alert('新しいメールアドレスの登録が完了しました。')
-        dispatch('setLoginUser', userInfo)
+        commit('setLoginUser', userInfo)
       } catch (err) {
         alert('新しいメールアドレスの登録に失敗しました。もう一度やり直してください。')
         console.log(err)
