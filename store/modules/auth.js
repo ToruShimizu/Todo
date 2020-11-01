@@ -72,8 +72,9 @@ const actions = {
   async login({ commit }, { email, password }) {
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password)
-      const user = await firebase.auth().currentUser
-      alert('ようこそ' + user.displayName + 'さん!')
+      const userInfo = await firebase.auth().currentUser
+      alert('ようこそ' + userInfo.displayName + 'さん!')
+      commit('setLoginUser', userInfo)
       // サインイン成功後にトップページに遷移する
       this.$router.push({ path: '/' })
     } catch {
@@ -140,7 +141,6 @@ const actions = {
           photoURL: image
         })
         alert('ユーザー名の変更が完了しました。')
-        console.log(user)
         dispatch('setLoginUser', userInfo)
       } catch (err) {
         alert('ユーザー名の変更に失敗しました。もう一度やり直してください。')
@@ -151,7 +151,7 @@ const actions = {
   // メールアドレスの変更
   async updateEmailAddress({ dispatch }, { email }) {
     const userInfo = firebase.auth().currentUser
-    if (user.email === 'test@example.com') {
+    if (userInfo.email === 'test@example.com') {
       alert('テストユーザーは変更できません')
     } else {
       try {
