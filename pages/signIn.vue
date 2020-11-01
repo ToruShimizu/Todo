@@ -38,14 +38,14 @@
         <v-card-text>
           <v-form ref="form" lazy-validation @submit.prevent="login">
             <v-text-field
-              v-model="getUserEmail"
+              v-model="signInUser.email"
               prepend-inner-icon="mdi-email-outline"
               label="メールアドレスを入力する"
               :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
               clearable
             />
             <v-text-field
-              v-model="getUserPassword"
+              v-model="signInUser.password"
               :type="showPassword ? 'text' : 'Password'"
               prepend-inner-icon="mdi-lock-outline"
               :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -90,13 +90,11 @@
 import { mapActions } from 'vuex'
 import FormValidation from '../mixins/FormValidation.vue'
 import LoadingView from '../mixins/LoadingView.vue'
-import StateUserEmail from '../mixins/UserInfo/StateUserEmail'
-import StateUserPassword from '../mixins/UserInfo/StateUserPassword'
 import CreateUser from '@/components/CreateUser/CreateUser'
 import ResetPassword from '@/components/ResetPassword/ResetPassword'
 
 export default {
-  mixins: [FormValidation, LoadingView, StateUserEmail, StateUserPassword],
+  mixins: [FormValidation, LoadingView],
   components: {
     CreateUser,
     ResetPassword
@@ -104,6 +102,10 @@ export default {
 
   data() {
     return {
+      signInUser: {
+        email: '',
+        password: ''
+      },
       loadingTestLogin: false,
       loadingLogin: false,
       showPassword: false,
@@ -121,24 +123,23 @@ export default {
       })
     },
     async login() {
-      if (!this.getUserPassword || !this.getUserEmail) {
+      if (!this.signInUser.password || !this.signInUser.email) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingLogin'
       await this.$store.dispatch('modules/auth/login', {
-        email: this.getUserEmail,
-        password: this.getUserPassword
+        email: this.signInUser.email,
+        password: this.signInUser.password
       })
-      this.getUserEmail = ''
-      this.getUserPassword = ''
+      this.signInUser.email = ''
+      this.signInUser.password = ''
       this.loader = null
       this.$refs.form.reset()
     },
     openCreateUser() {
-      this.getUserName = ''
-      this.getUserEmail = ''
-      this.getUserPassword = ''
+      this.signInUser.email = ''
+      this.signInUser.password = ''
       this.$refs.form.reset()
       this.createUserDialog = true
     },

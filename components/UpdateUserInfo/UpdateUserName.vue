@@ -23,7 +23,7 @@
             <v-card-text>
               <v-form ref="form" lazy-validation @submit.prevent="updateUserName">
                 <v-text-field
-                  v-model="getUserName"
+                  v-model="editUserName.name"
                   prepend-inner-icon="mdi-card-account-details-outline"
                   label="新しい名前を入力してください"
                   :rules="[validRules.nameRules.required]"
@@ -56,10 +56,9 @@
 import { mapGetters } from 'vuex'
 import FormValidation from '@/mixins/FormValidation.vue'
 import LoadingView from '@/mixins/LoadingView.vue'
-import StateUserName from '@/mixins/UserInfo/StateUserName.vue'
 
 export default {
-  mixins: [FormValidation, LoadingView, StateUserName],
+  mixins: [FormValidation, LoadingView],
 
   props: {
     updateUserNameDialog: {
@@ -71,6 +70,9 @@ export default {
   },
   data() {
     return {
+      editUserName: {
+        name: ''
+      },
       loadingUpdateUserName: false
     }
   },
@@ -81,7 +83,7 @@ export default {
       },
       set(value) {
         this.$emit('update:selectedUpdateUserName', value)
-        this.editUserName = ''
+        this.editUserName.name = ''
         this.$refs.form.reset()
       }
     },
@@ -89,15 +91,15 @@ export default {
   },
   methods: {
     async updateUserName() {
-      if (!this.getUserName) {
+      if (!this.editUserName.name) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingUpdateUserName'
       await this.$store.dispatch('modules/auth/updateUserName', {
-        userName: this.getUserName
+        userName: this.editUserName.name
       })
-      this.getUserName = ''
+      this.editUserName.name = ''
       this.loader = null
       this.$refs.form.reset()
       this.$emit('update:selectedUpdateUserName', 'closeUpdateUserName')

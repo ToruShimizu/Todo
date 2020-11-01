@@ -23,7 +23,7 @@
             <v-card-text>
               <v-form ref="form" lazy-validation @submit.prevent="updateEmailAddress">
                 <v-text-field
-                  v-model="getUserEmail"
+                  v-model="editUserEmail.email"
                   prepend-inner-icon="mdi-email-outline"
                   label="新しいメールアドレスを入力"
                   :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
@@ -59,10 +59,9 @@
 import { mapGetters } from 'vuex'
 import FormValidation from '@/mixins/FormValidation.vue'
 import LoadingView from '@/mixins/LoadingView.vue'
-import StateUserEmail from '@/mixins/UserInfo/StateUserEmail.vue'
 
 export default {
-  mixins: [FormValidation, LoadingView, StateUserEmail],
+  mixins: [FormValidation, LoadingView],
   props: {
     updateEmailAddressDialog: {
       type: Boolean
@@ -73,6 +72,9 @@ export default {
   },
   data() {
     return {
+      editUserEmail: {
+        email: ''
+      },
       loadingUpdateEmailAddress: false
     }
   },
@@ -83,7 +85,7 @@ export default {
       },
       set(value) {
         this.$emit('update:selectedUpdateEmailAddress', value)
-        this.getUserEmail = ''
+        this.editUserEmail.email = ''
         this.$refs.form.reset()
       }
     },
@@ -91,15 +93,15 @@ export default {
   },
   methods: {
     async updateEmailAddress() {
-      if (!this.getUserEmail) {
+      if (!this.editUserEmail.email) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingUpdateEmailAddress'
       await this.$store.dispatch('modules/auth/updateEmailAddress', {
-        email: this.getUserEmail
+        email: this.editUserEmail.email
       })
-      this.getUserEmail = ''
+      this.editUserEmail.email = ''
       this.loader = null
       this.$refs.form.reset()
       this.$emit('update:selectedUpdateEmailAddress', 'closeUpdateEmailAddress')

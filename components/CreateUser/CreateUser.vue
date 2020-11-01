@@ -20,21 +20,21 @@
                   <br />サンプルのメールアドレスで作成することができます。
                 </p>
                 <v-text-field
-                  v-model="getUserName"
+                  v-model="createNewUser.name"
                   prepend-inner-icon="mdi-card-account-details-outline"
                   label="名前を入力する"
                   :rules="[validRules.nameRules.required]"
                   clearable
                 />
                 <v-text-field
-                  v-model="getUserEmail"
+                  v-model="createNewUser.email"
                   prepend-inner-icon="mdi-email-outline"
                   label="メールアドレスを入力する"
                   :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
                   clearable
                 />
                 <v-text-field
-                  v-model="getUserPassword"
+                  v-model="createNewUser.password"
                   :type="showPassword ? 'text' : 'Password'"
                   prepend-inner-icon="mdi-lock-outline"
                   :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -73,12 +73,9 @@
 <script>
 import FormValidation from '@/mixins/FormValidation.vue'
 import LoadingView from '@/mixins/LoadingView.vue'
-import StateUserName from '@/mixins/UserInfo/StateUserName.vue'
-import StateUserEmail from '@/mixins/UserInfo/StateUserEmail.vue'
-import StateUserPassword from '@/mixins/UserInfo/StateUserPassword.vue'
 
 export default {
-  mixins: [FormValidation, LoadingView, StateUserName, StateUserEmail, StateUserPassword],
+  mixins: [FormValidation, LoadingView],
 
   props: {
     createUserDialog: {
@@ -87,29 +84,34 @@ export default {
   },
   data() {
     return {
-      loadingCreateUser: false,
-      showPassword: false
+      createNewUser: {
+        name: '',
+        email: '',
+        password: ''
+      },
+      showPassword: false,
+      loadingCreateUser: false
     }
   },
   methods: {
     async createUser() {
       this.loader = 'loadingCreateUser'
-      if (!this.getUserPassword || !this.getUserEmail) {
+      if (!this.createNewUser.password || !this.createNewUser.email) {
         this.$refs.form.validate()
         return
       }
       await this.$store.dispatch('modules/auth/createUser', {
-        email: this.getUserEmail,
-        password: this.getUserPassword,
-        userName: this.getUserName
+        email: this.createNewUser.email,
+        password: this.createNewUser.password,
+        userName: this.createNewUser.name
       })
       this.loader = null
       this.$refs.form.reset()
     },
     closeCreateUser() {
-      this.getUserName = ''
-      this.getUserEmail = ''
-      this.getUserPassword = ''
+      this.createNewUser.name = ''
+      this.createNewUser.email = ''
+      this.createNewUser.password = ''
       this.$refs.form.reset()
       this.$emit('close-create-user')
     }

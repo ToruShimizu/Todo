@@ -23,14 +23,14 @@
             <v-card-text>
               <v-form ref="form" lazy-validation @submit.prevent="deleteUser">
                 <v-text-field
-                  v-model="getUserEmail"
+                  v-model="deleteUser.email"
                   prepend-inner-icon="mdi-email-outline"
                   label="登録されているメールアドレス"
                   :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
                   clearable
                 />
                 <v-text-field
-                  v-model="getUserPassword"
+                  v-model="deleteUser.password"
                   :type="showPassword ? 'text' : 'Password'"
                   prepend-inner-icon="mdi-lock-outline"
                   :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -46,7 +46,7 @@
                   <v-spacer />
                   <v-btn
                     color="error"
-                    @click="deleteUser"
+                    @click="deleteAccount"
                     :loading="loadingDeleteUser"
                     :disabled="loadingDeleteUser"
                   >
@@ -65,10 +65,9 @@
 <script>
 import FormValidation from '@/mixins/FormValidation.vue'
 import LoadingView from '@/mixins/LoadingView.vue'
-import StateUserEmail from '@/mixins/UserInfo/StateUserEmail.vue'
-import StateUserPassword from '@/mixins/UserInfo/StateUserPassword.vue'
+
 export default {
-  mixins: [FormValidation, LoadingView, StateUserEmail, StateUserPassword],
+  mixins: [FormValidation, LoadingView],
   props: {
     deleteUserDialog: {
       type: Boolean
@@ -80,6 +79,10 @@ export default {
 
   data() {
     return {
+      deleteUser: {
+        email: '',
+        password: ''
+      },
       loadingDeleteUser: false,
       showPassword: false
     }
@@ -91,24 +94,25 @@ export default {
       },
       set(value) {
         this.$emit('update:selectedDeleteUser', value)
-        this.getUserEmail = ''
+        this.deleteAccountUser.email = ''
+        this.deleteAccountUser.password = ''
         this.$refs.form.reset()
       }
     }
   },
   methods: {
-    deleteUser() {
-      if (!this.getUserPassword || !this.getUserEmail) {
+    deleteAccount() {
+      if (!this.deleteUser.password || !this.deleteUser.email) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingDeleteUser'
-      this.$store.dispatch('modules/auth/deleteUser', {
-        email: this.getUserEmail,
-        password: this.getUserPassword
+      this.$store.dispatch('modules/auth/deleteAccount', {
+        email: this.deleteUser.email,
+        password: this.deleteUser.password
       })
-      this.getUserEmail = ''
-      this.getUserPassword = ''
+      this.deleteUser.email = ''
+      this.deleteUser.password = ''
       this.loader = null
       this.$refs.form.reset()
       this.$emit('update:selectedDeleteUser', 'closeDeleteUser')
