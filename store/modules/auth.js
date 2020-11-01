@@ -140,11 +140,7 @@ const actions = {
           photoURL: image
         })
         alert('ユーザー名の変更が完了しました。')
-<<<<<<< HEAD
         commit('setLoginUser', userInfo)
-=======
-        dispatch('setLoginUser', userInfo)
->>>>>>> df0829a3d11b11245242ab297dc03d216c8c0b4b
       } catch (err) {
         alert('ユーザー名の変更に失敗しました。もう一度やり直してください。')
         console.log(err)
