@@ -1,5 +1,19 @@
 import { v4 as uuidv4 } from 'uuid'
 import firebase, { db } from '~/plugins/firebase'
+const date = new Date()
+const createTime =
+  date.getFullYear() +
+  '年' +
+  (date.getMonth() + 1) +
+  '月' +
+  date.getDate() +
+  '日' +
+  date.getHours() +
+  '時' +
+  date.getMinutes() +
+  '分' +
+  date.getSeconds() +
+  '秒'
 
 const state = () => ({
   todos: [],
@@ -67,7 +81,7 @@ const actions = {
       detail: todo.task.detail,
       date: todo.task.date,
       done: false,
-      created: firebase.firestore.FieldValue.serverTimestamp()
+      created: createTime
     }
     if (getters.userUid) {
       await db.collection(`users/${getters.userUid}/todos`).doc(taskId).set(task)
