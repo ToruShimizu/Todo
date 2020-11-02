@@ -81,7 +81,7 @@ const actions = {
       detail: todo.task.detail,
       date: todo.task.date,
       done: false,
-      created: createTime
+      created: firebase.firestore.FieldValue.serverTimestamp()
     }
     if (getters.userUid) {
       await db.collection(`users/${getters.userUid}/todos`).doc(taskId).set(task)
