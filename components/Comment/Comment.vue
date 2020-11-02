@@ -1,23 +1,21 @@
 <template>
-  <v-list subheader>
-    <v-list-item>
-      <v-list-item-content>
-        <v-list-item-icon v-if="photoURL">
-          <v-avatar size="50">
-            <img :src="photoURL" />
-          </v-avatar>
-        </v-list-item-icon>
-        <v-list-item-title> {{ userName }}さんがコメントしました</v-list-item-title>
-        <v-list-item-title> {{ comment.created }}</v-list-item-title>
-        <v-layout>
-          <v-text-field v-model="comment.message" />
-          <v-btn icon @click="removeComment(comment)">
-            <v-icon>mdi-delete-outline</v-icon>
-          </v-btn>
-        </v-layout>
-      </v-list-item-content>
-    </v-list-item>
-  </v-list>
+  <v-card class="mx-auto my-2" width="80%" elevation="3">
+    <v-card-title>
+      <v-icon small left> mdi-comment-text-outline </v-icon>
+      <span class="subtitle-2 font-weight-light">コメント</span>
+      <v-spacer />
+      <span class="subtitle-2 font-weight-light">{{ comment.created }}</span>
+    </v-card-title>
+
+    <v-card-text class="body-1 font-weight-bold">
+      "{{ comment.message }}"
+      <v-row align="center" justify="end">
+        <v-btn icon @click="removeComment(comment)">
+          <v-icon>mdi-delete</v-icon>
+        </v-btn>
+      </v-row>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>
@@ -31,7 +29,7 @@ export default {
   },
   computed: {
     ...mapState('modules/todos', ['comments']),
-    ...mapGetters('modules/auth', ['userName', 'photoURL', 'userEmail'])
+    ...mapGetters('modules/auth', ['gettersUserName', 'photoURL', 'userEmail'])
   },
   methods: {
     removeComment(comment) {
