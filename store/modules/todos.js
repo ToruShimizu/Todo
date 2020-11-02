@@ -114,7 +114,7 @@ const actions = {
     const comment = {
       message,
       id: commentId,
-      created: firebase.firestore.FieldValue.serverTimestamp()
+      created: createTime
     }
     if (getters.userUid) {
       await db
