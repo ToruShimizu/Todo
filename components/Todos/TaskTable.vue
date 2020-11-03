@@ -1,57 +1,52 @@
 <template>
   <v-app>
     <v-card>
-      <v-data-table
-        :headers="headers"
-        :items="todosFiltered"
-        :items-per-page="itemsPerPage"
-        :search="searchTask"
-        :page.sync="page"
-        hide-default-footer
-        @page-count="pageCount = $event"
-        item-key="name"
-        class="elevation-1"
-      >
-        <template v-slot:body="{ items }">
-          <tbody name="list" is="transition-group" v-if="items.length > 0">
-            <tr v-for="todo in items" :key="todo.task.title">
-              <td>
-                <v-btn icon @click="doneTask(todo)">
-                  <v-icon :color="(!todo.task.done && 'grey') || 'primary'"
-                    >mdi-check-circle-outline</v-icon
-                  >
-                </v-btn>
-              </td>
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on, attrs }">
-                  <td
-                    v-bind="attrs"
-                    :class="(todo.task.done && 'grey--text') || 'primary--text'"
-                    v-on="on"
-                    @click="openUpdateTask(todo)"
-                  >
-                    {{ todo.task.title }}
-                  </td>
-                </template>
-                <span>{{ todo.task.title }}の詳細を開く</span>
-              </v-tooltip>
-              <td :class="(todo.task.done && 'grey--text') || 'black--text'" class="pa-0">
-                {{ todo.task.date }}
-              </td>
-              <td>
-                <v-btn icon>
-                  <v-icon @click="removeTask(todo)">mdi-delete-outline</v-icon>
-                </v-btn>
-              </td>
-            </tr>
-          </tbody>
-          <tbody v-else>
+      <v-simple-table fixed-header>
+        <template v-slot:default>
+          <thead>
             <tr>
-              <td :colspan="headers.length" style="text-align: center">タスクはありません</td>
+              <th class="text-left">状態</th>
+              <th class="text-left">タスク</th>
+              <th class="text-left">日時</th>
+              <th class="text-left">削除</th>
             </tr>
+          </thead>
+          <tbody>
+            <template v-for="todo in todosFiltered">
+              <transition name="list" :key="todo.task.title">
+                <tr>
+                  <td>
+                    <v-btn icon @click="doneTask(todo)">
+                      <v-icon>mdi-check-circle-outline</v-icon>
+                    </v-btn>
+                  </td>
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <td
+                        v-bind="attrs"
+                        :class="(todo.task.done && 'grey--text') || 'primary--text'"
+                        v-on="on"
+                        @click="openUpdateTask(todo)"
+                      >
+                        {{ todo.task.title }}
+                      </td>
+                    </template>
+                    <span>{{ todo.task.title }}の詳細を開く</span>
+                  </v-tooltip>
+                  <td :class="(todo.task.done && 'grey--text') || 'black--text'" class="pa-0">
+                    {{ todo.task.date }}
+                  </td>
+                  <td>
+                    <v-btn icon>
+                      <v-icon @click="removeTask(todo)">mdi-delete-outline</v-icon>
+                    </v-btn>
+                  </td>
+                </tr>
+              </transition>
+            </template>
           </tbody>
         </template>
-      </v-data-table>
+      </v-simple-table>
     </v-card>
     <div class="text-center py-2">
       <v-pagination v-model="page" :length="pageCount" />
@@ -154,8 +149,5 @@ export default {
 }
 .list-move {
   transition: transform 0.5s;
-}
-.v-data-table td {
-  white-space: nowrap;
 }
 </style>
