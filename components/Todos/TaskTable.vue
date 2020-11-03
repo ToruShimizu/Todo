@@ -12,7 +12,7 @@
             </tr>
           </thead>
           <tbody>
-            <template v-for="todo in todosFiltered">
+            <template v-for="todo in displayTodos">
               <transition name="list" :key="todo.task.title">
                 <tr>
                   <td>
@@ -49,7 +49,7 @@
       </v-simple-table>
     </v-card>
     <div class="text-center py-2">
-      <v-pagination v-model="page" :length="pageCount" />
+      <v-pagination v-model="todosPage" :length="todosPageCount" @input="changeTodosPage" />
     </div>
     <UpdateTask
       :editTodo="editTodo"
@@ -97,9 +97,10 @@ export default {
         { text: '期限', value: 'task.date', search: false },
         { text: '削除', value: 'remove', sortable: false }
       ],
-      itemsPerPage: 7,
-      page: 1,
-      pageCount: 0,
+      todosPage: 1,
+      todosPageCount: 0,
+      todosPageSize: 7,
+      displayTodos: [],
       editTodo: null,
       cancelTodo: null,
       updateTaskDialog: false
@@ -108,7 +109,23 @@ export default {
   computed: {
     ...mapState('modules/todos', ['todos'])
   },
+  mounted() {
+    // ページネーションの数をデータの件数とページサイズに応じた数に変える。
+    this.todosPageCount = Math.ceil(this.todosFiltered.length / this.todosPageSize)
+    // todosPageの値によって最初に表示されるデータが正しい内容に変わるようにdisplayTodosを変更します。
+    this.displayTodos = this.todosFiltered.slice(
+      this.todosPageSize * (this.todosPage - 1),
+      this.todosPageSize * this.todosPage
+    )
+  },
   methods: {
+    // 選択されたpageNumberによって表示するページを切り替える
+    changeTodosPage(pageNumber) {
+      this.displayTodos = this.todosFiltered.slice(
+        this.todosPageSize * (pageNumber - 1),
+        this.todosPageSize * pageNumber
+      )
+    },
     removeTask(todo) {
       if (!confirm(todo.task.title + 'を削除しますか？')) return
       this.$store.dispatch('modules/todos/removeTask', { id: todo.task.id })
