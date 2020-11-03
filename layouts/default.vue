@@ -2,7 +2,7 @@
   <v-app dark>
     <Header />
     <nuxt />
-    <v-footer color="indigo darken-2" dark app>
+    <v-footer color="indigo darken-2">
       <span class="grey--text text--lighten-2">&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
   </v-app>
