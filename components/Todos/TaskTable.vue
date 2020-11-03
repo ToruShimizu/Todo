@@ -17,7 +17,9 @@
                 <tr>
                   <td>
                     <v-btn icon @click="doneTask(todo)">
-                      <v-icon>mdi-check-circle-outline</v-icon>
+                      <v-icon :class="(todo.task.done && 'grey--text') || 'primary--text'"
+                        >mdi-check-circle-outline</v-icon
+                      >
                     </v-btn>
                   </td>
                   <v-tooltip bottom>
