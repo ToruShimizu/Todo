@@ -50,7 +50,7 @@
                     :loading="loadingDeleteUser"
                     :disabled="loadingDeleteUser"
                   >
-                    <v-icon left>mdi-account</v-icon>削除
+                    <v-icon left> mdi-account-multiple-remove-outline </v-icon>削除
                   </v-btn>
                 </v-card-actions>
               </v-form>
