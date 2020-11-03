@@ -19,7 +19,7 @@
       </v-flex>
     </v-layout>
     <v-divider class="mt-4" />
-    <v-card>
+    <v-card class="mb-5">
       <FilteredTask @update:filterdTask="taskFilter = $event" />
       <v-divider />
       <SearchTask :search.sync="searchTask" />
