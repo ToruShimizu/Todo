@@ -79,11 +79,10 @@ export default {
         done: false
       })
     },
-    todosFiltered: {
-      type: Array,
-      required: true
-    },
     searchTask: {
+      type: String
+    },
+    taskFilter: {
       type: String
     }
   },
@@ -102,28 +101,53 @@ export default {
       todosPage: 1,
       todosPageCount: 0,
       todosPageSize: 7,
-      displayTodos: [],
+      todoList: [],
       editTodo: null,
       cancelTodo: null,
       updateTaskDialog: false
     }
   },
   computed: {
+    displayTodos() {
+      return this.todosFiltered()
+    },
     ...mapState('modules/todos', ['todos'])
   },
   mounted() {
     // ページネーションの数をデータの件数とページサイズに応じた数に変える。
-    this.todosPageCount = Math.ceil(this.todosFiltered.length / this.todosPageSize)
-    // todosPageの値によって最初に表示されるデータが正しい内容に変わるようにdisplayTodosを変更します。
-    this.displayTodos = this.todosFiltered.slice(
+    this.todosPageCount = Math.ceil(this.todos.length / this.todosPageSize)
+    // todosPageの値によって最初に表示されるデータが正しい内容に変わるようにtodoListを変更します。
+    this.todoList = this.todos.slice(
       this.todosPageSize * (this.todosPage - 1),
       this.todosPageSize * this.todosPage
     )
   },
   methods: {
+    todosFiltered() {
+      // 完了状態の絞り込み
+      let returnvalue
+      switch (this.taskFilter) {
+        case 'all':
+          returnvalue = this.todoList
+          console.log(this.taskFilter)
+          break
+        case 'active':
+          returnvalue = this.todoList.filter((todo) => !todo.task.done)
+          console.log(this.taskFilter)
+
+          break
+        case 'done':
+          returnvalue = this.todoList.filter((todo) => todo.task.done)
+          console.log(this.taskFilter)
+
+          break
+        default:
+      }
+      return returnvalue
+    },
     // 選択されたpageNumberによって表示するページを切り替える
     changeTodosPage(pageNumber) {
-      this.displayTodos = this.todosFiltered.slice(
+      this.todoList = this.todos.slice(
         this.todosPageSize * (pageNumber - 1),
         this.todosPageSize * pageNumber
       )
