@@ -23,7 +23,7 @@
       <FilteredTask :filterdTask.sync="taskFilter" />
       <v-divider />
       <SearchTask :search.sync="searchTask" />
-      <TaskTable :searchTask="searchTask" :todosFiltered="todosFiltered" />
+      <TaskTable :searchTask="searchTask" :taskFilter="taskFilter" />
     </v-card>
   </v-container>
 </template>
@@ -56,23 +56,6 @@ export default {
     }
   },
   computed: {
-    todosFiltered() {
-      // 完了状態の絞り込み
-      let returnvalue
-      switch (this.taskFilter) {
-        case 'all':
-          returnvalue = this.todos
-          break
-        case 'active':
-          returnvalue = this.todos.filter((todo) => !todo.task.done)
-          break
-        case 'done':
-          returnvalue = this.todos.filter((todo) => todo.task.done)
-          break
-        default:
-      }
-      return returnvalue
-    },
     ...mapGetters('modules/todos', ['todosCount']),
     ...mapState('modules/todos', ['todos'])
   },
