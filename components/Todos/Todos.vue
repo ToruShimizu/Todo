@@ -22,8 +22,17 @@
     <v-card class="mb-5">
       <FilteredTask :filterdTask.sync="taskFilter" />
       <v-divider />
-      <SearchTask :search.sync="searchTaskKeyword" />
-      <TaskTable :searchTaskKeyword="searchTaskKeyword" :taskFilter="taskFilter" />
+      <v-layout>
+        <SearchTask :search.sync="searchTaskKeyword" />
+        <SortByTask :selected.sync="selectSortTask" />
+      </v-layout>
+      <TaskTable
+        :searchTaskKeyword="searchTaskKeyword"
+        :taskFilter="taskFilter"
+        :selectSortTask="selectSortTask"
+        :sortTaskTitleOrder="sortTaskTitleOrder"
+        :sortTaskDateOrder="sortTaskDateOrder"
+      />
     </v-card>
   </v-container>
 </template>
@@ -32,6 +41,7 @@
 import { mapState, mapGetters } from 'vuex'
 import FilteredTask from '@/components/Todos/FilteredTask'
 import SearchTask from '@/components/Todos/SearchTask'
+import SortByTask from '@/components/Todos/SortByTask'
 import TaskTable from '@/components/Todos/TaskTable'
 import AddTask from '@/components/Todos/AddTask'
 
@@ -39,6 +49,7 @@ export default {
   components: {
     FilteredTask,
     SearchTask,
+    SortByTask,
     AddTask,
     TaskTable
   },
@@ -50,6 +61,9 @@ export default {
         date: new Date().toISOString(),
         done: false
       },
+      selectSortTask: '',
+      sortTaskTitleOrder: 1,
+      sortTaskDateOrder: 1,
       taskFilter: 'all',
       searchTaskKeyword: '',
       taskDialog: false
