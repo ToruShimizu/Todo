@@ -108,9 +108,7 @@ export default {
         { text: '削除', value: 'remove', sortable: false }
       ],
       todosPage: 1,
-      todosPageCount: 0,
       todosPageSize: 7,
-      todoList: [],
       editTodo: null,
       cancelTodo: null,
       updateTaskDialog: false
@@ -120,16 +118,21 @@ export default {
     displayTodos() {
       return this.sortByTask()
     },
+    todoList: {
+      get() {
+        return this.todos.slice(
+          this.todosPageSize * (this.todosPage - 1),
+          this.todosPageSize * this.todosPage
+        )
+      },
+      set(changeTodos) {
+        return changeTodos
+      }
+    },
+    todosPageCount() {
+      return Math.ceil(this.todos.length / this.todosPageSize)
+    },
     ...mapState('modules/todos', ['todos'])
-  },
-  mounted() {
-    // ページネーションの数をデータの件数とページサイズに応じた数に変える。
-    this.todosPageCount = Math.ceil(this.todos.length / this.todosPageSize)
-    // todosPageの値によって最初に表示されるデータが正しい内容に変わるようにtodoListを変更します。
-    this.todoList = this.todos.slice(
-      this.todosPageSize * (this.todosPage - 1),
-      this.todosPageSize * this.todosPage
-    )
   },
   methods: {
     todosFiltered() {
