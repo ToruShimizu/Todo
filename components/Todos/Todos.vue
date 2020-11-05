@@ -61,7 +61,7 @@ export default {
         date: new Date().toISOString(),
         done: false
       },
-      selectSortTask: '',
+      selectSortTask: 'ascDate',
       sortTaskTitleOrder: 1,
       sortTaskDateOrder: 1,
       taskFilter: 'all',
