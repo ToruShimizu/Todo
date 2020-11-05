@@ -82,6 +82,15 @@ export default {
     searchTaskKeyword: {
       type: String
     },
+    selectSortTask: {
+      type: String
+    },
+    sortTaskDateOrder: {
+      type: Number
+    },
+    sortTaskTitleOrder: {
+      type: Number
+    },
     taskFilter: {
       type: String
     }
@@ -109,11 +118,7 @@ export default {
   },
   computed: {
     displayTodos() {
-      if (this.searchTaskKeyword) {
-        return this.searchTask()
-      } else {
-        return this.todosFiltered()
-      }
+      return this.sortByTask()
     },
     ...mapState('modules/todos', ['todos'])
   },
@@ -162,6 +167,59 @@ export default {
         return todo.task.title.includes(this.searchTaskKeyword)
       })
       //   // vuetifyのclearableを使用するとnullになり表示されなくなるためnullの場合の処理を記述
+    },
+    sortByTask() {
+      let returnvalue
+
+      switch (this.selectSortTask) {
+        case 'title':
+          returnvalue = this.sortByTaskTitle()
+          console.log(this.selectSortTask)
+          break
+        case 'ascDate':
+          returnvalue = this.sortByAscDate()
+          console.log(this.selectSortTask)
+
+          break
+        case 'descDate':
+          returnvalue = this.sortByDescDate()
+
+          console.log(this.selectSortTask)
+
+          break
+        default:
+      }
+      return returnvalue
+    },
+    sortByTaskTitle() {
+      const todos = this.searchTask()
+      return todos.sort((a, b) => {
+        return a.task.title < b.task.title
+          ? -this.sortTaskTitleOrder
+          : a.task.title > b.task.title
+          ? this.sortTaskTitleOrder
+          : 0
+      })
+    },
+    sortByAscDate() {
+      const todos = this.searchTask()
+      return todos.sort((a, b) => {
+        return a.task.Date < b.task.Date
+          ? -this.sortTaskDateOrder
+          : a.task.Date > b.task.Date
+          ? this.sortTaskDateOrder
+          : 0
+      })
+    },
+    sortByDescDate() {
+      const todos = this.searchTask()
+      return todos.sort((a, b) => {
+        return a.task.Date < b.task.Date
+          ? -this.sortTaskDateOrder
+          : a.task.Date > b.task.Date
+          ? this.sortTaskDateOrder
+          : -1
+      })
     },
     removeTask(todo) {
       if (!confirm(todo.task.title + 'を削除しますか？')) return
