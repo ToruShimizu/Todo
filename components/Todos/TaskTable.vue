@@ -157,25 +157,11 @@ export default {
       )
     },
     searchTask() {
+      const todos = this.todosFiltered()
+      return todos.filter((todo) => {
+        return todo.task.title.includes(this.searchTaskKeyword)
+      })
       //   // vuetifyのclearableを使用するとnullになり表示されなくなるためnullの場合の処理を記述
-      const remainingTodos = this.todoList.filter((todo) => !todo.task.done)
-      const completedTodos = this.todoList.filter((todo) => todo.task.done)
-      if (this.searchTaskKeyword === null) {
-        return this.todos
-      }
-      if (this.taskFilter === 'all') {
-        return this.todoList.filter((todo) => {
-          return todo.task.title.includes(this.searchTaskKeyword)
-        })
-      } else if (this.taskFilter === 'active') {
-        return remainingTodos.filter((todo) => {
-          return todo.task.title.includes(this.searchTaskKeyword)
-        })
-      } else {
-        return completedTodos.filter((todo) => {
-          return todo.task.title.includes(this.searchTaskKeyword)
-        })
-      }
     },
     removeTask(todo) {
       if (!confirm(todo.task.title + 'を削除しますか？')) return
