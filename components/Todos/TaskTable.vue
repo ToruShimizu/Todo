@@ -79,7 +79,7 @@ export default {
         done: false
       })
     },
-    searchTask: {
+    searchTaskKeyword: {
       type: String
     },
     taskFilter: {
@@ -109,7 +109,11 @@ export default {
   },
   computed: {
     displayTodos() {
-      return this.todosFiltered()
+      if (this.searchTaskKeyword) {
+        return this.searchTask()
+      } else {
+        return this.todosFiltered()
+      }
     },
     ...mapState('modules/todos', ['todos'])
   },
@@ -151,6 +155,27 @@ export default {
         this.todosPageSize * (pageNumber - 1),
         this.todosPageSize * pageNumber
       )
+    },
+    searchTask() {
+      //   // vuetifyのclearableを使用するとnullになり表示されなくなるためnullの場合の処理を記述
+      const remainingTodos = this.todoList.filter((todo) => !todo.task.done)
+      const completedTodos = this.todoList.filter((todo) => todo.task.done)
+      if (this.searchTaskKeyword === null) {
+        return this.todos
+      }
+      if (this.taskFilter === 'all') {
+        return this.todoList.filter((todo) => {
+          return todo.task.title.includes(this.searchTaskKeyword)
+        })
+      } else if (this.taskFilter === 'active') {
+        return remainingTodos.filter((todo) => {
+          return todo.task.title.includes(this.searchTaskKeyword)
+        })
+      } else {
+        return completedTodos.filter((todo) => {
+          return todo.task.title.includes(this.searchTaskKeyword)
+        })
+      }
     },
     removeTask(todo) {
       if (!confirm(todo.task.title + 'を削除しますか？')) return
