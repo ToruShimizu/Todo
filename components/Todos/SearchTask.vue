@@ -17,14 +17,14 @@
 <script>
 export default {
   props: {
-    searchTask: {
+    searchTaskKeyword: {
       type: String
     }
   },
   computed: {
     innerSearchTask: {
       get() {
-        return this.$props.searchTask
+        return this.searchTaskKeyword
       },
       set(value) {
         console.log(value)

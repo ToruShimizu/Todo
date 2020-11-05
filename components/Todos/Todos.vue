@@ -22,8 +22,8 @@
     <v-card class="mb-5">
       <FilteredTask :filterdTask.sync="taskFilter" />
       <v-divider />
-      <SearchTask :search.sync="searchTask" />
-      <TaskTable :searchTask="searchTask" :taskFilter="taskFilter" />
+      <SearchTask :search.sync="searchTaskKeyword" />
+      <TaskTable :searchTaskKeyword="searchTaskKeyword" :taskFilter="taskFilter" />
     </v-card>
   </v-container>
 </template>
@@ -51,7 +51,7 @@ export default {
         done: false
       },
       taskFilter: 'all',
-      searchTask: '',
+      searchTaskKeyword: '',
       taskDialog: false
     }
   },
