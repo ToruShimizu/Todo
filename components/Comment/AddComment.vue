@@ -26,11 +26,11 @@ export default {
     }
   },
   computed: {
-    ...mapState('modules/todos', ['comments'])
+    ...mapState('modules/comment', ['comments'])
   },
   methods: {
     addComment() {
-      this.$store.dispatch('modules/todos/addComment', {
+      this.$store.dispatch('modules/comment/addComment', {
         id: this.taskId,
         message: this.message
       })
