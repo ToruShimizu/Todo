@@ -10,7 +10,7 @@ export default function ({ store, redirect, route }) {
         uid: user.uid
       }
       // ログインユーザーの情報をstateに入れる
-      store.dispatch('modules/auth/setLoginUser', userInfo)
+      store.dispatch('modules/user/auth/setLoginUser', userInfo)
       // firestoreかデータを取得する
       store.dispatch('modules/todos/fetchTodos')
     } else if (route.path === '/signIn') {

@@ -116,7 +116,7 @@ export default {
   methods: {
     testLogin() {
       this.loader = 'loadingTestLogin'
-      this.$store.dispatch('modules/auth/login', {
+      this.$store.dispatch('modules/user/auth/login', {
         email: 'test@example.com',
         password: 'testUser',
         userName: 'テストユーザー'
@@ -128,7 +128,7 @@ export default {
         return
       }
       this.loader = 'loadingLogin'
-      await this.$store.dispatch('modules/auth/login', {
+      await this.$store.dispatch('modules/user/auth/login', {
         email: this.signInUser.email,
         password: this.signInUser.password
       })
@@ -153,7 +153,7 @@ export default {
     closeResetPasswprd() {
       this.resetPasswordDialog = false
     },
-    ...mapActions('modules/auth', ['googleLogin'])
+    ...mapActions('modules/user/auth', ['googleLogin'])
   }
 }
 </script>

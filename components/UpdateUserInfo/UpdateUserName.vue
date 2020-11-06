@@ -87,7 +87,7 @@ export default {
         this.$refs.form.reset()
       }
     },
-    ...mapGetters('modules/auth', ['gettersUserName'])
+    ...mapGetters('modules/user/auth', ['gettersUserName'])
   },
   methods: {
     async updateUserName() {
@@ -96,7 +96,7 @@ export default {
         return
       }
       this.loader = 'loadingUpdateUserName'
-      await this.$store.dispatch('modules/auth/updateUserName', {
+      await this.$store.dispatch('modules/user/userInfo/updateUserName', {
         userName: this.editUserName.name
       })
       this.editUserName.name = ''

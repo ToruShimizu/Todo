@@ -122,7 +122,7 @@ export default {
         return
       }
       this.loader = 'loadingResetPassword'
-      await this.$store.dispatch('modules/auth/updatePassword', {
+      await this.$store.dispatch('modules/user/userInfo/updatePassword', {
         updatePassword: this.editUserPassword.email,
         email: this.editUserPassword.loginPassword,
         password: this.editUserPassword

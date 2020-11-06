@@ -140,8 +140,8 @@ export default {
     updateUserInfo() {
       return this.selectedUserInfo()
     },
-    ...mapGetters('modules/auth', ['gettersUserName', 'photoURL', 'gettersUserEmail']),
-    ...mapState('modules/auth', ['login_user'])
+    ...mapGetters('modules/user/auth', ['gettersUserName', 'photoURL', 'gettersUserEmail']),
+    ...mapState('modules/user/auth', ['login_user'])
   },
   methods: {
     // 画像をクリックしした時にv-file-inputでファイルを選択できるようにする
@@ -151,7 +151,7 @@ export default {
     // @changeメソッドでファイルに変換してfirestorageへの追加処理を呼び出す
     selectUserAvatarFile() {
       const userAvatarFile = this.userAvatar
-      this.$store.dispatch('modules/auth/uploadUserAvatarFile', userAvatarFile)
+      this.$store.dispatch('modules/user/userInfo/uploadUserAvatarFile', userAvatarFile)
     },
     // ユーザー画面編集の選択
     selectedUserInfo() {
