@@ -23,10 +23,15 @@ export default {
   props: {
     selectSortTask: {
       type: String
+    },
+    searchTask: {
+      type: Function
     }
   },
   data() {
     return {
+      sortTaskTitleOrder: 1,
+      sortTaskDateOrder: 1,
       sortTaskDialog: false
     }
   },
@@ -38,6 +43,41 @@ export default {
       set(value) {
         this.$emit('update:selected', value)
       }
+    }
+  },
+  methods: {
+    sortByTaskTitle() {
+      // 検索された状態でもソートができるように
+      const todos = this.searchTask()
+      return todos.sort((a, b) => {
+        return a.task.title < b.task.title
+          ? -this.sortTaskTitleOrder
+          : a.task.title > b.task.title
+          ? this.sortTaskTitleOrder
+          : 0
+      })
+    },
+    sortByAscDate() {
+      // 検索された状態でもソートができるように
+      const todos = this.searchTask()
+      return todos.sort((a, b) => {
+        return a.task.date < b.task.date
+          ? -this.sortTaskDateOrder
+          : a.task.date > b.task.date
+          ? this.sortTaskDateOrder
+          : 1
+      })
+    },
+    sortByDescDate() {
+      // 検索された状態でもソートができるように
+      const todos = this.searchTask()
+      return todos.sort((a, b) => {
+        return a.task.date < b.task.date
+          ? -this.sortTaskDateOrder
+          : a.task.date > b.task.date
+          ? this.sortTaskDateOrder
+          : -1
+      })
     }
   }
 }

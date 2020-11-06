@@ -51,7 +51,7 @@
       </v-simple-table>
     </v-card>
     <div class="text-center py-2">
-      <v-pagination v-model="todosPage" :length="todosPageCount" @input="changeTodosPage" />
+      <v-pagination v-model="todosPageNumber" :length="todosPageCount" @input="changeTodosPage" />
     </div>
     <UpdateTask
       :editTodo="editTodo"
@@ -70,29 +70,17 @@ export default {
     UpdateTask
   },
   props: {
-    task: {
-      type: Object,
-      default: () => ({
-        title: '',
-        detail: '',
-        date: new Date().toISOString().substr(0, 10),
-        done: false
-      })
+    sortByTask: {
+      type: Function
     },
-    searchTaskKeyword: {
-      type: String
-    },
-    selectSortTask: {
-      type: String
-    },
-    sortTaskDateOrder: {
+    todosPage: {
       type: Number
     },
-    sortTaskTitleOrder: {
+    todosPageSize: {
       type: Number
     },
-    taskFilter: {
-      type: String
+    todosFiltered: {
+      type: Function
     }
   },
   data() {
@@ -107,8 +95,6 @@ export default {
         { text: '期限', value: 'task.date', search: false },
         { text: '削除', value: 'remove', sortable: false }
       ],
-      todosPage: 1,
-      todosPageSize: 7,
       editTodo: null,
       cancelTodo: null,
       updateTaskDialog: false
@@ -118,112 +104,26 @@ export default {
     displayTodos() {
       return this.sortByTask()
     },
-    todoList: {
+    todosPageNumber: {
       get() {
-        return this.todos.slice(
-          this.todosPageSize * (this.todosPage - 1),
-          this.todosPageSize * this.todosPage
-        )
+        return this.todosPage
       },
-      set(changeTodos) {
-        return changeTodos
+      set(todosPage) {
+        this.$emit('update:todosPage', todosPage)
       }
     },
     todosPageCount() {
-      return Math.ceil(this.todos.length / this.todosPageSize)
+      const todos = this.todosFiltered()
+      return Math.ceil(todos.length / this.todosPageSize)
     },
     ...mapState('modules/todos', ['todos'])
   },
   methods: {
-    todosFiltered() {
-      // 完了状態の絞り込み
-      let returnvalue
-      switch (this.taskFilter) {
-        case 'all':
-          returnvalue = this.todoList
-          console.log(this.taskFilter)
-          break
-        case 'active':
-          returnvalue = this.todoList.filter((todo) => !todo.task.done)
-          console.log(this.taskFilter)
-
-          break
-        case 'done':
-          returnvalue = this.todoList.filter((todo) => todo.task.done)
-          console.log(this.taskFilter)
-
-          break
-        default:
-      }
-      return returnvalue
-    },
     // 選択されたpageNumberによって表示するページを切り替える
     changeTodosPage(pageNumber) {
-      this.todoList = this.todos.slice(
-        this.todosPageSize * (pageNumber - 1),
-        this.todosPageSize * pageNumber
-      )
+      this.$emit('change-todos-page', pageNumber)
     },
-    searchTask() {
-      const todos = this.todosFiltered()
-      return todos.filter((todo) => {
-        return todo.task.title.includes(this.searchTaskKeyword)
-      })
-      //   // vuetifyのclearableを使用するとnullになり表示されなくなるためnullの場合の処理を記述
-    },
-    sortByTask() {
-      let returnvalue
 
-      switch (this.selectSortTask) {
-        case 'title':
-          returnvalue = this.sortByTaskTitle()
-          console.log(this.selectSortTask)
-          break
-        case 'ascDate':
-          returnvalue = this.sortByAscDate()
-          console.log(this.selectSortTask)
-
-          break
-        case 'descDate':
-          returnvalue = this.sortByDescDate()
-
-          console.log(this.selectSortTask)
-
-          break
-        default:
-      }
-      return returnvalue
-    },
-    sortByTaskTitle() {
-      const todos = this.searchTask()
-      return todos.sort((a, b) => {
-        return a.task.title < b.task.title
-          ? -this.sortTaskTitleOrder
-          : a.task.title > b.task.title
-          ? this.sortTaskTitleOrder
-          : 0
-      })
-    },
-    sortByAscDate() {
-      const todos = this.searchTask()
-      return todos.sort((a, b) => {
-        return a.task.Date < b.task.Date
-          ? -this.sortTaskDateOrder
-          : a.task.Date > b.task.Date
-          ? this.sortTaskDateOrder
-          : 0
-      })
-    },
-    sortByDescDate() {
-      const todos = this.searchTask()
-      return todos.sort((a, b) => {
-        return a.task.Date < b.task.Date
-          ? -this.sortTaskDateOrder
-          : a.task.Date > b.task.Date
-          ? this.sortTaskDateOrder
-          : -1
-      })
-    },
     removeTask(todo) {
       if (!confirm(todo.task.title + 'を削除しますか？')) return
       this.$store.dispatch('modules/todos/removeTask', { id: todo.task.id })
