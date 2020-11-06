@@ -1,5 +1,19 @@
 import { v4 as uuidv4 } from 'uuid'
 import firebase, { db } from '~/plugins/firebase'
+const date = new Date()
+const createTime =
+  date.getFullYear() +
+  '年' +
+  (date.getMonth() + 1) +
+  '月' +
+  date.getDate() +
+  '日' +
+  date.getHours() +
+  '時' +
+  date.getMinutes() +
+  '分' +
+  date.getSeconds() +
+  '秒'
 
 const state = () => ({
   todos: [],
@@ -96,20 +110,6 @@ const actions = {
     commit('doneTask', { todo })
   },
   async addComment({ getters, commit }, { id, message }) {
-    const date = new Date()
-    const createTime =
-      date.getFullYear() +
-      '年' +
-      (date.getMonth() + 1) +
-      '月' +
-      date.getDate() +
-      '日' +
-      date.getHours() +
-      '時' +
-      date.getMinutes() +
-      '分' +
-      date.getSeconds() +
-      '秒'
     const commentId = uuidv4()
     const comment = {
       message,
@@ -139,7 +139,10 @@ const actions = {
   async fetchComments({ getters, commit }, id) {
     commit('initComments')
     const snapShot = await db.collection(`users/${getters.userUid}/todos`).doc(id).get()
-    const subCollection = await snapShot.ref.collection(`comments/${getters.userUid}/message`).get()
+    const subCollection = await snapShot.ref
+      .collection(`comments/${getters.userUid}/message`)
+      .orderBy('created', 'desc')
+      .get()
     subCollection.forEach((doc) => {
       const comment = doc.data()
       commit('addComment', comment)
