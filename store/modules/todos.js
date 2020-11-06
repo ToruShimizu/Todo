@@ -1,19 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
 import firebase, { db } from '~/plugins/firebase'
-const date = new Date()
-const createTime =
-  date.getFullYear() +
-  '年' +
-  (date.getMonth() + 1) +
-  '月' +
-  date.getDate() +
-  '日' +
-  date.getHours() +
-  '時' +
-  date.getMinutes() +
-  '分' +
-  date.getSeconds() +
-  '秒'
 
 const state = () => ({
   todos: [],
@@ -110,6 +96,20 @@ const actions = {
     commit('doneTask', { todo })
   },
   async addComment({ getters, commit }, { id, message }) {
+    const date = new Date()
+    const createTime =
+      date.getFullYear() +
+      '年' +
+      (date.getMonth() + 1) +
+      '月' +
+      date.getDate() +
+      '日' +
+      date.getHours() +
+      '時' +
+      date.getMinutes() +
+      '分' +
+      date.getSeconds() +
+      '秒'
     const commentId = uuidv4()
     const comment = {
       message,
