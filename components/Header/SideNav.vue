@@ -84,6 +84,14 @@
           </v-btn>
         </v-list-item-title>
       </v-list-item>
+      <v-list-item @click="selectUserAvatar">
+        <v-list-item-title>
+          <v-btn text>
+            <v-icon> mdi-file-account-outline </v-icon>
+            プロフィール画像変更
+          </v-btn>
+        </v-list-item-title>
+      </v-list-item>
       <v-list-item @click="selectedUpdateUserInfo = 'openUpdateEmailAddress'">
         <v-list-item-title>
           <v-btn text> <v-icon>mdi-email-edit-outline </v-icon>メールアドレス変更 </v-btn>
