@@ -2,8 +2,7 @@ import { v4 as uuidv4 } from 'uuid'
 import firebase, { db } from '~/plugins/firebase'
 
 const state = () => ({
-  todos: [],
-  comments: []
+  todos: []
 })
 const mutations = {
   // データを初期化する
@@ -31,19 +30,6 @@ const mutations = {
   // 完了、未完了切り替え
   doneTask(state, { todo }) {
     todo.task.done = !todo.task.done
-  },
-  addComment(state, comment) {
-    state.comments.push(comment)
-    console.log('addComments')
-  },
-  removeComment(state, { id }) {
-    const index = state.comments.findIndex((comment) => comment.id === id)
-    state.comments.splice(index, 1)
-    console.log('removeComment')
-  },
-  initComments(state) {
-    state.comments = []
-    console.log('initComments')
   }
 }
 const actions = {
@@ -94,59 +80,6 @@ const actions = {
       done: !todo.task.done
     })
     commit('doneTask', { todo })
-  },
-  async addComment({ getters, commit }, { id, message }) {
-    const date = new Date()
-    const createTime =
-      date.getFullYear() +
-      '年' +
-      (date.getMonth() + 1) +
-      '月' +
-      date.getDate() +
-      '日' +
-      date.getHours() +
-      '時' +
-      date.getMinutes() +
-      '分' +
-      date.getSeconds() +
-      '秒'
-    const commentId = uuidv4()
-    const comment = {
-      message,
-      id: commentId,
-      created: createTime
-    }
-    if (getters.userUid) {
-      await db
-        .collection(`users/${getters.userUid}/todos`)
-        .doc(id)
-        .collection(`comments/${getters.userUid}/message`)
-        .doc(commentId)
-        .set(comment)
-    }
-    commit('addComment', comment)
-  },
-  async removeComment({ getters, commit }, { id }) {
-    if (getters.userUid) {
-      const snapShot = await db.collection(`users/${getters.userUid}/todos`).get()
-      snapShot.forEach(async (doc) => {
-        await doc.ref.collection(`comments/${getters.userUid}/message`).doc(id).delete()
-      })
-      commit('removeComment', { id })
-    }
-  },
-  // FIXME: id指定してログインユーザーのコメントを表示
-  async fetchComments({ getters, commit }, id) {
-    commit('initComments')
-    const snapShot = await db.collection(`users/${getters.userUid}/todos`).doc(id).get()
-    const subCollection = await snapShot.ref
-      .collection(`comments/${getters.userUid}/message`)
-      .orderBy('created', 'desc')
-      .get()
-    subCollection.forEach((doc) => {
-      const comment = doc.data()
-      commit('addComment', comment)
-    })
   }
 }
 
