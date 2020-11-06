@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   props: {
@@ -28,15 +28,14 @@ export default {
     }
   },
   computed: {
-    ...mapState('modules/todos', ['comments']),
+    ...mapState('modules/comment', ['comments']),
     ...mapGetters('modules/auth', ['gettersUserName', 'photoURL', 'userEmail'])
   },
   methods: {
     removeComment(comment) {
       if (!confirm('Are you sure?')) return
-      this.$store.dispatch('modules/todos/removeComment', { id: comment.id })
-    },
-    ...mapActions('modules/todos', ['fetchComments'])
+      this.$store.dispatch('modules/comment/removeComment', { id: comment.id })
+    }
   }
 }
 </script>
