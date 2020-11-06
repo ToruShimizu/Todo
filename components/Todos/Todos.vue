@@ -84,9 +84,7 @@ export default {
       set(changeTodosPage) {
         return changeTodosPage
       }
-    },
-    ...mapGetters('modules/todos', ['todosCount']),
-    ...mapState('modules/todos', ['todos'])
+    }
   },
   methods: {
     // 完了状態の絞り込み
