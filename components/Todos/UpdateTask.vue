@@ -118,7 +118,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('modules/todos', ['comments'])
+    ...mapState('modules/comment', ['comments'])
   },
   methods: {
     updateTask() {
