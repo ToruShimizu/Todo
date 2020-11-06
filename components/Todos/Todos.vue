@@ -24,14 +24,15 @@
       <v-divider />
       <v-layout>
         <SearchTask :search.sync="searchTaskKeyword" />
-        <SortByTask :selected.sync="selectSortTask" />
+        <SortByTask ref="sortByTask" :selected.sync="selectSortTask" :searchTask="searchTask" />
       </v-layout>
       <TaskTable
-        :searchTaskKeyword="searchTaskKeyword"
-        :taskFilter="taskFilter"
-        :selectSortTask="selectSortTask"
-        :sortTaskTitleOrder="sortTaskTitleOrder"
-        :sortTaskDateOrder="sortTaskDateOrder"
+        ref="taskTable"
+        :sortByTask="sortByTask"
+        :todosPage.sync="todosPage"
+        :todosPageSize="todosPageSize"
+        :todosFiltered="todosFiltered"
+        @change-todos-page="changeTodosPage"
       />
     </v-card>
   </v-container>
@@ -61,19 +62,96 @@ export default {
         date: new Date().toISOString(),
         done: false
       },
-      selectSortTask: 'ascDate',
-      sortTaskTitleOrder: 1,
-      sortTaskDateOrder: 1,
-      taskFilter: 'all',
+      todosPage: 1,
+      todosPageSize: 7,
       searchTaskKeyword: '',
+      selectSortTask: 'ascDate',
+      taskFilter: 'all',
       taskDialog: false
     }
   },
   computed: {
+    todoList: {
+      get() {
+        const todos = this.todosFiltered()
+        return todos.slice(
+          this.todosPageSize * (this.todosPage - 1),
+          this.todosPageSize * this.todosPage
+        )
+      },
+      set(changeTodos) {
+        console.log('changeTodos')
+        return changeTodos
+      }
+    },
     ...mapGetters('modules/todos', ['todosCount']),
     ...mapState('modules/todos', ['todos'])
   },
   methods: {
+    // 完了状態の絞り込み
+    todosFiltered() {
+      let returnvalue
+      switch (this.taskFilter) {
+        case 'all':
+          returnvalue = this.todos
+          console.log(this.taskFilter)
+          break
+        case 'active':
+          returnvalue = this.todos.filter((todo) => !todo.task.done)
+          console.log(this.taskFilter)
+
+          break
+        case 'done':
+          returnvalue = this.todos.filter((todo) => todo.task.done)
+          console.log(this.taskFilter)
+
+          break
+        default:
+      }
+      return returnvalue
+    },
+    // タスクの検索
+    searchTask() {
+      // vuetifyのclearableを使用するとnullになり表示されなくなるためnullの場合の処理を記述
+      // 絞り込みした状態でも検索ができるように変数を定義
+      // const todos = this.todosFiltered()
+      return this.todoList.filter((todo) => {
+        return todo.task.title.includes(this.searchTaskKeyword)
+      })
+    },
+    sortByTask() {
+      let returnvalue
+      const ref = this.$refs.sortByTask
+
+      switch (this.selectSortTask) {
+        case 'title':
+          returnvalue = ref.sortByTaskTitle()
+          console.log(this.selectSortTask)
+          break
+        case 'ascDate':
+          returnvalue = ref.sortByAscDate()
+          console.log(this.selectSortTask)
+
+          break
+        case 'descDate':
+          returnvalue = ref.sortByDescDate()
+
+          console.log(this.selectSortTask)
+
+          break
+        default:
+      }
+      return returnvalue
+    },
+    changeTodosPage(pageNumber) {
+      const todos = this.todosFiltered()
+      this.todoList = todos.slice(
+        this.todosPageSize * (pageNumber - 1),
+        this.todosPageSize * pageNumber
+      )
+      console.log(pageNumber)
+      console.log('page', this.todosPage)
+    },
     openAddTask() {
       this.taskDialog = true
     },
