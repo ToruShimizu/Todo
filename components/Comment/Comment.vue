@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     ...mapState('modules/comment', ['comments']),
-    ...mapGetters('modules/auth', ['gettersUserName', 'photoURL', 'userEmail'])
+    ...mapGetters('modules/user/auth', ['gettersUserName', 'photoURL', 'userEmail'])
   },
   methods: {
     removeComment(comment) {

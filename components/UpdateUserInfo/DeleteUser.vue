@@ -107,7 +107,7 @@ export default {
         return
       }
       this.loader = 'loadingDeleteUser'
-      this.$store.dispatch('modules/auth/deleteAccount', {
+      this.$store.dispatch('modules/user/userInfo/deleteAccount', {
         email: this.deleteUser.email,
         password: this.deleteUser.password
       })

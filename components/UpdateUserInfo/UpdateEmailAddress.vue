@@ -89,7 +89,7 @@ export default {
         this.$refs.form.reset()
       }
     },
-    ...mapGetters('modules/auth', ['gettersUserEmail'])
+    ...mapGetters('modules/user/auth', ['gettersUserEmail'])
   },
   methods: {
     async updateEmailAddress() {
@@ -98,7 +98,7 @@ export default {
         return
       }
       this.loader = 'loadingUpdateEmailAddress'
-      await this.$store.dispatch('modules/auth/updateEmailAddress', {
+      await this.$store.dispatch('modules/user/userInfo/updateEmailAddress', {
         email: this.editUserEmail.email
       })
       this.editUserEmail.email = ''

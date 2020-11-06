@@ -100,7 +100,7 @@ export default {
         this.$refs.form.validate()
         return
       }
-      await this.$store.dispatch('modules/auth/createUser', {
+      await this.$store.dispatch('modules/user/userInfo/createUser', {
         email: this.createNewUser.email,
         password: this.createNewUser.password,
         userName: this.createNewUser.name

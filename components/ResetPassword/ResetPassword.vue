@@ -81,7 +81,9 @@ export default {
         return
       }
       this.loader = 'loadingResetPassword'
-      this.$store.dispatch('modules/auth/passwordReset', { email: this.resetUserPassword.email })
+      this.$store.dispatch('modules/user/userInfo/passwordReset', {
+        email: this.resetUserPassword.email
+      })
       this.$refs.form.reset()
     },
     closeResetPasswprd() {
