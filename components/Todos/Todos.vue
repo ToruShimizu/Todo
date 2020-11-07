@@ -71,24 +71,6 @@ export default {
     }
   },
   computed: {
-    todoList: {
-      get() {
-        // 絞り込が行われたあとのデータを使用
-        const todos = this.todosFiltered()
-        // 1ページあたりの最大表示数に合わせて切り分ける
-        return todos.slice(
-          this.todosPageSize * (this.todosPage - 1),
-          this.todosPageSize * this.todosPage
-        )
-      },
-      set(changeTodosPage) {
-        return changeTodosPage
-      }
-    },
-    ...mapGetters('modules/todos', ['todosCount', 'remainingTodos', 'completedTodos']),
-    ...mapState('modules/todos', ['todos'])
-  },
-  methods: {
     // 完了状態の絞り込み
     todosFiltered() {
       let returnvalue
@@ -112,6 +94,24 @@ export default {
       }
       return returnvalue
     },
+    todoList: {
+      get() {
+        // 絞り込が行われたあとのデータを使用
+        const todos = this.todosFiltered()
+        // 1ページあたりの最大表示数に合わせて切り分ける
+        return todos.slice(
+          this.todosPageSize * (this.todosPage - 1),
+          this.todosPageSize * this.todosPage
+        )
+      },
+      set(changeTodosPage) {
+        return changeTodosPage
+      }
+    },
+    ...mapGetters('modules/todos', ['todosCount', 'remainingTodos', 'completedTodos']),
+    ...mapState('modules/todos', ['todos'])
+  },
+  methods: {
     // タスクの検索
     searchTask() {
       // vuetifyのclearableを使用するとnullになり表示されなくなるためnullの場合の処理を記述
