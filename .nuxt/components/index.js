@@ -7,6 +7,7 @@ export { default as ResetPassword } from '../../components/ResetPassword/ResetPa
 export { default as AddTask } from '../../components/Todos/AddTask.vue'
 export { default as FilteredTask } from '../../components/Todos/FilteredTask.vue'
 export { default as SearchTask } from '../../components/Todos/SearchTask.vue'
+export { default as SortByTask } from '../../components/Todos/SortByTask.vue'
 export { default as TaskTable } from '../../components/Todos/TaskTable.vue'
 export { default as Todos } from '../../components/Todos/Todos.vue'
 export { default as UpdateTask } from '../../components/Todos/UpdateTask.vue'
@@ -24,6 +25,7 @@ export const LazyResetPassword = import('../../components/ResetPassword/ResetPas
 export const LazyAddTask = import('../../components/Todos/AddTask.vue' /* webpackChunkName: "components/Todos/AddTask'}" */).then(c => c.default || c)
 export const LazyFilteredTask = import('../../components/Todos/FilteredTask.vue' /* webpackChunkName: "components/Todos/FilteredTask'}" */).then(c => c.default || c)
 export const LazySearchTask = import('../../components/Todos/SearchTask.vue' /* webpackChunkName: "components/Todos/SearchTask'}" */).then(c => c.default || c)
+export const LazySortByTask = import('../../components/Todos/SortByTask.vue' /* webpackChunkName: "components/Todos/SortByTask'}" */).then(c => c.default || c)
 export const LazyTaskTable = import('../../components/Todos/TaskTable.vue' /* webpackChunkName: "components/Todos/TaskTable'}" */).then(c => c.default || c)
 export const LazyTodos = import('../../components/Todos/Todos.vue' /* webpackChunkName: "components/Todos/Todos'}" */).then(c => c.default || c)
 export const LazyUpdateTask = import('../../components/Todos/UpdateTask.vue' /* webpackChunkName: "components/Todos/UpdateTask'}" */).then(c => c.default || c)

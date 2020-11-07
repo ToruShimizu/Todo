@@ -53,6 +53,12 @@
   "LazySearchTask": {
     "description": "Auto imported from components/Todos/SearchTask.vue"
   },
+  "SortByTask": {
+    "description": "Auto imported from components/Todos/SortByTask.vue"
+  },
+  "LazySortByTask": {
+    "description": "Auto imported from components/Todos/SortByTask.vue"
+  },
   "TaskTable": {
     "description": "Auto imported from components/Todos/TaskTable.vue"
   },
