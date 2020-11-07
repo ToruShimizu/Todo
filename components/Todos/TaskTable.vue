@@ -70,14 +70,14 @@ export default {
     UpdateTask
   },
   props: {
-    sortByTask: {
-      type: Function
-    },
     todosPage: {
       type: Number
     },
     todosPageSize: {
       type: Number
+    },
+    todoList: {
+      type: Array
     },
     todosFiltered: {
       type: Array
@@ -102,7 +102,7 @@ export default {
   },
   computed: {
     displayTodos() {
-      return this.sortByTask()
+      return this.todoList
     },
     todosPageNumber: {
       get() {
