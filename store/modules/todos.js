@@ -102,7 +102,7 @@ const getters = {
   },
   // タスクの完了率
   progress(state, getters) {
-    const completed = (getters.completedTodos / state.todos.length) * 100
+    const completed = (getters.completedTodosLength / state.todos.length) * 100
     return completed.toFixed()
   },
   // 未完了状態のタスクの絞り込み
