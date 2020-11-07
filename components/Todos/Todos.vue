@@ -85,7 +85,7 @@ export default {
         return changeTodosPage
       }
     },
-    ...mapGetters('modules/todos', ['todosCount']),
+    ...mapGetters('modules/todos', ['todosCount', 'remainingTodos', 'completedTodos']),
     ...mapState('modules/todos', ['todos'])
   },
   methods: {
@@ -99,12 +99,12 @@ export default {
           console.log(this.taskFilter)
           break
         case 'active':
-          returnvalue = todos.filter((todo) => !todo.task.done)
+          returnvalue = this.remainingTodos
           console.log(this.taskFilter)
 
           break
         case 'done':
-          returnvalue = todos.filter((todo) => todo.task.done)
+          returnvalue = this.completedTodos
           console.log(this.taskFilter)
 
           break
