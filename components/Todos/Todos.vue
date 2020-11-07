@@ -120,7 +120,8 @@ export default {
         this.todoList = this.todos
         return this.todoList
       }
-      return this.todoList.filter((todo) => {
+
+      return this.todosFiltered.filter((todo) => {
         return todo.task.title.includes(this.searchTaskKeyword)
       })
     },
