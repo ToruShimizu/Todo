@@ -32,11 +32,9 @@
       </v-layout>
       <TaskTable
         ref="taskTable"
-        :sortByTask="sortByTask"
         :todosPage.sync="todosPage"
         :todosPageSize="todosPageSize"
         :todoList="todoList"
-        :todosFiltered="todosFiltered"
         :searchTask="searchTask"
         @change-todos-page="changeTodosPage"
       />

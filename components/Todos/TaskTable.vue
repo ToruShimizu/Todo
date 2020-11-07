@@ -76,9 +76,6 @@ export default {
     todosPageSize: {
       type: Number
     },
-    todoList: {
-      type: Array
-    },
     searchTask: {
       type: Function
     },
