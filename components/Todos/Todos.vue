@@ -37,6 +37,7 @@
         :todosPageSize="todosPageSize"
         :todoList="todoList"
         :todosFiltered="todosFiltered"
+        :searchTask="searchTask"
         @change-todos-page="changeTodosPage"
       />
     </v-card>
@@ -144,14 +145,16 @@ export default {
   methods: {
     // タスクの検索
     searchTask() {
+      // todoListを表示するため検索の対象とする
+      let todoList = this.todoList
       // vuetifyのclearableを使用するとnullになり表示されなくなるためnullの場合の処理を記述
       // nullの場合は元の値であるstateのtodosを入れて返す
       if (this.searchTaskKeyword === null) {
-        this.todoList = this.todos
-        return this.todoList
+        todoList = this.todos
+        return todoList
       }
 
-      return this.todoList.filter((todo) => {
+      return todoList.filter((todo) => {
         return todo.task.title.includes(this.searchTaskKeyword)
       })
     },
