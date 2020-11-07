@@ -1,4 +1,4 @@
-import firebase, { auth, storageRef } from '~/plugins/firebase'
+import firebase, { auth } from '~/plugins/firebase'
 
 // initial state
 const state = () => ({
