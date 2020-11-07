@@ -97,7 +97,7 @@ export default {
     todoList: {
       get() {
         // 絞り込が行われたあとのデータを使用
-        const todos = this.todosFiltered()
+        const todos = this.todosFiltered
         // 1ページあたりの最大表示数に合わせて切り分ける
         return todos.slice(
           this.todosPageSize * (this.todosPage - 1),
@@ -151,7 +151,7 @@ export default {
     },
     // ページ番号のボタンが押された時にページを切り替える
     changeTodosPage(pageNumber) {
-      const todos = this.todosFiltered()
+      const todos = this.todosFiltered
       this.todoList = todos.slice(
         this.todosPageSize * (pageNumber - 1),
         this.todosPageSize * pageNumber

@@ -80,7 +80,7 @@ export default {
       type: Number
     },
     todosFiltered: {
-      type: Function
+      type: Array
     }
   },
   data() {
@@ -113,7 +113,7 @@ export default {
       }
     },
     todosPageCount() {
-      const todos = this.todosFiltered()
+      const todos = this.todosFiltered
       return Math.ceil(todos.length / this.todosPageSize)
     },
     ...mapState('modules/todos', ['todos'])
