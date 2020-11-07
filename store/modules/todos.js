@@ -157,18 +157,25 @@ const getters = {
   todosCount(state) {
     return state.todos.length
   },
+  remainingTodosLength(state, getters) {
+    return state.todos.length - getters.completedTodosLength
+  },
   // 完了タスクのカウント
-  completedTodos(state) {
-    return state.todos.filter((todo) => todo.task.done).length
+  completedTodosLength(state, getters) {
+    return getters.completedTodos.length
   },
   // タスクの完了率
   progress(state, getters) {
     const completed = (getters.completedTodos / state.todos.length) * 100
     return completed.toFixed()
   },
-  // 未完了タスクのカウント
+  // 未完了状態のタスクの絞り込み
   remainingTodos(state, getters) {
-    return state.todos.length - getters.completedTodos
+    return state.todos - getters.completedTodos
+  },
+  // 完了状態のタスクの絞り込み
+  completedTodos(state) {
+    return state.todos.filter((todo) => todo.task.done)
   }
 }
 
