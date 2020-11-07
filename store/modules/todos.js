@@ -107,7 +107,7 @@ const getters = {
   },
   // 未完了状態のタスクの絞り込み
   remainingTodos(state, getters) {
-    return state.todos - getters.completedTodos
+    return state.todos.filter((todo) => !todo.task.done)
   },
   // 完了状態のタスクの絞り込み
   completedTodos(state) {
