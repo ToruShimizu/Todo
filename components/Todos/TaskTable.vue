@@ -79,6 +79,9 @@ export default {
     todoList: {
       type: Array
     },
+    searchTask: {
+      type: Function
+    },
     todosFiltered: {
       type: Array
     }
@@ -102,7 +105,8 @@ export default {
   },
   computed: {
     displayTodos() {
-      return this.todoList
+      // todoListを対象に検索を行っているためメソッドを返すと配列が表示される
+      return this.searchTask()
     },
     todosPageNumber: {
       get() {
