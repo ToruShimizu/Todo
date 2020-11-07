@@ -24,7 +24,7 @@
       <v-divider />
       <v-layout>
         <SearchTask :search.sync="searchTaskKeyword" />
-        <SortByTask ref="sortByTask" :selected.sync="selectSortTask" :searchTask="searchTask" />
+        <SortByTask ref="sortByTask" :selected.sync="selectSortTask" :todoList="todoList" />
       </v-layout>
       <TaskTable
         ref="taskTable"
@@ -108,23 +108,6 @@ export default {
         return changeTodosPage
       }
     },
-    ...mapGetters('modules/todos', ['todosCount', 'remainingTodos', 'completedTodos']),
-    ...mapState('modules/todos', ['todos'])
-  },
-  methods: {
-    // タスクの検索
-    searchTask() {
-      // vuetifyのclearableを使用するとnullになり表示されなくなるためnullの場合の処理を記述
-      // nullの場合は元の値であるstateのtodosを入れて返す
-      if (this.searchTaskKeyword === null) {
-        this.todoList = this.todos
-        return this.todoList
-      }
-
-      return this.todosFiltered.filter((todo) => {
-        return todo.task.title.includes(this.searchTaskKeyword)
-      })
-    },
     sortByTask() {
       let returnvalue
       // SortByTaskコンポーネントのメソッドを呼び出す
@@ -149,6 +132,23 @@ export default {
         default:
       }
       return returnvalue
+    },
+    ...mapGetters('modules/todos', ['todosCount', 'remainingTodos', 'completedTodos']),
+    ...mapState('modules/todos', ['todos'])
+  },
+  methods: {
+    // タスクの検索
+    searchTask() {
+      // vuetifyのclearableを使用するとnullになり表示されなくなるためnullの場合の処理を記述
+      // nullの場合は元の値であるstateのtodosを入れて返す
+      if (this.searchTaskKeyword === null) {
+        this.todoList = this.todos
+        return this.todoList
+      }
+
+      return this.todoList.filter((todo) => {
+        return todo.task.title.includes(this.searchTaskKeyword)
+      })
     },
     // ページ番号のボタンが押された時にページを切り替える
     changeTodosPage(pageNumber) {
