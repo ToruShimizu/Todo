@@ -3,10 +3,10 @@
   <v-tabs>
     <v-tab @click="selectedTaskFilter = 'all'">全て:{{ todos.length }}</v-tab>
     <v-divider vertical />
-    <v-tab @click="selectedTaskFilter = 'active'">未完了:{{ remainingTodos }}</v-tab>
+    <v-tab @click="selectedTaskFilter = 'active'">未完了:{{ remainingTodosLength }}</v-tab>
     <v-divider vertical />
     <v-tab @click="selectedTaskFilter = 'done'">
-      完了: {{ completedTodos }}/{{ todos.length }}
+      完了: {{ completedTodosLength }}/{{ todos.length }}
       <!-- 完了率の表示 -->
       <v-progress-circular
         :value="progress"
@@ -39,7 +39,12 @@ export default {
         this.$emit('update:filterdTask', value)
       }
     },
-    ...mapGetters('modules/todos', ['completedTodos', 'progress', 'remainingTodos', 'todosCount']),
+    ...mapGetters('modules/todos', [
+      'completedTodosLength',
+      'progress',
+      'remainingTodosLength',
+      'todosCount'
+    ]),
     ...mapState('modules/todos', ['todos'])
   }
 }
