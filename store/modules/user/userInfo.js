@@ -6,23 +6,6 @@ const state = () => ({})
 const mutations = {}
 
 const actions = {
-  // ユーザー作成してからそのままログインする
-  async createUser({ dispatch }, { email, password, userName }) {
-    try {
-      const newUser = await auth.createUserWithEmailAndPassword(email, password)
-      await newUser.user.updateProfile({
-        displayName: userName
-      })
-      alert('ユーザーの作成に成功しました。このままログインします。')
-      await dispatch('modules/user/auth/login', { email, password }, { root: true })
-      email = null
-      password = null
-      userName = null
-    } catch (err) {
-      alert('ユーザーの作成に失敗しました。もう一度やり直してください。')
-      console.log(err)
-    }
-  },
   // ユーザープロフィール画像の追加
   async uploadUserAvatarFile({ getters, commit }, userAvatarFile) {
     const userInfo = await firebase.auth().currentUser
