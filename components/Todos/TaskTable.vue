@@ -70,17 +70,17 @@ export default {
     UpdateTask
   },
   props: {
-    sortByTask: {
-      type: Function
-    },
     todosPage: {
       type: Number
     },
     todosPageSize: {
       type: Number
     },
-    todosFiltered: {
+    searchTask: {
       type: Function
+    },
+    todosFiltered: {
+      type: Array
     }
   },
   data() {
@@ -102,7 +102,8 @@ export default {
   },
   computed: {
     displayTodos() {
-      return this.sortByTask()
+      // todoListを対象に検索を行っているためメソッドを返すと配列が表示される
+      return this.searchTask()
     },
     todosPageNumber: {
       get() {
@@ -113,7 +114,7 @@ export default {
       }
     },
     todosPageCount() {
-      const todos = this.todosFiltered()
+      const todos = this.todosFiltered
       return Math.ceil(todos.length / this.todosPageSize)
     },
     ...mapState('modules/todos', ['todos'])

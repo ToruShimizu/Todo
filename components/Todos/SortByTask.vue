@@ -24,8 +24,8 @@ export default {
     selectSortTask: {
       type: String
     },
-    searchTask: {
-      type: Function
+    todosFiltered: {
+      type: Array
     }
   },
   data() {
@@ -47,8 +47,8 @@ export default {
   },
   methods: {
     sortByTaskTitle() {
-      // 検索された状態でもソートができるように
-      const todos = this.searchTask()
+      // 絞り込みされた状態でもソートができるように
+      const todos = this.todosFiltered
       return todos.sort((a, b) => {
         return a.task.title < b.task.title
           ? -this.sortTaskTitleOrder
@@ -58,8 +58,8 @@ export default {
       })
     },
     sortByAscDate() {
-      // 検索された状態でもソートができるように
-      const todos = this.searchTask()
+      // 絞り込みされた状態でもソートができるように
+      const todos = this.todosFiltered
       return todos.sort((a, b) => {
         return a.task.date < b.task.date
           ? -this.sortTaskDateOrder
@@ -69,8 +69,8 @@ export default {
       })
     },
     sortByDescDate() {
-      // 検索された状態でもソートができるように
-      const todos = this.searchTask()
+      // 絞り込みされた状態でもソートができるように
+      const todos = this.todosFiltered
       return todos.sort((a, b) => {
         return a.task.date < b.task.date
           ? -this.sortTaskDateOrder

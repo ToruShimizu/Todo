@@ -24,14 +24,18 @@
       <v-divider />
       <v-layout>
         <SearchTask :search.sync="searchTaskKeyword" />
-        <SortByTask ref="sortByTask" :selected.sync="selectSortTask" :searchTask="searchTask" />
+        <SortByTask
+          ref="sortByTask"
+          :selected.sync="selectSortTask"
+          :todosFiltered="todosFiltered"
+        />
       </v-layout>
       <TaskTable
         ref="taskTable"
-        :sortByTask="sortByTask"
         :todosPage.sync="todosPage"
         :todosPageSize="todosPageSize"
-        :todosFiltered="todosFiltered"
+        :todoList="todoList"
+        :searchTask="searchTask"
         @change-todos-page="changeTodosPage"
       />
     </v-card>
@@ -71,24 +75,6 @@ export default {
     }
   },
   computed: {
-    todoList: {
-      get() {
-        // 絞り込が行われたあとのデータを使用
-        const todos = this.todosFiltered()
-        // 1ページあたりの最大表示数に合わせて切り分ける
-        return todos.slice(
-          this.todosPageSize * (this.todosPage - 1),
-          this.todosPageSize * this.todosPage
-        )
-      },
-      set(changeTodosPage) {
-        return changeTodosPage
-      }
-    },
-    ...mapGetters('modules/todos', ['todosCount', 'remainingTodos', 'completedTodos']),
-    ...mapState('modules/todos', ['todos'])
-  },
-  methods: {
     // 完了状態の絞り込み
     todosFiltered() {
       let returnvalue
@@ -112,17 +98,19 @@ export default {
       }
       return returnvalue
     },
-    // タスクの検索
-    searchTask() {
-      // vuetifyのclearableを使用するとnullになり表示されなくなるためnullの場合の処理を記述
-      // nullの場合は元の値であるstateのtodosを入れて返す
-      if (this.searchTaskKeyword === null) {
-        this.todoList = this.todos
-        return this.todoList
+    todoList: {
+      get() {
+        // 絞り込が行われたあとのデータを使用
+        const todos = this.todosFiltered
+        // 1ページあたりの最大表示数に合わせて切り分ける
+        return todos.slice(
+          this.todosPageSize * (this.todosPage - 1),
+          this.todosPageSize * this.todosPage
+        )
+      },
+      set(changeTodosPage) {
+        return changeTodosPage
       }
-      return this.todoList.filter((todo) => {
-        return todo.task.title.includes(this.searchTaskKeyword)
-      })
     },
     sortByTask() {
       let returnvalue
@@ -149,9 +137,28 @@ export default {
       }
       return returnvalue
     },
+    ...mapGetters('modules/todos', ['todosCount', 'remainingTodos', 'completedTodos']),
+    ...mapState('modules/todos', ['todos'])
+  },
+  methods: {
+    // タスクの検索
+    searchTask() {
+      // todoListを表示するため検索の対象とする
+      let todoList = this.todoList
+      // vuetifyのclearableを使用するとnullになり表示されなくなるためnullの場合の処理を記述
+      // nullの場合は元の値であるstateのtodosを入れて返す
+      if (this.searchTaskKeyword === null) {
+        todoList = this.todos
+        return todoList
+      }
+
+      return todoList.filter((todo) => {
+        return todo.task.title.includes(this.searchTaskKeyword)
+      })
+    },
     // ページ番号のボタンが押された時にページを切り替える
     changeTodosPage(pageNumber) {
-      const todos = this.todosFiltered()
+      const todos = this.todosFiltered
       this.todoList = todos.slice(
         this.todosPageSize * (pageNumber - 1),
         this.todosPageSize * pageNumber
