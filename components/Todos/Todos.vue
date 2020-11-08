@@ -128,21 +128,6 @@ export default {
         return todo.task.title.includes(this.searchTaskKeyword)
       })
     },
-    sortByTaskTitle() {
-      return this.todosFiltered.slice().sort((a, b) => {
-        if (a.task.title < b.task.title) return -1
-      })
-    },
-    sortByAscDate() {
-      return this.todosFiltered.slice().sort((a, b) => {
-        if (a.task.date > b.task.date) return -1
-      })
-    },
-    sortByDescDate() {
-      return this.todosFiltered.slice().sort((a, b) => {
-        if (a.task.date < b.task.date) return -1
-      })
-    },
     ...mapGetters('modules/todos', ['todosCount', 'remainingTodos', 'completedTodos']),
     ...mapState('modules/todos', ['todos'])
   },
@@ -151,15 +136,23 @@ export default {
       let returnvalue
       switch (this.selectSortTask) {
         case 'title':
-          returnvalue = this.sortByTaskTitle
+          // returnvalue = this.sortByTaskTitle
+          returnvalue = this.todosFiltered.slice().sort((a, b) => {
+            if (a.task.title < b.task.title) return -1
+          })
+
           console.log(this.selectSortTask)
           break
         case 'ascDate':
-          returnvalue = this.sortByAscDate
+          returnvalue = this.todosFiltered.slice().sort((a, b) => {
+            if (a.task.date > b.task.date) return -1
+          })
           console.log(this.selectSortTask)
           break
         case 'descDate':
-          returnvalue = this.sortByDescDate
+          returnvalue = this.todosFiltered.slice().sort((a, b) => {
+            if (a.task.date < b.task.date) return -1
+          })
           console.log(this.selectSortTask)
           break
         default:
