@@ -35,6 +35,9 @@
         :todosPage.sync="todosPage"
         :todosPageSize="todosPageSize"
         :todosFiltered="todosFiltered"
+        :todoList="todoList"
+        :sortByTask="sortByTask"
+        :selectSortTask="selectSortTask"
         :searchTask="searchTask"
         @change-todos-page="changeTodosPage"
       />
@@ -77,7 +80,6 @@ export default {
     }
   },
   computed: {
-    
     // 完了状態の絞り込み
     todosFiltered() {
       let returnvalue
@@ -129,8 +131,7 @@ export default {
       })
     },
     sortByTaskTitle() {
-      // 絞り込みされた状態でもソートができるように
-      const todos = this.todosFiltered
+      const todos = this.todoList
       return todos.sort((a, b) => {
         return a.task.title < b.task.title
           ? -this.sortTaskTitleOrder
@@ -140,8 +141,7 @@ export default {
       })
     },
     sortByAscDate() {
-      // 絞り込みされた状態でもソートができるように
-      const todos = this.todosFiltered
+      const todos = this.todoList
       return todos.sort((a, b) => {
         return a.task.date < b.task.date
           ? -this.sortTaskDateOrder
@@ -151,8 +151,7 @@ export default {
       })
     },
     sortByDescDate() {
-      // 絞り込みされた状態でもソートができるように
-      const todos = this.todosFiltered
+      const todos = this.todoList
       return todos.sort((a, b) => {
         return a.task.date < b.task.date
           ? -this.sortTaskDateOrder
