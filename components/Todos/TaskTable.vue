@@ -80,7 +80,7 @@ export default {
       type: Array
     },
     sortByTask: {
-      type: Function
+      type: Array
     }
   },
   data() {
@@ -102,7 +102,7 @@ export default {
   },
   computed: {
     displayTodos() {
-      return this.sortByTask()
+      return this.sortByTask
     },
     todosPageNumber: {
       get() {
