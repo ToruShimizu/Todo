@@ -72,8 +72,6 @@ export default {
       todosPage: 1,
       todosPageSize: 7,
       searchTaskKeyword: '',
-      sortTaskTitleOrder: 1,
-      sortTaskDateOrder: 1,
       selectSortTask: 'ascDate',
       taskFilter: 'all',
       taskDialog: false
@@ -131,33 +129,18 @@ export default {
       })
     },
     sortByTaskTitle() {
-      const todos = this.todoList
-      return todos.sort((a, b) => {
-        return a.task.title < b.task.title
-          ? -this.sortTaskTitleOrder
-          : a.task.title > b.task.title
-          ? this.sortTaskTitleOrder
-          : 0
+      return this.todoList.slice().sort((a, b) => {
+        if (a.task.title < b.task.title) return -1
       })
     },
     sortByAscDate() {
-      const todos = this.todoList
-      return todos.sort((a, b) => {
-        return a.task.date < b.task.date
-          ? -this.sortTaskDateOrder
-          : a.task.date > b.task.date
-          ? this.sortTaskDateOrder
-          : 1
+      return this.todoList.slice().sort((a, b) => {
+        if (a.task.date > b.task.date) return -1
       })
     },
     sortByDescDate() {
-      const todos = this.todoList
-      return todos.sort((a, b) => {
-        return a.task.date < b.task.date
-          ? -this.sortTaskDateOrder
-          : a.task.date > b.task.date
-          ? this.sortTaskDateOrder
-          : -1
+      return this.todoList.slice().sort((a, b) => {
+        if (a.task.date < b.task.date) return -1
       })
     },
     ...mapGetters('modules/todos', ['todosCount', 'remainingTodos', 'completedTodos']),
