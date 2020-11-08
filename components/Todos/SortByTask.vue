@@ -46,38 +46,29 @@ export default {
     }
   },
   methods: {
-    sortByTaskTitle() {
-      // 絞り込みされた状態でもソートができるように
-      const todos = this.todosFiltered
-      return todos.sort((a, b) => {
-        return a.task.title < b.task.title
-          ? -this.sortTaskTitleOrder
-          : a.task.title > b.task.title
-          ? this.sortTaskTitleOrder
-          : 0
-      })
-    },
-    sortByAscDate() {
-      // 絞り込みされた状態でもソートができるように
-      const todos = this.todosFiltered
-      return todos.sort((a, b) => {
-        return a.task.date < b.task.date
-          ? -this.sortTaskDateOrder
-          : a.task.date > b.task.date
-          ? this.sortTaskDateOrder
-          : 1
-      })
-    },
-    sortByDescDate() {
-      // 絞り込みされた状態でもソートができるように
-      const todos = this.todosFiltered
-      return todos.sort((a, b) => {
-        return a.task.date < b.task.date
-          ? -this.sortTaskDateOrder
-          : a.task.date > b.task.date
-          ? this.sortTaskDateOrder
-          : -1
-      })
+    sortByTask() {
+      let returnvalue
+      // SortByTaskコンポーネントのメソッドを呼び出す
+
+      switch (this.selectSortTask) {
+        case 'title':
+          returnvalue = this.sortByTaskTitle
+          console.log(this.selectSortTask)
+          break
+        case 'ascDate':
+          returnvalue = this.sortByAscDate
+          console.log(this.selectSortTask)
+
+          break
+        case 'descDate':
+          returnvalue = this.sortByDescDate
+
+          console.log(this.selectSortTask)
+
+          break
+        default:
+      }
+      return returnvalue
     }
   }
 }
