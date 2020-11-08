@@ -35,7 +35,6 @@
         :todosPage.sync="todosPage"
         :todosPageSize="todosPageSize"
         :todosFiltered="todosFiltered"
-        :todoList="todoList"
         :searchTask="searchTask"
         @change-todos-page="changeTodosPage"
       />
