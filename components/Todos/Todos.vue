@@ -124,7 +124,7 @@ export default {
         todoList = this.todos
         return todoList
       }
-      return todoList.filter((todo) => {
+      return this.todosFiltered.filter((todo) => {
         return todo.task.title.includes(this.searchTaskKeyword)
       })
     },
