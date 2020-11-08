@@ -76,11 +76,11 @@ export default {
     todosPageSize: {
       type: Number
     },
-    searchTask: {
-      type: Function
-    },
     todosFiltered: {
       type: Array
+    },
+    sortByTask: {
+      type: Function
     }
   },
   data() {
@@ -102,8 +102,7 @@ export default {
   },
   computed: {
     displayTodos() {
-      // todoListを対象に検索を行っているためメソッドを返すと配列が表示される
-      return this.searchTask()
+      return this.sortByTask()
     },
     todosPageNumber: {
       get() {
