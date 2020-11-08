@@ -69,6 +69,8 @@ export default {
       todosPage: 1,
       todosPageSize: 7,
       searchTaskKeyword: '',
+      sortTaskTitleOrder: 1,
+      sortTaskDateOrder: 1,
       selectSortTask: 'ascDate',
       taskFilter: 'all',
       taskDialog: false
