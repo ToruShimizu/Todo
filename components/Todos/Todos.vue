@@ -129,17 +129,17 @@ export default {
       })
     },
     sortByTaskTitle() {
-      return this.todoList.slice().sort((a, b) => {
+      return this.todosFiltered.slice().sort((a, b) => {
         if (a.task.title < b.task.title) return -1
       })
     },
     sortByAscDate() {
-      return this.todoList.slice().sort((a, b) => {
+      return this.todosFiltered.slice().sort((a, b) => {
         if (a.task.date > b.task.date) return -1
       })
     },
     sortByDescDate() {
-      return this.todoList.slice().sort((a, b) => {
+      return this.todosFiltered.slice().sort((a, b) => {
         if (a.task.date < b.task.date) return -1
       })
     },
