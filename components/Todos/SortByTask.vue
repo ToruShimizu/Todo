@@ -43,31 +43,5 @@ export default {
       }
     }
   },
-  methods: {
-    sortByTask() {
-      let returnvalue
-      // SortByTaskコンポーネントのメソッドを呼び出す
-
-      switch (this.selectSortTask) {
-        case 'title':
-          returnvalue = this.sortByTaskTitle
-          console.log(this.selectSortTask)
-          break
-        case 'ascDate':
-          returnvalue = this.sortByAscDate
-          console.log(this.selectSortTask)
-
-          break
-        case 'descDate':
-          returnvalue = this.sortByDescDate
-
-          console.log(this.selectSortTask)
-
-          break
-        default:
-      }
-      return returnvalue
-    }
-  }
 }
 </script>
