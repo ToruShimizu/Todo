@@ -30,8 +30,6 @@ export default {
   },
   data() {
     return {
-      sortTaskTitleOrder: 1,
-      sortTaskDateOrder: 1,
       sortTaskDialog: false
     }
   },
