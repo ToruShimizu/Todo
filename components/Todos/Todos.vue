@@ -77,6 +77,7 @@ export default {
     }
   },
   computed: {
+
     // 完了状態の絞り込み
     todosFiltered() {
       let returnvalue
@@ -151,6 +152,25 @@ export default {
     ...mapState('modules/todos', ['todos'])
   },
   methods: {
+    sortByTask() {
+      let returnvalue
+      switch (this.selectSortTask) {
+        case 'title':
+          returnvalue = this.sortByTaskTitle
+          console.log(this.selectSortTask)
+          break
+        case 'ascDate':
+          returnvalue = this.sortByAscDate
+          console.log(this.selectSortTask)
+          break
+        case 'descDate':
+          returnvalue = this.sortByDescDate
+          console.log(this.selectSortTask)
+          break
+        default:
+      }
+      return returnvalue
+    },
     // タスクの検索
     searchTask() {
       // todoListを表示するため検索の対象とする
