@@ -77,7 +77,7 @@ export default {
     }
   },
   computed: {
-
+    
     // 完了状態の絞り込み
     todosFiltered() {
       let returnvalue
@@ -114,6 +114,19 @@ export default {
       set(changeTodosPage) {
         return changeTodosPage
       }
+    },
+    // タスクの検索
+    searchTask() {
+      let todoList = this.todoList
+      // vuetifyのclearableを使用するとnullになり表示されなくなるためnullの場合の処理を記述
+      // nullの場合は元の値であるstateのtodosを入れて返す
+      if (this.searchTaskKeyword === null) {
+        todoList = this.todos
+        return todoList
+      }
+      return this.todoList.filter((todo) => {
+        return todo.task.title.includes(this.searchTaskKeyword)
+      })
     },
     sortByTaskTitle() {
       // 絞り込みされた状態でもソートができるように
@@ -170,21 +183,6 @@ export default {
         default:
       }
       return returnvalue
-    },
-    // タスクの検索
-    searchTask() {
-      // todoListを表示するため検索の対象とする
-      let todoList = this.todoList
-      // vuetifyのclearableを使用するとnullになり表示されなくなるためnullの場合の処理を記述
-      // nullの場合は元の値であるstateのtodosを入れて返す
-      if (this.searchTaskKeyword === null) {
-        todoList = this.todos
-        return todoList
-      }
-
-      return todoList.filter((todo) => {
-        return todo.task.title.includes(this.searchTaskKeyword)
-      })
     },
     // ページ番号のボタンが押された時にページを切り替える
     changeTodosPage(pageNumber) {
