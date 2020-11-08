@@ -112,30 +112,38 @@ export default {
         return changeTodosPage
       }
     },
-    sortByTask() {
-      let returnvalue
-      // SortByTaskコンポーネントのメソッドを呼び出す
-      const ref = this.$refs.sortByTask
-
-      switch (this.selectSortTask) {
-        case 'title':
-          returnvalue = ref.sortByTaskTitle()
-          console.log(this.selectSortTask)
-          break
-        case 'ascDate':
-          returnvalue = ref.sortByAscDate()
-          console.log(this.selectSortTask)
-
-          break
-        case 'descDate':
-          returnvalue = ref.sortByDescDate()
-
-          console.log(this.selectSortTask)
-
-          break
-        default:
-      }
-      return returnvalue
+    sortByTaskTitle() {
+      // 絞り込みされた状態でもソートができるように
+      const todos = this.todosFiltered
+      return todos.sort((a, b) => {
+        return a.task.title < b.task.title
+          ? -this.sortTaskTitleOrder
+          : a.task.title > b.task.title
+          ? this.sortTaskTitleOrder
+          : 0
+      })
+    },
+    sortByAscDate() {
+      // 絞り込みされた状態でもソートができるように
+      const todos = this.todosFiltered
+      return todos.sort((a, b) => {
+        return a.task.date < b.task.date
+          ? -this.sortTaskDateOrder
+          : a.task.date > b.task.date
+          ? this.sortTaskDateOrder
+          : 1
+      })
+    },
+    sortByDescDate() {
+      // 絞り込みされた状態でもソートができるように
+      const todos = this.todosFiltered
+      return todos.sort((a, b) => {
+        return a.task.date < b.task.date
+          ? -this.sortTaskDateOrder
+          : a.task.date > b.task.date
+          ? this.sortTaskDateOrder
+          : -1
+      })
     },
     ...mapGetters('modules/todos', ['todosCount', 'remainingTodos', 'completedTodos']),
     ...mapState('modules/todos', ['todos'])
