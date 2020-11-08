@@ -42,6 +42,6 @@ export default {
         this.$emit('update:selected', value)
       }
     }
-  },
+  }
 }
 </script>
