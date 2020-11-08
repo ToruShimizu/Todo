@@ -30,8 +30,6 @@ export default {
   },
   data() {
     return {
-      sortTaskTitleOrder: 1,
-      sortTaskDateOrder: 1,
       sortTaskDialog: false
     }
   },
@@ -45,40 +43,5 @@ export default {
       }
     }
   },
-  methods: {
-    sortByTaskTitle() {
-      // 絞り込みされた状態でもソートができるように
-      const todos = this.todosFiltered
-      return todos.sort((a, b) => {
-        return a.task.title < b.task.title
-          ? -this.sortTaskTitleOrder
-          : a.task.title > b.task.title
-          ? this.sortTaskTitleOrder
-          : 0
-      })
-    },
-    sortByAscDate() {
-      // 絞り込みされた状態でもソートができるように
-      const todos = this.todosFiltered
-      return todos.sort((a, b) => {
-        return a.task.date < b.task.date
-          ? -this.sortTaskDateOrder
-          : a.task.date > b.task.date
-          ? this.sortTaskDateOrder
-          : 1
-      })
-    },
-    sortByDescDate() {
-      // 絞り込みされた状態でもソートができるように
-      const todos = this.todosFiltered
-      return todos.sort((a, b) => {
-        return a.task.date < b.task.date
-          ? -this.sortTaskDateOrder
-          : a.task.date > b.task.date
-          ? this.sortTaskDateOrder
-          : -1
-      })
-    }
-  }
 }
 </script>

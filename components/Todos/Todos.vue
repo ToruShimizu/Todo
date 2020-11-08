@@ -35,6 +35,9 @@
         :todosPage.sync="todosPage"
         :todosPageSize="todosPageSize"
         :todosFiltered="todosFiltered"
+        :todoList="todoList"
+        :sortByTask="sortByTask"
+        :selectSortTask="selectSortTask"
         :searchTask="searchTask"
         @change-todos-page="changeTodosPage"
       />
@@ -69,6 +72,8 @@ export default {
       todosPage: 1,
       todosPageSize: 7,
       searchTaskKeyword: '',
+      sortTaskTitleOrder: 1,
+      sortTaskDateOrder: 1,
       selectSortTask: 'ascDate',
       taskFilter: 'all',
       taskDialog: false
@@ -112,38 +117,8 @@ export default {
         return changeTodosPage
       }
     },
-    sortByTask() {
-      let returnvalue
-      // SortByTaskコンポーネントのメソッドを呼び出す
-      const ref = this.$refs.sortByTask
-
-      switch (this.selectSortTask) {
-        case 'title':
-          returnvalue = ref.sortByTaskTitle()
-          console.log(this.selectSortTask)
-          break
-        case 'ascDate':
-          returnvalue = ref.sortByAscDate()
-          console.log(this.selectSortTask)
-
-          break
-        case 'descDate':
-          returnvalue = ref.sortByDescDate()
-
-          console.log(this.selectSortTask)
-
-          break
-        default:
-      }
-      return returnvalue
-    },
-    ...mapGetters('modules/todos', ['todosCount', 'remainingTodos', 'completedTodos']),
-    ...mapState('modules/todos', ['todos'])
-  },
-  methods: {
     // タスクの検索
     searchTask() {
-      // todoListを表示するため検索の対象とする
       let todoList = this.todoList
       // vuetifyのclearableを使用するとnullになり表示されなくなるためnullの場合の処理を記述
       // nullの場合は元の値であるstateのtodosを入れて返す
@@ -151,10 +126,62 @@ export default {
         todoList = this.todos
         return todoList
       }
-
       return todoList.filter((todo) => {
         return todo.task.title.includes(this.searchTaskKeyword)
       })
+    },
+    sortByTaskTitle() {
+      const todos = this.todoList
+      return todos.sort((a, b) => {
+        return a.task.title < b.task.title
+          ? -this.sortTaskTitleOrder
+          : a.task.title > b.task.title
+          ? this.sortTaskTitleOrder
+          : 0
+      })
+    },
+    sortByAscDate() {
+      const todos = this.todoList
+      return todos.sort((a, b) => {
+        return a.task.date < b.task.date
+          ? -this.sortTaskDateOrder
+          : a.task.date > b.task.date
+          ? this.sortTaskDateOrder
+          : 1
+      })
+    },
+    sortByDescDate() {
+      const todos = this.todoList
+      return todos.sort((a, b) => {
+        return a.task.date < b.task.date
+          ? -this.sortTaskDateOrder
+          : a.task.date > b.task.date
+          ? this.sortTaskDateOrder
+          : -1
+      })
+    },
+    ...mapGetters('modules/todos', ['todosCount', 'remainingTodos', 'completedTodos']),
+    ...mapState('modules/todos', ['todos'])
+  },
+  methods: {
+    sortByTask() {
+      let returnvalue
+      switch (this.selectSortTask) {
+        case 'title':
+          returnvalue = this.sortByTaskTitle
+          console.log(this.selectSortTask)
+          break
+        case 'ascDate':
+          returnvalue = this.sortByAscDate
+          console.log(this.selectSortTask)
+          break
+        case 'descDate':
+          returnvalue = this.sortByDescDate
+          console.log(this.selectSortTask)
+          break
+        default:
+      }
+      return returnvalue
     },
     // ページ番号のボタンが押された時にページを切り替える
     changeTodosPage(pageNumber) {
