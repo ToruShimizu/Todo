@@ -128,10 +128,6 @@ export default {
         return todo.task.title.includes(this.searchTaskKeyword)
       })
     },
-    ...mapGetters('modules/todos', ['todosCount', 'remainingTodos', 'completedTodos']),
-    ...mapState('modules/todos', ['todos'])
-  },
-  methods: {
     sortByTask() {
       let returnvalue
       switch (this.selectSortTask) {
@@ -140,7 +136,6 @@ export default {
           returnvalue = this.todosFiltered.slice().sort((a, b) => {
             if (a.task.title < b.task.title) return -1
           })
-
           console.log(this.selectSortTask)
           break
         case 'ascDate':
@@ -159,6 +154,10 @@ export default {
       }
       return returnvalue
     },
+    ...mapGetters('modules/todos', ['todosCount', 'remainingTodos', 'completedTodos']),
+    ...mapState('modules/todos', ['todos'])
+  },
+  methods: {
     // ページ番号のボタンが押された時にページを切り替える
     changeTodosPage(pageNumber) {
       const todos = this.todosFiltered
