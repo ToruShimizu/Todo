@@ -6,6 +6,8 @@
           >ログインユーザー
         </v-list-item-title>
       </v-list-item-content>
+      <!-- FIXME: コンポーネント化 -->
+
       <UpdateUser
         :update-user-name-dialog="updateUserNameDialog"
         @update:selected-update-user-name="selectedUpdateUserInfo = $event"
@@ -76,6 +78,7 @@
       </v-list-item>
 
       <v-divider />
+      <!-- FIXME: コンポーネント化 -->
       <v-list-item @click="selectedUpdateUserInfo = 'openUpdateUserName'">
         <v-list-item-title>
           <v-btn text>
@@ -151,6 +154,7 @@ export default {
     // @changeメソッドでファイルに変換してfirestorageへの追加処理を呼び出す
     selectUserAvatarFile() {
       const userAvatarFile = this.userAvatar
+      // <!-- FIXME: mapAction -->
       this.$store.dispatch('modules/user/userInfo/uploadUserAvatarFile', userAvatarFile)
     },
     // ユーザー画面編集の選択
