@@ -84,7 +84,7 @@ export default {
         return this.selectedUpdateUserInfo
       },
       set(value) {
-        this.$emit('update:selectedUpdateEmailAddress', value)
+        this.$emit('update:selected-update-email-address', value)
         this.editUserEmail.email = ''
         this.$refs.form.reset()
       }
@@ -104,7 +104,7 @@ export default {
       this.editUserEmail.email = ''
       this.loader = null
       this.$refs.form.reset()
-      this.$emit('update:selectedUpdateEmailAddress', 'closeUpdateEmailAddress')
+      this.$emit('update:selected-update-email-address', 'closeUpdateEmailAddress')
     }
   }
 }

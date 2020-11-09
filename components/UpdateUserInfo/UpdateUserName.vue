@@ -82,7 +82,7 @@ export default {
         return this.selectedUpdateUserInfo
       },
       set(value) {
-        this.$emit('update:selectedUpdateUserName', value)
+        this.$emit('update:selected-update-user-name', value)
         this.editUserName.name = ''
         this.$refs.form.reset()
       }
@@ -102,7 +102,7 @@ export default {
       this.editUserName.name = ''
       this.loader = null
       this.$refs.form.reset()
-      this.$emit('update:selectedUpdateUserName', 'closeUpdateUserName')
+      this.$emit('update:selected-update-user-name', 'closeUpdateUserName')
     }
   }
 }
