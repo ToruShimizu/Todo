@@ -91,13 +91,13 @@ export default {
   data() {
     return {
       headers: [
-        { text: '状態', align: 'start', sortable: false, value: 'task.done' },
+        { text: '状態', value: 'task.done', align: 'start', sortable: false },
         {
           text: 'タスク',
-          sortable: false,
-          value: 'task.title'
+          value: 'task.title',
+          sortable: false
         },
-        { text: '期限', value: 'task.date', search: false },
+        { text: '期限', value: 'task.date' },
         { text: '削除', value: 'remove', sortable: false }
       ],
       editTodo: null,
