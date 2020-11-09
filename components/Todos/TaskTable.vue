@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import UpdateTask from '@/components/Todos/UpdateTask.vue'
 export default {
   components: {
@@ -131,7 +131,7 @@ export default {
 
     removeTask(todo) {
       if (!confirm(todo.task.title + 'を削除しますか？')) return
-      this.$store.dispatch('modules/todos/removeTask', { id: todo.task.id })
+      this.removeTask({ id: todo.task.id })
     },
     doneTask(todo) {
       this.$store.dispatch('modules/todos/doneTask', {
@@ -151,7 +151,8 @@ export default {
     // FIXME キャンセル時の処理はあとで記述
     cancelUpdateTask() {
       this.updateTaskDialog = false
-    }
+    },
+    ...mapActions('modules/todos', ['removeTask', 'doneTask'])
   }
 }
 </script>
