@@ -33,8 +33,8 @@
                   :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                   label="現在のPassword(6文字以上)"
                   :rules="[validRules.passwordRules.required, validRules.passwordRules.regex]"
-                  @click:append="showPassword = !showPassword"
                   counter="72"
+                  @click:append="showPassword = !showPassword"
                 />
                 <v-text-field
                   v-model="editUserPassword.newPassword"
@@ -43,8 +43,8 @@
                   :append-icon="showEditPassword ? 'mdi-eye' : 'mdi-eye-off'"
                   label="新しいPassword(6文字以上)"
                   :rules="[validRules.passwordRules.required, validRules.passwordRules.regex]"
-                  @click:append="showEditPassword = !showEditPassword"
                   counter="72"
+                  @click:append="showEditPassword = !showEditPassword"
                 />
                 <v-card-actions>
                   <v-btn color="primary" @click="selectedUpdatePassword = 'closeUpdatePassword'">
@@ -54,9 +54,9 @@
 
                   <v-btn
                     color="success"
-                    @click="updatePassword"
                     :loading="loadingResetPassword"
                     :disabled="loadingResetPassword"
+                    @click="updatePassword"
                   >
                     <v-icon left>mdi-account</v-icon>SAVE
                   </v-btn>
