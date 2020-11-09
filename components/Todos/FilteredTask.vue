@@ -9,12 +9,12 @@
       完了: {{ completedTodosLength }}/{{ todos.length }}
       <!-- 完了率の表示 -->
       <v-progress-circular
+        v-if="todos.length > 0"
         :value="progress"
         :rotate="270"
         :size="45"
         class="ml-1"
         color="success"
-        v-if="todos.length > 0"
         >{{ progress }}</v-progress-circular
       >
     </v-tab>
