@@ -23,7 +23,7 @@
             <v-card-text>
               <v-form ref="form" lazy-validation @submit.prevent="updateEmail">
                 <v-text-field
-                  v-model="editUserEmail.email"
+                  v-model="updateUser.email"
                   prepend-inner-icon="mdi-email-outline"
                   label="新しいメールアドレスを入力"
                   :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
@@ -72,7 +72,7 @@ export default {
   },
   data() {
     return {
-      editUserEmail: {
+      updateUser: {
         email: ''
       },
       loadingUpdateEmail: false
@@ -85,7 +85,7 @@ export default {
       },
       set(value) {
         this.$emit('update:selected-update-email', value)
-        this.editUserEmail.email = ''
+        this.updateUserEmail.email = ''
         this.$refs.form.reset()
       }
     },
@@ -93,15 +93,16 @@ export default {
   },
   methods: {
     async updateEmail() {
-      if (!this.editUserEmail.email) {
+      const updateUserEmail = this.updateUser.email
+      if (!updateUserEmail) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingUpdateEmail'
       await this.$store.dispatch('modules/user/userInfo/updateEmail', {
-        email: this.editUserEmail.email
+        email: updateUserEmail
       })
-      this.editUserEmail.email = ''
+      this.updateUser.email = ''
       this.loader = null
       this.$refs.form.reset()
       this.$emit('update:selected-update-email', 'closeUpdateEmail')
