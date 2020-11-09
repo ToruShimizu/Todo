@@ -132,20 +132,15 @@ export default {
         email: this.signInUser.email,
         password: this.signInUser.password
       })
-      this.signInUser.email = ''
-      this.signInUser.password = ''
       this.loader = null
       this.$refs.form.reset()
     },
     openCreateUser() {
-      this.signInUser.email = ''
-      this.signInUser.password = ''
-      this.$refs.form.reset()
       this.createUserDialog = true
     },
     closeCreateUser() {
-      this.$refs.form.reset()
       this.createUserDialog = false
+      this.$refs.form.reset()
     },
     openResetPassword() {
       this.resetPasswordDialog = true
