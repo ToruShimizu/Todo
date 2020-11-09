@@ -79,10 +79,9 @@ export default {
     // 完了状態の絞り込み
     todosFiltered() {
       let returnvalue
-      const todos = this.todos
       switch (this.taskFilter) {
         case 'all':
-          returnvalue = todos
+          returnvalue = this.todos
 
           break
         case 'active':
