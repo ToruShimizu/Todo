@@ -28,8 +28,8 @@ export default {
       get() {
         return this.searchTaskKeyword
       },
-      set(value) {
-        this.$emit('update:search', value)
+      set(searchTaskKeyword) {
+        this.$emit('update:search-task-keyword', searchTaskKeyword)
       }
     }
   }
