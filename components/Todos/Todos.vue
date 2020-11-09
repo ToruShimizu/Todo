@@ -64,7 +64,7 @@ export default {
       task: {
         title: '',
         detail: '',
-        date: new Date().toISOString(),
+        date: new Date().toISOString().substr(0, 10),
         done: false
       },
       todosPage: 1,
@@ -159,7 +159,7 @@ export default {
     changeTodosPage(pageNumber) {
       const todos = this.todosFiltered
       const pageSize = this.todosPageSize
-      this.todoList = todos.slice(pageSize * (pageNumber - 1), todosPageSize * pageNumber)
+      this.todoList = todos.slice(pageSize * (pageNumber - 1), pageSize * pageNumber)
     },
     openAddTask() {
       this.taskDialog = true
