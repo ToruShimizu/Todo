@@ -170,8 +170,6 @@ export default {
       this.taskDialog = true
     },
     closeAddTask() {
-      this.task.title = ''
-      this.task.detail = ''
       this.taskDialog = false
     }
   }
