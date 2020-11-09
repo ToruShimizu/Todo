@@ -45,7 +45,7 @@ const actions = {
     }
   },
   // メールアドレスの変更
-  async updateEmailAddress({ commit }, { email }) {
+  async updateEmail({ commit }, { email }) {
     const userInfo = await firebase.auth().currentUser
     if (userInfo.email === 'test@example.com') {
       alert('テストユーザーは変更できません')

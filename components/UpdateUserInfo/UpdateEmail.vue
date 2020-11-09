@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-dialog
-      v-model="updateEmailAddressDialog"
+      v-model="updateEmailDialog"
       persistent
       max-width="400px"
       transition="scroll-y-transition"
@@ -21,7 +21,7 @@
               </v-card-text>
             </v-card-title>
             <v-card-text>
-              <v-form ref="form" lazy-validation @submit.prevent="updateEmailAddress">
+              <v-form ref="form" lazy-validation @submit.prevent="updateEmail">
                 <v-text-field
                   v-model="editUserEmail.email"
                   prepend-inner-icon="mdi-email-outline"
@@ -30,18 +30,15 @@
                   clearable
                 />
                 <v-card-actions>
-                  <v-btn
-                    color="primary"
-                    @click="selectedUpdateEmailAddress = 'closeUpdateEmailAddress'"
-                  >
+                  <v-btn color="primary" @click="selectedUpdateEmail = 'closeUpdateEmail'">
                     <v-icon left>mdi-login-variant</v-icon>戻る
                   </v-btn>
                   <v-spacer />
                   <v-btn
                     color="success"
-                    @click="updateEmailAddress"
-                    :loading="loadingUpdateEmailAddress"
-                    :disabled="loadingUpdateEmailAddress"
+                    @click="updateEmail"
+                    :loading="loadingUpdateEmail"
+                    :disabled="loadingUpdateEmail"
                   >
                     <v-icon left>mdi-email-plus</v-icon>SAVE
                   </v-btn>
@@ -63,7 +60,7 @@ import LoadingView from '@/mixins/LoadingView.vue'
 export default {
   mixins: [FormValidation, LoadingView],
   props: {
-    updateEmailAddressDialog: {
+    updateEmailDialog: {
       type: Boolean
     },
     selectedUpdateUserInfo: {
@@ -75,16 +72,16 @@ export default {
       editUserEmail: {
         email: ''
       },
-      loadingUpdateEmailAddress: false
+      loadingUpdateEmail: false
     }
   },
   computed: {
-    selectedUpdateEmailAddress: {
+    selectedUpdateEmail: {
       get() {
         return this.selectedUpdateUserInfo
       },
       set(value) {
-        this.$emit('update:selected-update-email-address', value)
+        this.$emit('update:selected-update-email', value)
         this.editUserEmail.email = ''
         this.$refs.form.reset()
       }
@@ -92,19 +89,19 @@ export default {
     ...mapGetters('modules/user/auth', ['gettersUserEmail'])
   },
   methods: {
-    async updateEmailAddress() {
+    async updateEmail() {
       if (!this.editUserEmail.email) {
         this.$refs.form.validate()
         return
       }
-      this.loader = 'loadingUpdateEmailAddress'
-      await this.$store.dispatch('modules/user/userInfo/updateEmailAddress', {
+      this.loader = 'loadingUpdateEmail'
+      await this.$store.dispatch('modules/user/userInfo/updateEmail', {
         email: this.editUserEmail.email
       })
       this.editUserEmail.email = ''
       this.loader = null
       this.$refs.form.reset()
-      this.$emit('update:selected-update-email-address', 'closeUpdateEmailAddress')
+      this.$emit('update:selected-update-email', 'closeUpdateEmail')
     }
   }
 }
