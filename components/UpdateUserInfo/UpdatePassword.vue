@@ -20,31 +20,31 @@
             <v-card-text>
               <v-form ref="form" lazy-validation @submit.prevent="updatePassword">
                 <v-text-field
-                  v-model="editUserPassword.email"
+                  v-model="updateUser.email"
                   prepend-inner-icon="mdi-email-outline"
                   label="登録されているメールアドレスを入力してください"
                   :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
                   clearable
                 />
                 <v-text-field
-                  v-model="editUserPassword.loginPassword"
+                  v-model="updateUser.loginPassword"
                   :type="showPassword ? 'text' : 'Password'"
                   prepend-inner-icon="mdi-lock-outline"
                   :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                   label="現在のPassword(6文字以上)"
                   :rules="[validRules.passwordRules.required, validRules.passwordRules.regex]"
-                  @click:append="showPassword = !showPassword"
                   counter="72"
+                  @click:append="showPassword = !showPassword"
                 />
                 <v-text-field
-                  v-model="editUserPassword.newPassword"
+                  v-model="updateUser.newPassword"
                   :type="showEditPassword ? 'text' : 'Password'"
                   prepend-inner-icon="mdi-lock-reset"
                   :append-icon="showEditPassword ? 'mdi-eye' : 'mdi-eye-off'"
                   label="新しいPassword(6文字以上)"
                   :rules="[validRules.passwordRules.required, validRules.passwordRules.regex]"
-                  @click:append="showEditPassword = !showEditPassword"
                   counter="72"
+                  @click:append="showEditPassword = !showEditPassword"
                 />
                 <v-card-actions>
                   <v-btn color="primary" @click="selectedUpdatePassword = 'closeUpdatePassword'">
@@ -54,9 +54,9 @@
 
                   <v-btn
                     color="success"
-                    @click="updatePassword"
                     :loading="loadingResetPassword"
                     :disabled="loadingResetPassword"
+                    @click="updatePassword"
                   >
                     <v-icon left>mdi-account</v-icon>SAVE
                   </v-btn>
@@ -75,33 +75,22 @@ import FormValidation from '@/mixins/FormValidation.vue'
 import LoadingView from '@/mixins/LoadingView.vue'
 
 export default {
-  mixins: [FormValidation, LoadingView],
   components: {},
+  mixins: [FormValidation, LoadingView],
   props: {
     updatePasswordDialog: {
-      type: Boolean
+      type: Boolean,
+      required: true
     },
     selectedUpdateUserInfo: {
-      type: String
-    }
-  },
-  computed: {
-    selectedUpdatePassword: {
-      get() {
-        return this.selectedUpdateUserInfo
-      },
-      set(value) {
-        this.$emit('update:selected-update-password', value)
-        this.editUserPassword.email = ''
-        this.editUserPassword.loginPassword = ''
-        this.editUserPassword.newPassword = ''
-        this.$refs.form.reset()
-      }
+      type: String,
+      required: false,
+      default: ''
     }
   },
   data() {
     return {
-      editUserPassword: {
+      updateUser: {
         email: '',
         loginPassword: '',
         newPassword: ''
@@ -111,27 +100,32 @@ export default {
       showEditPassword: false
     }
   },
+  computed: {
+    selectedUpdatePassword: {
+      get() {
+        return this.selectedUpdateUserInfo
+      },
+      set(closeUpdatePassword) {
+        this.$emit('update:selected-update-password', closeUpdatePassword)
+        this.$refs.form.reset()
+      }
+    }
+  },
   methods: {
     async updatePassword() {
-      if (
-        !this.editUserPassword.email ||
-        !this.editUserPassword.loginPassword ||
-        !this.editUserPassword.newPassword
-      ) {
+      const updateUser = this.updateUser
+      if (!updateUser.email || !updateUser.loginPassword || !updateUser.newPassword) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingResetPassword'
       await this.$store.dispatch('modules/user/userInfo/updatePassword', {
-        updatePassword: this.editUserPassword.email,
-        email: this.editUserPassword.loginPassword,
-        password: this.editUserPassword
+        updatePassword: updateUser.newPassword,
+        email: updateUser.email,
+        password: updateUser.loginPassword
       })
-      this.editUserPassword.email = ''
-      this.editUserPassword.loginPassword = ''
-      this.editUserPassword.newPassword = ''
-      this.$refs.form.reset()
       this.$emit('update:selected-update-password', 'closeUpdatePassword')
+      this.$refs.form.reset()
     }
   }
 }
