@@ -96,11 +96,13 @@ export default {
   },
   props: {
     editTodo: {
-      type: Object
+      type: Object,
+      required: false,
+      default: () => {}
     },
     updateTaskDialog: {
       type: Boolean,
-      default: false
+      required: true
     },
     task: {
       type: Object,
