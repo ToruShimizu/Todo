@@ -161,10 +161,3 @@ export default {
   }
 }
 </script>
-
-<style>
-/* Vuetifyの仕様上スタイルが適用されてしまうため非表示にする */
-.v-slide-group__prev {
-  display: none !important;
-}
-</style>
