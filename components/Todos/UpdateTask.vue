@@ -61,12 +61,7 @@
                   ></v-text-field>
                 </v-col>
                 <AddComment :task-id="editTodo.task.id" />
-                <Comment
-                  :task-id="editTodo.task.id"
-                  v-for="comment in comments"
-                  :key="comment.id"
-                  :comment="comment"
-                />
+                <Comment :task-id="editTodo.task.id" />
               </v-row>
             </v-container>
             <v-card-actions>
