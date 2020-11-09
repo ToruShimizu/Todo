@@ -74,16 +74,17 @@ export default {
   },
   methods: {
     passwordReset() {
-      if (this.resetUserPassword.email === 'test@example.com') {
+      const resetUserPassword = this.resetUserPassword
+      if (resetUserPassword.email === 'test@example.com') {
         alert('テストユーザーはパスワードを再設定することはできません')
         return
-      } else if (!this.resetUserPassword.email) {
+      } else if (!resetUserPassword.email) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingResetPassword'
       this.$store.dispatch('modules/user/userInfo/passwordReset', {
-        email: this.resetUserPassword.email
+        email: resetUserPassword.email
       })
       this.$refs.form.reset()
     },
