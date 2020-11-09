@@ -62,10 +62,13 @@ export default {
 
   props: {
     updateUserNameDialog: {
-      type: Boolean
+      type: Boolean,
+      required: true
     },
     selectedUpdateUserInfo: {
-      type: String
+      type: String,
+      required: false,
+      default: ''
     }
   },
   data() {
