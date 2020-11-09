@@ -85,8 +85,6 @@ export default {
       },
       set(closeUpdateEmail) {
         this.$emit('update:selected-update-email', closeUpdateEmail)
-        this.updateUserEmail.email = ''
-        this.$refs.form.reset()
       }
     },
     ...mapGetters('modules/user/auth', ['gettersUserEmail'])
