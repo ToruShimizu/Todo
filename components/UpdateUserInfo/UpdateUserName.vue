@@ -84,8 +84,8 @@ export default {
       get() {
         return this.selectedUpdateUserInfo
       },
-      set(value) {
-        this.$emit('update:selected-update-user-name', value)
+      set(closeUpdateUserName) {
+        this.$emit('update:selected-update-user-name', closeUpdateUserName)
         this.$refs.form.reset()
       }
     },
