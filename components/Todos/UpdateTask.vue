@@ -60,9 +60,9 @@
                     clearable
                   ></v-text-field>
                 </v-col>
-                <AddComment :taskId="editTodo.task.id" />
+                <AddComment :task-id="editTodo.task.id" />
                 <Comment
-                  :taskId="editTodo.task.id"
+                  :task-id="editTodo.task.id"
                   v-for="comment in comments"
                   :key="comment.id"
                   :comment="comment"
