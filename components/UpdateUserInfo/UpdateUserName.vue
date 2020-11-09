@@ -36,9 +36,9 @@
                   <v-spacer />
                   <v-btn
                     color="success"
-                    @click="updateUserName"
                     :loading="loadingUpdateUserName"
                     :disabled="loadingUpdateUserName"
+                    @click="updateUserName"
                   >
                     <v-icon left> mdi-badge-account-horizontal-outline </v-icon>SAVE
                   </v-btn>
