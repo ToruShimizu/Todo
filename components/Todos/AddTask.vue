@@ -18,7 +18,6 @@
                       prepend-inner-icon="mdi-pencil-outline"
                       :rules="[validRules.titleRules.required]"
                       clearable
-                      @keydown.enter="addTask"
                     />
                   </v-col>
                   <!-- 日付入力エリア -->
@@ -52,7 +51,6 @@
                       v-model="task.detail"
                       label="タスクの詳細を入力する"
                       prepend-inner-icon="mdi-briefcase-outline"
-                      required
                       clearable
                     ></v-text-field>
                   </v-col>
@@ -60,9 +58,7 @@
               </v-container>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <nuxt-link to="/">
-                  <v-btn color="blue darken-1" text @click="closeAddTask">Cancel</v-btn>
-                </nuxt-link>
+                <v-btn color="blue darken-1" text @click="closeAddTask">Cancel</v-btn>
                 <v-btn color="blue darken-1" text @click="addTask">Save</v-btn>
               </v-card-actions>
             </v-form>
@@ -109,7 +105,6 @@ export default {
         return
       }
       await this.$store.dispatch('modules/todos/addTask', { task: this.task })
-      console.log('addTask')
       this.closeAddTask()
     },
     openAddTask() {
