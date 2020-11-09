@@ -75,8 +75,8 @@ import FormValidation from '@/mixins/FormValidation.vue'
 import LoadingView from '@/mixins/LoadingView.vue'
 
 export default {
-  mixins: [FormValidation, LoadingView],
   components: {},
+  mixins: [FormValidation, LoadingView],
   props: {
     updatePasswordDialog: {
       type: Boolean,
@@ -86,6 +86,18 @@ export default {
       type: String,
       required: false,
       default: ''
+    }
+  },
+  data() {
+    return {
+      editUserPassword: {
+        email: '',
+        loginPassword: '',
+        newPassword: ''
+      },
+      loadingResetPassword: false,
+      showPassword: false,
+      showEditPassword: false
     }
   },
   computed: {
@@ -100,18 +112,6 @@ export default {
         this.editUserPassword.newPassword = ''
         this.$refs.form.reset()
       }
-    }
-  },
-  data() {
-    return {
-      editUserPassword: {
-        email: '',
-        loginPassword: '',
-        newPassword: ''
-      },
-      loadingResetPassword: false,
-      showPassword: false,
-      showEditPassword: false
     }
   },
   methods: {
