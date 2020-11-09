@@ -22,10 +22,14 @@
 export default {
   props: {
     selectSortTask: {
-      type: String
+      type: String,
+      required: false,
+      default: 'ascDate'
     },
     todosFiltered: {
-      type: Array
+      type: Array,
+      required: false,
+      default: () => []
     }
   },
   data() {
