@@ -102,7 +102,7 @@ export default {
     updateTaskDialog: {
       type: Boolean,
       required: true
-    },
+    }
   },
   data() {
     return {
@@ -114,13 +114,14 @@ export default {
   },
   methods: {
     updateTask() {
-      if (!this.editTodo.task.title) {
+      const editTodo = this.editTodo
+      if (!editTodo.task.title) {
         this.$refs.form.validate()
         return
       }
       this.$store.dispatch('modules/todos/updateTask', {
-        id: this.editTodo.task.id,
-        task: this.editTodo.task
+        id: editTodo.task.id,
+        task: editTodo.task
       })
       this.closeUpdateTask()
     },
