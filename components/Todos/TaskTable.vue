@@ -135,7 +135,6 @@ export default {
     },
     toggleDoneTask(todo) {
       this.doneTask({ todo, id: todo.task.id })
-
     },
     async openUpdateTask(todo) {
       const id = String(todo.task.id)
