@@ -73,7 +73,7 @@ export default {
     }
   },
   methods: {
-    passwordReset() {
+    async passwordReset() {
       const resetUserPassword = this.resetUserPassword
       if (resetUserPassword.email === 'test@example.com') {
         alert('テストユーザーはパスワードを再設定することはできません')
@@ -83,10 +83,10 @@ export default {
         return
       }
       this.loader = 'loadingResetPassword'
-      this.$store.dispatch('modules/user/userInfo/passwordReset', {
+      await this.$store.dispatch('modules/user/userInfo/passwordReset', {
         email: resetUserPassword.email
       })
-      this.$emit('close-reset-password')
+      this.closeResetPasswprd()
     },
     closeResetPasswprd() {
       this.$emit('close-reset-password')
