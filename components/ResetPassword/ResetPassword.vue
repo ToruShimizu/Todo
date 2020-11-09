@@ -60,7 +60,8 @@ export default {
 
   props: {
     resetPasswordDialog: {
-      type: Boolean
+      type: Boolean,
+      required: true
     }
   },
   data() {
