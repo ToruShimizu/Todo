@@ -41,12 +41,7 @@ export default {
         this.$emit('update:filterdTask', value)
       }
     },
-    ...mapGetters('modules/todos', [
-      'completedTodosLength',
-      'progress',
-      'remainingTodosLength',
-      'todosCount'
-    ]),
+    ...mapGetters('modules/todos', ['completedTodosLength', 'remainingTodosLength', 'progress']),
     ...mapState('modules/todos', ['todos'])
   }
 }
