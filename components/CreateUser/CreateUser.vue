@@ -96,14 +96,15 @@ export default {
   methods: {
     async createUser() {
       this.loader = 'loadingCreateUser'
-      if (!this.createNewUser.password || !this.createNewUser.email) {
+      const createUser = this.createNewUser
+      if (!createUser.password || !createUser.email) {
         this.$refs.form.validate()
         return
       }
       await this.$store.dispatch('modules/user/auth/createUser', {
-        email: this.createNewUser.email,
-        password: this.createNewUser.password,
-        userName: this.createNewUser.name
+        email: createUser.email,
+        password: createUser.password,
+        userName: createUser.name
       })
       this.loader = null
       this.$refs.form.reset()
