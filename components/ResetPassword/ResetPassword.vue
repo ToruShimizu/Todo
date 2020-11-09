@@ -86,7 +86,7 @@ export default {
       this.$store.dispatch('modules/user/userInfo/passwordReset', {
         email: resetUserPassword.email
       })
-      this.$refs.form.reset()
+      this.$emit('close-reset-password')
     },
     closeResetPasswprd() {
       this.$emit('close-reset-password')
