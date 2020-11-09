@@ -1,5 +1,10 @@
 <script>
 export default {
+  data() {
+    return {
+      loader: null
+    }
+  },
   watch: {
     loader() {
       const l = this.loader
@@ -8,11 +13,6 @@ export default {
       setTimeout(() => (this[l] = false), 3000)
 
       this.loader = null
-    }
-  },
-  data() {
-    return {
-      loader: null
     }
   }
 }
