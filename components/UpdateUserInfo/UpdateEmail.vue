@@ -61,10 +61,13 @@ export default {
   mixins: [FormValidation, LoadingView],
   props: {
     updateEmailDialog: {
-      type: Boolean
+      type: Boolean,
+      required: true
     },
     selectedUpdateUserInfo: {
-      type: String
+      type: String,
+      required: false,
+      default: ''
     }
   },
   data() {
