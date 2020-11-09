@@ -40,8 +40,8 @@
                       </template>
                       <v-date-picker
                         v-model="task.date"
-                        @input="dateMenu = false"
                         no-title
+                        @input="dateMenu = false"
                       ></v-date-picker>
                     </v-menu>
                   </v-col>
