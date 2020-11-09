@@ -97,6 +97,7 @@ export default {
       },
       set(closeDeleteUser) {
         this.$emit('update:selected-delete-user', closeDeleteUser)
+        this.$refs.form.reset()
       }
     }
   },
