@@ -70,10 +70,13 @@ export default {
   mixins: [FormValidation, LoadingView],
   props: {
     deleteUserDialog: {
-      type: Boolean
+      type: Boolean,
+      required: true
     },
     selectedUpdateUserInfo: {
-      type: String
+      type: String,
+      required: false,
+      default: ''
     }
   },
 
@@ -92,30 +95,26 @@ export default {
       get() {
         return this.selectedUpdateUserInfo
       },
-      set(value) {
-        this.$emit('update:selected-delete-user', value)
-        this.deleteUser.email = ''
-        this.deleteUser.password = ''
-        this.$refs.form.reset()
+      set(selectedDeleteUser) {
+        this.$emit('update:selected-delete-user', selectedDeleteUser)
       }
     }
   },
   methods: {
-    deleteAccount() {
-      if (!this.deleteUser.password || !this.deleteUser.email) {
+    async deleteAccount() {
+      const deleteUser = this.deleteUser
+      if (!deleteUser.password || !deleteUser.email) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingDeleteUser'
-      this.$store.dispatch('modules/user/userInfo/deleteAccount', {
-        email: this.deleteUser.email,
-        password: this.deleteUser.password
+      await this.$store.dispatch('modules/user/userInfo/deleteAccount', {
+        email: deleteUser.email,
+        password: deleteUser.password
       })
-      this.deleteUser.email = ''
-      this.deleteUser.password = ''
+      this.$emit('update:selected-delete-user', 'closeDeleteUser')
       this.loader = null
       this.$refs.form.reset()
-      this.$emit('update:selected-delete-user', 'closeDeleteUser')
     }
   }
 }
