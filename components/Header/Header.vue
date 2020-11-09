@@ -1,11 +1,11 @@
 <template>
   <v-app>
     <header>
-      <v-navigation-drawer v-model="drawer" app clipped>
+      <v-navigation-drawer v-model="sideNavDrawer" app clipped>
         <SideNav />
       </v-navigation-drawer>
       <v-app-bar color="indigo darken-2" dark app clipped-left>
-        <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon @click="sideNavDrawer = !sideNavDrawer"></v-app-bar-nav-icon>
         <v-toolbar-title>ToDo</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items v-if="login_user">
@@ -25,7 +25,7 @@ export default {
   },
   data() {
     return {
-      drawer: null
+      sideNavDrawer: null
     }
   },
   computed: {
