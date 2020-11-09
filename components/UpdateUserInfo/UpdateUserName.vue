@@ -23,7 +23,7 @@
             <v-card-text>
               <v-form ref="form" lazy-validation @submit.prevent="updateUserName">
                 <v-text-field
-                  v-model="editUserName.name"
+                  v-model="updateUser.name"
                   prepend-inner-icon="mdi-card-account-details-outline"
                   label="新しい名前を入力してください"
                   :rules="[validRules.nameRules.required]"
@@ -36,9 +36,9 @@
                   <v-spacer />
                   <v-btn
                     color="success"
-                    @click="updateUserName"
                     :loading="loadingUpdateUserName"
                     :disabled="loadingUpdateUserName"
+                    @click="updateUserName"
                   >
                     <v-icon left> mdi-badge-account-horizontal-outline </v-icon>SAVE
                   </v-btn>
@@ -62,15 +62,18 @@ export default {
 
   props: {
     updateUserNameDialog: {
-      type: Boolean
+      type: Boolean,
+      required: true
     },
     selectedUpdateUserInfo: {
-      type: String
+      type: String,
+      required: false,
+      default: ''
     }
   },
   data() {
     return {
-      editUserName: {
+      updateUser: {
         name: ''
       },
       loadingUpdateUserName: false
@@ -81,9 +84,8 @@ export default {
       get() {
         return this.selectedUpdateUserInfo
       },
-      set(value) {
-        this.$emit('update:selected-update-user-name', value)
-        this.editUserName.name = ''
+      set(closeUpdateUserName) {
+        this.$emit('update:selected-update-user-name', closeUpdateUserName)
         this.$refs.form.reset()
       }
     },
@@ -91,18 +93,18 @@ export default {
   },
   methods: {
     async updateUserName() {
-      if (!this.editUserName.name) {
+      const updateUser = this.updateUser
+      if (!updateUser.name) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingUpdateUserName'
       await this.$store.dispatch('modules/user/userInfo/updateUserName', {
-        userName: this.editUserName.name
+        userName: updateUser.name
       })
-      this.editUserName.name = ''
+      this.$emit('update:selected-update-user-name', 'closeUpdateUserName')
       this.loader = null
       this.$refs.form.reset()
-      this.$emit('update:selected-update-user-name', 'closeUpdateUserName')
     }
   }
 }
