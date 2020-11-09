@@ -12,13 +12,13 @@
         <AddTask
           @close-add-task="closeAddTask"
           @open-add-task="openAddTask"
-          :taskDialog="taskDialog"
+          :task-dialog="taskDialog"
         />
       </v-flex>
     </v-layout>
     <v-divider class="mt-4" />
     <v-card class="mb-5">
-      <FilteredTask :filterdTask.sync="taskFilter" />
+      <FilteredTask :filterd-task.sync="taskFilter" />
       <v-divider />
       <v-layout>
         <SearchTask :search.sync="searchTaskKeyword" />
@@ -26,10 +26,10 @@
       </v-layout>
       <TaskTable
         ref="taskTable"
-        :todosPage.sync="todosPage"
-        :todosPageSize="todosPageSize"
-        :todosFiltered="todosFiltered"
-        :sortByTask="sortByTask"
+        :todos-page.sync="todosPage"
+        :todos-page-size="todosPageSize"
+        :todos-filtered="todosFiltered"
+        :sort-by-task="sortByTask"
         @change-todos-page="changeTodosPage"
       />
     </v-card>
