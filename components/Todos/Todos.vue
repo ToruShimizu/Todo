@@ -83,16 +83,14 @@ export default {
       switch (this.taskFilter) {
         case 'all':
           returnvalue = todos
-          console.log(this.taskFilter)
+
           break
         case 'active':
           returnvalue = this.remainingTodos
-          console.log(this.taskFilter)
 
           break
         case 'done':
           returnvalue = this.completedTodos
-          console.log(this.taskFilter)
 
           break
         default:
@@ -134,19 +132,19 @@ export default {
           returnvalue = this.todosFiltered.slice().sort((a, b) => {
             if (a.task.title < b.task.title) return -1
           })
-          console.log(this.selectSortTask)
+
           break
         case 'ascDate':
           returnvalue = this.todosFiltered.slice().sort((a, b) => {
             if (a.task.date > b.task.date) return -1
           })
-          console.log(this.selectSortTask)
+
           break
         case 'descDate':
           returnvalue = this.todosFiltered.slice().sort((a, b) => {
             if (a.task.date < b.task.date) return -1
           })
-          console.log(this.selectSortTask)
+
           break
         default:
       }
@@ -163,8 +161,6 @@ export default {
         this.todosPageSize * (pageNumber - 1),
         this.todosPageSize * pageNumber
       )
-      console.log(pageNumber)
-      console.log('page', this.todosPage)
     },
     openAddTask() {
       this.taskDialog = true
