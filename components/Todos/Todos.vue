@@ -45,18 +45,18 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import AddTask from '@/components/Todos/AddTask'
 import FilteredTask from '@/components/Todos/FilteredTask'
 import SearchTask from '@/components/Todos/SearchTask'
 import SortByTask from '@/components/Todos/SortByTask'
 import TaskTable from '@/components/Todos/TaskTable'
-import AddTask from '@/components/Todos/AddTask'
 
 export default {
   components: {
+    AddTask,
     FilteredTask,
     SearchTask,
     SortByTask,
-    AddTask,
     TaskTable
   },
   data() {
@@ -67,15 +67,29 @@ export default {
         date: new Date().toISOString().substr(0, 10),
         done: false
       },
-      todosPage: 1,
-      todosPageSize: 7,
+
+      taskFilter: 'all',
       searchTaskKeyword: '',
       selectSortTask: 'ascDate',
-      taskFilter: 'all',
+      todosPage: 1,
+      todosPageSize: 7,
       taskDialog: false
     }
   },
   computed: {
+    todoList: {
+      get() {
+        // 絞り込が行われたあとのデータを使用
+        const todos = this.todosFiltered
+        const pageSize = this.todosPageSize
+        const page = this.todosPage
+        // 1ページあたりの最大表示数に合わせて切り分ける
+        return todos.slice(pageSize * (page - 1), pageSize * page)
+      },
+      set(changeTodosPage) {
+        return changeTodosPage
+      }
+    },
     // 完了状態の絞り込み
     todosFiltered() {
       let returnvalue
@@ -95,19 +109,6 @@ export default {
         default:
       }
       return returnvalue
-    },
-    todoList: {
-      get() {
-        // 絞り込が行われたあとのデータを使用
-        const todos = this.todosFiltered
-        const pageSize = this.todosPageSize
-        const page = this.todosPage
-        // 1ページあたりの最大表示数に合わせて切り分ける
-        return todos.slice(pageSize * (page - 1), pageSize * page)
-      },
-      set(changeTodosPage) {
-        return changeTodosPage
-      }
     },
     // タスクの検索
     searchTask() {
