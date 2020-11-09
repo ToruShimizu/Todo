@@ -9,12 +9,12 @@
       完了: {{ completedTodosLength }}/{{ todos.length }}
       <!-- 完了率の表示 -->
       <v-progress-circular
+        v-if="todos.length > 0"
         :value="progress"
         :rotate="270"
         :size="45"
         class="ml-1"
         color="success"
-        v-if="todos.length > 0"
         >{{ progress }}</v-progress-circular
       >
     </v-tab>
@@ -27,7 +27,9 @@ import { mapState, mapGetters } from 'vuex'
 export default {
   props: {
     taskFilter: {
-      type: String
+      type: String,
+      required: false,
+      default: 'all'
     }
   },
   computed: {
@@ -35,16 +37,11 @@ export default {
       get() {
         return this.taskfilter
       },
-      set(value) {
-        this.$emit('update:filterdTask', value)
+      set(selectedTaskFilter) {
+        this.$emit('update:selected-task-filter', selectedTaskFilter)
       }
     },
-    ...mapGetters('modules/todos', [
-      'completedTodosLength',
-      'progress',
-      'remainingTodosLength',
-      'todosCount'
-    ]),
+    ...mapGetters('modules/todos', ['completedTodosLength', 'remainingTodosLength', 'progress']),
     ...mapState('modules/todos', ['todos'])
   }
 }
