@@ -15,9 +15,9 @@
         @update:selected-update-password="selectedUpdateUserInfo = $event"
       />
 
-      <UpdateEmailAddress
-        :update-email-address-dialog="updateEmailAddressDialog"
-        @update:selected-update-email-address="selectedUpdateUserInfo = $event"
+      <UpdateEmail
+        :update-email-dialog="updateEmailDialog"
+        @update:selected-update-email-="selectedUpdateUserInfo = $event"
       />
 
       <DeleteLoginUser
@@ -92,7 +92,7 @@
           </v-btn>
         </v-list-item-title>
       </v-list-item>
-      <v-list-item @click="selectedUpdateUserInfo = 'openUpdateEmailAddress'">
+      <v-list-item @click="selectedUpdateUserInfo = 'openUpdateEmail'">
         <v-list-item-title>
           <v-btn text> <v-icon>mdi-email-edit-outline </v-icon>メールアドレス変更 </v-btn>
         </v-list-item-title>
@@ -130,7 +130,7 @@ export default {
       selectedUpdateUserInfo: '',
       updateUserNameDialog: false,
       updatePasswordDialog: false,
-      updateEmailAddressDialog: false,
+      updateEmailDialog: false,
       deleteUserDialog: false,
       userAvatar: null
     }
@@ -157,7 +157,7 @@ export default {
     selectedUserInfo() {
       let returnvalue
       const updateUserNameDialog = this.updateUserNameDialog
-      const updateUserEmailDialog = this.updateEmailAddressDialog
+      const updateUserEmailDialog = this.updateEmailDialog
       const updatePasswordDialog = this.updatePasswordDialog
       const deleteUserDialog = this.deleteUserDialog
       switch (this.selectedUpdateUserInfo) {
@@ -176,10 +176,10 @@ export default {
           returnvalue = updatePasswordDialog = false
           break
         // メールアドレス変更画面の開閉
-        case 'openUpdateEmailAddress':
+        case 'openUpdateEmail':
           returnvalue = updateUserEmailDialog = true
           break
-        case 'closeUpdateEmailAddress':
+        case 'closeUpdateEmail':
           returnvalue = updateUserEmailDialog = false
           break
         // アカウント削除画面の開閉
