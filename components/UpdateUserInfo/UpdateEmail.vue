@@ -83,8 +83,8 @@ export default {
       get() {
         return this.selectedUpdateUserInfo
       },
-      set(value) {
-        this.$emit('update:selected-update-email', value)
+      set(closeUpdateEmail) {
+        this.$emit('update:selected-update-email', closeUpdateEmail)
         this.updateUserEmail.email = ''
         this.$refs.form.reset()
       }
