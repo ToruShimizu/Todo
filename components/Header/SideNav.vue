@@ -6,23 +6,25 @@
           >ログインユーザー
         </v-list-item-title>
       </v-list-item-content>
+      <!-- FIXME: コンポーネント化 -->
+
       <UpdateUser
-        @update:selectedUpdateUserName="selectedUpdateUserInfo = $event"
-        :updateUserNameDialog="updateUserNameDialog"
+        :update-user-name-dialog="updateUserNameDialog"
+        @update:selected-update-user-name="selectedUpdateUserInfo = $event"
       />
       <UpdatePassword
-        @update:selectedUpdatePassword="selectedUpdateUserInfo = $event"
-        :updatePasswordDialog="updatePasswordDialog"
+        :update-password-dialog="updatePasswordDialog"
+        @update:selected-update-password="selectedUpdateUserInfo = $event"
       />
 
-      <UpdateEmailAddress
-        @update:selectedUpdateEmailAddress="selectedUpdateUserInfo = $event"
-        :updateEmailAddressDialog="updateEmailAddressDialog"
+      <UpdateEmail
+        :update-email-dialog="updateEmailDialog"
+        @update:selected-update-email-="selectedUpdateUserInfo = $event"
       />
 
       <DeleteLoginUser
-        @update:selectedDeleteUser="selectedUpdateUserInfo = $event"
-        :deleteUserDialog="deleteUserDialog"
+        :delete-user-dialog="deleteUserDialog"
+        @update:selected-delete-user="selectedUpdateUserInfo = $event"
       />
     </v-list-item>
     <v-divider />
@@ -30,24 +32,24 @@
       <v-list-item-content v-if="login_user">
         <v-list-item-title class="title grey--text text--darken-2">
           <v-file-input
+            ref="image"
             v-model="userAvatar"
             accept="image/*"
             show-size
             label="画像ファイルをアップロードしてください"
             prepend-icon="mdi-image"
-            @change="selectUserAvatarFile"
             style="display: none"
-            ref="image"
+            @change="selectUserAvatarFile"
           />
           <v-avatar max-width="50" max-height="50">
-            <v-img :src="photoURL" v-if="photoURL" @click="selectUserAvatar" :lazy-src="photoURL">
+            <v-img v-if="photoURL" :src="photoURL" :lazy-src="photoURL" @click="selectUserAvatar">
               <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
                   <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                 </v-row>
               </template>
             </v-img>
-            <v-btn text v-if="!photoURL">
+            <v-btn v-if="!photoURL" text>
               <v-icon @click="selectUserAvatar">mdi-account-outline</v-icon>
             </v-btn>
           </v-avatar>
@@ -66,7 +68,7 @@
     </v-list>
     <v-divider />
 
-    <v-list :updateUserInfo="updateUserInfo" v-if="login_user">
+    <v-list v-if="login_user" :update-user-info="updateUserInfo">
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="title grey--text text--darken-2"
@@ -76,6 +78,7 @@
       </v-list-item>
 
       <v-divider />
+      <!-- FIXME: コンポーネント化 -->
       <v-list-item @click="selectedUpdateUserInfo = 'openUpdateUserName'">
         <v-list-item-title>
           <v-btn text>
@@ -92,7 +95,7 @@
           </v-btn>
         </v-list-item-title>
       </v-list-item>
-      <v-list-item @click="selectedUpdateUserInfo = 'openUpdateEmailAddress'">
+      <v-list-item @click="selectedUpdateUserInfo = 'openUpdateEmail'">
         <v-list-item-title>
           <v-btn text> <v-icon>mdi-email-edit-outline </v-icon>メールアドレス変更 </v-btn>
         </v-list-item-title>
@@ -112,17 +115,17 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import UpdateUser from '@/components/UpdateUserInfo/UpdateUserName'
+import UpdateEmail from '@/components/UpdateUserInfo/UpdateEmail'
 import UpdatePassword from '@/components/UpdateUserInfo/UpdatePassword'
-import UpdateEmailAddress from '@/components/UpdateUserInfo/UpdateEmailAddress'
 import DeleteLoginUser from '@/components/UpdateUserInfo/DeleteUser'
 
 export default {
   components: {
     UpdateUser,
+    UpdateEmail,
     UpdatePassword,
-    UpdateEmailAddress,
     DeleteLoginUser
   },
   data() {
@@ -130,7 +133,7 @@ export default {
       selectedUpdateUserInfo: '',
       updateUserNameDialog: false,
       updatePasswordDialog: false,
-      updateEmailAddressDialog: false,
+      updateEmailDialog: false,
       deleteUserDialog: false,
       userAvatar: null
     }
@@ -151,6 +154,7 @@ export default {
     // @changeメソッドでファイルに変換してfirestorageへの追加処理を呼び出す
     selectUserAvatarFile() {
       const userAvatarFile = this.userAvatar
+      // <!-- FIXME: mapAction -->
       this.$store.dispatch('modules/user/userInfo/uploadUserAvatarFile', userAvatarFile)
     },
     // ユーザー画面編集の選択
@@ -163,6 +167,7 @@ export default {
           break
         case 'closeUpdateUserName':
           returnvalue = this.updateUserNameDialog = false
+
           break
         // パスワード変更画面の開閉
         case 'openUpdatePassword':
@@ -170,13 +175,15 @@ export default {
           break
         case 'closeUpdatePassword':
           returnvalue = this.updatePasswordDialog = false
+
           break
         // メールアドレス変更画面の開閉
-        case 'openUpdateEmailAddress':
-          returnvalue = this.updateEmailAddressDialog = true
+        case 'openUpdateEmail':
+          returnvalue = this.updateEmailDialog = true
           break
-        case 'closeUpdateEmailAddress':
-          returnvalue = this.updateEmailAddressDialog = false
+        case 'closeUpdateEmail':
+          returnvalue = this.updateEmailDialog = false
+
           break
         // アカウント削除画面の開閉
         case 'openDeleteUser':
@@ -184,6 +191,7 @@ export default {
           break
         case 'closeDeleteUser':
           returnvalue = this.deleteUserDialog = false
+
           break
         default:
       }

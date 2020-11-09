@@ -91,7 +91,7 @@ export default {
         return this.selectedUpdateUserInfo
       },
       set(value) {
-        this.$emit('update:selectedUpdatePassword', value)
+        this.$emit('update:selected-update-password', value)
         this.editUserPassword.email = ''
         this.editUserPassword.loginPassword = ''
         this.editUserPassword.newPassword = ''
@@ -131,7 +131,7 @@ export default {
       this.editUserPassword.loginPassword = ''
       this.editUserPassword.newPassword = ''
       this.$refs.form.reset()
-      this.$emit('update:selectedUpdatePassword', 'closeUpdatePassword')
+      this.$emit('update:selected-update-password', 'closeUpdatePassword')
     }
   }
 }

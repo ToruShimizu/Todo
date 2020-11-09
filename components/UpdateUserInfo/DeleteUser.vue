@@ -93,7 +93,7 @@ export default {
         return this.selectedUpdateUserInfo
       },
       set(value) {
-        this.$emit('update:selectedDeleteUser', value)
+        this.$emit('update:selected-delete-user', value)
         this.deleteUser.email = ''
         this.deleteUser.password = ''
         this.$refs.form.reset()
@@ -115,7 +115,7 @@ export default {
       this.deleteUser.password = ''
       this.loader = null
       this.$refs.form.reset()
-      this.$emit('update:selectedDeleteUser', 'closeDeleteUser')
+      this.$emit('update:selected-delete-user', 'closeDeleteUser')
     }
   }
 }
