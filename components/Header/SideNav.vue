@@ -7,22 +7,22 @@
         </v-list-item-title>
       </v-list-item-content>
       <UpdateUser
-        :updateUserNameDialog="updateUserNameDialog"
-        @update:selectedUpdateUserName="selectedUpdateUserInfo = $event"
+        :update-user-name-dialog="updateUserNameDialog"
+        @update:selected-update-user-name="selectedUpdateUserInfo = $event"
       />
       <UpdatePassword
-        :updatePasswordDialog="updatePasswordDialog"
-        @update:selectedUpdatePassword="selectedUpdateUserInfo = $event"
+        :update-password-dialog="updatePasswordDialog"
+        @update:selected-update-password="selectedUpdateUserInfo = $event"
       />
 
       <UpdateEmailAddress
-        :updateEmailAddressDialog="updateEmailAddressDialog"
-        @update:selectedUpdateEmailAddress="selectedUpdateUserInfo = $event"
+        :update-email-address-dialog="updateEmailAddressDialog"
+        @update:selected-update-email-address="selectedUpdateUserInfo = $event"
       />
 
       <DeleteLoginUser
-        :deleteUserDialog="deleteUserDialog"
-        @update:selectedDeleteUser="selectedUpdateUserInfo = $event"
+        :delete-user-dialog="deleteUserDialog"
+        @update:selected-delete-user="selectedUpdateUserInfo = $event"
       />
     </v-list-item>
     <v-divider />
@@ -66,7 +66,7 @@
     </v-list>
     <v-divider />
 
-    <v-list v-if="login_user" :updateUserInfo="updateUserInfo">
+    <v-list v-if="login_user" :update-user-info="updateUserInfo">
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="title grey--text text--darken-2"
