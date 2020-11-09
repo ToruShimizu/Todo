@@ -27,18 +27,18 @@
                   clearable
                 />
                 <v-card-actions>
-                  <v-btn color="primary" @click="closeResetPasswprd" class="hidden-sm-and-up">
+                  <v-btn color="primary" class="hidden-sm-and-up" @click="closeResetPasswprd">
                     <v-icon left>mdi-login-variant</v-icon>戻る
                   </v-btn>
-                  <v-btn color="primary" @click="closeResetPasswprd" class="hidden-xs-only">
+                  <v-btn color="primary" class="hidden-xs-only" @click="closeResetPasswprd">
                     <v-icon left>mdi-login-variant</v-icon>ログイン画面へ戻る
                   </v-btn>
                   <v-spacer />
                   <v-btn
                     color="success"
-                    @click="passwordReset"
                     :loading="loadingResetPassword"
                     :disabled="loadingResetPassword"
+                    @click="passwordReset"
                   >
                     <v-icon left>mdi-email-send</v-icon>送信
                   </v-btn>
@@ -60,7 +60,8 @@ export default {
 
   props: {
     resetPasswordDialog: {
-      type: Boolean
+      type: Boolean,
+      required: true
     }
   },
   data() {
@@ -72,23 +73,23 @@ export default {
     }
   },
   methods: {
-    passwordReset() {
-      if (this.resetUserPassword.email === 'test@example.com') {
+    async passwordReset() {
+      const resetUserPassword = this.resetUserPassword
+      if (resetUserPassword.email === 'test@example.com') {
         alert('テストユーザーはパスワードを再設定することはできません')
         return
-      } else if (!this.resetUserPassword.email) {
+      } else if (!resetUserPassword.email) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingResetPassword'
-      this.$store.dispatch('modules/user/userInfo/passwordReset', {
-        email: this.resetUserPassword.email
+      await this.$store.dispatch('modules/user/userInfo/passwordReset', {
+        email: resetUserPassword.email
       })
-      this.$refs.form.reset()
+      this.closeResetPasswprd()
     },
     closeResetPasswprd() {
       this.$emit('close-reset-password')
-      this.resetUserPassword.email = ''
       this.$refs.form.reset()
     }
   }
