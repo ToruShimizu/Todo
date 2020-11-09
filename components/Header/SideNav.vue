@@ -115,14 +115,14 @@
 import { mapGetters, mapState } from 'vuex'
 import UpdateUser from '@/components/UpdateUserInfo/UpdateUserName'
 import UpdatePassword from '@/components/UpdateUserInfo/UpdatePassword'
-import UpdateEmailAddress from '@/components/UpdateUserInfo/UpdateEmailAddress'
+import UpdateEmail from '@/components/UpdateUserInfo/UpdateEmail'
 import DeleteLoginUser from '@/components/UpdateUserInfo/DeleteUser'
 
 export default {
   components: {
     UpdateUser,
     UpdatePassword,
-    UpdateEmailAddress,
+    UpdateEmail,
     DeleteLoginUser
   },
   data() {
