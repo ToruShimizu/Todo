@@ -42,8 +42,8 @@ export default {
       get() {
         return this.selectSortTask
       },
-      set(value) {
-        this.$emit('update:selected', value)
+      set(selectedSortTask) {
+        this.$emit('update:selected-sort-task', selectedSortTask)
       }
     }
   }

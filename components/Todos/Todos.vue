@@ -22,7 +22,7 @@
       <v-divider />
       <v-layout>
         <SearchTask :search-task-keyword.sync="searchTaskKeyword" />
-        <SortByTask :selected.sync="selectSortTask" />
+        <SortByTask :selected-sort-task.sync="selectSortTask" />
       </v-layout>
       <TaskTable
         :todos-page.sync="todosPage"
