@@ -102,10 +102,9 @@ export default {
       await this.$store.dispatch('modules/user/userInfo/updateEmail', {
         email: updateUserEmail
       })
-      this.updateUser.email = ''
+      this.$emit('update:selected-update-email', 'closeUpdateEmail')
       this.loader = null
       this.$refs.form.reset()
-      this.$emit('update:selected-update-email', 'closeUpdateEmail')
     }
   }
 }
