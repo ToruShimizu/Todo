@@ -18,7 +18,6 @@
                       prepend-inner-icon="mdi-pencil-outline"
                       :rules="[validRules.titleRules.required]"
                       clearable
-                      @keydown.enter="addTask"
                     />
                   </v-col>
                   <!-- 日付入力エリア -->
@@ -29,10 +28,10 @@
                       transition="scale-transition"
                       min-width="290px"
                     >
-                      <template v-slot:activator="{ on, attrs }">
+                      <template #activator="{ on, attrs }">
                         <v-text-field
                           v-model="task.date"
-                          label="期限を変更する"
+                          label="日付を変更する"
                           prepend-inner-icon="mdi-calendar-today"
                           readonly
                           v-bind="attrs"
@@ -41,8 +40,8 @@
                       </template>
                       <v-date-picker
                         v-model="task.date"
-                        @input="dateMenu = false"
                         no-title
+                        @input="dateMenu = false"
                       ></v-date-picker>
                     </v-menu>
                   </v-col>
@@ -52,7 +51,6 @@
                       v-model="task.detail"
                       label="タスクの詳細を入力する"
                       prepend-inner-icon="mdi-briefcase-outline"
-                      required
                       clearable
                     ></v-text-field>
                   </v-col>
@@ -60,9 +58,7 @@
               </v-container>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <nuxt-link to="/">
-                  <v-btn color="blue darken-1" text @click="closeAddTask">Cancel</v-btn>
-                </nuxt-link>
+                <v-btn color="blue darken-1" text @click="closeAddTask">Cancel</v-btn>
                 <v-btn color="blue darken-1" text @click="addTask">Save</v-btn>
               </v-card-actions>
             </v-form>
@@ -104,16 +100,12 @@ export default {
   },
   methods: {
     async addTask() {
-      if (!this.task.title) {
+      const task = this.task
+      if (!task.title) {
         this.$refs.form.validate()
         return
       }
-      await this.$store.dispatch('modules/todos/addTask', { task: this.task })
-      console.log('addTask')
-      this.task.title = ''
-      this.task.detail = ''
-      this.task.date = new Date().toISOString().substr(0, 10)
-      this.$refs.form.reset()
+      await this.dispatch('modules/todos/addTask', task)
       this.closeAddTask()
     },
     openAddTask() {
@@ -121,9 +113,7 @@ export default {
     },
     closeAddTask() {
       this.$emit('close-add-task')
-      this.task.title = ''
-      this.task.date = new Date().toISOString().substr(0, 10)
-      this.task.detail = ''
+      this.$refs.form.reset()
     }
   }
 }
