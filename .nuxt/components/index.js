@@ -12,7 +12,7 @@ export { default as TaskTable } from '../../components/Todos/TaskTable.vue'
 export { default as Todos } from '../../components/Todos/Todos.vue'
 export { default as UpdateTask } from '../../components/Todos/UpdateTask.vue'
 export { default as DeleteUser } from '../../components/UpdateUserInfo/DeleteUser.vue'
-export { default as UpdateEmailAddress } from '../../components/UpdateUserInfo/UpdateEmailAddress.vue'
+export { default as UpdateEmail } from '../../components/UpdateUserInfo/UpdateEmail.vue'
 export { default as UpdatePassword } from '../../components/UpdateUserInfo/UpdatePassword.vue'
 export { default as UpdateUserName } from '../../components/UpdateUserInfo/UpdateUserName.vue'
 
@@ -30,6 +30,6 @@ export const LazyTaskTable = import('../../components/Todos/TaskTable.vue' /* we
 export const LazyTodos = import('../../components/Todos/Todos.vue' /* webpackChunkName: "components/Todos/Todos'}" */).then(c => c.default || c)
 export const LazyUpdateTask = import('../../components/Todos/UpdateTask.vue' /* webpackChunkName: "components/Todos/UpdateTask'}" */).then(c => c.default || c)
 export const LazyDeleteUser = import('../../components/UpdateUserInfo/DeleteUser.vue' /* webpackChunkName: "components/UpdateUserInfo/DeleteUser'}" */).then(c => c.default || c)
-export const LazyUpdateEmailAddress = import('../../components/UpdateUserInfo/UpdateEmailAddress.vue' /* webpackChunkName: "components/UpdateUserInfo/UpdateEmailAddress'}" */).then(c => c.default || c)
+export const LazyUpdateEmail = import('../../components/UpdateUserInfo/UpdateEmail.vue' /* webpackChunkName: "components/UpdateUserInfo/UpdateEmail'}" */).then(c => c.default || c)
 export const LazyUpdatePassword = import('../../components/UpdateUserInfo/UpdatePassword.vue' /* webpackChunkName: "components/UpdateUserInfo/UpdatePassword'}" */).then(c => c.default || c)
 export const LazyUpdateUserName = import('../../components/UpdateUserInfo/UpdateUserName.vue' /* webpackChunkName: "components/UpdateUserInfo/UpdateUserName'}" */).then(c => c.default || c)
