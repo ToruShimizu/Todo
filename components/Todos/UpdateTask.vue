@@ -45,9 +45,9 @@
                     </template>
                     <v-date-picker
                       v-model="editTodo.task.date"
-                      @input="updateDateMenu = false"
                       no-title
                       scrollable
+                      @input="updateDateMenu = false"
                     ></v-date-picker>
                   </v-menu>
                 </v-col>
@@ -88,11 +88,11 @@ import Comment from '@/components/Comment/Comment'
 import FormValidation from '@/mixins/FormValidation.vue'
 
 export default {
-  mixins: [FormValidation],
   components: {
     AddComment,
     Comment
   },
+  mixins: [FormValidation],
   props: {
     editTodo: {
       type: Object,
