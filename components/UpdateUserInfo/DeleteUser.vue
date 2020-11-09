@@ -95,8 +95,9 @@ export default {
       get() {
         return this.selectedUpdateUserInfo
       },
-      set(selectedDeleteUser) {
-        this.$emit('update:selected-delete-user', selectedDeleteUser)
+      set(closeDeleteUser) {
+        this.$emit('update:selected-delete-user', closeDeleteUser)
+        this.$refs.form.reset()
       }
     }
   },
