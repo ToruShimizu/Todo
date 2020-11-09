@@ -23,7 +23,7 @@
             <v-card-text>
               <v-form ref="form" lazy-validation @submit.prevent="updateEmail">
                 <v-text-field
-                  v-model="editUserEmail.email"
+                  v-model="updateUser.email"
                   prepend-inner-icon="mdi-email-outline"
                   label="新しいメールアドレスを入力"
                   :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
@@ -36,9 +36,9 @@
                   <v-spacer />
                   <v-btn
                     color="success"
-                    @click="updateEmail"
                     :loading="loadingUpdateEmail"
                     :disabled="loadingUpdateEmail"
+                    @click="updateEmail"
                   >
                     <v-icon left>mdi-email-plus</v-icon>SAVE
                   </v-btn>
@@ -61,15 +61,18 @@ export default {
   mixins: [FormValidation, LoadingView],
   props: {
     updateEmailDialog: {
-      type: Boolean
+      type: Boolean,
+      required: true
     },
     selectedUpdateUserInfo: {
-      type: String
+      type: String,
+      required: false,
+      default: ''
     }
   },
   data() {
     return {
-      editUserEmail: {
+      updateUser: {
         email: ''
       },
       loadingUpdateEmail: false
@@ -80,28 +83,26 @@ export default {
       get() {
         return this.selectedUpdateUserInfo
       },
-      set(value) {
-        this.$emit('update:selected-update-email', value)
-        this.editUserEmail.email = ''
-        this.$refs.form.reset()
+      set(closeUpdateEmail) {
+        this.$emit('update:selected-update-email', closeUpdateEmail)
       }
     },
     ...mapGetters('modules/user/auth', ['gettersUserEmail'])
   },
   methods: {
     async updateEmail() {
-      if (!this.editUserEmail.email) {
+      const updateUserEmail = this.updateUser.email
+      if (!updateUserEmail) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingUpdateEmail'
       await this.$store.dispatch('modules/user/userInfo/updateEmail', {
-        email: this.editUserEmail.email
+        email: updateUserEmail
       })
-      this.editUserEmail.email = ''
+      this.$emit('update:selected-update-email', 'closeUpdateEmail')
       this.loader = null
       this.$refs.form.reset()
-      this.$emit('update:selected-update-email', 'closeUpdateEmail')
     }
   }
 }
