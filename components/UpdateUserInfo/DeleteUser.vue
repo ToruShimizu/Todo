@@ -36,8 +36,8 @@
                   :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                   label="現在のPassword(6文字以上)"
                   :rules="[validRules.passwordRules.required, validRules.passwordRules.regex]"
-                  @click:append="showPassword = !showPassword"
                   counter="72"
+                  @click:append="showPassword = !showPassword"
                 />
                 <v-card-actions>
                   <v-btn color="primary" @click="selectedDeleteUser = 'closeDeleteUser'">
@@ -46,9 +46,9 @@
                   <v-spacer />
                   <v-btn
                     color="error"
-                    @click="deleteAccount"
                     :loading="loadingDeleteUser"
                     :disabled="loadingDeleteUser"
+                    @click="deleteAccount"
                   >
                     <v-icon left> mdi-account-multiple-remove-outline </v-icon>削除
                   </v-btn>
