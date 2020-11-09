@@ -51,18 +51,18 @@
               :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
               label="パスワードを入力する(6文字以上)"
               :rules="[validRules.passwordRules.required, validRules.passwordRules.regex]"
-              @click:append="showPassword = !showPassword"
               counter="72"
+              @click:append="showPassword = !showPassword"
             />
-            <v-btn text color="primary accent-4" @click="openResetPassword" class="fill-width">
+            <v-btn text color="primary accent-4" class="fill-width" @click="openResetPassword">
               パスワードを忘れた方はこちら</v-btn
             >
             <v-card-actions>
               <v-btn
                 color="primary"
-                @click="login"
                 :loading="loadingLogin"
                 :disabled="loadingLogin"
+                @click="login"
               >
                 <v-icon left>mdi-login-variant</v-icon>ログイン
               </v-btn>
@@ -88,17 +88,17 @@
 
 <script>
 import { mapActions } from 'vuex'
-import FormValidation from '../mixins/FormValidation.vue'
-import LoadingView from '../mixins/LoadingView.vue'
 import CreateUser from '@/components/CreateUser/CreateUser'
 import ResetPassword from '@/components/ResetPassword/ResetPassword'
+import FormValidation from '@/mixins/FormValidation.vue'
+import LoadingView from '@/mixins/LoadingView.vue'
 
 export default {
-  mixins: [FormValidation, LoadingView],
   components: {
     CreateUser,
     ResetPassword
   },
+  mixins: [FormValidation, LoadingView],
 
   data() {
     return {
