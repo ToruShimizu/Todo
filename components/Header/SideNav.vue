@@ -156,38 +156,38 @@ export default {
     // ユーザー画面編集の選択
     selectedUserInfo() {
       let returnvalue
-      const updateUserNameDialog = this.updateUserNameDialog
-      const updateUserEmailDialog = this.updateEmailDialog
-      const updatePasswordDialog = this.updatePasswordDialog
-      const deleteUserDialog = this.deleteUserDialog
       switch (this.selectedUpdateUserInfo) {
         // ユーザーネームの変更画面の開閉
         case 'openUpdateUserName':
-          returnvalue = updateUserNameDialog = true
+          returnvalue = this.updateUserNameDialog = true
           break
         case 'closeUpdateUserName':
-          returnvalue = updateUserNameDialog = false
+          returnvalue = this.updateUserNameDialog = false
+
           break
         // パスワード変更画面の開閉
         case 'openUpdatePassword':
-          returnvalue = updatePasswordDialog = true
+          returnvalue = this.updatePasswordDialog = true
           break
         case 'closeUpdatePassword':
-          returnvalue = updatePasswordDialog = false
+          returnvalue = this.updatePasswordDialog = false
+
           break
         // メールアドレス変更画面の開閉
         case 'openUpdateEmail':
-          returnvalue = updateUserEmailDialog = true
+          returnvalue = this.updateEmailDialog = true
           break
         case 'closeUpdateEmail':
-          returnvalue = updateUserEmailDialog = false
+          returnvalue = this.updateEmailDialog = false
+
           break
         // アカウント削除画面の開閉
         case 'openDeleteUser':
-          returnvalue = deleteUserDialog = true
+          returnvalue = this.deleteUserDialog = true
           break
         case 'closeDeleteUser':
-          returnvalue = deleteUserDialog = false
+          returnvalue = this.deleteUserDialog = false
+
           break
         default:
       }
