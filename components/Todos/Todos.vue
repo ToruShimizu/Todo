@@ -22,21 +22,14 @@
       <v-divider />
       <v-layout>
         <SearchTask :search.sync="searchTaskKeyword" />
-        <SortByTask
-          ref="sortByTask"
-          :selected.sync="selectSortTask"
-          :todosFiltered="todosFiltered"
-        />
+        <SortByTask ref="sortByTask" :selected.sync="selectSortTask" />
       </v-layout>
       <TaskTable
         ref="taskTable"
         :todosPage.sync="todosPage"
         :todosPageSize="todosPageSize"
         :todosFiltered="todosFiltered"
-        :todoList="todoList"
         :sortByTask="sortByTask"
-        :selectSortTask="selectSortTask"
-        :searchTask="searchTask"
         @change-todos-page="changeTodosPage"
       />
     </v-card>
@@ -67,7 +60,6 @@ export default {
         date: new Date().toISOString().substr(0, 10),
         done: false
       },
-
       taskFilter: 'all',
       searchTaskKeyword: '',
       selectSortTask: 'ascDate',
@@ -130,7 +122,6 @@ export default {
       const todos = this.todosFiltered
       switch (this.selectSortTask) {
         case 'title':
-          // returnvalue = this.sortByTaskTitle
           returnvalue = todos.slice().sort((a, b) => {
             if (a.task.title < b.task.title) return -1
           })
@@ -173,9 +164,6 @@ export default {
 </script>
 
 <style>
-a {
-  text-decoration: none;
-}
 /* Vuetifyの仕様上スタイルが適用されてしまうため非表示にする */
 .v-slide-group__prev {
   display: none !important;
