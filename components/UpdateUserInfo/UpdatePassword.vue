@@ -105,8 +105,8 @@ export default {
       get() {
         return this.selectedUpdateUserInfo
       },
-      set(value) {
-        this.$emit('update:selected-update-password', value)
+      set(closeUpdatePassword) {
+        this.$emit('update:selected-update-password', closeUpdatePassword)
         this.$refs.form.reset()
       }
     }
