@@ -123,14 +123,15 @@ export default {
       })
     },
     async login() {
-      if (!this.signInUser.password || !this.signInUser.email) {
+      const signInUser = this.signInUser
+      if (!signInUser.password || !signInUser.email) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingLogin'
       await this.$store.dispatch('modules/user/auth/login', {
-        email: this.signInUser.email,
-        password: this.signInUser.password
+        email: signInUser.email,
+        password: signInUser.password
       })
       this.loader = null
       this.$refs.form.reset()
