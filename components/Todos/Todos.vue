@@ -142,7 +142,7 @@ export default {
       }
       return returnvalue
     },
-    ...mapGetters('modules/todos', ['todosCount', 'remainingTodos', 'completedTodos']),
+    ...mapGetters('modules/todos', ['remainingTodos', 'completedTodos']),
     ...mapState('modules/todos', ['todos'])
   },
   methods: {
