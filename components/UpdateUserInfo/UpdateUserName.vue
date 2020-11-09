@@ -86,7 +86,6 @@ export default {
       },
       set(value) {
         this.$emit('update:selected-update-user-name', value)
-        this.updateUser.name = ''
         this.$refs.form.reset()
       }
     },
@@ -103,10 +102,9 @@ export default {
       await this.$store.dispatch('modules/user/userInfo/updateUserName', {
         userName: updateUser.name
       })
-      updateUser.name = ''
+      this.$emit('update:selected-update-user-name', 'closeUpdateUserName')
       this.loader = null
       this.$refs.form.reset()
-      this.$emit('update:selected-update-user-name', 'closeUpdateUserName')
     }
   }
 }
