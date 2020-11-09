@@ -51,7 +51,6 @@
                     <v-icon left>mdi-login-variant</v-icon>戻る
                   </v-btn>
                   <v-spacer />
-
                   <v-btn
                     color="success"
                     :loading="loadingCreateUser"
@@ -79,7 +78,8 @@ export default {
 
   props: {
     createUserDialog: {
-      type: Boolean
+      type: Boolean,
+      required: true
     }
   },
   data() {
