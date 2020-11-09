@@ -59,7 +59,7 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" text @click="closeAddTask">Cancel</v-btn>
-                <v-btn color="blue darken-1" text @click="addTask">Save</v-btn>
+                <v-btn color="blue darken-1" text @click="addTask(task)">Save</v-btn>
               </v-card-actions>
             </v-form>
           </v-card>
@@ -76,6 +76,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import FormValidation from '@/mixins/FormValidation.vue'
 export default {
   mixins: [FormValidation],
@@ -105,7 +106,7 @@ export default {
         this.$refs.form.validate()
         return
       }
-      await this.$store.dispatch('modules/todos/addTask', task)
+      await this.addTask(task)
       this.closeAddTask()
     },
     openAddTask() {
@@ -114,7 +115,8 @@ export default {
     closeAddTask() {
       this.$emit('close-add-task')
       this.$refs.form.reset()
-    }
+    },
+    ...mapActions('modules/todos', ['addTask'])
   }
 }
 </script>
