@@ -101,14 +101,14 @@ export default {
     }
   },
   methods: {
-    deleteAccount() {
+    async deleteAccount() {
       const deleteUser = this.deleteUser
       if (!deleteUser.password || !deleteUser.email) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingDeleteUser'
-      this.$store.dispatch('modules/user/userInfo/deleteAccount', {
+      await this.$store.dispatch('modules/user/userInfo/deleteAccount', {
         email: deleteUser.email,
         password: deleteUser.password
       })
