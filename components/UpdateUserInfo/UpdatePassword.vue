@@ -79,10 +79,13 @@ export default {
   components: {},
   props: {
     updatePasswordDialog: {
-      type: Boolean
+      type: Boolean,
+      required: true
     },
     selectedUpdateUserInfo: {
-      type: String
+      type: String,
+      required: false,
+      default: ''
     }
   },
   computed: {
