@@ -110,10 +110,6 @@ export default {
       }
       await this.$store.dispatch('modules/todos/addTask', { task: this.task })
       console.log('addTask')
-      this.task.title = ''
-      this.task.detail = ''
-      this.task.date = new Date().toISOString().substr(0, 10)
-      this.$refs.form.reset()
       this.closeAddTask()
     },
     openAddTask() {
@@ -121,9 +117,7 @@ export default {
     },
     closeAddTask() {
       this.$emit('close-add-task')
-      this.task.title = ''
-      this.task.date = new Date().toISOString().substr(0, 10)
-      this.task.detail = ''
+      this.$refs.form.reset()
     }
   }
 }
