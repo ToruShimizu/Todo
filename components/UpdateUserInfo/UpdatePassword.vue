@@ -90,7 +90,7 @@ export default {
   },
   data() {
     return {
-      editUserPassword: {
+      updateUser: {
         email: '',
         loginPassword: '',
         newPassword: ''
@@ -116,19 +116,16 @@ export default {
   },
   methods: {
     async updatePassword() {
-      if (
-        !this.editUserPassword.email ||
-        !this.editUserPassword.loginPassword ||
-        !this.editUserPassword.newPassword
-      ) {
+      const updateUser = this.updateUser
+      if (!updateUser.email || !updateUser.loginPassword || !updateUser.newPassword) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingResetPassword'
       await this.$store.dispatch('modules/user/userInfo/updatePassword', {
-        updatePassword: this.editUserPassword.email,
-        email: this.editUserPassword.loginPassword,
-        password: this.editUserPassword
+        updatePassword: updateUser.newPassword,
+        email: updateUser.email,
+        password: updateUser.loginPassword
       })
       this.editUserPassword.email = ''
       this.editUserPassword.loginPassword = ''
