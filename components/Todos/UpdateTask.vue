@@ -33,7 +33,7 @@
                     transition="scale-transition"
                     min-width="290px"
                   >
-                    <template v-slot:activator="{ on, attrs }">
+                    <template #activator="{ on, attrs }">
                       <v-text-field
                         v-model="editTodo.task.date"
                         label="期限を変更する"
@@ -45,9 +45,9 @@
                     </template>
                     <v-date-picker
                       v-model="editTodo.task.date"
-                      @input="updateDateMenu = false"
                       no-title
                       scrollable
+                      @input="updateDateMenu = false"
                     ></v-date-picker>
                   </v-menu>
                 </v-col>
@@ -57,13 +57,12 @@
                     v-model="editTodo.task.detail"
                     label="タスクの詳細を変更する"
                     prepend-inner-icon="mdi-briefcase-outline"
-                    required
                     clearable
                   ></v-text-field>
                 </v-col>
-                <AddComment :taskId="editTodo.task.id" />
+                <AddComment :task-id="editTodo.task.id" />
                 <Comment
-                  :taskId="editTodo.task.id"
+                  :task-id="editTodo.task.id"
                   v-for="comment in comments"
                   :key="comment.id"
                   :comment="comment"
@@ -89,27 +88,20 @@ import Comment from '@/components/Comment/Comment'
 import FormValidation from '@/mixins/FormValidation.vue'
 
 export default {
-  mixins: [FormValidation],
   components: {
     AddComment,
     Comment
   },
+  mixins: [FormValidation],
   props: {
     editTodo: {
-      type: Object
+      type: Object,
+      required: false,
+      default: () => {}
     },
     updateTaskDialog: {
       type: Boolean,
-      default: false
-    },
-    task: {
-      type: Object,
-      default: () => ({
-        title: '',
-        detail: '',
-        date: new Date().toISOString().substr(0, 10),
-        done: false
-      })
+      required: true
     }
   },
   data() {
@@ -122,15 +114,15 @@ export default {
   },
   methods: {
     updateTask() {
-      if (!this.editTodo.task.title) {
+      const editTodo = this.editTodo
+      if (!editTodo.task.title) {
         this.$refs.form.validate()
         return
       }
       this.$store.dispatch('modules/todos/updateTask', {
-        id: this.editTodo.task.id,
-        task: this.editTodo.task
+        id: editTodo.task.id,
+        task: editTodo.task
       })
-      this.$refs.form.reset()
       this.closeUpdateTask()
     },
     closeUpdateTask() {
