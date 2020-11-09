@@ -29,7 +29,6 @@ export default {
         return this.searchTaskKeyword
       },
       set(value) {
-        console.log(value)
         this.$emit('update:search', value)
       }
     }
