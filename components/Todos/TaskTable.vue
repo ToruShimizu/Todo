@@ -144,7 +144,6 @@ export default {
       await this.$store.dispatch('modules/comment/fetchComments', id)
       this.editTodo = todo
       this.updateTaskDialog = true
-      console.log(this.editTodo)
     },
     closeUpdateTask() {
       this.updateTaskDialog = false
