@@ -17,7 +17,8 @@ import { mapState } from 'vuex'
 export default {
   props: {
     taskId: {
-      type: String
+      type: String,
+      required: true
     }
   },
   data() {
