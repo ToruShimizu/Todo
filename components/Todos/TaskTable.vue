@@ -13,7 +13,7 @@
           </thead>
           <tbody>
             <template v-for="todo in displayTodos">
-              <transition name="list" :key="todo.task.title">
+              <transition :key="todo.task.title" name="list">
                 <tr>
                   <td>
                     <v-btn icon @click="doneTask(todo)">
@@ -54,8 +54,8 @@
       <v-pagination v-model="todosPageNumber" :length="todosPageCount" @input="changeTodosPage" />
     </div>
     <UpdateTask
-      :editTodo="editTodo"
-      :updateTaskDialog="updateTaskDialog"
+      :edit-todo="editTodo"
+      :update-task-dialog="updateTaskDialog"
       @close-update-task="closeUpdateTask"
       @cancel-update-task="cancelUpdateTask"
     />
