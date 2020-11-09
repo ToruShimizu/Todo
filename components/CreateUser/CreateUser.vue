@@ -107,14 +107,10 @@ export default {
         userName: createUser.name
       })
       this.loader = null
-      this.$refs.form.reset()
     },
     closeCreateUser() {
-      this.createNewUser.name = ''
-      this.createNewUser.email = ''
-      this.createNewUser.password = ''
-      this.$refs.form.reset()
       this.$emit('close-create-user')
+      this.$refs.form.reset()
     }
   }
 }
