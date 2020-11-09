@@ -107,9 +107,6 @@ export default {
       },
       set(value) {
         this.$emit('update:selected-update-password', value)
-        this.editUserPassword.email = ''
-        this.editUserPassword.loginPassword = ''
-        this.editUserPassword.newPassword = ''
         this.$refs.form.reset()
       }
     }
@@ -127,11 +124,8 @@ export default {
         email: updateUser.email,
         password: updateUser.loginPassword
       })
-      this.editUserPassword.email = ''
-      this.editUserPassword.loginPassword = ''
-      this.editUserPassword.newPassword = ''
-      this.$refs.form.reset()
       this.$emit('update:selected-update-password', 'closeUpdatePassword')
+      this.$refs.form.reset()
     }
   }
 }
