@@ -37,8 +37,8 @@ export default {
       get() {
         return this.taskfilter
       },
-      set(value) {
-        this.$emit('update:filterdTask', value)
+      set(selectedTaskFilter) {
+        this.$emit('update:selected-task-filter', selectedTaskFilter)
       }
     },
     ...mapGetters('modules/todos', ['completedTodosLength', 'remainingTodosLength', 'progress']),

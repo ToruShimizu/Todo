@@ -18,7 +18,7 @@
     </v-layout>
     <v-divider class="mt-4" />
     <v-card class="mb-5">
-      <FilteredTask :filterd-task.sync="taskFilter" />
+      <FilteredTask :selected-task-filter.sync="taskFilter" />
       <v-divider />
       <v-layout>
         <SearchTask :search.sync="searchTaskKeyword" />
