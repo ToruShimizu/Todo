@@ -115,17 +115,17 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import UpdateUser from '@/components/UpdateUserInfo/UpdateUserName'
-import UpdatePassword from '@/components/UpdateUserInfo/UpdatePassword'
 import UpdateEmail from '@/components/UpdateUserInfo/UpdateEmail'
+import UpdatePassword from '@/components/UpdateUserInfo/UpdatePassword'
 import DeleteLoginUser from '@/components/UpdateUserInfo/DeleteUser'
 
 export default {
   components: {
     UpdateUser,
-    UpdatePassword,
     UpdateEmail,
+    UpdatePassword,
     DeleteLoginUser
   },
   data() {
