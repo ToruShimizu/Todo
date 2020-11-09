@@ -70,10 +70,13 @@ export default {
   mixins: [FormValidation, LoadingView],
   props: {
     deleteUserDialog: {
-      type: Boolean
+      type: Boolean,
+      required: true
     },
     selectedUpdateUserInfo: {
-      type: String
+      type: String,
+      required: false,
+      default: ''
     }
   },
 
