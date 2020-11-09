@@ -20,14 +20,14 @@
             <v-card-text>
               <v-form ref="form" lazy-validation @submit.prevent="updatePassword">
                 <v-text-field
-                  v-model="editUserPassword.email"
+                  v-model="updateUser.email"
                   prepend-inner-icon="mdi-email-outline"
                   label="登録されているメールアドレスを入力してください"
                   :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
                   clearable
                 />
                 <v-text-field
-                  v-model="editUserPassword.loginPassword"
+                  v-model="updateUser.loginPassword"
                   :type="showPassword ? 'text' : 'Password'"
                   prepend-inner-icon="mdi-lock-outline"
                   :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -37,7 +37,7 @@
                   @click:append="showPassword = !showPassword"
                 />
                 <v-text-field
-                  v-model="editUserPassword.newPassword"
+                  v-model="updateUser.newPassword"
                   :type="showEditPassword ? 'text' : 'Password'"
                   prepend-inner-icon="mdi-lock-reset"
                   :append-icon="showEditPassword ? 'mdi-eye' : 'mdi-eye-off'"
