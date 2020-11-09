@@ -7,22 +7,22 @@
         </v-list-item-title>
       </v-list-item-content>
       <UpdateUser
-        @update:selectedUpdateUserName="selectedUpdateUserInfo = $event"
         :updateUserNameDialog="updateUserNameDialog"
+        @update:selectedUpdateUserName="selectedUpdateUserInfo = $event"
       />
       <UpdatePassword
-        @update:selectedUpdatePassword="selectedUpdateUserInfo = $event"
         :updatePasswordDialog="updatePasswordDialog"
+        @update:selectedUpdatePassword="selectedUpdateUserInfo = $event"
       />
 
       <UpdateEmailAddress
-        @update:selectedUpdateEmailAddress="selectedUpdateUserInfo = $event"
         :updateEmailAddressDialog="updateEmailAddressDialog"
+        @update:selectedUpdateEmailAddress="selectedUpdateUserInfo = $event"
       />
 
       <DeleteLoginUser
-        @update:selectedDeleteUser="selectedUpdateUserInfo = $event"
         :deleteUserDialog="deleteUserDialog"
+        @update:selectedDeleteUser="selectedUpdateUserInfo = $event"
       />
     </v-list-item>
     <v-divider />
@@ -30,24 +30,24 @@
       <v-list-item-content v-if="login_user">
         <v-list-item-title class="title grey--text text--darken-2">
           <v-file-input
+            ref="image"
             v-model="userAvatar"
             accept="image/*"
             show-size
             label="画像ファイルをアップロードしてください"
             prepend-icon="mdi-image"
-            @change="selectUserAvatarFile"
             style="display: none"
-            ref="image"
+            @change="selectUserAvatarFile"
           />
           <v-avatar max-width="50" max-height="50">
-            <v-img :src="photoURL" v-if="photoURL" @click="selectUserAvatar" :lazy-src="photoURL">
+            <v-img v-if="photoURL" :src="photoURL" :lazy-src="photoURL" @click="selectUserAvatar">
               <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
                   <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                 </v-row>
               </template>
             </v-img>
-            <v-btn text v-if="!photoURL">
+            <v-btn v-if="!photoURL" text>
               <v-icon @click="selectUserAvatar">mdi-account-outline</v-icon>
             </v-btn>
           </v-avatar>
@@ -66,7 +66,7 @@
     </v-list>
     <v-divider />
 
-    <v-list :updateUserInfo="updateUserInfo" v-if="login_user">
+    <v-list v-if="login_user" :updateUserInfo="updateUserInfo">
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="title grey--text text--darken-2"
