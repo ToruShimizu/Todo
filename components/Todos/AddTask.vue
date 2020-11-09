@@ -100,11 +100,12 @@ export default {
   },
   methods: {
     async addTask() {
-      if (!this.task.title) {
+      const task = this.task
+      if (!task.title) {
         this.$refs.form.validate()
         return
       }
-      await this.$store.dispatch('modules/todos/addTask', { task: this.task })
+      await this.$store.dispatch('modules/todos/addTask', task)
       this.closeAddTask()
     },
     openAddTask() {
