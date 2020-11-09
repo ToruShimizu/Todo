@@ -101,11 +101,10 @@ export default {
       get() {
         // 絞り込が行われたあとのデータを使用
         const todos = this.todosFiltered
+        const pageSize = this.todosPageSize
+        const page = this.todosPage
         // 1ページあたりの最大表示数に合わせて切り分ける
-        return todos.slice(
-          this.todosPageSize * (this.todosPage - 1),
-          this.todosPageSize * this.todosPage
-        )
+        return todos.slice(pageSize * (page - 1), pageSize * page)
       },
       set(changeTodosPage) {
         return changeTodosPage
@@ -114,34 +113,37 @@ export default {
     // タスクの検索
     searchTask() {
       let todoList = this.todoList
+      const todos = this.todosFiltered
+      const searchKeyword = this.searchTaskKeyword
       // vuetifyのclearableを使用するとnullになり表示されなくなるためnullの場合の処理を記述
       // nullの場合は元の値であるstateのtodosを入れて返す
-      if (this.searchTaskKeyword === null) {
+      if (searchKeyword === null) {
         todoList = this.todos
         return todoList
       }
-      return this.todosFiltered.filter((todo) => {
-        return todo.task.title.includes(this.searchTaskKeyword)
+      return todos.filter((todo) => {
+        return todo.task.title.includes(searchKeyword)
       })
     },
     sortByTask() {
       let returnvalue
+      const todos = this.todosFiltered
       switch (this.selectSortTask) {
         case 'title':
           // returnvalue = this.sortByTaskTitle
-          returnvalue = this.todosFiltered.slice().sort((a, b) => {
+          returnvalue = todos.slice().sort((a, b) => {
             if (a.task.title < b.task.title) return -1
           })
 
           break
         case 'ascDate':
-          returnvalue = this.todosFiltered.slice().sort((a, b) => {
+          returnvalue = todos.slice().sort((a, b) => {
             if (a.task.date > b.task.date) return -1
           })
 
           break
         case 'descDate':
-          returnvalue = this.todosFiltered.slice().sort((a, b) => {
+          returnvalue = todos.slice().sort((a, b) => {
             if (a.task.date < b.task.date) return -1
           })
 
@@ -157,10 +159,8 @@ export default {
     // ページ番号のボタンが押された時にページを切り替える
     changeTodosPage(pageNumber) {
       const todos = this.todosFiltered
-      this.todoList = todos.slice(
-        this.todosPageSize * (pageNumber - 1),
-        this.todosPageSize * pageNumber
-      )
+      const pageSize = this.todosPageSize
+      this.todoList = todos.slice(pageSize * (pageNumber - 1), todosPageSize * pageNumber)
     },
     openAddTask() {
       this.taskDialog = true
