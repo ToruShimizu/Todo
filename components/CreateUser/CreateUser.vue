@@ -40,23 +40,23 @@
                   :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                   label="パスワードを入力する(6文字以上)"
                   :rules="[validRules.passwordRules.required, validRules.passwordRules.regex]"
-                  @click:append="showPassword = !showPassword"
                   counter="72"
+                  @click:append="showPassword = !showPassword"
                 />
                 <v-card-actions>
-                  <v-btn color="primary" @click="closeCreateUser" class="hidden-xs-only">
+                  <v-btn color="primary" class="hidden-xs-only" @click="closeCreateUser">
                     <v-icon left>mdi-login-variant</v-icon>ログイン画面へ戻る
                   </v-btn>
-                  <v-btn color="primary" @click="closeCreateUser" class="hidden-sm-and-up">
+                  <v-btn color="primary" class="hidden-sm-and-up" @click="closeCreateUser">
                     <v-icon left>mdi-login-variant</v-icon>戻る
                   </v-btn>
                   <v-spacer />
 
                   <v-btn
                     color="success"
-                    @click="createUser"
                     :loading="loadingCreateUser"
                     :disabled="loadingCreateUser"
+                    @click="createUser"
                   >
                     <v-icon left>mdi-account-plus</v-icon>新規作成
                   </v-btn>
