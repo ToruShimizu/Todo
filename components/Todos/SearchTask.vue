@@ -18,7 +18,9 @@
 export default {
   props: {
     searchTaskKeyword: {
-      type: String
+      type: String,
+      required: false,
+      default: ''
     }
   },
   computed: {
