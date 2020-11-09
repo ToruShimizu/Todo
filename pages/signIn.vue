@@ -71,11 +71,11 @@
                 <v-icon left>mdi-account-plus</v-icon>新規作成はこちら
               </v-btn>
               <CreateUser
-                :createUserDialog="createUserDialog"
+                :create-user-dialog="createUserDialog"
                 @close-create-user="closeCreateUser"
               />
               <ResetPassword
-                :resetPasswordDialog="resetPasswordDialog"
+                :reset-password-dialog="resetPasswordDialog"
                 @close-reset-password="closeResetPasswprd"
               />
             </v-card-actions>
