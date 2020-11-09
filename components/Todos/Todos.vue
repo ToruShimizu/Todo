@@ -5,7 +5,7 @@
         <!-- トータルtodos表示 -->
         <h2 class="display-1 grey--text pl-4">
           totalTodos:&nbsp;
-          <span :key="`todos-${todos.length}`">{{ todos.length }}</span>
+          {{ todos.length }}
         </h2>
       </v-flex>
       <v-flex>
