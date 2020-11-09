@@ -13,7 +13,7 @@
           </thead>
           <tbody>
             <template v-for="todo in displayTodos">
-              <transition name="list" :key="todo.task.title">
+              <transition :key="todo.task.title" name="list">
                 <tr>
                   <td>
                     <v-btn icon @click="doneTask(todo)">
@@ -54,8 +54,8 @@
       <v-pagination v-model="todosPageNumber" :length="todosPageCount" @input="changeTodosPage" />
     </div>
     <UpdateTask
-      :editTodo="editTodo"
-      :updateTaskDialog="updateTaskDialog"
+      :edit-todo="editTodo"
+      :update-task-dialog="updateTaskDialog"
       @close-update-task="closeUpdateTask"
       @cancel-update-task="cancelUpdateTask"
     />
@@ -71,16 +71,21 @@ export default {
   },
   props: {
     todosPage: {
-      type: Number
+      type: Number,
+      required: false,
+      default: 1
     },
     todosPageSize: {
-      type: Number
+      type: Number,
+      required: true
     },
     todosFiltered: {
-      type: Array
+      type: Array,
+      required: true
     },
     sortByTask: {
-      type: Array
+      type: Array,
+      required: true
     }
   },
   data() {
@@ -108,8 +113,8 @@ export default {
       get() {
         return this.todosPage
       },
-      set(todosPage) {
-        this.$emit('update:todosPage', todosPage)
+      set(setTodosPage) {
+        this.$emit('update:set-todos-page', setTodosPage)
       }
     },
     todosPageCount() {
