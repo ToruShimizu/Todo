@@ -71,16 +71,21 @@ export default {
   },
   props: {
     todosPage: {
-      type: Number
+      type: Number,
+      required: false,
+      default: 1
     },
     todosPageSize: {
-      type: Number
+      type: Number,
+      required: true
     },
     todosFiltered: {
-      type: Array
+      type: Array,
+      required: true
     },
     sortByTask: {
-      type: Array
+      type: Array,
+      required: true
     }
   },
   data() {
