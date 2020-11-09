@@ -27,7 +27,9 @@ import { mapState, mapGetters } from 'vuex'
 export default {
   props: {
     taskFilter: {
-      type: String
+      type: String,
+      required: false,
+      default: 'all'
     }
   },
   computed: {
