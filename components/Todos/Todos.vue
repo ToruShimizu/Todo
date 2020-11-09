@@ -25,7 +25,7 @@
         <SortByTask :selected-sort-task.sync="selectSortTask" />
       </v-layout>
       <TaskTable
-        :todos-page.sync="todosPage"
+        :set-todos-page.sync="todosPage"
         :todos-page-size="todosPageSize"
         :todos-filtered="todosFiltered"
         :sort-by-task="sortByTask"

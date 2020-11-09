@@ -108,8 +108,8 @@ export default {
       get() {
         return this.todosPage
       },
-      set(todosPage) {
-        this.$emit('update:todosPage', todosPage)
+      set(setTodosPage) {
+        this.$emit('update:set-todos-page', setTodosPage)
       }
     },
     todosPageCount() {
