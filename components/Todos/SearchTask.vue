@@ -18,7 +18,9 @@
 export default {
   props: {
     searchTaskKeyword: {
-      type: String
+      type: String,
+      required: false,
+      default: ''
     }
   },
   computed: {
@@ -26,9 +28,8 @@ export default {
       get() {
         return this.searchTaskKeyword
       },
-      set(value) {
-        console.log(value)
-        this.$emit('update:search', value)
+      set(searchTaskKeyword) {
+        this.$emit('update:search-task-keyword', searchTaskKeyword)
       }
     }
   }

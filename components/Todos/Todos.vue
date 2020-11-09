@@ -21,7 +21,7 @@
       <FilteredTask :selected-task-filter.sync="taskFilter" />
       <v-divider />
       <v-layout>
-        <SearchTask :search.sync="searchTaskKeyword" />
+        <SearchTask :search-task-keyword.sync="searchTaskKeyword" />
         <SortByTask :selected.sync="selectSortTask" />
       </v-layout>
       <TaskTable
