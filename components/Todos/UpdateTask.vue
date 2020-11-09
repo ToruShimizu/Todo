@@ -57,7 +57,6 @@
                     v-model="editTodo.task.detail"
                     label="タスクの詳細を変更する"
                     prepend-inner-icon="mdi-briefcase-outline"
-                    required
                     clearable
                   ></v-text-field>
                 </v-col>
@@ -104,15 +103,6 @@ export default {
       type: Boolean,
       required: true
     },
-    task: {
-      type: Object,
-      default: () => ({
-        title: '',
-        detail: '',
-        date: new Date().toISOString().substr(0, 10),
-        done: false
-      })
-    }
   },
   data() {
     return {
@@ -132,7 +122,6 @@ export default {
         id: this.editTodo.task.id,
         task: this.editTodo.task
       })
-      this.$refs.form.reset()
       this.closeUpdateTask()
     },
     closeUpdateTask() {
