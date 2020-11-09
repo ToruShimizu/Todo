@@ -19,7 +19,7 @@
 
       <UpdateEmail
         :update-email-dialog="updateEmailDialog"
-        @update:selected-update-email-="selectedUpdateUserInfo = $event"
+        @update:selected-update-email="selectedUpdateUserInfo = $event"
       />
 
       <DeleteLoginUser
