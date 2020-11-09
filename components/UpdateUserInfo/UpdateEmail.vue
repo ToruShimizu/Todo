@@ -36,9 +36,9 @@
                   <v-spacer />
                   <v-btn
                     color="success"
-                    @click="updateEmail"
                     :loading="loadingUpdateEmail"
                     :disabled="loadingUpdateEmail"
+                    @click="updateEmail"
                   >
                     <v-icon left>mdi-email-plus</v-icon>SAVE
                   </v-btn>
