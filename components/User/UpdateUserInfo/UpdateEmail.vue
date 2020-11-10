@@ -29,7 +29,7 @@
                 clearable
               />
               <v-card-actions>
-                <v-btn color="primary" @click="selectedUpdateEmail = 'closeUpdateEmail'">
+                <v-btn color="primary" @click="selectUpdateEmail = 'closeUpdateEmail'">
                   <v-icon left>mdi-login-variant</v-icon>戻る
                 </v-btn>
                 <v-spacer />
@@ -62,7 +62,7 @@ export default {
       type: Boolean,
       required: true
     },
-    selectedUpdateUserInfo: {
+    selectUpdateUserInfo: {
       type: String,
       required: false,
       default: ''
@@ -77,12 +77,12 @@ export default {
     }
   },
   computed: {
-    selectedUpdateEmail: {
+    selectUpdateEmail: {
       get() {
-        return this.selectedUpdateUserInfo
+        return this.selectEditUserInfo
       },
       set(closeUpdateEmail) {
-        this.$emit('update:selected-update-email', closeUpdateEmail)
+        this.$emit('update:close-update-email', closeUpdateEmail)
         this.$refs.form.reset()
       }
     },

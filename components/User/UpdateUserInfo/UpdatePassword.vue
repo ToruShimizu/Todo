@@ -81,7 +81,7 @@ export default {
       type: Boolean,
       required: true
     },
-    selectedUpdateUserInfo: {
+    selectUpdateUserInfo: {
       type: String,
       required: false,
       default: ''
@@ -102,10 +102,10 @@ export default {
   computed: {
     selectedUpdatePassword: {
       get() {
-        return this.selectedUpdateUserInfo
+        return this.selectUpdateUserInfo
       },
       set(closeUpdatePassword) {
-        this.$emit('update:selected-update-password', closeUpdatePassword)
+        this.$emit('update:close-update-password', closeUpdatePassword)
         this.$refs.form.reset()
       }
     }
