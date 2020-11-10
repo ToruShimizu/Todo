@@ -22,7 +22,7 @@
           <v-card-text>
             <v-form ref="form" lazy-validation @submit.prevent="updateUserName">
               <v-text-field
-                v-model="updateUser.name"
+                v-model="editUser.name"
                 prepend-inner-icon="mdi-card-account-details-outline"
                 label="新しい名前を入力してください"
                 :rules="[validRules.nameRules.required]"
@@ -67,13 +67,15 @@ export default {
       type: String,
       required: false,
       default: ''
+    },
+    editUser: {
+      type: Object,
+      required: false,
+      default: () => {}
     }
   },
   data() {
     return {
-      updateUser: {
-        name: ''
-      },
       loadingUpdateUserName: false
     }
   },
@@ -91,18 +93,17 @@ export default {
   },
   methods: {
     async handleUpdateUserName() {
-      const updateUser = this.updateUser
-      if (!updateUser.name) {
+      const editUser = this.editUser
+      if (!editUser.name) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingUpdateUserName'
       await this.updateUserName({
-        userName: updateUser.name
+        userName: editUser.name
       })
       this.$emit('update:selected-update-user-name', 'closeUpdateUserName')
       this.loader = null
-      this.$refs.form.reset()
     },
     ...mapActions('modules/user/userInfo', ['updateUserName'])
   }

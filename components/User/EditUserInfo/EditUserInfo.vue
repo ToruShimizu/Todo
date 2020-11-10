@@ -7,6 +7,7 @@
     />
 
     <UpdateUser
+      :edit-user="editUser"
       :update-user-name-dialog="updateUserNameDialog"
       :close-update-user-name.sync="selectEditUserInfo"
     />
@@ -14,16 +15,19 @@
     <UpdateUserAvatar ref="updateUserAvatar" />
 
     <UpdateEmail
+      :edit-user="editUser"
       :update-email-dialog="updateEmailDialog"
       :close-update-email.sync="selectEditUserInfo"
     />
 
     <UpdatePassword
+      :edit-user="editUser"
       :update-password-dialog="updatePasswordDialog"
       :close-update-password.sync="selectEditUserInfo"
     />
 
     <DeleteAccount
+      :edit-user="editUser"
       :delete-account-dialog="deleteAccountDialog"
       :close-delete-account.sync="selectEditUserInfo"
     />
@@ -47,6 +51,12 @@ export default {
   },
   data() {
     return {
+      editUser: {
+        name: '',
+        email: '',
+        password: '',
+        editPassword: ''
+      },
       selectEditUserInfo: '',
       updateUserNameDialog: false,
       updatePasswordDialog: false,
