@@ -124,7 +124,6 @@ export default {
         password: editUser.password
       })
       this.$emit('update:selected-update-password', 'closeUpdatePassword')
-      this.$refs.form.reset()
     },
     ...mapActions('modules/user/userInfo', ['updatePassword'])
   }

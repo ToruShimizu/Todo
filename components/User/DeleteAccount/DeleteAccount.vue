@@ -115,7 +115,6 @@ export default {
       })
       this.$emit('update:selected-delete-user', 'closeDeleteUser')
       this.loader = null
-      this.$refs.form.reset()
     },
     ...mapActions('modules/user/userInfo', ['deleteAccount'])
   }

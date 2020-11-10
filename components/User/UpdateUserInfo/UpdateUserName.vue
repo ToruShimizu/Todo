@@ -104,7 +104,6 @@ export default {
       })
       this.$emit('update:selected-update-user-name', 'closeUpdateUserName')
       this.loader = null
-      this.$refs.form.reset()
     },
     ...mapActions('modules/user/userInfo', ['updateUserName'])
   }
