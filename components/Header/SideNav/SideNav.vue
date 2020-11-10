@@ -7,38 +7,13 @@
         </v-list-item-title>
       </v-list-item-content>
       <!-- FIXME: コンポーネント化 -->
-      <UpdateUserAvatar ref="updateUserAvatar" />
-
-      <UpdateUser
-        :update-user-name-dialog="updateUserNameDialog"
-        @update:selected-update-user-name="selectedUpdateUserInfo = $event"
-      />
-      <UpdatePassword
-        :update-password-dialog="updatePasswordDialog"
-        @update:selected-update-password="selectedUpdateUserInfo = $event"
-      />
-
-      <UpdateEmail
-        :update-email-dialog="updateEmailDialog"
-        @update:selected-update-email="selectedUpdateUserInfo = $event"
-      />
-
-      <DeleteAccount
-        :delete-user-dialog="deleteUserDialog"
-        @update:selected-delete-user="selectedUpdateUserInfo = $event"
-      />
     </v-list-item>
     <v-divider />
     <v-list dense nav>
       <v-list-item-content v-if="login_user">
         <v-list-item-title class="title grey--text text--darken-2">
           <v-avatar max-width="50" max-height="50">
-            <v-img
-              v-if="photoURL"
-              :src="photoURL"
-              :lazy-src="photoURL"
-              @click="handleSelectUserImageFile"
-            >
+            <v-img v-if="photoURL" :src="photoURL" :lazy-src="photoURL">
               <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
                   <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
@@ -46,7 +21,7 @@
               </template>
             </v-img>
             <v-btn v-if="!photoURL" text>
-              <v-icon @click="handleSelectUserImageFile">mdi-account-outline</v-icon>
+              <v-icon>mdi-account-outline</v-icon>
             </v-btn>
           </v-avatar>
           {{ gettersUserName }}
@@ -63,130 +38,21 @@
       </v-list-item>
     </v-list>
     <v-divider />
-
-    <v-list v-if="login_user" :update-user-info="updateUserInfo">
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title class="title grey--text text--darken-2"
-            >ユーザー情報編集
-          </v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-
-      <v-divider />
-      <!-- FIXME: コンポーネント化 -->
-      <v-list-item @click="selectedUpdateUserInfo = 'openUpdateUserName'">
-        <v-list-item-title>
-          <v-btn text>
-            <v-icon> mdi-badge-account-horizontal-outline </v-icon>
-            ユーザー名変更
-          </v-btn>
-        </v-list-item-title>
-      </v-list-item>
-      <v-list-item @click="handleSelectUserImageFile">
-        <v-list-item-title>
-          <v-btn text>
-            <v-icon> mdi-file-account-outline </v-icon>
-            プロフィール画像変更
-          </v-btn>
-        </v-list-item-title>
-      </v-list-item>
-      <v-list-item @click="selectedUpdateUserInfo = 'openUpdateEmail'">
-        <v-list-item-title>
-          <v-btn text> <v-icon>mdi-email-edit-outline </v-icon>メールアドレス変更 </v-btn>
-        </v-list-item-title>
-      </v-list-item>
-      <v-list-item @click="selectedUpdateUserInfo = 'openUpdatePassword'">
-        <v-list-item-title>
-          <v-btn text> <v-icon>mdi-account-key-outline </v-icon>パスワード変更 </v-btn>
-        </v-list-item-title>
-      </v-list-item>
-      <v-list-item @click="selectedUpdateUserInfo = 'openDeleteUser'">
-        <v-list-item-title>
-          <v-btn text> <v-icon> mdi-account-remove-outline </v-icon>アカウント削除 </v-btn>
-        </v-list-item-title>
-      </v-list-item>
-    </v-list>
+    <EditUserInfo />
   </v-container>
 </template>
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import updateUserAvatar from '@/components/User/UpdateUserInfo/updateUserAvatar'
-import UpdateUser from '@/components/User/UpdateUserInfo/UpdateUserName'
-import UpdateEmail from '@/components/User/UpdateUserInfo/UpdateEmail'
-import UpdatePassword from '@/components/User/UpdateUserInfo/UpdatePassword'
-import DeleteAccount from '@/components/User/DeleteAccount/DeleteAccount'
+import EditUserInfo from '@/components/User/EditUserInfo/EditUserInfo'
 
 export default {
   components: {
-    updateUserAvatar,
-    UpdateUser,
-    UpdateEmail,
-    UpdatePassword,
-    DeleteAccount
-  },
-  data() {
-    return {
-      selectedUpdateUserInfo: '',
-      updateUserNameDialog: false,
-      updatePasswordDialog: false,
-      updateEmailDialog: false,
-      deleteUserDialog: false
-    }
+    EditUserInfo
   },
   computed: {
-    // ユーザー情報編集の選択
-    updateUserInfo() {
-      return this.selectedUserInfo()
-    },
     ...mapGetters('modules/user/auth', ['gettersUserName', 'photoURL', 'gettersUserEmail']),
     ...mapState('modules/user/auth', ['login_user'])
-  },
-  methods: {
-    handleSelectUserImageFile() {
-      this.$refs.updateUserAvatar.selectUserImageFile()
-    },
-    // ユーザー画面編集の選択
-    selectedUserInfo() {
-      let returnvalue
-      switch (this.selectedUpdateUserInfo) {
-        // ユーザーネームの変更画面の開閉
-        case 'openUpdateUserName':
-          returnvalue = this.updateUserNameDialog = true
-          break
-        case 'closeUpdateUserName':
-          returnvalue = this.updateUserNameDialog = false
-
-          break
-        // パスワード変更画面の開閉
-        case 'openUpdatePassword':
-          returnvalue = this.updatePasswordDialog = true
-          break
-        case 'closeUpdatePassword':
-          returnvalue = this.updatePasswordDialog = false
-
-          break
-        // メールアドレス変更画面の開閉
-        case 'openUpdateEmail':
-          returnvalue = this.updateEmailDialog = true
-          break
-        case 'closeUpdateEmail':
-          returnvalue = this.updateEmailDialog = false
-
-          break
-        // アカウント削除画面の開閉
-        case 'openDeleteUser':
-          returnvalue = this.deleteUserDialog = true
-          break
-        case 'closeDeleteUser':
-          returnvalue = this.deleteUserDialog = false
-
-          break
-        default:
-      }
-      return returnvalue
-    }
   }
 }
 </script>
