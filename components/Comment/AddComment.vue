@@ -6,13 +6,13 @@
       prepend-inner-icon="mdi-message-text-outline"
       label="コメントを追加する"
       clearable
-      @keypress.enter="addComment"
+      @keypress.enter="handleAddComment"
     ></v-text-field>
   </v-col>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   props: {
@@ -30,13 +30,14 @@ export default {
     ...mapState('modules/comment', ['comments'])
   },
   methods: {
-    addComment() {
-      this.$store.dispatch('modules/comment/addComment', {
+    handleAddComment() {
+      this.addComment({
         id: this.taskId,
         message: this.message
       })
       this.message = ''
-    }
+    },
+    ...mapActions('modules/comment', ['addComment'])
   }
 }
 </script>
