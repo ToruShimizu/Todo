@@ -28,7 +28,7 @@
             tile
             :loading="loadingTestLogin"
             :disabled="loadingTestLogin"
-            @click="testLogin"
+            @click="handleTestLogin"
             ><v-icon>mdi-account-arrow-left-outline </v-icon> テストユーザーでログイン
           </v-btn>
         </v-card-text>
@@ -62,7 +62,7 @@
                 color="primary"
                 :loading="loadingLogin"
                 :disabled="loadingLogin"
-                @click="login"
+                @click="handleLogin"
               >
                 <v-icon left>mdi-login-variant</v-icon>ログイン
               </v-btn>
@@ -114,22 +114,22 @@ export default {
     }
   },
   methods: {
-    testLogin() {
+    handleTestLogin() {
       this.loader = 'loadingTestLogin'
-      this.$store.dispatch('modules/user/auth/login', {
+      this.login({
         email: 'test@example.com',
         password: 'testUser',
         userName: 'テストユーザー'
       })
     },
-    async login() {
+    async handleLogin() {
       const signInUser = this.signInUser
       if (!signInUser.password || !signInUser.email) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingLogin'
-      await this.$store.dispatch('modules/user/auth/login', {
+      await this.login({
         email: signInUser.email,
         password: signInUser.password
       })
@@ -149,7 +149,7 @@ export default {
     closeResetPasswprd() {
       this.resetPasswordDialog = false
     },
-    ...mapActions('modules/user/auth', ['googleLogin'])
+    ...mapActions('modules/user/auth', ['googleLogin', 'login'])
   }
 }
 </script>
