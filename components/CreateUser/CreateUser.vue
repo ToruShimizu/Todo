@@ -55,7 +55,7 @@
                     color="success"
                     :loading="loadingCreateUser"
                     :disabled="loadingCreateUser"
-                    @click="createUser"
+                    @click="handleCreateUser"
                   >
                     <v-icon left>mdi-account-plus</v-icon>新規作成
                   </v-btn>
@@ -70,6 +70,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import FormValidation from '@/mixins/FormValidation.vue'
 import LoadingView from '@/mixins/LoadingView.vue'
 
@@ -94,14 +95,14 @@ export default {
     }
   },
   methods: {
-    async createUser() {
+    async handleCreateUser() {
       this.loader = 'loadingCreateUser'
       const createUser = this.createNewUser
       if (!createUser.password || !createUser.email) {
         this.$refs.form.validate()
         return
       }
-      await this.$store.dispatch('modules/user/auth/createUser', {
+      await this.createUser({
         email: createUser.email,
         password: createUser.password,
         userName: createUser.name
@@ -111,7 +112,8 @@ export default {
     closeCreateUser() {
       this.$emit('close-create-user')
       this.$refs.form.reset()
-    }
+    },
+    ...mapActions('modules/user/auth', ['createUser'])
   }
 }
 </script>
