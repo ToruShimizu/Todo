@@ -7,7 +7,7 @@ const mutations = {}
 
 const actions = {
   // ユーザープロフィール画像の追加
-  async uploadUserAvatarFile({ getters, commit }, userAvatarFile) {
+  async uploadUserImageFile({ getters, commit }, userAvatarFile) {
     const userInfo = await firebase.auth().currentUser
     const imageRef = await storageRef.child(`images/${getters.uid}/${userAvatarFile.name}`)
     const snapShot = await imageRef.put(userAvatarFile)
