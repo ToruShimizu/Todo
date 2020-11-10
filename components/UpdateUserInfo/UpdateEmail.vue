@@ -38,7 +38,7 @@
                     color="success"
                     :loading="loadingUpdateEmail"
                     :disabled="loadingUpdateEmail"
-                    @click="updateEmail"
+                    @click="handleUpdateEmail"
                   >
                     <v-icon left>mdi-email-plus</v-icon>SAVE
                   </v-btn>
@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import FormValidation from '@/mixins/FormValidation.vue'
 import LoadingView from '@/mixins/LoadingView.vue'
 
@@ -91,20 +91,21 @@ export default {
     ...mapGetters('modules/user/auth', ['gettersUserEmail'])
   },
   methods: {
-    async updateEmail() {
+    async handleUpdateEmail() {
       const updateUserEmail = this.updateUser.email
       if (!updateUserEmail) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingUpdateEmail'
-      await this.$store.dispatch('modules/user/userInfo/updateEmail', {
+      await this.updateEmail({
         email: updateUserEmail
       })
       this.$emit('update:selected-update-email', 'closeUpdateEmail')
       this.loader = null
       this.$refs.form.reset()
-    }
+    },
+    ...mapActions('modules/user/userInfo', ['updateEmail'])
   }
 }
 </script>
