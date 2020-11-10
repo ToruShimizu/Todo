@@ -115,7 +115,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import UpdateUser from '@/components/UpdateUserInfo/UpdateUserName'
 import UpdateEmail from '@/components/UpdateUserInfo/UpdateEmail'
 import UpdatePassword from '@/components/UpdateUserInfo/UpdatePassword'
@@ -155,7 +155,7 @@ export default {
     selectUserAvatarFile() {
       const userAvatarFile = this.userAvatar
       // <!-- FIXME: mapAction -->
-      this.$store.dispatch('modules/user/userInfo/uploadUserAvatarFile', userAvatarFile)
+      this.uploadUserAvatarFile(userAvatarFile)
     },
     // ユーザー画面編集の選択
     selectedUserInfo() {
@@ -196,7 +196,8 @@ export default {
         default:
       }
       return returnvalue
-    }
+    },
+    ...mapActions('modules/user/userInfo', ['uploadUserAvatarFile'])
   }
 }
 </script>

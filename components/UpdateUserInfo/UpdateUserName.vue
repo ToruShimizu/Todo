@@ -38,7 +38,7 @@
                     color="success"
                     :loading="loadingUpdateUserName"
                     :disabled="loadingUpdateUserName"
-                    @click="updateUserName"
+                    @click="handleUpdateUserName"
                   >
                     <v-icon left> mdi-badge-account-horizontal-outline </v-icon>SAVE
                   </v-btn>
@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import FormValidation from '@/mixins/FormValidation.vue'
 import LoadingView from '@/mixins/LoadingView.vue'
 
@@ -92,20 +92,21 @@ export default {
     ...mapGetters('modules/user/auth', ['gettersUserName'])
   },
   methods: {
-    async updateUserName() {
+    async handleUpdateUserName() {
       const updateUser = this.updateUser
       if (!updateUser.name) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingUpdateUserName'
-      await this.$store.dispatch('modules/user/userInfo/updateUserName', {
+      await this.updateUserName({
         userName: updateUser.name
       })
       this.$emit('update:selected-update-user-name', 'closeUpdateUserName')
       this.loader = null
       this.$refs.form.reset()
-    }
+    },
+    ...mapActions('modules/user/userInfo', ['updateUserName'])
   }
 }
 </script>

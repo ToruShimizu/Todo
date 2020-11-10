@@ -38,7 +38,7 @@
                     color="success"
                     :loading="loadingResetPassword"
                     :disabled="loadingResetPassword"
-                    @click="passwordReset"
+                    @click="handlePasswordReset"
                   >
                     <v-icon left>mdi-email-send</v-icon>送信
                   </v-btn>
@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import FormValidation from '@/mixins/FormValidation.vue'
 import LoadingView from '@/mixins/LoadingView.vue'
 export default {
@@ -73,7 +74,7 @@ export default {
     }
   },
   methods: {
-    async passwordReset() {
+    async handlePasswordReset() {
       const resetUserPassword = this.resetUserPassword
       if (resetUserPassword.email === 'test@example.com') {
         alert('テストユーザーはパスワードを再設定することはできません')
@@ -83,7 +84,7 @@ export default {
         return
       }
       this.loader = 'loadingResetPassword'
-      await this.$store.dispatch('modules/user/userInfo/passwordReset', {
+      await this.passwordReset({
         email: resetUserPassword.email
       })
       this.closeResetPasswprd()
@@ -91,7 +92,8 @@ export default {
     closeResetPasswprd() {
       this.$emit('close-reset-password')
       this.$refs.form.reset()
-    }
+    },
+    ...mapActions('modules/user/userInfo', ['passwordReset'])
   }
 }
 </script>

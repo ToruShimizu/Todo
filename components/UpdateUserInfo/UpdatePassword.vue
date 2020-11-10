@@ -56,7 +56,7 @@
                     color="success"
                     :loading="loadingResetPassword"
                     :disabled="loadingResetPassword"
-                    @click="updatePassword"
+                    @click="handleUpdatePassword"
                   >
                     <v-icon left>mdi-account</v-icon>SAVE
                   </v-btn>
@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import FormValidation from '@/mixins/FormValidation.vue'
 import LoadingView from '@/mixins/LoadingView.vue'
 
@@ -112,21 +113,22 @@ export default {
     }
   },
   methods: {
-    async updatePassword() {
+    async handleUpdatePassword() {
       const updateUser = this.updateUser
       if (!updateUser.email || !updateUser.loginPassword || !updateUser.newPassword) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingResetPassword'
-      await this.$store.dispatch('modules/user/userInfo/updatePassword', {
+      await this.updatePassword({
         updatePassword: updateUser.newPassword,
         email: updateUser.email,
         password: updateUser.loginPassword
       })
       this.$emit('update:selected-update-password', 'closeUpdatePassword')
       this.$refs.form.reset()
-    }
+    },
+    ...mapActions('modules/user/userInfo', ['updatePassword'])
   }
 }
 </script>
