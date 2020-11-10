@@ -138,7 +138,7 @@ export default {
     },
     async openUpdateTask(todo) {
       const id = String(todo.task.id)
-      await this.$store.dispatch('modules/comment/fetchComments', id)
+      await this.fetchComments(id)
       this.editTodo = todo
       this.updateTaskDialog = true
     },
@@ -149,7 +149,8 @@ export default {
     cancelUpdateTask() {
       this.updateTaskDialog = false
     },
-    ...mapActions('modules/todos', ['removeTask', 'doneTask'])
+    ...mapActions('modules/todos', ['removeTask', 'doneTask']),
+    ...mapActions('modules/comment', ['fetchComments'])
   }
 }
 </script>
