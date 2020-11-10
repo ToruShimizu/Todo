@@ -63,7 +63,7 @@ export default {
       type: Boolean,
       required: true
     },
-    selectedUpdateUserInfo: {
+    selectUpdateUserInfo: {
       type: String,
       required: false,
       default: ''
@@ -80,10 +80,10 @@ export default {
   computed: {
     selectedUpdateUserName: {
       get() {
-        return this.selectedUpdateUserInfo
+        return this.selectEditUserInfo
       },
       set(closeUpdateUserName) {
-        this.$emit('update:selected-update-user-name', closeUpdateUserName)
+        this.$emit('update:close-update-user-name', closeUpdateUserName)
         this.$refs.form.reset()
       }
     },

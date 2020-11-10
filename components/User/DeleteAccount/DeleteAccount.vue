@@ -1,6 +1,6 @@
 <template>
   <v-dialog
-    v-model="deleteUserDialog"
+    v-model="deleteAccountDialog"
     persistent
     max-width="500px"
     transition="scroll-y-transition"
@@ -39,7 +39,7 @@
                 @click:append="showPassword = !showPassword"
               />
               <v-card-actions>
-                <v-btn color="primary" @click="selectedDeleteUser = 'closeDeleteUser'">
+                <v-btn color="primary" @click="selectedDeleteAccount = 'closeDeleteAccount'">
                   <v-icon left>mdi-login-variant</v-icon>戻る
                 </v-btn>
                 <v-spacer />
@@ -68,11 +68,11 @@ import LoadingView from '@/mixins/LoadingView.vue'
 export default {
   mixins: [FormValidation, LoadingView],
   props: {
-    deleteUserDialog: {
+    deleteAccountDialog: {
       type: Boolean,
       required: true
     },
-    selectedUpdateUserInfo: {
+    selectEditUserInfo: {
       type: String,
       required: false,
       default: ''
@@ -90,12 +90,12 @@ export default {
     }
   },
   computed: {
-    selectedDeleteUser: {
+    selectedDeleteAccount: {
       get() {
-        return this.selectedUpdateUserInfo
+        return this.selectEditUserInfo
       },
-      set(closeDeleteUser) {
-        this.$emit('update:selected-delete-user', closeDeleteUser)
+      set(closeDeleteAccount) {
+        this.$emit('update:close-delete-account', closeDeleteAccount)
         this.$refs.form.reset()
       }
     }
