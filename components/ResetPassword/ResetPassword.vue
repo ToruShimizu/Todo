@@ -38,7 +38,7 @@
                     color="success"
                     :loading="loadingResetPassword"
                     :disabled="loadingResetPassword"
-                    @click="handlePasswordReset"
+                    @click="handleResetPassword"
                   >
                     <v-icon left>mdi-email-send</v-icon>送信
                   </v-btn>
@@ -74,7 +74,7 @@ export default {
     }
   },
   methods: {
-    async handlePasswordReset() {
+    async handleResetPassword() {
       const resetUserPassword = this.resetUserPassword
       if (resetUserPassword.email === 'test@example.com') {
         alert('テストユーザーはパスワードを再設定することはできません')
@@ -84,7 +84,7 @@ export default {
         return
       }
       this.loader = 'loadingResetPassword'
-      await this.passwordReset({
+      await this.resetPassword({
         email: resetUserPassword.email
       })
       this.closeResetPasswprd()
@@ -93,7 +93,7 @@ export default {
       this.$emit('close-reset-password')
       this.$refs.form.reset()
     },
-    ...mapActions('modules/user/userInfo', ['passwordReset'])
+    ...mapActions('modules/user/userInfo', ['resetPassword'])
   }
 }
 </script>

@@ -79,7 +79,7 @@ const actions = {
     }
   },
   // パスワードの再登録
-  async passwordReset({ commit }, { email }) {
+  async resetPassword({ commit }, { email }) {
     try {
       // 送信されるメールを日本語に変換
       auth.languageCode = 'ja'
