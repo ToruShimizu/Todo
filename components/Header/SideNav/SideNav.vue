@@ -23,7 +23,7 @@
         @update:selected-update-email="selectedUpdateUserInfo = $event"
       />
 
-      <DeleteLoginUser
+      <DeleteAccount
         :delete-user-dialog="deleteUserDialog"
         @update:selected-delete-user="selectedUpdateUserInfo = $event"
       />
@@ -116,7 +116,7 @@ import updateUserAvatar from '@/components/User/UpdateUserInfo/updateUserAvatar'
 import UpdateUser from '@/components/User/UpdateUserInfo/UpdateUserName'
 import UpdateEmail from '@/components/User/UpdateUserInfo/UpdateEmail'
 import UpdatePassword from '@/components/User/UpdateUserInfo/UpdatePassword'
-import DeleteLoginUser from '@/components/User/DeleteUser/DeleteUser'
+import DeleteAccount from '@/components/User/DeleteAccount/DeleteAccount'
 
 export default {
   components: {
@@ -124,7 +124,7 @@ export default {
     UpdateUser,
     UpdateEmail,
     UpdatePassword,
-    DeleteLoginUser
+    DeleteAccount
   },
   data() {
     return {
