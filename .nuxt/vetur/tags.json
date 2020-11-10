@@ -83,11 +83,11 @@
   "LazyDeleteUser": {
     "description": "Auto imported from components/UpdateUserInfo/DeleteUser.vue"
   },
-  "UpdateEmailAddress": {
-    "description": "Auto imported from components/UpdateUserInfo/UpdateEmailAddress.vue"
+  "UpdateEmail": {
+    "description": "Auto imported from components/UpdateUserInfo/UpdateEmail.vue"
   },
-  "LazyUpdateEmailAddress": {
-    "description": "Auto imported from components/UpdateUserInfo/UpdateEmailAddress.vue"
+  "LazyUpdateEmail": {
+    "description": "Auto imported from components/UpdateUserInfo/UpdateEmail.vue"
   },
   "UpdatePassword": {
     "description": "Auto imported from components/UpdateUserInfo/UpdatePassword.vue"

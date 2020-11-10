@@ -67,7 +67,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="cancelUpdateTask">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="updateTask">Save</v-btn>
+              <v-btn color="blue darken-1" text @click="handleUpdateTask">Save</v-btn>
             </v-card-actions>
           </v-form>
         </v-card>
@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import AddComment from '@/components/Comment/AddComment'
 import Comment from '@/components/Comment/Comment'
 import FormValidation from '@/mixins/FormValidation.vue'
@@ -108,13 +108,13 @@ export default {
     ...mapState('modules/comment', ['comments'])
   },
   methods: {
-    updateTask() {
+    handleUpdateTask() {
       const editTodo = this.editTodo
       if (!editTodo.task.title) {
         this.$refs.form.validate()
         return
       }
-      this.$store.dispatch('modules/todos/updateTask', {
+      this.updateTask({
         id: editTodo.task.id,
         task: editTodo.task
       })
@@ -127,7 +127,8 @@ export default {
     cancelUpdateTask() {
       this.$refs.form.reset()
       this.$emit('cancel-update-task')
-    }
+    },
+    ...mapActions('modules/todos', ['updateTask'])
   }
 }
 </script>
