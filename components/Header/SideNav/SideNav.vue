@@ -112,11 +112,11 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import updateUserAvatar from '@/components/UpdateUserInfo/updateUserAvatar'
-import UpdateUser from '@/components/UpdateUserInfo/UpdateUserName'
-import UpdateEmail from '@/components/UpdateUserInfo/UpdateEmail'
-import UpdatePassword from '@/components/UpdateUserInfo/UpdatePassword'
-import DeleteLoginUser from '@/components/UpdateUserInfo/DeleteUser'
+import updateUserAvatar from '@/components/User/UpdateUserInfo/updateUserAvatar'
+import UpdateUser from '@/components/User/UpdateUserInfo/UpdateUserName'
+import UpdateEmail from '@/components/User/UpdateUserInfo/UpdateEmail'
+import UpdatePassword from '@/components/User/UpdateUserInfo/UpdatePassword'
+import DeleteLoginUser from '@/components/User/DeleteUser/DeleteUser'
 
 export default {
   components: {
