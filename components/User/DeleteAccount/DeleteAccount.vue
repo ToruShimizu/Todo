@@ -20,16 +20,16 @@
             </v-card-text>
           </v-card-title>
           <v-card-text>
-            <v-form ref="form" lazy-validation @submit.prevent="deleteUser">
+            <v-form ref="form" lazy-validation>
               <v-text-field
-                v-model="deleteUser.email"
+                v-model="editUser.email"
                 prepend-inner-icon="mdi-email-outline"
                 label="登録されているメールアドレス"
                 :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
                 clearable
               />
               <v-text-field
-                v-model="deleteUser.password"
+                v-model="editUser.password"
                 :type="showPassword ? 'text' : 'Password'"
                 prepend-inner-icon="mdi-lock-outline"
                 :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -76,15 +76,16 @@ export default {
       type: String,
       required: false,
       default: ''
+    },
+    editUser: {
+      type: Object,
+      required: false,
+      default: () => {}
     }
   },
 
   data() {
     return {
-      deleteUser: {
-        email: '',
-        password: ''
-      },
       loadingDeleteUser: false,
       showPassword: false
     }
@@ -102,15 +103,15 @@ export default {
   },
   methods: {
     async handleDeleteAccount() {
-      const deleteUser = this.deleteUser
-      if (!deleteUser.password || !deleteUser.email) {
+      const editUser = this.editUser
+      if (!editUser.password || !editUser.email) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingDeleteUser'
       await this.deleteAccount({
-        email: deleteUser.email,
-        password: deleteUser.password
+        email: editUser.email,
+        password: editUser.password
       })
       this.$emit('update:selected-delete-user', 'closeDeleteUser')
       this.loader = null

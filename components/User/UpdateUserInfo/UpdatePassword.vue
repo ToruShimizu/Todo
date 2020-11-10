@@ -17,16 +17,16 @@
             <v-card-text>※ 変更完了後にログイン画面に戻ります。 </v-card-text>
           </v-card-title>
           <v-card-text>
-            <v-form ref="form" lazy-validation @submit.prevent="updatePassword">
+            <v-form ref="form" lazy-validation @click="handleUpdatePassword">
               <v-text-field
-                v-model="updateUser.email"
+                v-model="editUser.email"
                 prepend-inner-icon="mdi-email-outline"
                 label="登録されているメールアドレスを入力してください"
                 :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
                 clearable
               />
               <v-text-field
-                v-model="updateUser.loginPassword"
+                v-model="editUser.password"
                 :type="showPassword ? 'text' : 'Password'"
                 prepend-inner-icon="mdi-lock-outline"
                 :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -36,7 +36,7 @@
                 @click:append="showPassword = !showPassword"
               />
               <v-text-field
-                v-model="updateUser.newPassword"
+                v-model="editUser.editPassword"
                 :type="showEditPassword ? 'text' : 'Password'"
                 prepend-inner-icon="mdi-lock-reset"
                 :append-icon="showEditPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -85,15 +85,15 @@ export default {
       type: String,
       required: false,
       default: ''
+    },
+    editUser: {
+      type: Object,
+      required: false,
+      default: () => {}
     }
   },
   data() {
     return {
-      updateUser: {
-        email: '',
-        loginPassword: '',
-        newPassword: ''
-      },
       loadingResetPassword: false,
       showPassword: false,
       showEditPassword: false
@@ -112,16 +112,16 @@ export default {
   },
   methods: {
     async handleUpdatePassword() {
-      const updateUser = this.updateUser
-      if (!updateUser.email || !updateUser.loginPassword || !updateUser.newPassword) {
+      const editUser = this.editUser
+      if (!editUser.email || !editUser.password || !editUser.editPassword) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingResetPassword'
       await this.updatePassword({
-        updatePassword: updateUser.newPassword,
-        email: updateUser.email,
-        password: updateUser.loginPassword
+        updatePassword: editUser.editPassword,
+        email: editUser.email,
+        password: editUser.password
       })
       this.$emit('update:selected-update-password', 'closeUpdatePassword')
       this.$refs.form.reset()
