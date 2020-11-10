@@ -16,7 +16,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import SideNav from '@/components/Header/SideNav'
+import SideNav from '@/components/Header/SideNav/SideNav'
 export default {
   components: {
     SideNav
