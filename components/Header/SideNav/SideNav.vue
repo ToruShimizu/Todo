@@ -7,6 +7,7 @@
         </v-list-item-title>
       </v-list-item-content>
       <!-- FIXME: コンポーネント化 -->
+      <UpdateUserAvatar ref="updateUserAvatar" />
 
       <UpdateUser
         :update-user-name-dialog="updateUserNameDialog"
@@ -31,18 +32,13 @@
     <v-list dense nav>
       <v-list-item-content v-if="login_user">
         <v-list-item-title class="title grey--text text--darken-2">
-          <v-file-input
-            ref="image"
-            v-model="userAvatar"
-            accept="image/*"
-            show-size
-            label="画像ファイルをアップロードしてください"
-            prepend-icon="mdi-image"
-            style="display: none"
-            @change="selectUserAvatarFile"
-          />
           <v-avatar max-width="50" max-height="50">
-            <v-img v-if="photoURL" :src="photoURL" :lazy-src="photoURL" @click="selectUserAvatar">
+            <v-img
+              v-if="photoURL"
+              :src="photoURL"
+              :lazy-src="photoURL"
+              @click="handleSelectUserImageFile"
+            >
               <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
                   <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
@@ -50,7 +46,7 @@
               </template>
             </v-img>
             <v-btn v-if="!photoURL" text>
-              <v-icon @click="selectUserAvatar">mdi-account-outline</v-icon>
+              <v-icon @click="handleSelectUserImageFile">mdi-account-outline</v-icon>
             </v-btn>
           </v-avatar>
           {{ gettersUserName }}
@@ -87,7 +83,7 @@
           </v-btn>
         </v-list-item-title>
       </v-list-item>
-      <v-list-item @click="selectUserAvatar">
+      <v-list-item @click="handleSelectUserImageFile">
         <v-list-item-title>
           <v-btn text>
             <v-icon> mdi-file-account-outline </v-icon>
@@ -115,7 +111,8 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
+import updateUserAvatar from '@/components/UpdateUserInfo/updateUserAvatar'
 import UpdateUser from '@/components/UpdateUserInfo/UpdateUserName'
 import UpdateEmail from '@/components/UpdateUserInfo/UpdateEmail'
 import UpdatePassword from '@/components/UpdateUserInfo/UpdatePassword'
@@ -123,6 +120,7 @@ import DeleteLoginUser from '@/components/UpdateUserInfo/DeleteUser'
 
 export default {
   components: {
+    updateUserAvatar,
     UpdateUser,
     UpdateEmail,
     UpdatePassword,
@@ -134,8 +132,7 @@ export default {
       updateUserNameDialog: false,
       updatePasswordDialog: false,
       updateEmailDialog: false,
-      deleteUserDialog: false,
-      userAvatar: null
+      deleteUserDialog: false
     }
   },
   computed: {
@@ -147,15 +144,8 @@ export default {
     ...mapState('modules/user/auth', ['login_user'])
   },
   methods: {
-    // 画像をクリックしした時にv-file-inputでファイルを選択できるようにする
-    selectUserAvatar() {
-      this.$refs.image.$refs.input.click()
-    },
-    // @changeメソッドでファイルに変換してfirestorageへの追加処理を呼び出す
-    selectUserAvatarFile() {
-      const userAvatarFile = this.userAvatar
-      // <!-- FIXME: mapAction -->
-      this.uploadUserAvatarFile(userAvatarFile)
+    handleSelectUserImageFile() {
+      this.$refs.updateUserAvatar.selectUserImageFile()
     },
     // ユーザー画面編集の選択
     selectedUserInfo() {
@@ -196,8 +186,7 @@ export default {
         default:
       }
       return returnvalue
-    },
-    ...mapActions('modules/user/userInfo', ['uploadUserAvatarFile'])
+    }
   }
 }
 </script>
