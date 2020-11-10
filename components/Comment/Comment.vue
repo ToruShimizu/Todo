@@ -8,11 +8,10 @@
           <v-spacer />
           <span class="subtitle-2 font-weight-light">{{ comment.created }}</span>
         </v-card-title>
-
         <v-card-text class="body-1 font-weight-bold">
           "{{ comment.message }}"
           <v-row align="center" justify="end">
-            <v-btn icon @click="removeComment(comment)">
+            <v-btn icon @click="handleRemoveComment(comment)">
               <v-icon>mdi-delete</v-icon>
             </v-btn>
           </v-row>
@@ -23,7 +22,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   computed: {
@@ -31,10 +30,11 @@ export default {
     ...mapGetters('modules/user/auth', ['gettersUserName', 'photoURL', 'userEmail'])
   },
   methods: {
-    removeComment(comment) {
+    handleRemoveComment(comment) {
       if (!confirm('Are you sure?')) return
-      this.$store.dispatch('modules/comment/removeComment', { id: comment.id })
-    }
+      this.removeComment({ id: comment.id })
+    },
+    ...mapActions('modules/comment', ['removeComment'])
   }
 }
 </script>
