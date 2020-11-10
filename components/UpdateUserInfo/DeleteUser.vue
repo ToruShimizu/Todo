@@ -48,7 +48,7 @@
                     color="error"
                     :loading="loadingDeleteUser"
                     :disabled="loadingDeleteUser"
-                    @click="deleteAccount"
+                    @click="handleDeleteAccount"
                   >
                     <v-icon left> mdi-account-multiple-remove-outline </v-icon>削除
                   </v-btn>
@@ -63,6 +63,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import FormValidation from '@/mixins/FormValidation.vue'
 import LoadingView from '@/mixins/LoadingView.vue'
 
@@ -102,21 +103,22 @@ export default {
     }
   },
   methods: {
-    async deleteAccount() {
+    async handleDeleteAccount() {
       const deleteUser = this.deleteUser
       if (!deleteUser.password || !deleteUser.email) {
         this.$refs.form.validate()
         return
       }
       this.loader = 'loadingDeleteUser'
-      await this.$store.dispatch('modules/user/userInfo/deleteAccount', {
+      await this.deleteAccount({
         email: deleteUser.email,
         password: deleteUser.password
       })
       this.$emit('update:selected-delete-user', 'closeDeleteUser')
       this.loader = null
       this.$refs.form.reset()
-    }
+    },
+    ...mapActions('modules/user/userInfo', ['deleteAccount'])
   }
 }
 </script>
