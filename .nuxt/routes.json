@@ -2,15 +2,15 @@
   {
     "name": "signIn",
     "path": "/signIn",
-    "component": "/Users/Toru/Desktop/ToDo/pages/signIn.vue",
+    "component": "/Users/Toru/ToDo/pages/signIn.vue",
     "chunkName": "pages/signIn",
-    "_name": "_ea58f72c"
+    "_name": "_14038586"
   },
   {
     "name": "index",
     "path": "/",
-    "component": "/Users/Toru/Desktop/ToDo/pages/index.vue",
+    "component": "/Users/Toru/ToDo/pages/index.vue",
     "chunkName": "pages/index",
-    "_name": "_117ee95a"
+    "_name": "_46804a27"
   }
 ]
