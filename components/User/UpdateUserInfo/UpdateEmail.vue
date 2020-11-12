@@ -1,10 +1,14 @@
 <template>
+  <!-- eslint-disable  -->
+
   <v-dialog
     v-model="updateEmailDialog"
     persistent
     max-width="400px"
     transition="scroll-y-transition"
   >
+    <!-- eslint-disable  -->
+
     <v-app>
       <v-col cols="12" sm="12" md="12">
         <v-card width="500px" class="mx-auto text-center">

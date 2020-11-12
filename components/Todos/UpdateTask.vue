@@ -1,10 +1,14 @@
 <template>
+  <!-- eslint-disable  -->
+
   <v-dialog
     v-model="updateTaskDialog"
     persistent
     max-width="600px"
     transition="scroll-y-transition"
   >
+    <!-- eslint-disable  -->
+
     <v-app>
       <v-col cols="12" sm="12" md="12">
         <v-card>
@@ -17,7 +21,7 @@
                 <!-- タスク編集エリア -->
                 <v-col cols="12">
                   <v-text-field
-                    v-model="editTodo.task.title"
+                    v-model="editTodo"
                     label="タスクを変更する"
                     prepend-inner-icon="mdi-pencil-outline"
                     :rules="[validRules.titleRules.required]"
@@ -34,7 +38,7 @@
                   >
                     <template #activator="{ on, attrs }">
                       <v-text-field
-                        v-model="editTodo.task.date"
+                        v-model="editTodo"
                         label="期限を変更する"
                         prepend-inner-icon="mdi-calendar-today"
                         readonly
@@ -43,7 +47,7 @@
                       ></v-text-field>
                     </template>
                     <v-date-picker
-                      v-model="editTodo.task.date"
+                      v-model="editTodo"
                       no-title
                       scrollable
                       @input="updateDateMenu = false"
@@ -53,14 +57,14 @@
                 <!-- 詳細編集エリア -->
                 <v-col cols="12">
                   <v-text-field
-                    v-model="editTodo.task.detail"
+                    v-model="editTodo"
                     label="タスクの詳細を変更する"
                     prepend-inner-icon="mdi-briefcase-outline"
                     clearable
                   ></v-text-field>
                 </v-col>
-                <AddComment :task-id="editTodo.task.id" />
-                <Comment :task-id="editTodo.task.id" />
+                <AddComment :task-id="editTodo" />
+                <Comment :task-id="editTodo" />
               </v-row>
             </v-container>
             <v-card-actions>
@@ -107,27 +111,29 @@ export default {
     ...mapState('modules/comment', ['comments'])
   },
   methods: {
-    handleUpdateTask() {
-      const editTodo = this.editTodo
-      if (!editTodo.task.title) {
-        this.$refs.form.validate()
-        return
-      }
-      this.updateTask({
-        id: editTodo.task.id,
-        task: editTodo.task
-      })
-      this.closeUpdateTask()
-    },
-    closeUpdateTask() {
-      this.$refs.form.reset()
-      this.$emit('close-update-task')
-    },
-    cancelUpdateTask() {
-      this.$refs.form.reset()
-      this.$emit('cancel-update-task')
-    },
+    // handleUpdateTask() {
+    //       const editTodo = this.editTodo
+    //       if (!editTodo.task.title) {
+    //         this.$refs.form.validate()
+    //         return
+    //       }
+    //       this.updateTask({
+    //         id: editTodo.task.id,
+    //         task: editTodo.task
+    //       })
+    //       this.closeUpdateTask()
+    //     },
+    //     closeUpdateTask() {
+    //       this.$refs.form.reset()
+    //       this.$emit('close-update-task')
+    //     },
+    //     cancelUpdateTask() {
+    //       this.$refs.form.reset()
+    //       this.$emit('cancel-update-task')
+    //     },
     ...mapActions('modules/todos', ['updateTask'])
+    //   }
+    // }
   }
 }
 </script>

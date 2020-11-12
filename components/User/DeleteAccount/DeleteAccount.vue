@@ -1,10 +1,14 @@
 <template>
+  <!-- eslint-disable  -->
+
   <v-dialog
     v-model="deleteAccountDialog"
     persistent
     max-width="500px"
     transition="scroll-y-transition"
   >
+    <!-- eslint-disable  -->
+
     <v-app>
       <v-col cols="12" sm="12" md="12">
         <v-card width="400px" class="mx-auto text-center">

@@ -1,6 +1,10 @@
 <template>
   <v-app>
+    <!-- eslint-disable  -->
+
     <v-dialog v-model="taskDialog" persistent max-width="600px" transition="scroll-y-transition">
+      <!-- eslint-disable  -->
+
       <v-app>
         <v-col cols="12" sm="12" md="12">
           <v-card>
