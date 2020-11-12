@@ -127,7 +127,7 @@ export default {
         email: editUser.email,
         password: editUser.password
       })
-      this.$emit('update:selected-update-password', 'closeUpdatePassword')
+      this.$emit('update:close-update-password', 'closeUpdatePassword')
     },
     ...mapActions('modules/user/userInfo', ['updatePassword'])
   }

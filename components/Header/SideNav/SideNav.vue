@@ -20,9 +20,7 @@
                 </v-row>
               </template>
             </v-img>
-            <v-btn v-if="!photoURL" text>
-              <v-icon>mdi-account-outline</v-icon>
-            </v-btn>
+            <v-icon>mdi-account-outline</v-icon>
           </v-avatar>
           {{ gettersUserName }}
         </v-list-item-title>

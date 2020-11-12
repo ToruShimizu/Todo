@@ -117,7 +117,7 @@ export default {
         email: editUser.email,
         password: editUser.password
       })
-      this.$emit('update:selected-delete-user', 'closeDeleteUser')
+      this.$emit('update:close-delete-user', 'closeDeleteUser')
       this.loader = null
     },
     ...mapActions('modules/user/userInfo', ['deleteAccount'])

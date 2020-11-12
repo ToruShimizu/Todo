@@ -105,7 +105,7 @@ export default {
       await this.updateEmail({
         email: editUserEmail
       })
-      this.$emit('update:selected-update-email', 'closeUpdateEmail')
+      this.$emit('update:close-update-email', 'closeUpdateEmail')
       this.loader = null
     },
     ...mapActions('modules/user/userInfo', ['updateEmail'])
