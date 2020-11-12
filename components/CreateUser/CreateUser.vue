@@ -93,7 +93,7 @@ export default {
     }
   },
   computed: {
-    propsCreateUserDialogChild: {
+    propsCreateUserDialog: {
       get() {
         return this.createUserDialog
       },
