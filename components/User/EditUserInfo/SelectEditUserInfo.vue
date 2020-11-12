@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-list v-if="login_user">
+    <v-list v-if="loginUser">
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="title grey--text text--darken-2"
@@ -54,7 +54,9 @@ export default {
       default: ''
     },
     selectedEditUserInfoScreen: {
-      type: Boolean
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
   computed: {
@@ -66,7 +68,7 @@ export default {
         this.$emit('update:open-edit-user-info', openEditUserInfo)
       }
     },
-    ...mapState('modules/user/auth', ['login_user'])
+    ...mapState('modules/user/auth', ['loginUser'])
   },
   methods: {
     handleSelectUserImageFile() {

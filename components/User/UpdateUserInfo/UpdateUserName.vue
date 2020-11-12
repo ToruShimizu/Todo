@@ -106,7 +106,7 @@ export default {
       await this.updateUserName({
         userName: editUser.name
       })
-      this.$emit('update:selected-update-user-name', 'closeUpdateUserName')
+      this.$emit('update:close-update-user-name', 'closeUpdateUserName')
       this.loader = null
     },
     ...mapActions('modules/user/userInfo', ['updateUserName'])

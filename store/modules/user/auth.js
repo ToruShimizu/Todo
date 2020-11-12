@@ -2,18 +2,18 @@ import firebase, { auth } from '~/plugins/firebase'
 
 // initial state
 const state = () => ({
-  login_user: null
+  loginUser: null
 })
 
 const mutations = {
   // ログインユーザー情報の取得
   setLoginUser(state, userInfo) {
-    state.login_user = userInfo
+    state.loginUser = userInfo
     console.log('setLoginUser')
   },
   // ログインユーザー情報の削除
   deleteLoginUser(state) {
-    state.login_user = null
+    state.loginUser = null
     console.log('deleteLoginUser')
   }
 }
@@ -81,13 +81,13 @@ const actions = {
 
 const getters = {
   // ユーザー名の取得
-  gettersUserName: (state) => (state.login_user ? state.login_user.displayName : ''),
+  gettersUserName: (state) => (state.loginUser ? state.loginUser.displayName : ''),
   // ユーザーのメールアドレスの取得
-  gettersUserEmail: (state) => (state.login_user ? state.login_user.email : ''),
+  gettersUserEmail: (state) => (state.loginUser ? state.loginUser.email : ''),
   // ユーザー画像の取得
-  photoURL: (state) => (state.login_user ? state.login_user.photoURL : ''),
+  photoURL: (state) => (state.loginUser ? state.loginUser.photoURL : ''),
   // uidの取得
-  uid: (state) => (state.login_user ? state.login_user.uid : null)
+  uid: (state) => (state.loginUser ? state.loginUser.uid : null)
 }
 
 export default {

@@ -10,10 +10,10 @@
       </v-flex>
       <v-flex>
         <AddTask
-          :task.sync="task"
+          :task="task"
           :task-dialog="taskDialog"
-          :close-add-task.sync="closeAddTask"
           @open-add-task="openAddTask"
+          @close-add-task="closeAddTask"
         />
       </v-flex>
     </v-layout>
