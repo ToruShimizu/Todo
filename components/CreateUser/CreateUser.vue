@@ -1,6 +1,6 @@
 <template>
   <v-dialog
-    v-model="createUserDialogChild"
+    v-model="propsCreateUserDialog"
     persistent
     max-width="500px"
     transition="scroll-y-transition"
@@ -93,7 +93,7 @@ export default {
     }
   },
   computed: {
-    createUserDialogChild: {
+    propsCreateUserDialogChild: {
       get() {
         return this.createUserDialog
       },
