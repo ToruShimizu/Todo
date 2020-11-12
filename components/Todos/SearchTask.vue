@@ -2,9 +2,6 @@
   <v-col cols="8" sm="8" md="8">
     <v-text-field
       v-model="innerSearchTask"
-      flat
-      solo-inverted
-      hide-details
       prepend-inner-icon="mdi-magnify"
       label="タスクを検索する"
       clearable
