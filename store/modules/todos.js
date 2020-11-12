@@ -59,7 +59,7 @@ const actions = {
     if (getters.userUid) {
       await db.collection(`users/${getters.userUid}/todos`).doc(taskId).set(todo)
     }
-    commit('addTodos', { todo })
+    commit('addTodos', todo)
   },
   // タスク更新
   async updateTask({ getters, commit }, { id, task }) {
