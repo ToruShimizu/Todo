@@ -1,6 +1,6 @@
 <template>
   <v-dialog
-    v-model="propsCreateUserDialog"
+    v-model="createUserDialog"
     persistent
     max-width="500px"
     transition="scroll-y-transition"
@@ -90,16 +90,6 @@ export default {
       },
       showPassword: false,
       loadingCreateUser: false
-    }
-  },
-  computed: {
-    propsCreateUserDialog: {
-      get() {
-        return this.createUserDialog
-      },
-      set(closeCreateUser) {
-        this.$emit('update:close-create-user', closeCreateUser)
-      }
     }
   },
   methods: {
