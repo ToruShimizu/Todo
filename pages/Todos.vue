@@ -64,7 +64,7 @@ export default {
       taskFilter: 'all',
       searchTaskKeyword: '',
       selectSortTask: { state: '名前順' },
-      items: [{ state: '名前順' }, { state: '日付降順' }, { state: '日付昇順' }],
+      items: [{ state: '名前順' }, { state: '日付降順↓' }, { state: '日付昇順↑' }],
       todosPage: 1,
       todosPageSize: 7,
       taskDialog: false
