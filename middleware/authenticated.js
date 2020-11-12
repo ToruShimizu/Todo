@@ -14,7 +14,7 @@ export default function ({ store, redirect, route }) {
       // firestoreかデータを取得する
       store.dispatch('modules/todos/fetchTodos')
     } else if (route.path === '/signIn') {
-      return redirect('/')
+      return redirect('/todos')
     } else {
       return redirect('/signIn')
     }
