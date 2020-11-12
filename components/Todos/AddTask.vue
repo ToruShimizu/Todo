@@ -95,7 +95,8 @@ export default {
       })
     },
     taskDialog: {
-      type: Boolean
+      type: Boolean,
+      required: true
     }
   },
   data() {
@@ -117,8 +118,8 @@ export default {
       this.$emit('open-add-task')
     },
     closeAddTask() {
-      this.$refs.form.reset()
       this.$emit('close-add-task')
+      this.$refs.form.reset()
     },
     ...mapActions('modules/todos', ['addTask'])
   }
