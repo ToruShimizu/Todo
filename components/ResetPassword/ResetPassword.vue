@@ -1,6 +1,6 @@
 <template>
   <v-dialog
-    v-model="resetPasswordDialog"
+    v-model="propsResetPasswordDialog"
     persistent
     max-width="400px"
     transition="scroll-y-transition"
@@ -69,6 +69,16 @@ export default {
         email: ''
       },
       loadingResetPassword: false
+    }
+  },
+  computed: {
+    propsResetPasswordDialog: {
+      get() {
+        return this.resetPasswordDialog
+      },
+      set(closeResetPassword) {
+        this.$emit('update:close-reset-password', closeResetPassword)
+      }
     }
   },
   methods: {
