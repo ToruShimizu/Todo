@@ -17,6 +17,7 @@
                   <!-- タスク入力エリア -->
                   <v-col cols="12" sm="6" md="6">
                     <v-text-field
+                      ref="title"
                       v-model="task.title"
                       label="タスクを入力する"
                       prepend-inner-icon="mdi-pencil-outline"
@@ -104,6 +105,16 @@ export default {
       dateMenu: false
     }
   },
+  computed: {
+    createTask: {
+      get() {
+        return this.task
+      },
+      set(createTask) {
+        this.$emit('update:create-task', createTask)
+      }
+    }
+  },
   methods: {
     async handleAddTask() {
       const task = this.task
@@ -119,7 +130,9 @@ export default {
     },
     closeAddTask() {
       this.$emit('close-add-task')
-      this.$refs.form.reset()
+      this.$refs.title.reset()
+      this.createTask.detail = ''
+      this.createTask.date = new Date().toISOString().substr(0, 10)
     },
     ...mapActions('modules/todos', ['addTask'])
   }
