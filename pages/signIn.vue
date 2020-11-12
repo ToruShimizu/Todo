@@ -72,7 +72,7 @@
               </v-btn>
               <CreateUser
                 :create-user-dialog="createUserDialog"
-                @close-create-user="closeCreateUser"
+                :close-create-user.sync="closeCreateUser"
               />
               <ResetPassword
                 :reset-password-dialog="resetPasswordDialog"
