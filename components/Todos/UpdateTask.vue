@@ -36,7 +36,7 @@
                     transition="scale-transition"
                     min-width="290px"
                   >
-                    <template #activator="{ on, attrs }">
+                    <template v-slot:activator="{ on, attrs }">
                       <v-text-field
                         v-model="editTodo"
                         label="期限を変更する"
