@@ -23,7 +23,7 @@
       <v-divider />
       <v-layout>
         <SearchTask :search-task-keyword.sync="searchTaskKeyword" />
-        <SortByTask :selected-sort-task.sync="selectSortTask" />
+        <SortByTask :selected-sort-task.sync="selectSortTask" :items="items" />
       </v-layout>
       <TaskTable
         :set-todos-page.sync="todosPage"
@@ -63,7 +63,8 @@ export default {
       },
       taskFilter: 'all',
       searchTaskKeyword: '',
-      selectSortTask: 'ascDate',
+      selectSortTask: { state: '名前順' },
+      items: [{ state: '名前順' }, { state: '日付降順' }, { state: '日付昇順' }],
       todosPage: 1,
       todosPageSize: 7,
       taskDialog: false
@@ -121,20 +122,20 @@ export default {
     sortByTask() {
       let returnvalue
       const todos = this.todosFiltered
-      switch (this.selectSortTask) {
-        case 'title':
+      switch (this.selectSortTask.state) {
+        case '名前順':
           returnvalue = todos.slice().sort((a, b) => {
             if (a.task.title < b.task.title) return -1
           })
 
           break
-        case 'ascDate':
+        case '日付降順':
           returnvalue = todos.slice().sort((a, b) => {
             if (a.task.date > b.task.date) return -1
           })
 
           break
-        case 'descDate':
+        case '日付昇順':
           returnvalue = todos.slice().sort((a, b) => {
             if (a.task.date < b.task.date) return -1
           })

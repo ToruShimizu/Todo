@@ -1,20 +1,16 @@
 <template>
-  <div class="mt-5">
-    <v-bottom-sheet v-model="sortTaskDialog" persistent>
-      <template #activator="{ on, attrs }">
-        <v-btn icon v-bind="attrs" v-on="on"> <v-icon>mdi-dots-vertical</v-icon> </v-btn>
-      </template>
-      <v-sheet class="text-center" height="200px">
-        <v-btn class="mt-6" text color="error" @click="sortTaskDialog = !sortTaskDialog">
-          close
-        </v-btn>
-        <div class="py-1"><v-btn text @click="selectedSortTask = 'title'">五十音順</v-btn></div>
-        <div class="py-1"><v-btn text @click="selectedSortTask = 'ascDate'">日付昇順</v-btn></div>
-        <div class="py-1">
-          <v-btn text @click="selectedSortTask = 'descDate'">日付降順</v-btn>
-        </div>
-      </v-sheet>
-    </v-bottom-sheet>
+  <div>
+    <v-col cols="6">
+      <v-select
+        v-model="selectedSortTask"
+        :items="items"
+        item-text="state"
+        item-value="abbr"
+        label="並べ替え"
+        return-object
+        single-line
+      ></v-select>
+    </v-col>
   </div>
 </template>
 
@@ -24,7 +20,12 @@ export default {
     selectSortTask: {
       type: String,
       required: false,
-      default: 'ascDate'
+      default: ''
+    },
+    items: {
+      type: Array,
+      required: false,
+      default: () => []
     },
     todosFiltered: {
       type: Array,
@@ -43,6 +44,7 @@ export default {
         return this.selectSortTask
       },
       set(selectedSortTask) {
+        console.log(selectedSortTask.state)
         this.$emit('update:selected-sort-task', selectedSortTask)
       }
     }
