@@ -13,11 +13,11 @@
           </thead>
           <tbody>
             <template v-for="todo in displayTodos">
-              <transition :key="todo.task.title" name="list">
+              <transition :key="todo.title" name="list">
                 <tr>
                   <td>
                     <v-btn icon @click="toggleDoneTask(todo)">
-                      <v-icon :class="(!todo.task.done && 'grey--text') || 'primary--text'"
+                      <v-icon :class="(!todo.done && 'grey--text') || 'primary--text'"
                         >mdi-check-circle-outline</v-icon
                       >
                     </v-btn>
@@ -26,17 +26,17 @@
                     <template v-slot:activator="{ on, attrs }">
                       <td
                         v-bind="attrs"
-                        :class="(todo.task.done && 'grey--text') || 'primary--text'"
+                        :class="(todo.done && 'grey--text') || 'primary--text'"
                         v-on="on"
                         @click="openUpdateTask(todo)"
                       >
-                        {{ todo.task.title }}
+                        {{ todo.title }}
                       </td>
                     </template>
-                    <span>{{ todo.task.title }}の詳細を開く</span>
+                    <span>{{ todo.title }}の詳細を開く</span>
                   </v-tooltip>
-                  <td :class="(todo.task.done && 'grey--text') || 'black--text'" class="pa-0">
-                    {{ todo.task.date }}
+                  <td :class="(todo.done && 'grey--text') || 'black--text'" class="pa-0">
+                    {{ todo.date }}
                   </td>
                   <td>
                     <v-btn icon>
@@ -94,10 +94,10 @@ export default {
         { text: '状態', value: 'task.done', align: 'start', sortable: false },
         {
           text: 'タスク',
-          value: 'task.title',
+          value: 'title',
           sortable: false
         },
-        { text: '期限', value: 'task.date' },
+        { text: '期限', value: 'date' },
         { text: '削除', value: 'remove', sortable: false }
       ],
       editTodo: null,
@@ -130,14 +130,14 @@ export default {
     },
 
     handleRemoveTask(todo) {
-      if (!confirm(todo.task.title + 'を削除しますか？')) return
-      this.removeTask({ id: todo.task.id })
+      if (!confirm(todo.title + 'を削除しますか？')) return
+      this.removeTask({ id: todo.id })
     },
     toggleDoneTask(todo) {
-      this.doneTask({ todo, id: todo.task.id })
+      this.doneTask({ todo, id: todo.id })
     },
     async openUpdateTask(todo) {
-      const id = String(todo.task.id)
+      const id = String(todo.id)
       await this.fetchComments(id)
       this.editTodo = todo
       this.updateTaskDialog = true

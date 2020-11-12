@@ -116,7 +116,7 @@ export default {
         return todoList
       }
       return todos.filter((todo) => {
-        return todo.task.title.includes(searchKeyword)
+        return todo.title.includes(searchKeyword)
       })
     },
     sortByTask() {
@@ -125,19 +125,19 @@ export default {
       switch (this.selectSortTask.state) {
         case '名前順':
           returnvalue = todos.slice().sort((a, b) => {
-            if (a.task.title < b.task.title) return -1
+            if (a.title < b.title) return -1
           })
 
           break
         case '日付降順':
           returnvalue = todos.slice().sort((a, b) => {
-            if (a.task.date > b.task.date) return -1
+            if (a.date > b.date) return -1
           })
 
           break
         case '日付昇順':
           returnvalue = todos.slice().sort((a, b) => {
-            if (a.task.date < b.task.date) return -1
+            if (a.date < b.date) return -1
           })
 
           break

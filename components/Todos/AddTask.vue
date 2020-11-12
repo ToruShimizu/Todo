@@ -111,7 +111,7 @@ export default {
         this.$refs.form.validate()
         return
       }
-      await this.addTask({ task: this.task })
+      await this.addTask(task)
       this.closeAddTask()
     },
     openAddTask() {
