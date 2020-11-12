@@ -1,6 +1,6 @@
 <template>
   <v-dialog
-    v-model="propsUpdateTaskDialog"
+    v-model="updateTaskDialog"
     persistent
     max-width="600px"
     transition="scroll-y-transition"
@@ -17,7 +17,7 @@
                 <!-- タスク編集エリア -->
                 <v-col cols="12">
                   <v-text-field
-                    v-model="propsEditTodo.task.title"
+                    v-model="editTodo.task.title"
                     label="タスクを変更する"
                     prepend-inner-icon="mdi-pencil-outline"
                     :rules="[validRules.titleRules.required]"
@@ -34,7 +34,7 @@
                   >
                     <template #activator="{ on, attrs }">
                       <v-text-field
-                        v-model="propsEditTodo.task.date"
+                        v-model="editTodo.task.date"
                         label="期限を変更する"
                         prepend-inner-icon="mdi-calendar-today"
                         readonly
@@ -43,7 +43,7 @@
                       ></v-text-field>
                     </template>
                     <v-date-picker
-                      v-model="propsEditTodo.task.date"
+                      v-model="editTodo.task.date"
                       no-title
                       scrollable
                       @input="updateDateMenu = false"
@@ -53,14 +53,14 @@
                 <!-- 詳細編集エリア -->
                 <v-col cols="12">
                   <v-text-field
-                    v-model="propsEditTodo.task.detail"
+                    v-model="editTodo.task.detail"
                     label="タスクの詳細を変更する"
                     prepend-inner-icon="mdi-briefcase-outline"
                     clearable
                   ></v-text-field>
                 </v-col>
-                <AddComment :task-id="propsEditTodo.task.id" />
-                <Comment :task-id="propsEditTodo.task.id" />
+                <AddComment :task-id="editTodo.task.id" />
+                <Comment :task-id="editTodo.task.id" />
               </v-row>
             </v-container>
             <v-card-actions>
@@ -104,29 +104,11 @@ export default {
     }
   },
   computed: {
-    computed: {
-      propsEditTodo: {
-        get() {
-          return this.editTodo
-        },
-        set(editTodo) {
-          this.$emit('update:edit-todo', editTodo)
-        }
-      },
-      propsUpdateTaskDialog: {
-        get() {
-          return this.updateTaskDialog
-        },
-        set(closeUpdateTask) {
-          this.$emit('update:close-update-task', closeUpdateTask)
-        }
-      }
-    },
     ...mapState('modules/comment', ['comments'])
   },
   methods: {
     handleUpdateTask() {
-      const editTodo = this.propsEditTodo
+      const editTodo = this.editTodo
       if (!editTodo.task.title) {
         this.$refs.form.validate()
         return
