@@ -7,7 +7,7 @@
       <v-app-bar-nav-icon @click="sideNavDrawer = !sideNavDrawer"></v-app-bar-nav-icon>
       <v-toolbar-title>ToDo</v-toolbar-title>
       <v-spacer />
-      <v-toolbar-items v-if="login_user">
+      <v-toolbar-items v-if="loginUser">
         <v-icon @click="logout"> mdi-account-arrow-right-outline </v-icon>
       </v-toolbar-items>
     </v-app-bar>
@@ -27,7 +27,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('modules/user/auth', ['login_user'])
+    ...mapState('modules/user/auth', ['loginUser'])
   },
   methods: {
     ...mapActions('modules/user/auth', ['logout'])
