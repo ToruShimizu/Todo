@@ -1,17 +1,15 @@
 <template>
-  <div>
-    <v-col cols="6">
-      <v-select
-        v-model="selectedSortTask"
-        :items="items"
-        item-text="state"
-        item-value="abbr"
-        label="並べ替え"
-        return-object
-        single-line
-      ></v-select>
-    </v-col>
-  </div>
+  <v-col cols="4" sm="4" md="4">
+    <v-select
+      v-model="selectedSortTask"
+      :items="items"
+      item-text="state"
+      item-value="abbr"
+      label="並べ替え"
+      return-object
+      single-line
+    ></v-select>
+  </v-col>
 </template>
 
 <script>
