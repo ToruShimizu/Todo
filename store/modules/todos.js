@@ -17,19 +17,19 @@ const mutations = {
   },
   // タスク削除
   removeTask(state, { id }) {
-    const index = state.todos.findIndex((todo) => todo.task.id === id)
+    const index = state.todos.findIndex((todo) => todo.id === id)
     state.todos.splice(index, 1)
     console.log('removeTask')
   },
   updateTask(state, { id, task }) {
     // インデックスを取得
-    const index = state.todos.findIndex((todo) => todo.task.id === id)
-    state.todos[index] = { task }
+    const index = state.todos.findIndex((todo) => todo.id === id)
+    state.todos[index] = task
     console.log('updateTask')
   },
   // 完了、未完了切り替え
-  doneTask(state, { todo }) {
-    todo.task.done = !todo.task.done
+  doneTask(state, todo) {
+    todo.done = !todo.done
   }
 }
 const actions = {
@@ -41,7 +41,8 @@ const actions = {
       .get()
     commit('initTodos')
     snapShot.docs.map((doc) => {
-      commit('addTodos', { task: doc.data() })
+      const task = doc.data()
+      commit('addTodos', task)
     })
   },
   // タスク追加
@@ -76,8 +77,9 @@ const actions = {
   },
   // 完了、未完了切り替え
   async doneTask({ getters, commit }, { todo, id }) {
+    console.log(todo.done)
     await db.collection(`users/${getters.userUid}/todos`).doc(id).update({
-      done: !todo.task.done
+      done: !todo.done
     })
     commit('doneTask', todo)
   }
@@ -107,11 +109,11 @@ const getters = {
   },
   // 未完了状態のタスクの絞り込み
   remainingTodos(state, getters) {
-    return state.todos.filter((todo) => !todo.task.done)
+    return state.todos.filter((todo) => !todo.done)
   },
   // 完了状態のタスクの絞り込み
   completedTodos(state) {
-    return state.todos.filter((todo) => todo.task.done)
+    return state.todos.filter((todo) => todo.done)
   }
 }
 
