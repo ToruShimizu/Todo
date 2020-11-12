@@ -1,6 +1,11 @@
 <template>
   <v-app>
-    <v-dialog v-model="taskDialog" persistent max-width="600px" transition="scroll-y-transition">
+    <v-dialog
+      v-model="propsTaskDialog"
+      persistent
+      max-width="600px"
+      transition="scroll-y-transition"
+    >
       <v-app>
         <v-col cols="12" sm="12" md="12">
           <v-card>
@@ -13,7 +18,7 @@
                   <!-- タスク入力エリア -->
                   <v-col cols="12" sm="6" md="6">
                     <v-text-field
-                      v-model="task.title"
+                      v-model="propsTask.title"
                       label="タスクを入力する"
                       prepend-inner-icon="mdi-pencil-outline"
                       :rules="[validRules.titleRules.required]"
@@ -30,7 +35,7 @@
                     >
                       <template #activator="{ on, attrs }">
                         <v-text-field
-                          v-model="task.date"
+                          v-model="propsTask.date"
                           label="日付を変更する"
                           prepend-inner-icon="mdi-calendar-today"
                           readonly
@@ -39,7 +44,7 @@
                         ></v-text-field>
                       </template>
                       <v-date-picker
-                        v-model="task.date"
+                        v-model="propsTask.date"
                         no-title
                         @input="dateMenu = false"
                       ></v-date-picker>
@@ -48,7 +53,7 @@
                   <!-- 詳細入力エリア -->
                   <v-col cols="12">
                     <v-text-field
-                      v-model="task.detail"
+                      v-model="propsTask.detail"
                       label="タスクの詳細を入力する"
                       prepend-inner-icon="mdi-briefcase-outline"
                       clearable
@@ -94,6 +99,24 @@ export default {
       type: Boolean
     }
   },
+  computed: {
+    propsTask: {
+      get() {
+        return this.task
+      },
+      set(task) {
+        this.$emit('update:task', task)
+      }
+    }
+  },
+  propsTaskDialog: {
+    get() {
+      return this.taskDialog
+    },
+    set(closeAddTask) {
+      this.$emit('update:close-add-task', closeAddTask)
+    }
+  },
   data() {
     return {
       dateMenu: false
@@ -101,12 +124,12 @@ export default {
   },
   methods: {
     async handleAddTask() {
-      const task = this.task
+      const task = this.propsTask
       if (!task.title) {
         this.$refs.form.validate()
         return
       }
-      await this.addTask({ task: this.task })
+      await this.addTask({ task: this.propsTask })
       this.closeAddTask()
     },
     openAddTask() {
