@@ -27,6 +27,8 @@
       </v-layout>
       <TaskTable
         :set-todos-page.sync="todosPage"
+        :displayTodos="displayTodos"
+        :todosPageLength="todosPageLength"
         :todos-page-size="todosPageSize"
         :todos-filtered="todosFiltered"
         :sort-by-task="sortByTask"
@@ -67,24 +69,22 @@ export default {
       items: [{ state: '名前順' }, { state: '日付降順↓' }, { state: '日付昇順↑' }],
       todosPage: 1,
       todosPageSize: 7,
-      taskDialog: false
+      taskDialog: false,
+      todosPageLength: 0,
+      todoList: [],
+      displayTodos: []
     }
   },
+  watch: {
+    todosFiltered() {
+      this.todoList = this.todosFiltered
+      const todos = this.todoList
+      this.todosPageLength = Math.ceil(todos.length / this.todosPageSize)
+      this.displayTodos = todos.slice(0, this.todosPageSize)
+    }
+  },
+  // 完了状態の絞り込み
   computed: {
-    todoList: {
-      get() {
-        // 絞り込が行われたあとのデータを使用
-        const todos = this.todosFiltered
-        const pageSize = this.todosPageSize
-        const page = this.todosPage
-        // 1ページあたりの最大表示数に合わせて切り分ける
-        return todos.slice(pageSize * (page - 1), pageSize * page)
-      },
-      set(changeTodosPage) {
-        return changeTodosPage
-      }
-    },
-    // 完了状態の絞り込み
     todosFiltered() {
       let returnvalue
       switch (this.taskFilter) {
@@ -151,9 +151,9 @@ export default {
   methods: {
     // ページ番号のボタンが押された時にページを切り替える
     changeTodosPage(pageNumber) {
-      const todos = this.todosFiltered
+      const todos = this.todoList
       const pageSize = this.todosPageSize
-      this.todoList = todos.slice(pageSize * (pageNumber - 1), pageSize * pageNumber)
+      this.displayTodos = todos.slice(pageSize * (pageNumber - 1), pageSize * pageNumber)
     },
     openAddTask() {
       this.taskDialog = true
