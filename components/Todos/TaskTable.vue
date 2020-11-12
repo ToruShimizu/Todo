@@ -51,7 +51,7 @@
       </v-simple-table>
     </v-card>
     <div class="text-center py-2">
-      <v-pagination v-model="todosPageNumber" :length="todosPageCount" @input="changeTodosPage" />
+      <v-pagination v-model="todosPageNumber" :length="todosPageLength" @input="changeTodosPage" />
     </div>
     <UpdateTask
       :edit-todo="editTodo"
@@ -86,6 +86,16 @@ export default {
     sortByTask: {
       type: Array,
       required: true
+    },
+    displayTodos: {
+      type: Array,
+      required: false,
+      default: () => []
+    },
+    todosPageLength: {
+      type: Number,
+      required: false,
+      default: 0
     }
   },
   data() {
@@ -106,9 +116,10 @@ export default {
     }
   },
   computed: {
-    displayTodos() {
-      return this.sortByTask
-    },
+    // ソート機能はあとで追加
+    // displayTodos() {
+    //   // return this.sortByTask
+    // },
     todosPageNumber: {
       get() {
         return this.todosPage
@@ -116,10 +127,6 @@ export default {
       set(setTodosPage) {
         this.$emit('update:set-todos-page', setTodosPage)
       }
-    },
-    todosPageCount() {
-      const todos = this.todosFiltered
-      return Math.ceil(todos.length / this.todosPageSize)
     },
     ...mapState('modules/todos', ['todos'])
   },
