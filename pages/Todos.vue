@@ -45,6 +45,7 @@ import SortByTask from '@/components/Todos/SortByTask'
 import TaskTable from '@/components/Todos/TaskTable'
 
 export default {
+  middleware: 'authenticated',
   components: {
     AddTask,
     FilteredTask,
