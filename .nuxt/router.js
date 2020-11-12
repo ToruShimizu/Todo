@@ -4,13 +4,13 @@ import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
 const _14038586 = () => interopDefault(import('../pages/signIn.vue' /* webpackChunkName: "pages/signIn" */))
-const _1e1c3cc2 = () => interopDefault(import('../pages/todos.vue' /* webpackChunkName: "pages/todos" */))
+const _d4e346bc = () => interopDefault(import('../pages/todos.vue' /* webpackChunkName: "pages/Todos" */))
 const _46804a27 = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
 
 // TODO: remove in Nuxt 3
-const emptyFn = () => {}
+const emptyFn = () => { }
 const originalPush = Router.prototype.push
-Router.prototype.push = function push (location, onComplete = emptyFn, onAbort) {
+Router.prototype.push = function push(location, onComplete = emptyFn, onAbort) {
   return originalPush.call(this, location, onComplete, onAbort)
 }
 
@@ -29,7 +29,7 @@ export const routerOptions = {
     name: "signIn"
   }, {
     path: "/todos",
-    component: _1e1c3cc2,
+    component: _d4e346bc,
     name: "todos"
   }, {
     path: "/",
@@ -40,6 +40,6 @@ export const routerOptions = {
   fallback: false
 }
 
-export function createRouter () {
+export function createRouter() {
   return new Router(routerOptions)
 }
