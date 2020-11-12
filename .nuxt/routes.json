@@ -7,6 +7,13 @@
     "_name": "_14038586"
   },
   {
+    "name": "todos",
+    "path": "/todos",
+    "component": "/Users/Toru/ToDo/pages/todos.vue",
+    "chunkName": "pages/todos",
+    "_name": "_1e1c3cc2"
+  },
+  {
     "name": "index",
     "path": "/",
     "component": "/Users/Toru/ToDo/pages/index.vue",

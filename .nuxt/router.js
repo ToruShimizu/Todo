@@ -4,6 +4,7 @@ import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
 const _14038586 = () => interopDefault(import('../pages/signIn.vue' /* webpackChunkName: "pages/signIn" */))
+const _1e1c3cc2 = () => interopDefault(import('../pages/todos.vue' /* webpackChunkName: "pages/todos" */))
 const _46804a27 = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
 
 // TODO: remove in Nuxt 3
@@ -26,6 +27,10 @@ export const routerOptions = {
     path: "/signIn",
     component: _14038586,
     name: "signIn"
+  }, {
+    path: "/todos",
+    component: _1e1c3cc2,
+    name: "todos"
   }, {
     path: "/",
     component: _46804a27,
