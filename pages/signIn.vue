@@ -76,7 +76,7 @@
               />
               <ResetPassword
                 :reset-password-dialog="resetPasswordDialog"
-                @close-reset-password="closeResetPasswprd"
+                :close-reset-password.sync="closeResetPasswprd"
               />
             </v-card-actions>
           </v-form>
