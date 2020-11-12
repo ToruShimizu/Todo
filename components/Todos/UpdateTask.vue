@@ -111,29 +111,27 @@ export default {
     ...mapState('modules/comment', ['comments'])
   },
   methods: {
-    // handleUpdateTask() {
-    //       const editTodo = this.editTodo
-    //       if (!editTodo.task.title) {
-    //         this.$refs.form.validate()
-    //         return
-    //       }
-    //       this.updateTask({
-    //         id: editTodo.task.id,
-    //         task: editTodo.task
-    //       })
-    //       this.closeUpdateTask()
-    //     },
-    //     closeUpdateTask() {
-    //       this.$refs.form.reset()
-    //       this.$emit('close-update-task')
-    //     },
-    //     cancelUpdateTask() {
-    //       this.$refs.form.reset()
-    //       this.$emit('cancel-update-task')
-    //     },
+    handleUpdateTask() {
+      const editTodo = this.editTodo
+      if (!editTodo.task.title) {
+        this.$refs.form.validate()
+        return
+      }
+      this.updateTask({
+        id: editTodo.task.id,
+        task: editTodo.task
+      })
+      this.closeUpdateTask()
+    },
+    closeUpdateTask() {
+      this.$refs.form.reset()
+      this.$emit('close-update-task')
+    },
+    cancelUpdateTask() {
+      this.$refs.form.reset()
+      this.$emit('cancel-update-task')
+    },
     ...mapActions('modules/todos', ['updateTask'])
-    //   }
-    // }
   }
 }
 </script>
