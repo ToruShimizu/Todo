@@ -98,13 +98,12 @@ export default {
   methods: {
     async handleUpdateUserName() {
       const editUser = this.editUser
-      let loader = this.loader
       if (!editUser.name) {
-        loader = null
+        this.loader = null
         this.$refs.form.validate()
         return
       }
-      loader = 'loadingUpdateUserName'
+      this.loader = 'loadingUpdateUserName'
       await this.updateUserName({
         userName: editUser.name
       })

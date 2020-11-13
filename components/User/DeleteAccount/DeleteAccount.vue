@@ -108,14 +108,12 @@ export default {
   methods: {
     async handleDeleteAccount() {
       const editUser = this.editUser
-      let loader = this.loader
-
       if (!editUser.password || !editUser.email) {
-        loader = null
+        this.loader = null
         this.$refs.form.validate()
         return
       }
-      loader = 'loadingDeleteUser'
+      this.loader = 'loadingDeleteUser'
       await this.deleteAccount({
         email: editUser.email,
         password: editUser.password
