@@ -25,15 +25,10 @@
         <SearchTask :search-task-keyword.sync="searchTaskKeyword" />
         <SortByTask :selected-sort-task.sync="selectSortTask" :items="items" />
       </v-layout>
-      <TaskTable
-        :set-todos-page.sync="todosPage"
-        :displayTodos="displayTodos"
-        :todosPageLength="todosPageLength"
-        :todos-page-size="todosPageSize"
-        :todos-filtered="todosFiltered"
-        :sort-by-task="sortByTask"
-        @change-todos-page="changeTodosPage"
-      />
+      <div class="text-center">
+        <v-pagination v-model="todosPage" :length="todosPageLength" @input="changeTodosPage" />
+      </div>
+      <TaskTable :displayTodos="displayTodos" :sort-by-task="sortByTask" />
     </v-card>
   </v-container>
 </template>
