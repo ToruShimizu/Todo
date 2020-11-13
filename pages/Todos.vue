@@ -25,9 +25,11 @@
         <SearchTask :search-task-keyword.sync="searchTaskKeyword" />
         <SortByTask :selected-sort-task.sync="selectSortTask" :items="items" />
       </v-layout>
-      <div class="text-center">
-        <v-pagination v-model="todosPage" :length="todosPageLength" @input="changeTodosPage" />
-      </div>
+      <Pagination
+        :todos-page.sync="todosPage"
+        @change-todos-page="changeTodosPage"
+        :todos-page-length="todosPageLength"
+      />
       <TaskTable :displayTodos="displayTodos" :sort-by-task="sortByTask" />
     </v-card>
   </v-container>
@@ -39,6 +41,7 @@ import AddTask from '@/components/Todos/AddTask'
 import FilteredTask from '@/components/Todos/FilteredTask'
 import SearchTask from '@/components/Todos/SearchTask'
 import SortByTask from '@/components/Todos/SortByTask'
+import Pagination from '@/components/Todos/Pagination'
 import TaskTable from '@/components/Todos/TaskTable'
 
 export default {
@@ -48,6 +51,7 @@ export default {
     FilteredTask,
     SearchTask,
     SortByTask,
+    Pagination,
     TaskTable
   },
   data() {
