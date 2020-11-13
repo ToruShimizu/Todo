@@ -67,10 +67,6 @@ export default {
     UpdateTask
   },
   props: {
-    sortByTask: {
-      type: Array,
-      required: true
-    },
     displayTodos: {
       type: Array,
       required: false,
@@ -95,10 +91,6 @@ export default {
     }
   },
   computed: {
-    // ソート機能はあとで追加
-    // displayTodos() {
-    //   // return this.sortByTask
-    // },
     ...mapState('modules/todos', ['todos'])
   },
   methods: {
