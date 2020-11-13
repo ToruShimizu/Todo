@@ -98,9 +98,11 @@ export default {
   },
   methods: {
     async handleCreateUser() {
-      this.loader = 'loadingCreateUser'
+      let loader = this.loader
+      loader = 'loadingCreateUser'
       const createUser = this.createNewUser
       if (!createUser.password || !createUser.email) {
+        loader = null
         this.$refs.form.validate()
         return
       }
@@ -109,7 +111,7 @@ export default {
         password: createUser.password,
         userName: createUser.name
       })
-      this.loader = null
+      loader = null
     },
     closeCreateUser() {
       this.$emit('close-create-user')

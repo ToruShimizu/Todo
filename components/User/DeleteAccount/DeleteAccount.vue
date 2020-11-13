@@ -108,17 +108,19 @@ export default {
   methods: {
     async handleDeleteAccount() {
       const editUser = this.editUser
+      let loader = this.loader
+
       if (!editUser.password || !editUser.email) {
+        loader = null
         this.$refs.form.validate()
         return
       }
-      this.loader = 'loadingDeleteUser'
+      loader = 'loadingDeleteUser'
       await this.deleteAccount({
         email: editUser.email,
         password: editUser.password
       })
       this.$emit('update:close-delete-user', 'closeDeleteUser')
-      this.loader = null
     },
     ...mapActions('modules/user/userInfo', ['deleteAccount'])
   }

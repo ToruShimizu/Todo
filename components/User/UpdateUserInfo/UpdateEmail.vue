@@ -97,16 +97,17 @@ export default {
   methods: {
     async handleUpdateEmail() {
       const editUserEmail = this.editUser.email
+      let loader = this.loader
       if (!editUserEmail) {
+        loader = null
         this.$refs.form.validate()
         return
       }
-      this.loader = 'loadingUpdateEmail'
+      oader = 'loadingUpdateEmail'
       await this.updateEmail({
         email: editUserEmail
       })
       this.$emit('update:close-update-email', 'closeUpdateEmail')
-      this.loader = null
     },
     ...mapActions('modules/user/userInfo', ['updateEmail'])
   }
