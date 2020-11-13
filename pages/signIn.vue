@@ -72,7 +72,7 @@
               </v-btn>
               <CreateUser
                 :create-user-dialog="createUserDialog"
-                :close-create-user.sync="closeCreateUser"
+                :close-create-user="closeCreateUser"
               />
               <ResetPassword
                 :reset-password-dialog="resetPasswordDialog"
@@ -153,39 +153,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.fill-width {
-  width: 100%;
-}
-.link-caption {
-  text-decoration: none;
-  color: #666 !important;
-  font-size: 0.75rem;
-}
-.separator {
-  margin-top: 30px;
-  margin-bottom: 30px;
-  height: 0;
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #fff;
-  position: relative;
-}
-.middle_separator {
-  position: absolute;
-  padding: 0 16px;
-  color: #ccc;
-  background: #fff;
-  font-size: 11px;
-  text-shadow: 0 1px 0 #fff;
-  text-transform: uppercase;
-  top: -7px;
-  left: 30%;
-}
-.middle_separator {
-  color: #777;
-  font-size: 13px;
-  top: -9px;
-  left: 41%;
-}
-</style>
