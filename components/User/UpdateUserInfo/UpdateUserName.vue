@@ -98,16 +98,17 @@ export default {
   methods: {
     async handleUpdateUserName() {
       const editUser = this.editUser
+      let loader = this.loader
       if (!editUser.name) {
+        loader = null
         this.$refs.form.validate()
         return
       }
-      this.loader = 'loadingUpdateUserName'
+      loader = 'loadingUpdateUserName'
       await this.updateUserName({
         userName: editUser.name
       })
       this.$emit('update:close-update-user-name', 'closeUpdateUserName')
-      this.loader = null
     },
     ...mapActions('modules/user/userInfo', ['updateUserName'])
   }

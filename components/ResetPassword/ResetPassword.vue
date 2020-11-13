@@ -78,14 +78,16 @@ export default {
   methods: {
     async handleResetPassword() {
       const resetUserPassword = this.resetUserPassword
+      let loader = this.loader
       if (resetUserPassword.email === 'test@example.com') {
         alert('テストユーザーはパスワードを再設定することはできません')
         return
       } else if (!resetUserPassword.email) {
+        loader = null
         this.$refs.form.validate()
         return
       }
-      this.loader = 'loadingResetPassword'
+      loader = 'loadingResetPassword'
       await this.resetPassword({
         email: resetUserPassword.email
       })
