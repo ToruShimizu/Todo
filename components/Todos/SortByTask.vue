@@ -2,11 +2,8 @@
   <v-col cols="4" sm="4" md="4">
     <v-select
       v-model="selectedSortTask"
-      :items="items"
-      item-text="state"
-      item-value="abbr"
+      :items="sortTaskStates"
       label="並べ替え"
-      return-object
       single-line
     ></v-select>
   </v-col>
@@ -16,19 +13,13 @@
 export default {
   props: {
     selectSortTask: {
-      type: String,
-      required: false,
-      default: ''
-    },
-    items: {
       type: Array,
       required: false,
       default: () => []
     },
-    todosFiltered: {
+    sortTaskStates: {
       type: Array,
-      required: false,
-      default: () => []
+      required: true
     }
   },
   data() {
@@ -42,7 +33,6 @@ export default {
         return this.selectSortTask
       },
       set(selectedSortTask) {
-        console.log(selectedSortTask.state)
         this.$emit('update:selected-sort-task', selectedSortTask)
       }
     }
