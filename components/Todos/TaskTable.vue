@@ -50,9 +50,6 @@
         </template>
       </v-simple-table>
     </v-card>
-    <div class="text-center py-2">
-      <v-pagination v-model="todosPageNumber" :length="todosPageLength" @input="changeTodosPage" />
-    </div>
     <UpdateTask
       :edit-todo="editTodo"
       :update-task-dialog="updateTaskDialog"
@@ -70,19 +67,6 @@ export default {
     UpdateTask
   },
   props: {
-    todosPage: {
-      type: Number,
-      required: false,
-      default: 1
-    },
-    todosPageSize: {
-      type: Number,
-      required: true
-    },
-    todosFiltered: {
-      type: Array,
-      required: true
-    },
     sortByTask: {
       type: Array,
       required: true
@@ -91,11 +75,6 @@ export default {
       type: Array,
       required: false,
       default: () => []
-    },
-    todosPageLength: {
-      type: Number,
-      required: false,
-      default: 0
     }
   },
   data() {
@@ -120,22 +99,9 @@ export default {
     // displayTodos() {
     //   // return this.sortByTask
     // },
-    todosPageNumber: {
-      get() {
-        return this.todosPage
-      },
-      set(setTodosPage) {
-        this.$emit('update:set-todos-page', setTodosPage)
-      }
-    },
     ...mapState('modules/todos', ['todos'])
   },
   methods: {
-    // 選択されたpageNumberによって表示するページを切り替える
-    changeTodosPage(pageNumber) {
-      this.$emit('change-todos-page', pageNumber)
-    },
-
     handleRemoveTask(todo) {
       if (!confirm(todo.title + 'を削除しますか？')) return
       this.removeTask({ id: todo.id })

@@ -25,15 +25,10 @@
         <SearchTask :search-task-keyword.sync="searchTaskKeyword" />
         <SortByTask :selected-sort-task.sync="selectSortTask" :items="items" />
       </v-layout>
-      <TaskTable
-        :set-todos-page.sync="todosPage"
-        :displayTodos="displayTodos"
-        :todosPageLength="todosPageLength"
-        :todos-page-size="todosPageSize"
-        :todos-filtered="todosFiltered"
-        :sort-by-task="sortByTask"
-        @change-todos-page="changeTodosPage"
-      />
+      <div class="text-center">
+        <v-pagination v-model="todosPage" :length="todosPageLength" @input="changeTodosPage" />
+      </div>
+      <TaskTable :displayTodos="displayTodos" :sort-by-task="sortByTask" />
     </v-card>
   </v-container>
 </template>
@@ -81,6 +76,9 @@ export default {
       const todos = this.todoList
       this.todosPageLength = Math.ceil(todos.length / this.todosPageSize)
       this.displayTodos = todos.slice(0, this.todosPageSize)
+      if (this.todosFiltered.length <= 7) {
+        this.todosPage = this.todosPageLength
+      }
     }
   },
   // 完了状態の絞り込み
