@@ -76,6 +76,9 @@ export default {
       const todos = this.todoList
       this.todosPageLength = Math.ceil(todos.length / this.todosPageSize)
       this.displayTodos = todos.slice(0, this.todosPageSize)
+      if (this.todosFiltered.length <= 7) {
+        this.todosPage = this.todosPageLength
+      }
     }
   },
   // 完了状態の絞り込み
