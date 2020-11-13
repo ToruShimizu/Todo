@@ -1,21 +1,18 @@
 <template>
-  <v-container style="max-width: 500px">
+  <v-container style="max-width: 500px" class="mb-5">
     <v-layout>
-      <v-flex>
-        <!-- トータルtodos表示 -->
-        <h2 class="display-1 grey--text pl-4">
-          totalTodos:&nbsp;
-          {{ todos.length }}
-        </h2>
-      </v-flex>
-      <v-flex>
-        <AddTask
-          :create-task.sync="task"
-          :task-dialog="taskDialog"
-          @open-add-task="openAddTask"
-          @close-add-task="closeAddTask"
-        />
-      </v-flex>
+      <!-- トータルtodos表示 -->
+      <h2 class="display-1 grey--text pl-4">
+        totalTodos:&nbsp;
+        {{ todos.length }}
+      </h2>
+      <v-spacer />
+      <AddTask
+        :create-task.sync="task"
+        :task-dialog="taskDialog"
+        @open-add-task="openAddTask"
+        @close-add-task="closeAddTask"
+      />
     </v-layout>
     <v-divider class="mt-4" />
     <v-card class="mb-5">
