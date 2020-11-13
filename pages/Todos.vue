@@ -30,7 +30,7 @@
         @change-todos-page="changeTodosPage"
         :todos-page-length="todosPageLength"
       />
-      <TaskTable :displayTodos="displayTodos" :sort-by-task="sortByTask" />
+      <TaskTable :displayTodos="displayTodos" />
     </v-card>
   </v-container>
 </template>
@@ -76,13 +76,20 @@ export default {
   },
   watch: {
     todosFiltered() {
-      this.todoList = this.todosFiltered
-      const todos = this.todoList
-      this.todosPageLength = Math.ceil(todos.length / this.todosPageSize)
-      this.displayTodos = todos.slice(0, this.todosPageSize)
+      let todosPageLength = this.todosPageLength
+      todosPageLength = Math.ceil(this.searchTask.length / this.todosPageSize)
       if (this.todosFiltered.length <= 7) {
-        this.todosPage = this.todosPageLength
+        this.todosPage = todosPageLength
       }
+    },
+    searchTask() {
+      const searchTask = this.searchTask
+      const pageSize = this.todosPageSize
+      this.displayTodos = searchTask.slice(0, pageSize)
+      this.todosPageLength = Math.ceil(searchTask.length / pageSize)
+    },
+    sortByTask() {
+      this.displayTodos = this.sortByTask.slice(0, this.todosPageSize)
     }
   },
   // 完了状態の絞り込み
@@ -108,22 +115,19 @@ export default {
     },
     // タスクの検索
     searchTask() {
-      let todoList = this.todoList
-      const todos = this.todosFiltered
+      const todosFiltered = this.todosFiltered
       const searchKeyword = this.searchTaskKeyword
       // vuetifyのclearableを使用するとnullになり表示されなくなるためnullの場合の処理を記述
-      // nullの場合は元の値であるstateのtodosを入れて返す
       if (searchKeyword === null) {
-        todoList = this.todos
-        return todoList
+        return todosFiltered
       }
-      return todos.filter((todo) => {
+      return todosFiltered.filter((todo) => {
         return todo.title.includes(searchKeyword)
       })
     },
     sortByTask() {
       let returnvalue
-      const todos = this.todosFiltered
+      const todos = this.searchTask
       switch (this.selectSortTask.state) {
         case '名前順':
           returnvalue = todos.slice().sort((a, b) => {
@@ -153,7 +157,7 @@ export default {
   methods: {
     // ページ番号のボタンが押された時にページを切り替える
     changeTodosPage(pageNumber) {
-      const todos = this.todoList
+      const todos = this.searchTask
       const pageSize = this.todosPageSize
       this.displayTodos = todos.slice(pageSize * (pageNumber - 1), pageSize * pageNumber)
     },
