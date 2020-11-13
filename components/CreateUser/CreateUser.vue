@@ -98,20 +98,18 @@ export default {
   },
   methods: {
     async handleCreateUser() {
-      let loader = this.loader
-      loader = 'loadingCreateUser'
       const createUser = this.createNewUser
       if (!createUser.password || !createUser.email) {
-        loader = null
+        this.loader = null
         this.$refs.form.validate()
         return
       }
+      this.loader = 'loadingCreateUser'
       await this.createUser({
         email: createUser.email,
         password: createUser.password,
         userName: createUser.name
       })
-      loader = null
     },
     closeCreateUser() {
       this.$emit('close-create-user')

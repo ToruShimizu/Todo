@@ -124,14 +124,12 @@ export default {
     },
     async handleLogin() {
       const signInUser = this.signInUser
-      let loader = this.loader
-
       if (!signInUser.password || !signInUser.email) {
-        loader = null
+        this.loader = null
         this.$refs.form.validate()
         return
       }
-      loader = 'loadingLogin'
+      this.loader = 'loadingLogin'
       await this.login({
         email: signInUser.email,
         password: signInUser.password

@@ -117,13 +117,12 @@ export default {
   methods: {
     async handleUpdatePassword() {
       const editUser = this.editUser
-      let loader = this.loader
-      loader = null
+      this.loader = null
       if (!editUser.email || !editUser.password || !editUser.editPassword) {
         this.$refs.form.validate()
         return
       }
-      loader = 'loadingResetPassword'
+      this.loader = 'loadingResetPassword'
       await this.updatePassword({
         updatePassword: editUser.editPassword,
         email: editUser.email,
