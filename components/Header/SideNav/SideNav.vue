@@ -6,7 +6,6 @@
           >ログインユーザー
         </v-list-item-title>
       </v-list-item-content>
-      <!-- FIXME: コンポーネント化 -->
     </v-list-item>
     <v-divider />
     <v-list dense nav>
@@ -20,7 +19,7 @@
                 </v-row>
               </template>
             </v-img>
-            <v-icon>mdi-account-outline</v-icon>
+            <v-icon v-else>mdi-account-outline</v-icon>
           </v-avatar>
           {{ gettersUserName }}
         </v-list-item-title>
