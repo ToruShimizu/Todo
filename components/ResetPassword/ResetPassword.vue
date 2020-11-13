@@ -30,10 +30,10 @@
                 clearable
               />
               <v-card-actions>
-                <v-btn color="primary" class="hidden-sm-and-up" @click="closeResetPasswprd">
+                <v-btn color="primary" class="hidden-sm-and-up" @click="closeResetPassword">
                   <v-icon left>mdi-login-variant</v-icon>戻る
                 </v-btn>
-                <v-btn color="primary" class="hidden-xs-only" @click="closeResetPasswprd">
+                <v-btn color="primary" class="hidden-xs-only" @click="closeResetPassword">
                   <v-icon left>mdi-login-variant</v-icon>ログイン画面へ戻る
                 </v-btn>
                 <v-spacer />
@@ -89,9 +89,9 @@ export default {
       await this.resetPassword({
         email: resetUserPassword.email
       })
-      this.closeResetPasswprd()
+      this.closeResetPassword()
     },
-    closeResetPasswprd() {
+    closeResetPassword() {
       this.$emit('close-reset-password')
       this.$refs.form.reset()
     },

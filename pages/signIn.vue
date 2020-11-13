@@ -72,11 +72,11 @@
               </v-btn>
               <CreateUser
                 :create-user-dialog="createUserDialog"
-                :close-create-user="closeCreateUser"
+                @close-create-user="closeCreateUser"
               />
               <ResetPassword
                 :reset-password-dialog="resetPasswordDialog"
-                :close-reset-password.sync="closeResetPasswprd"
+                @close-reset-password="closeResetPassword"
               />
             </v-card-actions>
           </v-form>
@@ -146,7 +146,7 @@ export default {
     openResetPassword() {
       this.resetPasswordDialog = true
     },
-    closeResetPasswprd() {
+    closeResetPassword() {
       this.resetPasswordDialog = false
     },
     ...mapActions('modules/user/auth', ['googleLogin', 'login'])
