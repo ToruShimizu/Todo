@@ -73,37 +73,32 @@ export default {
   },
   watch: {
     todosFiltered() {
-      let todosPageLength = this.todosPageLength
-      todosPageLength = Math.ceil(this.searchTask.length / this.todosPageSize)
-      if (this.todosFiltered.length <= 7) {
-        this.todosPage = todosPageLength
-      }
-    },
-    searchTask() {
-      const searchTask = this.searchTask
+      let displayTodos = this.displayTodos
       const pageSize = this.todosPageSize
-      this.displayTodos = searchTask.slice(0, pageSize)
-      this.todosPageLength = Math.ceil(searchTask.length / pageSize)
-    },
-    sortByTask() {
-      this.displayTodos = this.sortByTask.slice(0, this.todosPageSize)
+      const todos = this.todosFiltered
+
+      displayTodos = todos.slice(0, pageSize)
+      this.todosPageLength = Math.ceil(todos.length / pageSize)
+      this.todosPage = 1
+      this.changeTodosPage(this.todosPage)
     }
   },
   // 完了状態の絞り込み
   computed: {
     todosFiltered() {
       let returnvalue
+      const todos = this.searchTask
       switch (this.taskFilter) {
         case 'all':
-          returnvalue = this.todos
+          returnvalue = todos
 
           break
         case 'active':
-          returnvalue = this.remainingTodos
+          returnvalue = todos.filter((todo) => !todo.done)
 
           break
         case 'done':
-          returnvalue = this.completedTodos
+          returnvalue = todos.filter((todo) => todo.done)
 
           break
         default:
@@ -112,19 +107,19 @@ export default {
     },
     // タスクの検索
     searchTask() {
-      const todosFiltered = this.todosFiltered
+      const todos = this.sortByTask
       const searchKeyword = this.searchTaskKeyword
       // vuetifyのclearableを使用するとnullになり表示されなくなるためnullの場合の処理を記述
       if (searchKeyword === null) {
-        return todosFiltered
+        return todos
       }
-      return todosFiltered.filter((todo) => {
+      return todos.filter((todo) => {
         return todo.title.includes(searchKeyword)
       })
     },
     sortByTask() {
       let returnvalue
-      const todos = this.searchTask
+      const todos = this.todos
       switch (this.selectSortTask) {
         case '名前順':
           returnvalue = todos.slice().sort((a, b) => {
@@ -142,6 +137,7 @@ export default {
           })
           break
         default:
+          returnvalue = todos
       }
       return returnvalue
     },
@@ -151,7 +147,7 @@ export default {
   methods: {
     // ページ番号のボタンが押された時にページを切り替える
     changeTodosPage(pageNumber) {
-      const todos = this.searchTask
+      const todos = this.todosFiltered
       const pageSize = this.todosPageSize
       this.displayTodos = todos.slice(pageSize * (pageNumber - 1), pageSize * pageNumber)
     },
