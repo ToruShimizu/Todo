@@ -1,32 +1,41 @@
 <template>
-  <!-- eslint-disable  -->
-
   <v-dialog
-    v-model="updateTaskDialog"
+    v-model="updateActivityPlanDialog"
     persistent
     max-width="600px"
     transition="scroll-y-transition"
   >
-    <!-- eslint-disable  -->
-
     <v-app>
       <v-col cols="12" sm="12" md="12">
         <v-card>
           <v-card-title>
-            <span class="headline">タスク詳細×編集</span>
+            <span class="headline">QC活動計画詳細×編集</span>
           </v-card-title>
           <v-form ref="form" lazy-validation>
             <v-container>
               <v-row>
                 <!-- タスク編集エリア -->
-                <v-col cols="12">
-                  <v-text-field
-                    v-model="editTodo.title"
-                    label="タスクを変更する"
-                    prepend-inner-icon="mdi-pencil-outline"
-                    :rules="[validRules.titleRules.required]"
-                    clearable
-                  />
+                <v-col cols="12" sm="12" md="12">
+                  <v-combobox
+                    ref="categorys"
+                    v-model="editedPlanContents"
+                    :items="qcCategorys"
+                    label="カテゴリを変更"
+                    multiple
+                    chips
+                    :rules="[validRules.categoryRules.required]"
+                  >
+                    <template v-slot:selection="contents">
+                      <v-chip>
+                        <v-avatar
+                          class="accent white--text"
+                          left
+                          v-text="contents.item.slice(0, 1).toUpperCase()"
+                        ></v-avatar>
+                        {{ contents.item }}
+                      </v-chip>
+                    </template>
+                  </v-combobox>
                 </v-col>
                 <!-- 日付編集エリア -->
                 <v-col cols="12">
@@ -38,8 +47,8 @@
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field
-                        v-model="editTodo.date"
-                        label="期限を変更する"
+                        v-model="editedPlanContents"
+                        label="日付を変更"
                         prepend-inner-icon="mdi-calendar-today"
                         readonly
                         v-bind="attrs"
@@ -47,7 +56,7 @@
                       ></v-text-field>
                     </template>
                     <v-date-picker
-                      v-model="editTodo.date"
+                      v-model="editedPlanContents"
                       no-title
                       scrollable
                       @input="updateDateMenu = false"
@@ -57,20 +66,20 @@
                 <!-- 詳細編集エリア -->
                 <v-col cols="12">
                   <v-text-field
-                    v-model="editTodo.detail"
-                    label="タスクの詳細を変更する"
+                    v-model="editedPlanContents"
+                    label="詳細を変更"
                     prepend-inner-icon="mdi-briefcase-outline"
                     clearable
                   ></v-text-field>
                 </v-col>
-                <AddComment :task-id="editTodo.id" />
-                <Comment :task-id="editTodo.id" />
+                <AddComment :planContents-id="editPlanContents" />
+                <Comment :planContents-id="editPlanContents" />
               </v-row>
             </v-container>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="cancelUpdateTask">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="handleUpdateTask">Save</v-btn>
+              <v-btn color="blue darken-1" text @click="closeUpdateActivityPlan">Cancel</v-btn>
+              <v-btn color="blue darken-1" text @click="handleUpdateActivityPlan">Save</v-btn>
             </v-card-actions>
           </v-form>
         </v-card>
@@ -92,12 +101,15 @@ export default {
   },
   mixins: [FormValidation],
   props: {
-    editTodo: {
+    editPlanContents: {
       type: Object,
-      required: false,
-      default: () => {}
+      required: false
     },
-    updateTaskDialog: {
+    qcCategorys: {
+      type: Array,
+      required: true
+    },
+    updateActivityPlanDialog: {
       type: Boolean,
       required: true
     }
@@ -108,26 +120,34 @@ export default {
     }
   },
   computed: {
+    editedPlanContents: {
+      get() {
+        return this.editPlanContents
+      },
+      set(editedPlanContents) {
+        this.$emit('update:edited-plan-contents', editedPlanContents)
+      }
+    },
     ...mapState('modules/comment', ['comments'])
   },
   methods: {
-    async handleUpdateTask() {
-      const task = this.editTodo
-      if (!task.title) {
+    async handleUpdateActivityPlan() {
+      const editPlanContens = this.editedPlanContents
+      if (editPlanContens.categorys.length === 0) {
         this.$refs.form.validate()
         return
       }
-      await this.updateTask(task)
-      await this.fetchTodos()
-      this.closeUpdateTask()
+      await this.updateActivityPlan(editPlanContens)
+      await this.fetchActivityPlans()
+      this.closeUpdateActivityPlan()
     },
-    closeUpdateTask() {
-      this.$emit('close-update-task')
+    closeUpdateActivityPlan() {
+      this.$emit('close-update-activity-plan')
     },
-    cancelUpdateTask() {
-      this.$emit('cancel-update-task')
-    },
-    ...mapActions('modules/todos', ['fetchTodos', 'updateTask'])
+    ...mapActions('modules/activityPlans/activityPlans', [
+      'fetchActivityPlans',
+      'updateActivityPlan'
+    ])
   }
 }
 </script>
