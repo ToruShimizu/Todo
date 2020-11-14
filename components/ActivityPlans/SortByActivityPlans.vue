@@ -1,8 +1,8 @@
 <template>
   <v-col cols="4" sm="4" md="4">
     <v-select
-      v-model="selectedSortTask"
-      :items="sortTaskStates"
+      v-model="selectedSortActivityPlans"
+      :items="sortActivityPlansStates"
       label="並べ替え"
       single-line
     ></v-select>
@@ -12,28 +12,23 @@
 <script>
 export default {
   props: {
-    selectSortTask: {
+    selectSortActivityPlans: {
       type: Array,
       required: false,
       default: () => []
     },
-    sortTaskStates: {
+    sortActivityPlansStates: {
       type: Array,
       required: true
     }
   },
-  data() {
-    return {
-      sortTaskDialog: false
-    }
-  },
   computed: {
-    selectedSortTask: {
+    selectedSortActivityPlans: {
       get() {
-        return this.selectSortTask
+        return this.selectSortActivityPlans
       },
-      set(selectedSortTask) {
-        this.$emit('update:selected-sort-task', selectedSortTask)
+      set(selectedSortActivityPlans) {
+        this.$emit('update:selected-sort-activity-plans', selectedSortActivityPlans)
       }
     }
   }
