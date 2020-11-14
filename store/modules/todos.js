@@ -119,9 +119,26 @@ const getters = {
   remainingTodos(state, getters) {
     return state.todos.filter((todo) => !todo.done)
   },
-  // 完了状態のタスクの絞り込み
   completedTodos(state) {
     return state.todos.filter((todo) => todo.done)
+  },
+  gettersTodos(state) {
+    return state.todos
+  },
+  sortByName(state) {
+    return state.todos.slice().sort((a, b) => {
+      if (a.title < b.title) return -1
+    })
+  },
+  sortByAscDate(state) {
+    return state.todos.slice().sort((a, b) => {
+      if (a.date > b.date) return -1
+    })
+  },
+  sortByDescDate(state) {
+    return state.todos.slice().sort((a, b) => {
+      if (a.date < b.date) return -1
+    })
   }
 }
 

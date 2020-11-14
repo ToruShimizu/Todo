@@ -122,26 +122,29 @@ export default {
       const todos = this.todos
       switch (this.selectSortTask) {
         case '名前順':
-          returnvalue = todos.slice().sort((a, b) => {
-            if (a.title < b.title) return -1
-          })
+          returnvalue = this.sortByName
           break
+
         case '日付降順↓':
-          returnvalue = todos.slice().sort((a, b) => {
-            if (a.date > b.date) return -1
-          })
+          returnvalue = this.sortByAscDate
           break
+
         case '日付昇順↑':
-          returnvalue = todos.slice().sort((a, b) => {
-            if (a.date < b.date) return -1
-          })
+          returnvalue = this.sortByDescDate
           break
+
         default:
           returnvalue = todos
       }
       return returnvalue
     },
-    ...mapGetters('modules/todos', ['remainingTodos', 'completedTodos']),
+    ...mapGetters('modules/todos', [
+      'remainingTodos',
+      'completedTodos',
+      'sortByName',
+      'sortByAscDate',
+      'sortByDescDate'
+    ]),
     ...mapState('modules/todos', ['todos'])
   },
   methods: {
