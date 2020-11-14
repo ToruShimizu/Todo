@@ -1,9 +1,9 @@
 <template>
   <v-col cols="8" sm="8" md="8">
     <v-text-field
-      v-model="innerSearchTask"
+      v-model="innnerSearchPlanContentsCategorys"
       prepend-inner-icon="mdi-magnify"
-      label="タスクを検索する"
+      label="カテゴリ検索"
       clearable
     ></v-text-field>
   </v-col>
@@ -12,19 +12,19 @@
 <script>
 export default {
   props: {
-    searchTaskKeyword: {
+    searchPlanContentsCategorys: {
       type: String,
       required: false,
       default: ''
     }
   },
   computed: {
-    innerSearchTask: {
+    innnerSearchPlanContentsCategorys: {
       get() {
-        return this.searchTaskKeyword
+        return this.searchPlanContentsCategorys
       },
-      set(searchTaskKeyword) {
-        this.$emit('update:search-task-keyword', searchTaskKeyword)
+      set(searchPlanContentsCategorys) {
+        this.$emit('update:search-plan-contents-categorys', searchPlanContentsCategorys)
       }
     }
   }

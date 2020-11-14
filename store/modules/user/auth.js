@@ -34,7 +34,7 @@ const actions = {
       await auth.signInWithPopup(provider).then((result) => {
         alert('ようこそ ' + result.user.displayName + 'さん!')
         commit('setLoginUser')
-        this.$router.push({ path: '/todos' })
+        this.$router.push({ path: '/activityPlans' })
       })
     } catch (err) {
       alert('ログインに失敗しました。もう一度やり直してください。')
@@ -48,7 +48,7 @@ const actions = {
       alert('ようこそ' + userInfo.displayName + 'さん!')
       commit('setLoginUser', userInfo)
       // サインイン成功後にトップページに遷移する
-      this.$router.push({ path: '/todos' })
+      this.$router.push({ path: '/activityPlans' })
     } catch {
       alert('ログインに失敗しました。もう一度やり直してください。')
     }

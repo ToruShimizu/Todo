@@ -47,7 +47,7 @@ const actions = {
     }
     if (getters.userUid) {
       await db
-        .collection(`users/${getters.userUid}/todos`)
+        .collection(`users/${getters.userUid}/activityPlans`)
         .doc(id)
         .collection(`comments/${getters.userUid}/message`)
         .doc(commentId)
@@ -58,7 +58,7 @@ const actions = {
   // コメントの削除
   async removeComment({ getters, commit }, { id }) {
     if (getters.userUid) {
-      const snapShot = await db.collection(`users/${getters.userUid}/todos`).get()
+      const snapShot = await db.collection(`users/${getters.userUid}/activityPlans`).get()
       snapShot.forEach(async (doc) => {
         await doc.ref.collection(`comments/${getters.userUid}/message`).doc(id).delete()
       })
@@ -68,7 +68,7 @@ const actions = {
   // コメントの取得
   async fetchComments({ getters, commit }, id) {
     commit('initComments')
-    const snapShot = await db.collection(`users/${getters.userUid}/todos`).doc(id).get()
+    const snapShot = await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).get()
     const subCollection = await snapShot.ref
       .collection(`comments/${getters.userUid}/message`)
       .orderBy('created', 'desc')

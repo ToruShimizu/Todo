@@ -12,9 +12,9 @@ export default function ({ store, redirect, route }) {
       // ログインユーザーの情報をstateに入れる
       store.dispatch('modules/user/auth/setLoginUser', userInfo)
       // firestoreかデータを取得する
-      store.dispatch('modules/todos/fetchTodos')
+      store.dispatch('modules/activityPlans/activityPlans/fetchActivityPlans')
     } else if (route.path === '/signIn') {
-      return redirect('/todos')
+      return redirect('/activityPlans')
     } else {
       return redirect('/signIn')
     }
