@@ -21,7 +21,7 @@ let store = {};
 
   resolveStoreModules(require('../store/store.js'), 'store.js')
   resolveStoreModules(require('../store/modules/comment.js'), 'modules/comment.js')
-  resolveStoreModules(require('../store/modules/todos.js'), 'modules/todos.js')
+  resolveStoreModules(require('../store/modules/activityPlans/activityPlans.js'), 'modules/activityPlans/activityPlans.js')
   resolveStoreModules(require('../store/modules/user/auth.js'), 'modules/user/auth.js')
   resolveStoreModules(require('../store/modules/user/userInfo.js'), 'modules/user/userInfo.js')
 
@@ -33,7 +33,7 @@ let store = {};
       '../store/index.js',
       '../store/store.js',
       '../store/modules/comment.js',
-      '../store/modules/todos.js',
+      '../store/modules/activityPlans/activityPlans.js',
       '../store/modules/user/auth.js',
       '../store/modules/user/userInfo.js',
     ], () => {

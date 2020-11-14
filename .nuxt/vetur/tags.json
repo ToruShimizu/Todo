@@ -1,9 +1,45 @@
 {
-  "CreateUser": {
-    "description": "Auto imported from components/CreateUser/CreateUser.vue"
+  "ActivityPlansTable": {
+    "description": "Auto imported from components/ActivityPlans/ActivityPlansTable.vue"
   },
-  "LazyCreateUser": {
-    "description": "Auto imported from components/CreateUser/CreateUser.vue"
+  "LazyActivityPlansTable": {
+    "description": "Auto imported from components/ActivityPlans/ActivityPlansTable.vue"
+  },
+  "AddActivityPlan": {
+    "description": "Auto imported from components/ActivityPlans/AddActivityPlan.vue"
+  },
+  "LazyAddActivityPlan": {
+    "description": "Auto imported from components/ActivityPlans/AddActivityPlan.vue"
+  },
+  "FilteredActivityPlans": {
+    "description": "Auto imported from components/ActivityPlans/FilteredActivityPlans.vue"
+  },
+  "LazyFilteredActivityPlans": {
+    "description": "Auto imported from components/ActivityPlans/FilteredActivityPlans.vue"
+  },
+  "Pagination": {
+    "description": "Auto imported from components/ActivityPlans/Pagination.vue"
+  },
+  "LazyPagination": {
+    "description": "Auto imported from components/ActivityPlans/Pagination.vue"
+  },
+  "SearchActivityPlans": {
+    "description": "Auto imported from components/ActivityPlans/SearchActivityPlans.vue"
+  },
+  "LazySearchActivityPlans": {
+    "description": "Auto imported from components/ActivityPlans/SearchActivityPlans.vue"
+  },
+  "SortByActivityPlans": {
+    "description": "Auto imported from components/ActivityPlans/SortByActivityPlans.vue"
+  },
+  "LazySortByActivityPlans": {
+    "description": "Auto imported from components/ActivityPlans/SortByActivityPlans.vue"
+  },
+  "UpdateActivityPlan": {
+    "description": "Auto imported from components/ActivityPlans/UpdateActivityPlan.vue"
+  },
+  "LazyUpdateActivityPlan": {
+    "description": "Auto imported from components/ActivityPlans/UpdateActivityPlan.vue"
   },
   "Header": {
     "description": "Auto imported from components/Header/Header.vue"
@@ -23,53 +59,17 @@
   "LazyComment": {
     "description": "Auto imported from components/Comment/Comment.vue"
   },
+  "CreateUser": {
+    "description": "Auto imported from components/CreateUser/CreateUser.vue"
+  },
+  "LazyCreateUser": {
+    "description": "Auto imported from components/CreateUser/CreateUser.vue"
+  },
   "ResetPassword": {
     "description": "Auto imported from components/ResetPassword/ResetPassword.vue"
   },
   "LazyResetPassword": {
     "description": "Auto imported from components/ResetPassword/ResetPassword.vue"
-  },
-  "AddTask": {
-    "description": "Auto imported from components/Todos/AddTask.vue"
-  },
-  "LazyAddTask": {
-    "description": "Auto imported from components/Todos/AddTask.vue"
-  },
-  "FilteredTask": {
-    "description": "Auto imported from components/Todos/FilteredTask.vue"
-  },
-  "LazyFilteredTask": {
-    "description": "Auto imported from components/Todos/FilteredTask.vue"
-  },
-  "SearchTask": {
-    "description": "Auto imported from components/Todos/SearchTask.vue"
-  },
-  "LazySearchTask": {
-    "description": "Auto imported from components/Todos/SearchTask.vue"
-  },
-  "SortByTask": {
-    "description": "Auto imported from components/Todos/SortByTask.vue"
-  },
-  "LazySortByTask": {
-    "description": "Auto imported from components/Todos/SortByTask.vue"
-  },
-  "TaskTable": {
-    "description": "Auto imported from components/Todos/TaskTable.vue"
-  },
-  "LazyTaskTable": {
-    "description": "Auto imported from components/Todos/TaskTable.vue"
-  },
-  "Todos": {
-    "description": "Auto imported from components/Todos/Todos.vue"
-  },
-  "LazyTodos": {
-    "description": "Auto imported from components/Todos/Todos.vue"
-  },
-  "UpdateTask": {
-    "description": "Auto imported from components/Todos/UpdateTask.vue"
-  },
-  "LazyUpdateTask": {
-    "description": "Auto imported from components/Todos/UpdateTask.vue"
   },
   "SideNav": {
     "description": "Auto imported from components/Header/SideNav/SideNav.vue"
@@ -82,18 +82,6 @@
   },
   "LazyDeleteAccount": {
     "description": "Auto imported from components/User/DeleteAccount/DeleteAccount.vue"
-  },
-  "EditUserInfo": {
-    "description": "Auto imported from components/User/EditUserInfo/EditUserInfo.vue"
-  },
-  "LazyEditUserInfo": {
-    "description": "Auto imported from components/User/EditUserInfo/EditUserInfo.vue"
-  },
-  "SelectEditUserInfo": {
-    "description": "Auto imported from components/User/EditUserInfo/SelectEditUserInfo.vue"
-  },
-  "LazySelectEditUserInfo": {
-    "description": "Auto imported from components/User/EditUserInfo/SelectEditUserInfo.vue"
   },
   "UpdateEmail": {
     "description": "Auto imported from components/User/UpdateUserInfo/UpdateEmail.vue"
@@ -118,5 +106,17 @@
   },
   "LazyUpdateUserName": {
     "description": "Auto imported from components/User/UpdateUserInfo/UpdateUserName.vue"
+  },
+  "EditUserInfo": {
+    "description": "Auto imported from components/User/EditUserInfo/EditUserInfo.vue"
+  },
+  "LazyEditUserInfo": {
+    "description": "Auto imported from components/User/EditUserInfo/EditUserInfo.vue"
+  },
+  "SelectEditUserInfo": {
+    "description": "Auto imported from components/User/EditUserInfo/SelectEditUserInfo.vue"
+  },
+  "LazySelectEditUserInfo": {
+    "description": "Auto imported from components/User/EditUserInfo/SelectEditUserInfo.vue"
   }
 }

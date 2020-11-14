@@ -1,23 +1,16 @@
 [
   {
+    "name": "activityPlans",
+    "path": "/activityPlans",
+    "component": "/Users/Toru/ToDo/pages/activityPlans.vue",
+    "chunkName": "pages/activityPlans",
+    "_name": "_1aa39070"
+  },
+  {
     "name": "signIn",
     "path": "/signIn",
     "component": "/Users/Toru/ToDo/pages/signIn.vue",
     "chunkName": "pages/signIn",
     "_name": "_14038586"
-  },
-  {
-    "name": "todos",
-    "path": "/todos",
-    "component": "/Users/Toru/ToDo/pages/todos.vue",
-    "chunkName": "pages/todos",
-    "_name": "_d4e346bc"
-  },
-  {
-    "name": "index",
-    "path": "/",
-    "component": "/Users/Toru/ToDo/pages/index.vue",
-    "chunkName": "pages/index",
-    "_name": "_46804a27"
   }
 ]
