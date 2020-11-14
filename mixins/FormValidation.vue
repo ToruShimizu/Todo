@@ -1,7 +1,7 @@
 <script>
 // バリデーションの共通化
 const validRules = {
-  titleRules: { required: (value) => !!value || 'タイトルは必須です' },
+  categoryRules: { required: (v) => v.length > 0 || 'カテゴリは必須です' },
   emailRules: {
     required: (value) => !!value || 'メールアドレスは必須です',
     regex: (value) =>

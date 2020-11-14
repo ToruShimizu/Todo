@@ -16,7 +16,7 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
   props: {
-    taskId: {
+    planContentsId: {
       type: String,
       required: true
     }
@@ -32,7 +32,7 @@ export default {
   methods: {
     handleAddComment() {
       this.addComment({
-        id: this.taskId,
+        id: this.planContentsId,
         message: this.message
       })
       this.message = ''

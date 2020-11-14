@@ -5,7 +5,7 @@
     </v-navigation-drawer>
     <v-app-bar color="indigo darken-2" dark app clipped-left>
       <v-app-bar-nav-icon @click="sideNavDrawer = !sideNavDrawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>ToDo</v-toolbar-title>
+      <v-toolbar-title>QC活動管理</v-toolbar-title>
       <v-spacer />
       <v-toolbar-items v-if="loginUser">
         <v-icon @click="logout"> mdi-account-arrow-right-outline </v-icon>
