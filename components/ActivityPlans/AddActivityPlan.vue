@@ -122,7 +122,7 @@ export default {
   methods: {
     async handleAddActivityPlan() {
       const planContents = this.planContents
-      if (planContents.category.length === 0) {
+      if (planContents.category === '') {
         this.$refs.form.validate()
         return
       }
@@ -133,10 +133,11 @@ export default {
       this.$emit('open-add-activity-plan')
     },
     closeAddActivityPlan() {
-      this.$emit('close-add-activity-plan')
       this.$refs.category.reset()
+      this.createPlanContents.category = []
       this.createPlanContents.detail = ''
       this.createPlanContents.date = new Date().toISOString().substr(0, 10)
+      this.$emit('close-add-activity-plan')
     },
     ...mapActions('modules/activityPlans/activityPlans', ['addActivityPlan'])
   }

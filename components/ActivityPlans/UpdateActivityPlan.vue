@@ -17,7 +17,7 @@
                 <!-- タスク編集エリア -->
                 <v-col cols="12" sm="12" md="12">
                   <v-combobox
-                    ref="categorys"
+                    ref="category"
                     v-model="editedPlanContents"
                     :items="qcCategorys"
                     label="カテゴリを変更"
@@ -133,7 +133,7 @@ export default {
   methods: {
     async handleUpdateActivityPlan() {
       const editPlanContens = this.editedPlanContents
-      if (editPlanContens.categorys.length === 0) {
+      if (editPlanContens.category.length === 0) {
         this.$refs.form.validate()
         return
       }

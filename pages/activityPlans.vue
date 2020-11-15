@@ -14,7 +14,7 @@
       <FilteredActivityPlans :selected-activity-plans-filter.sync="selectActivityPlansFilter" />
       <v-divider />
       <v-layout>
-        <SearchActivityPlans :search-plan-contents-category.sync="searchPlanContentsCategorys" />
+        <SearchActivityPlans :search-plan-contents-category.sync="searchPlanContentsCategory" />
         <SortByActivityPlans
           :selected-sort-activity-plans.sync="selectSortActivityPlans"
           :sort-activity-plans-states="sortActivityPlansStates"
@@ -138,8 +138,9 @@ export default {
         return activityPlans
       }
       return activityPlans.filter((activityPlan) => {
-        const category = activityPlan.category
-        return category.includes(searchCategory)
+        console.log(activityPlan)
+        // const category = activityPlan.category
+        // return this.activityPlan.planContents.category.includes(searchCategory)
       })
     },
     sortByActivityPlans() {
