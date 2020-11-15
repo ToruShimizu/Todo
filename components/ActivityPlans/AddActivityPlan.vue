@@ -16,31 +16,19 @@
               <v-container>
                 <v-row>
                   <!-- 活動計画入力エリア -->
-                  <v-col cols="12" sm="12" md="12">
+                  <v-col cols="12" sm="6" md="6">
                     <v-combobox
-                      ref="categorys"
-                      v-model="planContents.categorys"
+                      ref="category"
+                      v-model="planContents.category"
                       :items="qcCategorys"
                       label="やること"
-                      multiple
-                      chips
+                      dense
                       :rules="[validRules.categoryRules.required]"
-                    >
-                      <template v-slot:selection="planContents">
-                        <v-chip>
-                          <v-avatar
-                            class="accent white--text"
-                            left
-                            v-text="planContents.item.slice(0, 1).toUpperCase()"
-                          ></v-avatar>
-                          {{ planContents.item }}
-                        </v-chip>
-                      </template>
-                    </v-combobox>
+                    />
                   </v-col>
 
                   <!-- 日付入力エリア -->
-                  <v-col cols="12" sm="12" md="12">
+                  <v-col cols="12" sm="6" md="6">
                     <v-menu
                       v-model="dateMenu"
                       :close-on-content-click="false"
@@ -99,8 +87,9 @@ export default {
   props: {
     planContents: {
       type: Object,
+      required: false,
       default: () => ({
-        categorys: [],
+        category: '',
         detail: '',
         date: new Date().toISOString().substr(0, 10),
         done: false
@@ -133,7 +122,7 @@ export default {
   methods: {
     async handleAddActivityPlan() {
       const planContents = this.planContents
-      if (planContents.categorys.length === 0) {
+      if (planContents.category.length === 0) {
         this.$refs.form.validate()
         return
       }
@@ -145,7 +134,7 @@ export default {
     },
     closeAddActivityPlan() {
       this.$emit('close-add-activity-plan')
-      this.$refs.categorys.reset()
+      this.$refs.category.reset()
       this.createPlanContents.detail = ''
       this.createPlanContents.date = new Date().toISOString().substr(0, 10)
     },
