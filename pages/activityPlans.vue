@@ -14,7 +14,7 @@
       <FilteredActivityPlans :selected-activity-plans-filter.sync="selectActivityPlansFilter" />
       <v-divider />
       <v-layout>
-        <SearchActivityPlans :search-plan-contents-categorys.sync="searchPlanContentsCategorys" />
+        <SearchActivityPlans :search-plan-contents-category.sync="searchPlanContentsCategorys" />
         <SortByActivityPlans
           :selected-sort-activity-plans.sync="selectSortActivityPlans"
           :sort-activity-plans-states="sortActivityPlansStates"
@@ -58,7 +58,7 @@ export default {
   data() {
     return {
       planContents: {
-        categorys: [],
+        category: null,
         detail: '',
         date: new Date().toISOString().substr(0, 10),
         done: false
@@ -83,7 +83,7 @@ export default {
         '今後の進め方'
       ],
       selectActivityPlansFilter: 'all',
-      searchPlanContentsCategorys: '',
+      searchPlanContentsCategory: '',
       selectSortActivityPlans: [],
       sortActivityPlansStates: ['カテゴリ順', '日付降順↓', '日付昇順↑'],
       activityPlansPage: 1,
@@ -132,21 +132,21 @@ export default {
     // タスクの検索
     searchActivityPlans() {
       const activityPlans = this.sortByActivityPlans
-      const searchCategorys = this.searchPlanContentsCategorys
+      const searchCategory = this.searchPlanContentsCategory
       // vuetifyのclearableを使用するとnullになり表示されなくなるためnullの場合の処理を記述
-      if (searchCategorys === null) {
+      if (searchCategory === null) {
         return activityPlans
       }
       return activityPlans.filter((activityPlan) => {
-        const categorys = activityPlan.categorys.join(',')
-        return categorys.includes(searchCategorys)
+        const category = activityPlan.category
+        return category.includes(searchCategory)
       })
     },
     sortByActivityPlans() {
       let returnvalue
       switch (this.selectSortActivityPlans) {
         case 'カテゴリ順':
-          returnvalue = this.sortByCategorys
+          returnvalue = this.sortByCategory
           break
 
         case '日付降順↓':
@@ -165,7 +165,7 @@ export default {
     ...mapGetters('modules/activityPlans/activityPlans', [
       'remainingAcactivityPlans',
       'completedactivityPlans',
-      'sortByCategorys',
+      'sortByCategory',
       'sortByAscDate',
       'sortByDescDate'
     ]),

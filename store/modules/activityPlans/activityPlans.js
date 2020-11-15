@@ -50,7 +50,7 @@ const actions = {
     const activityPlanId = uuidv4()
     const createActivityPlan = {
       id: activityPlanId,
-      categorys: planContents.categorys,
+      category: planContents.category,
       detail: planContents.detail,
       date: planContents.date,
       done: false,
@@ -66,7 +66,7 @@ const actions = {
     const activityPlanId = planContents.id
     const updateActivityPlan = {
       id,
-      categorys: planContents.categorys,
+      category: planContents.category,
       date: planContents.date,
       detail: planContents.detail,
       done: false,
@@ -124,9 +124,9 @@ const getters = {
   completedActivityPlans(state) {
     return state.activityPlans.filter((activityPlan) => activityPlan.done)
   },
-  sortByCategorys(state) {
+  sortByCategory(state) {
     return state.activityPlans.slice().sort((a, b) => {
-      if (a.categorys < b.categorys) return -1
+      if (a.category < b.category) return -1
     })
   },
   sortByAscDate(state) {

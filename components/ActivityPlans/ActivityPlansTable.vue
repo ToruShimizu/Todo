@@ -30,10 +30,10 @@
                         v-on="on"
                         @click="openUpdateActivityPlan(contents)"
                       >
-                        {{ contents.categorys }}
+                        {{ contents.category }}
                       </td>
                     </template>
-                    <span>{{ contents.categorys }}の詳細を開く</span>
+                    <span>{{ contents.category }}の詳細を開く</span>
                   </v-tooltip>
                   <td :class="(contents.done && 'grey--text') || 'black--text'" class="pa-0">
                     {{ contents.date }}
@@ -108,7 +108,7 @@ export default {
   },
   methods: {
     handleRemoveActivityPlan(contents) {
-      if (!confirm(contents.categorys + 'を削除しますか？')) return
+      if (!confirm(contents.category + 'を削除しますか？')) return
       this.removeActivityPlan({ id: contents.id })
     },
     toggleDoneActivityPlan(contents) {
