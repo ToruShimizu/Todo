@@ -139,8 +139,7 @@ export default {
       }
       return activityPlans.filter((activityPlan) => {
         console.log(activityPlan)
-        // const category = activityPlan.category
-        // return this.activityPlan.planContents.category.includes(searchCategory)
+        return activityPlan.planContents.category.includes(searchCategory)
       })
     },
     sortByActivityPlans() {
