@@ -13,14 +13,21 @@
       </v-avatar>
       <h2 class="grey--text font-italic">{{ teamName }}</h2>
     </v-layout>
-    <v-layout class="justify-end">
-      <AddActivityPlan
-        :create-activity-plans.sync="planContents"
-        :todo-categorys="todoCategorys"
-        :add-activity-plan-dialog="addActivityPlanDialog"
-        @open-add-activity-plan="openAddActivityPlan"
-        @close-add-activity-plan="closeAddActivityPlan"
-      />
+    <v-layout class="justify-center">
+      <v-col cols="6">
+        <v-btn 　color="success" to="/createCircle" nuxt>
+          <v-icon>mdi-account-multiple-plus </v-icon>メンバー登録
+        </v-btn>
+      </v-col>
+      <v-col cols="6">
+        <AddActivityPlan
+          :create-activity-plans.sync="planContents"
+          :todo-categorys="todoCategorys"
+          :add-activity-plan-dialog="addActivityPlanDialog"
+          @open-add-activity-plan="openAddActivityPlan"
+          @close-add-activity-plan="closeAddActivityPlan"
+        />
+      </v-col>
     </v-layout>
     <v-divider class="mt-4" />
     <v-card class="mb-5">
@@ -185,7 +192,7 @@ export default {
       'sortByAscDate',
       'sortByDescDate'
     ]),
-    ...mapGetters('modules/auth/auth', ['photoURL']),
+    ...mapGetters('modules/user/auth', ['photoURL']),
     ...mapGetters('modules/team/team', ['teamName']),
     ...mapState('modules/activityPlans/activityPlans', ['activityPlans'])
   },
