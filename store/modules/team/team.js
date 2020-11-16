@@ -5,13 +5,18 @@ const state = () => ({
   team: {
     name: '',
     id: '',
-  }
+  },
+  teamMember: [],
 })
 const mutations = {
   registrationTeam(state, registrationTeam) {
     state.team.name = registrationTeam.teamName
     state.team.id = registrationTeam.teamId
     console.log('registrationTeam')
+  },
+  registrationMember(state, registrationMember) {
+    state.teamMember.unshift(registrationMember)
+    console.log('registrationMember')
   },
 
 }
@@ -42,6 +47,30 @@ const actions = {
     commit('registrationTeam', registrationTeam)
   },
 
+  async registrationMember({ commit, getters }, teamMember) {
+    const id = uuidv4()
+    const memberId = String(id)
+    const registrationMember = {
+      name: teamMember.name,
+      role: teamMember.role,
+      improvementRole: teamMember.improvementRole
+    }
+    try {
+      if (getters.userUid) {
+        await db
+          .collection(`users/${getters.userUid}/team`)
+          .doc(getters.teamId)
+          .collection('teamMember')
+          .doc(memberId)
+          .set(registrationMember)
+      }
+    }
+    catch (err) {
+      alert('登録に失敗しました。もう一度やり直してください。')
+      console.log(err);
+    }
+    commit('registrationMember', registrationMember)
+  }
 }
 
 const getters = {

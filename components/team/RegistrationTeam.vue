@@ -49,13 +49,14 @@
         </v-row>
       </v-card-text>
       <v-card-actions class="justify-end">
-        <v-btn color="primary" @click="registrationMember">登録</v-btn>
+        <v-btn color="primary" @click="handleRegistrationMember">登録</v-btn>
       </v-card-actions>
     </v-card>
   </v-col>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import FormValidation from '@/mixins/FormValidation.vue'
 
 export default {
@@ -74,6 +75,13 @@ export default {
       type: Array,
       required: true
     }
+  },
+  methods: {
+    handleRegistrationMember() {
+      const teamMember = this.teamMember
+      this.registrationMember(teamMember)
+    },
+    ...mapActions('modules/team/team', ['registrationMember'])
   }
 }
 </script>
