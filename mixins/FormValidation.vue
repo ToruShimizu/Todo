@@ -14,7 +14,8 @@ const validRules = {
     regex: (value) =>
       /^[\w-]{6,72}$/.test(value) || '半角英数字で6文字以上72文字以下でで入力してください'
   },
-  nameRules: { required: (value) => !!value || '名前は必須です' }
+  nameRules: { required: (value) => !!value || '名前は必須です' },
+  teamNameRules: { required: (value) => !!value || 'サークル名は必須です' }
 }
 
 export default {
