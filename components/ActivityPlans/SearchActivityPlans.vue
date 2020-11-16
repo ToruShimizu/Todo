@@ -3,7 +3,7 @@
     <v-combobox
       v-model="searchedCategoryKeyword"
       prepend-inner-icon="mdi-magnify"
-      :items="qcCategorys"
+      :items="todoCategorys"
       label="カテゴリ検索"
       clearable
       persistent-hint
@@ -21,7 +21,7 @@ export default {
       required: false,
       default: ''
     },
-    qcCategorys: {
+    todoCategorys: {
       type: Array
     }
   },
