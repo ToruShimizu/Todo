@@ -5,13 +5,27 @@ const state = () => ({
   team: []
 })
 const mutations = {
-  registrationTeamName(state, registrationTeam) {
+  registrationTeam(state, registrationTeam) {
+    console.log(registrationTeam)
     state.team.unshift(registrationTeam)
-    console.log('registrationTeamName')
+    console.log('registrationTeam')
   },
 
 }
 const actions = {
+  async fetchActivityPlans({ getters, commit }) {
+
+  },
+  async fetchTeamData({ getters, commit }) {
+    const snapShot = await db
+      .collection(`users/${getters.userUid}/team`)
+      .orderBy('created', 'desc')
+      .get()
+    snapShot.docs.map((doc) => {
+      const teamData = doc.data()
+      commit('registrationTeam', teamData)
+    })
+  },
   async registrationTeamName({ getters, commit }, teamName) {
     console.log(teamName)
     const teamId = uuidv4()
@@ -23,7 +37,7 @@ const actions = {
     if (getters.userUid) {
       await db.collection(`users/${getters.userUid}/team`).doc(teamId).set(registrationTeam)
     }
-    commit('registrationTeamName', registrationTeam)
+    commit('registrationTeam', registrationTeam)
   },
 
 }
