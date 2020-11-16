@@ -20,7 +20,7 @@
                     <v-combobox
                       ref="category"
                       v-model="planContents.category"
-                      :items="qcCategorys"
+                      :items="todoCategorys"
                       label="やること"
                       dense
                       :rules="[validRules.categoryRules.required]"
@@ -95,7 +95,7 @@ export default {
         done: false
       })
     },
-    qcCategorys: {
+    todoCategorys: {
       type: Array,
       required: true
     },

@@ -3,7 +3,7 @@
     <v-layout>
       <AddActivityPlan
         :create-activity-plans.sync="planContents"
-        :qc-categorys="qcCategorys"
+        :todo-categorys="todoCategorys"
         :add-activity-plan-dialog="addActivityPlanDialog"
         @open-add-activity-plan="openAddActivityPlan"
         @close-add-activity-plan="closeAddActivityPlan"
@@ -16,7 +16,7 @@
       <v-layout>
         <SearchActivityPlans
           :searched-category-keyword.sync="searchCategoryKeyword"
-          :qc-categorys="qcCategorys"
+          :todo-categorys="todoCategorys"
         />
 
         <SortByActivityPlans
@@ -34,7 +34,7 @@
         :searchActivityPlans="searchActivityPlans"
         :sortByActivityPlans="sortByActivityPlans"
         :display-activity-plans="displayActivityPlans"
-        :qc-categorys="qcCategorys"
+        :todo-categorys="todoCategorys"
       />
     </v-card>
   </v-container>
@@ -67,7 +67,7 @@ export default {
         date: new Date().toISOString().substr(0, 10),
         done: false
       },
-      qcCategorys: [
+      todoCategorys: [
         '会合',
         'KYT',
         '勉強会',
