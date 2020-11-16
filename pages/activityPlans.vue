@@ -1,6 +1,19 @@
 <template>
   <v-container style="max-width: 500px" class="mb-5">
-    <v-layout>
+    <v-layout class="justify-center">
+      <v-avatar max-width="40" max-height="40">
+        <v-img v-if="photoURL" :src="photoURL" :lazy-src="photoURL">
+          <template v-slot:placeholder>
+            <v-row class="fill-height ma-0" align="center" justify="center">
+              <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+            </v-row>
+          </template>
+        </v-img>
+        <v-icon v-else>mdi-account-outline</v-icon>
+      </v-avatar>
+      <h2 class="grey--text font-italic">{{ teamName }}</h2>
+    </v-layout>
+    <v-layout class="justify-end">
       <AddActivityPlan
         :create-activity-plans.sync="planContents"
         :todo-categorys="todoCategorys"
@@ -172,6 +185,8 @@ export default {
       'sortByAscDate',
       'sortByDescDate'
     ]),
+    ...mapGetters('modules/auth/auth', ['photoURL']),
+    ...mapGetters('modules/team/team', ['teamName']),
     ...mapState('modules/activityPlans/activityPlans', ['activityPlans'])
   },
   methods: {
