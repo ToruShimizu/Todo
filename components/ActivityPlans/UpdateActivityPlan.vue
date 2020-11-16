@@ -19,7 +19,7 @@
                   <v-combobox
                     ref="category"
                     v-model="editedPlanContents"
-                    :items="qcCategorys"
+                    :items="todoCategorys"
                     label="カテゴリを変更"
                     multiple
                     chips
@@ -105,7 +105,7 @@ export default {
       type: Object,
       required: false
     },
-    qcCategorys: {
+    todoCategorys: {
       type: Array,
       required: true
     },
