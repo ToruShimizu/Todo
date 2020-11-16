@@ -18,8 +18,8 @@
 
             <v-col cols="12" md="6">
               <v-combobox
-                v-model="circleMenber.role"
-                :items="circleRoles"
+                v-model="teamMenber.role"
+                :items="teamRoles"
                 label="サークル役割"
                 clearable
                 multiple
@@ -34,7 +34,7 @@
             </v-col>
             <v-col cols="12" md="6">
               <v-combobox
-                v-model="circleMenber.improvementRoles"
+                v-model="teamMenber.improvementRoles"
                 :items="improvementRoles"
                 label="改善事例担当"
                 clearable
@@ -65,12 +65,12 @@ export default {
   components: {},
   data() {
     return {
-      circleMenber: {
+      teamMenber: {
         name: '',
         role: [],
         improvementRole: []
       },
-      circleRoles: ['リーダー', 'サブリーダー', 'レクリエーション', '安全', '6S'],
+      teamRoles: ['リーダー', 'サブリーダー', 'レクリエーション', '安全', '6S'],
       improvementRoles: [
         'テーマリーダー',
         'サブリーダー',
