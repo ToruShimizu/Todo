@@ -31,7 +31,7 @@
         <v-btn text x-small>
           <v-icon small> mdi-pencil </v-icon>
         </v-btn>
-        <v-btn text x-small>
+        <v-btn text x-small @click="removeMember(item)">
           <v-icon small> mdi-delete </v-icon>
         </v-btn>
       </template>
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   data: () => ({
     memberHeaders: [
@@ -63,6 +63,12 @@ export default {
 
   computed: {
     ...mapState('modules/team/team', ['teamMember'])
+  },
+  methods: {
+    removeMember(item) {
+      this.removeMember(item)
+    },
+    ...mapActions('modules/team/team', ['removeMember'])
   }
 }
 </script>
