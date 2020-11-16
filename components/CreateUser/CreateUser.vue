@@ -23,6 +23,13 @@
                 <br />サンプルのメールアドレスで作成することができます。
               </p>
               <v-text-field
+                v-model="createNewUser.teamName"
+                prepend-inner-icon="mdi-card-account-details-outline"
+                label="サークル名を入力する"
+                :rules="[validRules.teamNameRules.required]"
+                clearable
+              />
+              <v-text-field
                 v-model="createNewUser.name"
                 prepend-inner-icon="mdi-card-account-details-outline"
                 label="名前を入力する"
@@ -88,6 +95,7 @@ export default {
   data() {
     return {
       createNewUser: {
+        teamName: '',
         name: '',
         email: '',
         password: ''
@@ -99,7 +107,7 @@ export default {
   methods: {
     async handleCreateUser() {
       const createUser = this.createNewUser
-      if (!createUser.password || !createUser.email) {
+      if (!createUser.password || !createUser.email || !createUser.name || !createUser.teamName) {
         this.loader = null
         this.$refs.form.validate()
         return
@@ -110,12 +118,14 @@ export default {
         password: createUser.password,
         userName: createUser.name
       })
+      this.registrationTeamName(createUser.teamName)
     },
     closeCreateUser() {
       this.$emit('close-create-user')
       this.$refs.form.reset()
     },
-    ...mapActions('modules/user/auth', ['createUser'])
+    ...mapActions('modules/user/auth', ['createUser']),
+    ...mapActions('modules/team/team', ['registrationTeamName'])
   }
 }
 </script>
