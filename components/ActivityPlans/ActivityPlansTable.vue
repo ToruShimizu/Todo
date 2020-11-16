@@ -54,7 +54,7 @@
     </v-card>
     <UpdateActivityPlan
       :edited-plan-contents.sync="editPlanContents"
-      :qc-categorys="qcCategorys"
+      :todo-categorys="todoCategorys"
       :update-activity-plan-dialog="updateActivityPlanDialog"
       @close-update-activity-plan="closeUpdateActivityPlan"
     />
@@ -82,7 +82,7 @@ export default {
       type: Array,
       required: true
     },
-    qcCategorys: {
+    todoCategorys: {
       type: Array,
       required: true
     }
