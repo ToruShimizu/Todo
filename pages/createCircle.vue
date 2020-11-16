@@ -6,7 +6,7 @@
           <v-row>
             <v-col cols="12" md="6">
               <v-text-field
-                v-model="memberName"
+                v-model="teamMember.name"
                 label="名前"
                 required
                 clearable
@@ -18,7 +18,7 @@
 
             <v-col cols="12" md="6">
               <v-combobox
-                v-model="teamMenber.role"
+                v-model="teamMember.role"
                 :items="teamRoles"
                 label="サークル役割"
                 clearable
@@ -34,7 +34,7 @@
             </v-col>
             <v-col cols="12" md="6">
               <v-combobox
-                v-model="teamMenber.improvementRoles"
+                v-model="teamMember.improvementRoles"
                 :items="improvementRoles"
                 label="改善事例担当"
                 clearable
@@ -54,18 +54,22 @@
         </v-card-actions>
       </v-card>
     </v-col>
+    <TeamMenber />
   </v-app>
 </template>
 
 <script>
 import FormValidation from '@/mixins/FormValidation.vue'
+import TeamMenber from '@/components/team/teamMember'
 
 export default {
   mixins: [FormValidation],
-  components: {},
+  components: {
+    TeamMenber
+  },
   data() {
     return {
-      teamMenber: {
+      teamMember: {
         name: '',
         role: [],
         improvementRole: []
