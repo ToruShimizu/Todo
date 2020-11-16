@@ -6,22 +6,20 @@ const state = () => ({
 })
 const mutations = {
   registrationTeam(state, registrationTeam) {
-    console.log(registrationTeam)
     state.team.unshift(registrationTeam)
     console.log('registrationTeam')
   },
 
 }
 const actions = {
-  async fetchActivityPlans({ getters, commit }) {
 
-  },
   async fetchTeamData({ getters, commit }) {
+    console.log(getters.userUid)
     const snapShot = await db
       .collection(`users/${getters.userUid}/team`)
-      .orderBy('created', 'desc')
       .get()
     snapShot.docs.map((doc) => {
+
       const teamData = doc.data()
       commit('registrationTeam', teamData)
     })
