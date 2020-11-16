@@ -14,7 +14,11 @@
       <FilteredActivityPlans :selected-activity-plans-filter.sync="selectActivityPlansFilter" />
       <v-divider />
       <v-layout>
-        <SearchActivityPlans :search-plan-contents-category.sync="searchPlanContentsCategory" />
+        <SearchActivityPlans
+          :searched-category-keyword.sync="searchCategoryKeyword"
+          :qc-categorys="qcCategorys"
+        />
+
         <SortByActivityPlans
           :selected-sort-activity-plans.sync="selectSortActivityPlans"
           :sort-activity-plans-states="sortActivityPlansStates"
@@ -83,7 +87,7 @@ export default {
         '今後の進め方'
       ],
       selectActivityPlansFilter: 'all',
-      searchPlanContentsCategory: '',
+      searchCategoryKeyword: '',
       selectSortActivityPlans: [],
       sortActivityPlansStates: ['カテゴリ順', '日付降順↓', '日付昇順↑'],
       activityPlansPage: 1,
@@ -132,14 +136,13 @@ export default {
     // タスクの検索
     searchActivityPlans() {
       const activityPlans = this.sortByActivityPlans
-      const searchCategory = this.searchPlanContentsCategory
-      // vuetifyのclearableを使用するとnullになり表示されなくなるためnullの場合の処理を記述
-      if (searchCategory === null) {
-        return activityPlans
+      const searchCategory = this.searchCategoryKeyword
+      if (this.searchCategoryKeyword === null) {
+        return this.activityPlans
       }
+
       return activityPlans.filter((activityPlan) => {
-        console.log(activityPlan)
-        return activityPlan.planContents.category.includes(searchCategory)
+        return activityPlan.category.includes(searchCategory)
       })
     },
     sortByActivityPlans() {
