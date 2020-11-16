@@ -1,30 +1,37 @@
 <template>
   <v-col cols="8" sm="8" md="8">
-    <v-text-field
-      v-model="innnerSearchPlanContentsCategory"
+    <v-combobox
+      v-model="searchedCategoryKeyword"
       prepend-inner-icon="mdi-magnify"
+      :items="qcCategorys"
       label="カテゴリ検索"
       clearable
-    ></v-text-field>
+      persistent-hint
+      hint="文字入力の場合はEnterキーを押してください"
+      @click:clear="$nextTick(() => (searchedCategoryKeyword = null))"
+    />
   </v-col>
 </template>
 
 <script>
 export default {
   props: {
-    searchPlanContentsCategory: {
+    searchCategoryKeyword: {
       type: String,
       required: false,
       default: ''
+    },
+    qcCategorys: {
+      type: Array
     }
   },
   computed: {
-    innnerSearchPlanContentsCategory: {
+    searchedCategoryKeyword: {
       get() {
-        return this.searchPlanContentsCategory
+        return this.searchCategoryKeyword
       },
-      set(searchPlanContentsCategory) {
-        this.$emit('update:search-plan-contents-category', searchPlanContentsCategory)
+      set(searchedCategoryKeyword) {
+        this.$emit('update:searched-category-keyword', searchedCategoryKeyword)
       }
     }
   }
