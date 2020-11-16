@@ -7,14 +7,16 @@
         </v-expansion-panel-header>
         <v-expansion-panel-content>
           <RegistrationTeam
+            :registration-member-dialog="registrationMemberDialog"
             :team-member="teamMember"
             :team-roles="teamRoles"
             :improvement-roles="improvementRoles"
+            @close-registration-member="closeRegistrationMember"
         /></v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
 
-    <TeamMenber />
+    <TeamMenber @open-registration-member="openRegistrationMember" />
   </v-app>
 </template>
 
@@ -29,6 +31,7 @@ export default {
   },
   data() {
     return {
+      registrationMemberDialog: false,
       registrationPanel: [0, 1],
       teamMember: {
         name: '',
@@ -54,7 +57,12 @@ export default {
     }
   },
   methods: {
-    registrationMember() {}
+    openRegistrationMember() {
+      this.registrationMemberDialog = true
+    },
+    closeRegistrationMember() {
+      this.registrationMemberDialog = false
+    }
   }
 }
 </script>

@@ -21,7 +21,7 @@
             hide-details
           />
           <v-divider class="mx-4" inset vertical />
-          <v-btn color="primary" dark>
+          <v-btn color="primary" dark @click="openRegistrationMember">
             <v-icon>mdi-account-plus-outline </v-icon>
           </v-btn>
           <v-spacer />
@@ -67,6 +67,9 @@ export default {
   methods: {
     removeMember(item) {
       this.removeMember(item)
+    },
+    openRegistrationMember() {
+      this.$emit('open-registration-member')
     },
     ...mapActions('modules/team/team', ['removeMember'])
   }
