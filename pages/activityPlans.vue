@@ -15,7 +15,7 @@
     </v-layout>
     <v-layout class="justify-center">
       <v-col cols="6">
-        <v-btn 　color="success" to="/createCircle" nuxt>
+        <v-btn 　color="success" to="/createTeam" nuxt>
           <v-icon>mdi-account-multiple-plus </v-icon>メンバー登録
         </v-btn>
       </v-col>
