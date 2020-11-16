@@ -74,7 +74,7 @@
     </v-dialog>
 
     <v-btn color="primary" dark @click="openAddActivityPlan">
-      <v-icon>mdi-pen-plus</v-icon>活動計画を作成する
+      <v-icon>mdi-pen-plus</v-icon>活動計画作成
     </v-btn>
   </v-app>
 </template>
