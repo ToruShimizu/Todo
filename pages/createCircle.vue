@@ -6,7 +6,7 @@
           <span class="font-weight-bold text-center"> メンバー登録 </span>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <RegistrationTeam
+          <RegistrationMember
             :registration-member-dialog="registrationMemberDialog"
             :team-member="teamMember"
             :team-roles="teamRoles"
@@ -21,12 +21,12 @@
 </template>
 
 <script>
-import RegistrationTeam from '@/components/team/RegistrationTeam'
+import RegistrationMember from '@/components/team/RegistrationMember'
 import TeamMenber from '@/components/team/teamMember'
 
 export default {
   components: {
-    RegistrationTeam,
+    RegistrationMember,
     TeamMenber
   },
   data() {
