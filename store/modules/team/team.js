@@ -18,6 +18,10 @@ const mutations = {
     state.teamMember.unshift(registrationMember)
     console.log('registrationMember')
   },
+  removeMember(state, id) {
+    const index = state.teamMember.findIndex((member) => member.id === id)
+    state.teamMember.splice(index, 1)
+  }
 
 }
 const actions = {
@@ -43,8 +47,6 @@ const actions = {
     })
   },
 
-
-
   async registrationTeamName({ getters, commit }, teamName) {
     const id = uuidv4()
     const teamId = String(id)
@@ -63,6 +65,7 @@ const actions = {
     const id = uuidv4()
     const memberId = String(id)
     const registrationMember = {
+      id: memberId,
       name: teamMember.name,
       role: teamMember.role,
       improvementRole: teamMember.improvementRole
@@ -82,6 +85,16 @@ const actions = {
       console.log(err);
     }
     commit('registrationMember', registrationMember)
+  },
+  async removeMember({ commit, getters }, teamMember) {
+    const id = teamMember.id;
+    if (getters.userUid) {
+      const snapShot = await db.collection(`users/${getters.userUid}/team`).get()
+      snapShot.forEach(async (doc) => {
+        await doc.ref.collection('teamMember').doc(id).delete()
+      })
+      commit('removeMember', id)
+    }
   }
 }
 
