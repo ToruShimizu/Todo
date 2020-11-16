@@ -31,7 +31,7 @@
         <v-btn text x-small>
           <v-icon small> mdi-pencil </v-icon>
         </v-btn>
-        <v-btn text x-small @click="removeMember(item)">
+        <v-btn text x-small @click="handleRemoveMember(item)">
           <v-icon small> mdi-delete </v-icon>
         </v-btn>
       </template>
@@ -65,7 +65,8 @@ export default {
     ...mapState('modules/team/team', ['teamMember'])
   },
   methods: {
-    removeMember(item) {
+    handleRemoveMember(item) {
+      if (!confirm(item.name + 'を削除しますか？')) return
       this.removeMember(item)
     },
     openRegistrationMember() {
