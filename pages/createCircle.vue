@@ -1,71 +1,36 @@
 <template>
   <v-app>
-    <v-col cols="12" sm="12" md="12">
-      <v-card width="600px" class="mx-auto">
-        <v-card-text>
-          <v-row>
-            <v-col cols="12" md="6">
-              <v-text-field
-                v-model="memberName"
-                label="名前"
-                required
-                clearable
-                dense
-                prepend-inner-icon="mdi-card-account-details-outline"
-                :rules="[validRules.nameRules.required]"
-              />
-            </v-col>
+    <v-expansion-panels v-model="registrationPanel" multiple class="mb-4">
+      <v-expansion-panel>
+        <v-expansion-panel-header expand-icon="mdi-menu-down" class="font-weight-medium">
+          <span class="font-weight-bold text-center"> メンバー登録 </span>
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <RegistrationTeam
+            :team-member="teamMember"
+            :team-roles="teamRoles"
+            :improvement-roles="improvementRoles"
+        /></v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
 
-            <v-col cols="12" md="6">
-              <v-combobox
-                v-model="teamMenber.role"
-                :items="teamRoles"
-                label="サークル役割"
-                clearable
-                multiple
-                small-chips
-                persistent-hint
-                dense
-                prepend-inner-icon="mdi-briefcase-account-outline"
-                hint="文字入力の場合はEnterキーを押してください"
-                @click:clear="$nextTick(() => (searchedCategoryKeyword = null))"
-              >
-              </v-combobox>
-            </v-col>
-            <v-col cols="12" md="6">
-              <v-combobox
-                v-model="teamMenber.improvementRoles"
-                :items="improvementRoles"
-                label="改善事例担当"
-                clearable
-                persistent-hint
-                hint="文字入力の場合はEnterキーを押してください"
-                multiple
-                small-chips
-                prepend-inner-icon="mdi-briefcase-outline"
-                @click:clear="$nextTick(() => (searchedCategoryKeyword = null))"
-              >
-              </v-combobox>
-            </v-col>
-          </v-row>
-        </v-card-text>
-        <v-card-actions class="justify-end">
-          <v-btn color="primary" @click="registrationMember">登録</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-col>
+    <TeamMenber />
   </v-app>
 </template>
 
 <script>
-import FormValidation from '@/mixins/FormValidation.vue'
+import RegistrationTeam from '@/components/team/RegistrationTeam'
+import TeamMenber from '@/components/team/teamMember'
 
 export default {
-  mixins: [FormValidation],
-  components: {},
+  components: {
+    RegistrationTeam,
+    TeamMenber
+  },
   data() {
     return {
-      teamMenber: {
+      registrationPanel: [0, 1],
+      teamMember: {
         name: '',
         role: [],
         improvementRole: []
