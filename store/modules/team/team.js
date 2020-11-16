@@ -2,11 +2,15 @@ import { v4 as uuidv4 } from 'uuid'
 import firebase, { db } from '~/plugins/firebase'
 
 const state = () => ({
-  team: []
+  team: {
+    name: '',
+    id: '',
+  }
 })
 const mutations = {
   registrationTeam(state, registrationTeam) {
-    state.team.unshift(registrationTeam)
+    state.team.name = registrationTeam.teamName
+    state.team.id = registrationTeam.teamId
     console.log('registrationTeam')
   },
 
@@ -25,8 +29,8 @@ const actions = {
     })
   },
   async registrationTeamName({ getters, commit }, teamName) {
-    console.log(teamName)
-    const teamId = uuidv4()
+    const id = uuidv4()
+    const teamId = String(id)
     const registrationTeam = {
       teamName,
       teamId,
@@ -41,6 +45,14 @@ const actions = {
 }
 
 const getters = {
+  // チームネームの取得
+  teamName: (state) => {
+    return state.team.name
+  },
+  // チームidの取得
+  teamId: (state) => {
+    return state.team.id
+  },
   // uidの取得
   userUid: (state, getters, rootState, rootGetters) => {
     return rootGetters['modules/user/auth/uid']
