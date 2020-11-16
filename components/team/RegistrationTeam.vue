@@ -40,7 +40,7 @@
               </v-col>
               <v-col cols="12" sm="12" md="12">
                 <v-combobox
-                  v-model="teamMember.improvementRoles"
+                  v-model="teamMember.improvementRole"
                   :items="improvementRoles"
                   label="改善事例担当"
                   clearable
