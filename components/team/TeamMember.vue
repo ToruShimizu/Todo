@@ -12,10 +12,20 @@
             </tr>
           </thead>
           <tbody>
-            <template>
-              <transition>
+            <template v-for="member in teamMember">
+              <transition :key="member.name" name="list">
                 <tr>
-                  <td></td>
+                  <td>{{ member.name }}</td>
+
+                  <td>
+                    {{ member.role }}
+                  </td>
+                  <td>{{ member.improvementRole }}</td>
+                  <td>
+                    <v-btn icon>
+                      <v-icon>mdi-delete-outline</v-icon>
+                    </v-btn>
+                  </td>
                 </tr>
               </transition>
             </template>
@@ -27,19 +37,13 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   data() {
-    return {
-      teamMemberHeaders: [
-        { text: '名前', value: 'name', align: 'start' },
-        {
-          text: ' 役割',
-          value: 'teamRoles'
-        },
-        { text: '期限', value: 'date' },
-        { text: '削除', value: 'remove', sortable: false }
-      ]
-    }
+    return {}
+  },
+  computed: {
+    ...mapState('modules/team/team', ['teamMember'])
   }
 }
 </script>
