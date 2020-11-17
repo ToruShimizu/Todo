@@ -11,8 +11,8 @@
       <v-icon v-else>mdi-account-outline</v-icon>
     </v-avatar>
     <h2 class="grey--text font-italic">{{ teamName }}</h2>
-    <v-btn text v-if="this.$route.path === '/createTeam'">
-      <v-icon color="grey darken-1"> mdi-pencil-outline </v-icon>
+    <v-btn 　color="success" to="/createTeam" nuxt　class="ml-2">
+      <v-icon>mdi-account-multiple-plus </v-icon>
     </v-btn>
   </v-layout>
 </template>
