@@ -28,7 +28,7 @@
         </v-toolbar>
       </template>
       <template v-slot:item.actions="{ item }">
-        <v-btn text x-small>
+        <v-btn text x-small @click="openUpdateMember(item)">
           <v-icon small> mdi-pencil </v-icon>
         </v-btn>
         <v-btn text x-small @click="handleRemoveMember(item)">
@@ -36,12 +36,33 @@
         </v-btn>
       </template>
     </v-data-table>
+    <UpdateMember
+      :edit-member="editMember"
+      :improvement-roles="improvementRoles"
+      :team-roles="teamRoles"
+      :update-member-dialog="updateMemberDialog"
+      @close-update-member="closeUpdateMember"
+    />
   </v-layout>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import UpdateMember from '@/components/team/UpdateMember'
 export default {
+  components: {
+    UpdateMember
+  },
+  props: {
+    teamRoles: {
+      type: Array,
+      required: true
+    },
+    improvementRoles: {
+      type: Array,
+      required: true
+    }
+  },
   data: () => ({
     memberHeaders: [
       {
@@ -51,14 +72,16 @@ export default {
         value: 'name'
       },
       { text: '役割', value: 'role', sortable: true },
-      { text: '改善', value: 'improvementRoles', sortable: true },
+      { text: '改善', value: 'improvementRole', sortable: true },
       { text: '編集or削除', value: 'actions', sortable: false }
     ],
     searchMember: '',
     pageOptions: {
       page: 1,
       itemsPerPage: 5
-    }
+    },
+    editMember: {},
+    updateMemberDialog: false
   }),
 
   computed: {
@@ -71,6 +94,13 @@ export default {
     },
     openRegistrationMember() {
       this.$emit('open-registration-member')
+    },
+    openUpdateMember(item) {
+      this.editMember = Object.assign({}, item)
+      this.updateMemberDialog = true
+    },
+    closeUpdateMember() {
+      this.updateMemberDialog = false
     },
     ...mapActions('modules/team/team', ['removeMember'])
   }
