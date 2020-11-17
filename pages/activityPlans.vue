@@ -1,26 +1,22 @@
 <template>
   <v-container style="max-width: 500px" class="mb-5">
     <TeamName />
-    <v-layout class="justify-center">
-      <v-col cols="6">
-        <v-btn 　color="success" to="/createTeam" nuxt>
-          <v-icon>mdi-account-multiple-plus </v-icon>メンバー登録
-        </v-btn>
-      </v-col>
-      <v-col cols="6">
-        <AddActivityPlan
-          :create-activity-plans.sync="planContents"
-          :todo-categorys="todoCategorys"
-          :add-activity-plan-dialog="addActivityPlanDialog"
-          @open-add-activity-plan="openAddActivityPlan"
-          @close-add-activity-plan="closeAddActivityPlan"
-        />
-      </v-col>
-    </v-layout>
+    <AddActivityPlan
+      :create-activity-plans.sync="planContents"
+      :todo-categorys="todoCategorys"
+      :add-activity-plan-dialog="addActivityPlanDialog"
+      @open-add-activity-plan="openAddActivityPlan"
+      @close-add-activity-plan="closeAddActivityPlan"
+    />
     <v-divider class="mt-4" />
     <v-card class="mb-5">
       <FilteredActivityPlans :selected-activity-plans-filter.sync="selectActivityPlansFilter" />
       <v-divider />
+      <v-layout class="justify-center mt-2">
+        <v-btn color="primary" dark @click="openAddActivityPlan">
+          <v-icon>mdi-pen-plus</v-icon>活動計画作成
+        </v-btn>
+      </v-layout>
       <v-layout>
         <SearchActivityPlans
           :searched-category-keyword.sync="searchCategoryKeyword"

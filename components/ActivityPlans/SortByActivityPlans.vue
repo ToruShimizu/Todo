@@ -1,5 +1,5 @@
 <template>
-  <v-col cols="4" sm="4" md="4">
+  <v-col cols="5" sm="4" md="4">
     <v-select
       v-model="selectedSortActivityPlans"
       :items="sortActivityPlansStates"
