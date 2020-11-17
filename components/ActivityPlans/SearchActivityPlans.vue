@@ -1,5 +1,5 @@
 <template>
-  <v-col cols="8" sm="8" md="8">
+  <v-col cols="7" sm="8" md="8">
     <v-combobox
       v-model="searchedCategoryKeyword"
       prepend-inner-icon="mdi-magnify"
