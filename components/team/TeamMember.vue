@@ -48,7 +48,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import UpdateMember from '@/components/team/UpdateMember'
+import UpdateMember from '@/components/team/edit/UpdateMember'
 export default {
   components: {
     UpdateMember
