@@ -59,7 +59,7 @@
             </v-form>
           </v-card-text>
           <v-card-actions class="justify-end">
-            <v-btn color="primary" @click="closeRegistrationMmber" text>close</v-btn>
+            <v-btn color="primary" @click="closeRegistrationMember" text>close</v-btn>
             <v-btn color="primary" @click="handleRegistrationMember" text>save</v-btn>
           </v-card-actions>
         </v-card>
@@ -94,16 +94,19 @@ export default {
     }
   },
   methods: {
-    handleRegistrationMember() {
+    async handleRegistrationMember() {
       const teamMember = this.teamMember
       if (!teamMember.name) {
         this.$refs.form.validate()
         return
       }
-      this.registrationMember(teamMember)
+      await this.registrationMember(teamMember)
+      this.closeRegistrationMember()
     },
-    closeRegistrationMmber() {
+    closeRegistrationMember() {
       this.$refs.memberName.reset()
+      this.teamMember.role = ''
+      this.teamMember.improvementRoles = ''
       this.$emit('close-registration-member')
     },
     ...mapActions('modules/team/team', ['registrationMember'])
