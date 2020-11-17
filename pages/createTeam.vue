@@ -1,33 +1,28 @@
 <template>
   <v-app>
-    <v-expansion-panels v-model="registrationPanel" multiple class="mb-4">
-      <v-expansion-panel>
-        <v-expansion-panel-header expand-icon="mdi-menu-down" class="font-weight-medium">
-          <span class="font-weight-bold text-center"> メンバー登録 </span>
-        </v-expansion-panel-header>
-        <v-expansion-panel-content>
-          <RegistrationMember
-            :registration-member-dialog="registrationMemberDialog"
-            :team-member="teamMember"
-            :team-roles="teamRoles"
-            :improvement-roles="improvementRoles"
-            @close-registration-member="closeRegistrationMember"
-        /></v-expansion-panel-content>
-      </v-expansion-panel>
-    </v-expansion-panels>
+    <TeamName />
 
-    <TeamMenber @open-registration-member="openRegistrationMember" />
+    <RegistrationMember
+      :registration-member-dialog="registrationMemberDialog"
+      :team-member="teamMember"
+      :team-roles="teamRoles"
+      :improvement-roles="improvementRoles"
+      @close-registration-member="closeRegistrationMember"
+    />
+    <TeamMember @open-registration-member="openRegistrationMember" />
   </v-app>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import RegistrationMember from '@/components/team/RegistrationMember'
-import TeamMenber from '@/components/team/teamMember'
+import TeamMember from '@/components/team/teamMember'
+import TeamName from '@/components/team/TeamName'
 
 export default {
   components: {
     RegistrationMember,
-    TeamMenber
+    TeamName
   },
   data() {
     return {
@@ -55,6 +50,9 @@ export default {
         '今後の進め方'
       ]
     }
+  },
+  computed: {
+    ...mapGetters('modules/team/team', ['teamName'])
   },
   methods: {
     openRegistrationMember() {
