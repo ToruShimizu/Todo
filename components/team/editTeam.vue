@@ -13,7 +13,7 @@
       </v-list-item>
       <v-list-item>
         <v-btn text>
-          <v-list-item-title @click="editDeleteTeam">サークル削除</v-list-item-title>
+          <v-list-item-title @click="handleDeleteTeam">サークル削除</v-list-item-title>
         </v-btn>
       </v-list-item>
       <v-list-item v-if="this.$route.path !== '/createTeam'">
@@ -26,9 +26,14 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
-  data() {
-    return {}
+  methods: {
+    handleDeleteTeam() {
+      if (!confirm('サークルを削除しますか？')) return
+      this.removeTeam()
+    },
+    ...mapActions('modules/team/team', ['removeTeam'])
   }
 }
 </script>
