@@ -27,6 +27,10 @@ const mutations = {
     console.log('updateMember')
 
   },
+  removeTeam(state, id) {
+    const index = state.teamMember.findIndex((member) => member.id === id)
+    state.team.splice(index, 1)
+  },
   removeMember(state, id) {
     const index = state.teamMember.findIndex((member) => member.id === id)
     state.teamMember.splice(index, 1)
@@ -68,6 +72,11 @@ const actions = {
       await db.collection(`users/${getters.userUid}/team`).doc(teamId).set(registrationTeam)
     }
     commit('registrationTeam', registrationTeam)
+  },
+  async removeTeam({ commit, state, getters }) {
+    const id = state.team.id
+    await db.collection(`users/${getters.userUid}/team`).doc(id).delete()
+    commit('removeTeam', id)
   },
 
   async registrationMember({ commit, getters }, teamMember) {
