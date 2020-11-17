@@ -9,7 +9,11 @@
       :improvement-roles="improvementRoles"
       @close-registration-member="closeRegistrationMember"
     />
-    <TeamMember @open-registration-member="openRegistrationMember" />
+    <TeamMember
+      @open-registration-member="openRegistrationMember"
+      :improvement-roles="improvementRoles"
+      :team-roles="teamRoles"
+    />
   </v-app>
 </template>
 
