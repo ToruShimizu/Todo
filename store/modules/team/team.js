@@ -18,6 +18,15 @@ const mutations = {
     state.teamMember.unshift(registrationMember)
     console.log('registrationMember')
   },
+  updateMember(state, editMember) {
+    const index = state.teamMember.findIndex((member) => member.id === editMember.id)
+    const teamMember = state.teamMember[index]
+    teamMember.name = editMember.name
+    teamMember.role = editMember.role
+    teamMember.improvementRole = editMember.improvementRole
+    console.log('updateMember')
+
+  },
   removeMember(state, id) {
     const index = state.teamMember.findIndex((member) => member.id === id)
     state.teamMember.splice(index, 1)
@@ -85,6 +94,22 @@ const actions = {
       console.log(err);
     }
     commit('registrationMember', registrationMember)
+  },
+  async updateMember({ getters, commit }, editMember) {
+    try {
+      if (getters.userUid) {
+        const snapShot = await db.collection(`users/${getters.userUid}/team`).get()
+        snapShot.docs.map(async (doc) => {
+          await doc.ref.collection('teamMember').doc(editMember.id).update(editMember
+          )
+        })
+        await commit('updateMember', editMember
+        )
+      }
+    } catch (err) {
+      alert('更新に失敗しました。もう一度やり直しください。')
+      console.log(err);
+    }
   },
   async removeMember({ commit, getters }, teamMember) {
     const id = teamMember.id;
