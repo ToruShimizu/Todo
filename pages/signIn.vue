@@ -1,68 +1,54 @@
 <template>
   <v-app>
-    <v-col cols="12" sm="12" md="12">
-      <v-card width="400px" class="mx-auto">
-        <v-card-title class="text-center">
-          <h4 class="fill-width">ログインはこちらから</h4>
-        </v-card-title>
-        <v-card-text>
-          <v-btn
-            class="fill-width text-capitalize caption"
-            height="48px"
-            outlined
-            style="border-color: #979797"
-            tile
-            @click="googleLogin"
-          >
-            <img
-              class="button-logo-img mr-4"
-              src="https://madeby.google.com/static/images/google_g_logo.svg"
-              style="height: 24px"
-            />Googleアカウントでログイン
-          </v-btn>
-          <v-btn
-            class="fill-width text-capitalize caption mt-5"
-            height="48px"
-            outlined
-            style="border-color: #979797"
-            tile
-            @click="handleTestLogin"
-            ><v-icon>mdi-account-arrow-left-outline </v-icon> テストユーザーでログイン
-          </v-btn>
-        </v-card-text>
-        <div class="separator separator_login_page">
-          <div class="middle_separator">または</div>
-        </div>
-        <v-btn text color="primary accent-4" class="fill-width" @click="openResetPassword">
-          パスワードを忘れた方はこちら</v-btn
-        >
-        <v-card-text>
-          <v-form ref="form" lazy-validation @submit.prevent="login">
-            <FormUserEmail :user-email.sync="signInUser.email" :email-label="'メールアドレス'" />
-            <FormUserPassword :password-label="'パスワード'" />
+    <FormView :title="'ログインはこちら'">
+      <template v-slot:form>
+        <FormCardText>
+          <template v-slot:text>
+            <LoginButton @login="googleLogin" class="mb-3">
+              <template v-slot:icon>
+                <img
+                  class="button-logo-img mr-4"
+                  src="https://madeby.google.com/static/images/google_g_logo.svg"
+                  style="height: 24px"
+                />Googleアカウントでログイン
+              </template>
+            </LoginButton>
+            <LoginButton @login="handleTestLogin">
+              <template v-slot:icon>
+                <v-icon>mdi-account-arrow-left-outline </v-icon> テストユーザーでログイン
+              </template>
+            </LoginButton>
+          </template>
+        </FormCardText>
+        <v-divider />
+        <FormCardText>
+          <template v-slot:text> またはこちらからログイン </template>
+        </FormCardText>
 
-            <v-card-actions class="justify-end">
-              <SaveButton :title="'login'" @save-button="handleLogin">
-                <template v-slot:saveButton
-                  ><v-icon>mdi-account-arrow-left-outline </v-icon></template
-                >
-              </SaveButton>
-              <SaveButton :title="'new'" @save-button="openCreateUser">
-                <template v-slot:saveButton> <v-icon left>mdi-account-plus</v-icon></template>
-              </SaveButton>
-            </v-card-actions>
-            <CreateUser
-              :create-user-dialog="createUserDialog"
-              @close-create-user="closeCreateUser"
-            />
-            <ResetPassword
-              :reset-password-dialog="resetPasswordDialog"
-              @close-reset-password="closeResetPassword"
-            />
-          </v-form>
-        </v-card-text>
-      </v-card>
-    </v-col>
+        <v-form ref="form" lazy-validation @submit.prevent="login">
+          <FormUserEmail :user-email.sync="signInUser.email" :email-label="'メールアドレス'" />
+          <FormUserPassword :password-label="'パスワード'" />
+          <v-btn text color="primary accent-4" class="fill-width" @click="openResetPassword">
+            ※パスワードを忘れた方はこちら</v-btn
+          >
+          <v-card-actions class="justify-end">
+            <SaveButton :title="'login'" @save-button="handleLogin">
+              <template v-slot:saveButton
+                ><v-icon>mdi-account-arrow-left-outline </v-icon></template
+              >
+            </SaveButton>
+            <SaveButton :title="'new'" @save-button="openCreateUser">
+              <template v-slot:saveButton> <v-icon left>mdi-account-plus</v-icon></template>
+            </SaveButton>
+          </v-card-actions>
+          <CreateUser :create-user-dialog="createUserDialog" @close-create-user="closeCreateUser" />
+          <ResetPassword
+            :reset-password-dialog="resetPasswordDialog"
+            @close-reset-password="closeResetPassword"
+          />
+        </v-form>
+      </template>
+    </FormView>
   </v-app>
 </template>
 
@@ -73,6 +59,7 @@ import ResetPassword from '@/components/ResetPassword/ResetPassword'
 import FormUserEmail from '@/components/commonParts/user/form/FormUserEmail'
 import FormUserPassword from '@/components/commonParts/user/form/FormUserPassword'
 import SaveButton from '@/components/commonParts/button/SaveButton'
+import FormView from '@/components/commonParts/form/FormView'
 
 export default {
   components: {
@@ -80,7 +67,8 @@ export default {
     ResetPassword,
     FormUserEmail,
     FormUserPassword,
-    SaveButton
+    SaveButton,
+    FormView
   },
 
   data() {

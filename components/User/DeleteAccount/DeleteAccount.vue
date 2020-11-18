@@ -5,46 +5,31 @@
     max-width="500px"
     transition="scroll-y-transition"
   >
-    <v-app>
-      <v-col cols="12" sm="12" md="12">
-        <v-card width="400px" class="mx-auto text-center">
-          <v-card-title class="text-center">
-            <!-- FIXME classはscssに記述する -->
-            <h4 class="fill-width">アカウント削除</h4>
-          </v-card-title>
-          <v-divider />
-          <v-card-title>
-            <v-card-text>
-              登録されているメールアドレスと
-              <br />パスワードを入力してください
-            </v-card-text>
-          </v-card-title>
-          <v-card-text>
-            <v-form ref="form" lazy-validation>
-              <FormUserEmail
-                :user-email.sync="editUser.email"
-                :email-label="'現在のメールアドレス'"
-              />
-              <FormUserPassword
-                :user-password.sync="editUser.password"
-                :passwordLabel="'現在のパスワード'"
-              />
-              <v-card-actions class="justify-end">
-                <CloseButton
-                  title="close"
-                  @close-button="selectedDeleteAccount = 'closeDeleteAccount'"
-                />
-                <DeleteButton :title="'delete'" @delete-button="handleDeleteAccount"
-                  ><template v-slot:deleteButton>
-                    <v-icon left> mdi-account-multiple-remove-outline </v-icon></template
-                  ></DeleteButton
-                >
-              </v-card-actions>
-            </v-form>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-app>
+    <FormView :title="'アカウント削除'">
+      <template v-slot:form>
+        <FormCardText>
+          <template v-slot:text> ※ 削除後にログイン画面に戻ります。 </template>
+        </FormCardText>
+        <v-form ref="form" lazy-validation>
+          <FormUserEmail :user-email.sync="editUser.email" :email-label="'現在のメールアドレス'" />
+          <FormUserPassword
+            :user-password.sync="editUser.password"
+            :passwordLabel="'現在のパスワード'"
+          />
+          <v-card-actions class="justify-end">
+            <CloseButton
+              title="close"
+              @close-button="selectedDeleteAccount = 'closeDeleteAccount'"
+            />
+            <DeleteButton :title="'delete'" @delete-button="handleDeleteAccount"
+              ><template v-slot:deleteButton>
+                <v-icon left> mdi-account-multiple-remove-outline </v-icon></template
+              ></DeleteButton
+            >
+          </v-card-actions>
+        </v-form>
+      </template>
+    </FormView>
   </v-dialog>
 </template>
 
@@ -54,13 +39,17 @@ import FormUserEmail from '@/components/commonParts/user/form/FormUserEmail'
 import FormUserPassword from '@/components/commonParts/user/form/FormUserPassword'
 import DeleteButton from '@/components/commonParts/button/DeleteButton'
 import CloseButton from '@/components/commonParts/button/CloseButton'
+import FormView from '@/components/commonParts/form/FormView'
+import FormCardText from '@/components/commonParts/card/FormCardText'
 
 export default {
   components: {
     FormUserEmail,
     FormUserPassword,
     DeleteButton,
-    CloseButton
+    CloseButton,
+    FormView,
+    FormCardText
   },
   props: {
     deleteAccountDialog: {
