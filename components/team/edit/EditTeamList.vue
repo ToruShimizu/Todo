@@ -1,6 +1,9 @@
 <template>
   <div>
-    <v-menu transition="fab-transition">
+    <v-btn v-if="team === null" color="teal" dark class="font-italic mb-5" @click="openCreateTeam">
+      <v-icon>mdi-account-plus</v-icon>サークル新規作成
+    </v-btn>
+    <v-menu transition="fab-transition" v-else>
       <template v-slot:activator="{ on, attrs }">
         <v-btn dark color="grey" v-bind="attrs" v-on="on" text>
           <v-icon>mdi-pen </v-icon>
@@ -19,23 +22,38 @@
         </v-list-item>
       </v-list>
     </v-menu>
-    <UpdateTeam :update-team-dialog="updateTeamDialog" @close-update-team="closeUpdateTeam" />
+    <CreateTeam :create-team-dialog="createTeamDialog" @close-team-dialog="closeCreateTeam" />
+    <UpdateTeam :update-team-dialog="updateTeamDialog" @close-team-dialog="closeUpdateTeam" />
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import UpdateTeam from '@/components/team/edit/UpdateTeam'
+import CreateTeam from '@/components/team/CreateTeam'
 export default {
+  components: {
+    UpdateTeam,
+    CreateTeam
+  },
   data() {
     return {
+      createTeamDialog: false,
       updateTeamDialog: false
     }
   },
+  computed: {
+    ...mapState('modules/team/team', ['team'])
+  },
   methods: {
+    openCreateTeam() {
+      this.createTeamDialog = true
+    },
     openUpdateTeam() {
-      console.log('hoge')
       this.updateTeamDialog = true
+    },
+    closeCreateTeam() {
+      this.createTeamDialog = false
     },
     closeUpdateTeam() {
       this.updateTeamDialog = false
