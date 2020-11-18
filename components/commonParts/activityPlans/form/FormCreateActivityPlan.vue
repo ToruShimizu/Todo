@@ -8,9 +8,10 @@
     <v-app>
       <v-col cols="12" sm="12" md="12">
         <v-card>
-          <v-card-title>
+          <v-card-title class="justify-center font-italic grey--text darken">
             <span class="headline">{{ title }}</span>
           </v-card-title>
+          <v-divider></v-divider>
           <v-form ref="form" lazy-validation>
             <v-container>
               <v-row>
@@ -19,9 +20,11 @@
                   <v-combobox
                     ref="category"
                     v-model="planContents.category"
+                    prepend-inner-icon="mdi-pencil-outline"
                     :items="categorys"
                     label="やること"
-                    dense
+                    persistent-hint
+                    hint="文字入力の場合はEnterキーを押してください"
                     :rules="[validRules.categoryRules.required]"
                   />
                 </v-col>
@@ -56,9 +59,10 @@
                     clearable
                   />
                 </v-col>
+                <slot name="comment"></slot>
               </v-row>
             </v-container>
-            <v-card-actions>
+            <v-card-actions class="justify-end">
               <v-btn color="blue darken-1" text @click="closeActivityPlan">Cancel</v-btn>
               <v-btn color="blue darken-1" text @click="handleSaveActivityPlan">Save</v-btn>
             </v-card-actions>
@@ -94,7 +98,8 @@ export default {
     },
     activityPlanDialog: {
       type: Boolean,
-      required: true
+      required: true,
+      detail: false
     }
   },
   data() {
