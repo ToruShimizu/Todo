@@ -128,7 +128,7 @@ export default {
       'removeActivityPlan',
       'doneActivityPlan'
     ]),
-    ...mapActions('modules/comment', ['fetchComments'])
+    ...mapActions('modules/comment/comment', ['fetchComments'])
   }
 }
 </script>

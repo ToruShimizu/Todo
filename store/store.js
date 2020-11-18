@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import * as auth from './modules/user/auth'
 import * as userInfo from './modules/user/userInfo'
 import * as activityPlans from './modules/activityPlans/activityPlans'
-import * as comment from './modules/comment'
+import * as comment from './modules/comment/comment'
 import * as team from './modules/team/team'
 
 

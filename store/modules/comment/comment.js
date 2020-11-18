@@ -36,9 +36,7 @@ const actions = {
       date.getHours() +
       '時' +
       date.getMinutes() +
-      '分' +
-      date.getSeconds() +
-      '秒'
+      '分'
     const commentId = uuidv4()
     const comment = {
       message,
