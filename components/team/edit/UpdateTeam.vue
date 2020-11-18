@@ -29,17 +29,13 @@ export default {
     }
   },
   methods: {
-    changeTeamImageFile(event) {
-      const file = event
-      this.teamImageFile = file
-    },
-    handleUpdateTeam() {
-      this.uploadTeamImageFile(this.teamImageFile)
+    handleUpdateTeam(team) {
+      this.updateTeam(team)
     },
     closeTeamDialog() {
       this.$emit('close-team-dialog')
     },
-    ...mapActions('modules/team/team', ['updateTeam', 'uploadTeamImageFile'])
+    ...mapActions('modules/team/team', ['updateTeam'])
   }
 }
 </script>
