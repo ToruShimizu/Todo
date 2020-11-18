@@ -25,20 +25,14 @@
           </v-card-title>
           <v-card-text>
             <v-form ref="form" lazy-validation @submit.prevent="updateEmail">
-              <v-card-actions>
-                <v-btn color="primary" @click="selectUpdateEmail = 'closeUpdateEmail'">
-                  <v-icon left>mdi-login-variant</v-icon>戻る
-                </v-btn>
-                <v-spacer />
-                <v-btn
-                  color="success"
-                  :loading="loadingUpdateEmail"
-                  :disabled="loadingUpdateEmail"
-                  @click="handleUpdateEmail"
-                >
-                  <v-icon left>mdi-email-plus</v-icon>SAVE
-                </v-btn>
-              </v-card-actions>
+              <SaveAndCloseButton
+                @save-button="handleUpdateEmail"
+                @close-button="selectUpdateEmail = 'closeUpdateEmail'"
+              >
+                <template v-slot:save
+                  ><v-icon left>mdi-email-edit-outline</v-icon></template
+                ></SaveAndCloseButton
+              >
             </v-form>
           </v-card-text>
         </v-card>
@@ -49,14 +43,13 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import SaveAndCloseButton from '@/components/commonParts/button/SaveAndCloseButton'
 import FormUserEmail from '@/components/commonParts/user/form/FormUserEmail'
-import FormValidation from '@/mixins/FormValidation.vue'
-import LoadingView from '@/mixins/LoadingView.vue'
 
 export default {
-  mixins: [FormValidation, LoadingView],
   components: {
-    FormUserEmail
+    FormUserEmail,
+    SaveAndCloseButton
   },
   props: {
     updateEmailDialog: {
@@ -72,11 +65,6 @@ export default {
       type: Object,
       required: false,
       default: () => {}
-    }
-  },
-  data() {
-    return {
-      loadingUpdateEmail: false
     }
   },
   computed: {
@@ -96,11 +84,9 @@ export default {
       const editUserEmail = this.editUser.email
       console.log(editUserEmail)
       if (!editUserEmail) {
-        this.loader = null
         this.$refs.form.validate()
         return
       }
-      this.loader = 'loadingUpdateEmail'
       await this.updateEmail({
         email: editUserEmail
       })

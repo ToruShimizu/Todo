@@ -1,7 +1,9 @@
 <template>
   <v-card-actions class="justify-end">
     <CloseButton :title="'CLOSE'" @close-button="closeButton" />
-    <SaveButton :title="'SAVE'" @save-button="saveButton" />
+    <SaveButton :title="'SAVE'" @save-button="saveButton"
+      ><template v-slot:saveButton><slot name="save"></slot></template
+    ></SaveButton>
   </v-card-actions>
 </template>
 
