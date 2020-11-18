@@ -77,7 +77,7 @@ export default {
     ...mapGetters('modules/team/team', ['teamPhotoURL'])
   },
   methods: {
-    changeTeamImageFile() {
+    changeTeamImageFile(event) {
       const file = event
       this.team.imageFile = file
     },
@@ -85,7 +85,8 @@ export default {
       this.$emit('close-team-dialog')
     },
     saveTeam() {
-      this.$emit('save-team')
+      const team = this.team
+      this.$emit('save-team', team)
     }
   }
 }

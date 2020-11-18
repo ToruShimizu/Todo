@@ -8,6 +8,7 @@
   />
 </template>
 <script>
+import { mapActions } from 'vuex'
 import FormCreateTeam from '@/components/commonParts/team/form/FormCreateTeam'
 export default {
   props: {
@@ -25,10 +26,13 @@ export default {
     }
   },
   methods: {
-    handleCreateTeam() {},
+    handleCreateTeam(team) {
+      this.registrationTeam(team)
+    },
     closeTeamDialog() {
       this.$emit('close-team-dialog')
-    }
+    },
+    ...mapActions('modules/team/team', ['registrationTeam', 'uploadTeamImageFile'])
   }
 }
 </script>
