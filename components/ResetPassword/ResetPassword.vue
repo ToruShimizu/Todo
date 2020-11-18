@@ -26,23 +26,16 @@
                 :user-email.sync="resetUserPassword.email"
                 :email-label="'現在のメールアドレス'"
               />
-              <v-card-actions>
-                <v-btn color="primary" class="hidden-sm-and-up" @click="closeResetPassword">
-                  <v-icon left>mdi-login-variant</v-icon>戻る
-                </v-btn>
-                <v-btn color="primary" class="hidden-xs-only" @click="closeResetPassword">
-                  <v-icon left>mdi-login-variant</v-icon>ログイン画面へ戻る
-                </v-btn>
-                <v-spacer />
-                <v-btn
-                  color="success"
-                  :loading="loadingResetPassword"
-                  :disabled="loadingResetPassword"
-                  @click="handleResetPassword"
-                >
-                  <v-icon left>mdi-email-send</v-icon>送信
-                </v-btn>
-              </v-card-actions>
+              <SaveAndCloseButton
+                :close-button-title="'close'"
+                :save-button-title="'send'"
+                @close-button="closeResetPassword"
+                @save-button="handleResetPassword"
+              >
+                <template v-slot:save>
+                  <v-icon left>mdi-email-send</v-icon>
+                </template>
+              </SaveAndCloseButton>
             </v-form>
           </v-card-text>
         </v-card>
@@ -53,10 +46,12 @@
 
 <script>
 import { mapActions } from 'vuex'
-import LoadingView from '@/mixins/LoadingView.vue'
-export default {
-  mixins: [LoadingView],
+import SaveAndCloseButton from '@/components/commonParts/button/SaveAndCloseButton'
 
+export default {
+  components: {
+    SaveAndCloseButton
+  },
   props: {
     resetPasswordDialog: {
       type: Boolean,
@@ -67,8 +62,7 @@ export default {
     return {
       resetUserPassword: {
         email: ''
-      },
-      loadingResetPassword: false
+      }
     }
   },
   methods: {
@@ -78,11 +72,9 @@ export default {
         alert('テストユーザーはパスワードを再設定することはできません')
         return
       } else if (!resetUserPassword.email) {
-        this.loader = null
         this.$refs.form.validate()
         return
       }
-      this.loader = 'loadingResetPassword'
       await this.resetPassword({
         email: resetUserPassword.email
       })

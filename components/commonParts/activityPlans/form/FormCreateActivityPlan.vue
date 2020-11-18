@@ -63,6 +63,8 @@
               </v-row>
             </v-container>
             <SaveAndCloseButton
+              :close-button-title="'close'"
+              :save-button-title="'save'"
               @save-button="handleSaveActivityPlan"
               @close-button="closeActivityPlan"
             />

@@ -26,6 +26,8 @@
           <v-card-text>
             <v-form ref="form" lazy-validation @submit.prevent="updateEmail">
               <SaveAndCloseButton
+                :close-button-title="'close'"
+                :save-button-title="'save'"
                 @save-button="handleUpdateEmail"
                 @close-button="selectUpdateEmail = 'closeUpdateEmail'"
               >
