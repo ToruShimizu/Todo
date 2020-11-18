@@ -53,7 +53,7 @@
       </v-simple-table>
     </v-card>
     <UpdateActivityPlan
-      :edited-plan-contents.sync="editPlanContents"
+      :edit-plan-contents="editPlanContents"
       :todo-categorys="todoCategorys"
       :update-activity-plan-dialog="updateActivityPlanDialog"
       @close-update-activity-plan="closeUpdateActivityPlan"
