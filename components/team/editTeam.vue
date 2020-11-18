@@ -16,11 +16,6 @@
           <v-list-item-title @click="handleDeleteTeam">サークル削除</v-list-item-title>
         </v-btn>
       </v-list-item>
-      <v-list-item v-if="this.$route.path !== '/createTeam'">
-        <v-btn to="/createTeam" nuxt text>
-          <v-list-item-title>メンバー編集</v-list-item-title>
-        </v-btn>
-      </v-list-item>
     </v-list>
   </v-menu>
 </template>
