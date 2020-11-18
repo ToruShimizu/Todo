@@ -5,7 +5,9 @@
     </v-navigation-drawer>
     <v-app-bar color="indigo darken-2" dark app clipped-left>
       <v-app-bar-nav-icon @click="sideNavDrawer = !sideNavDrawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>QC活動管理</v-toolbar-title>
+      <nuxt-link to="/activityPlans" class="white--text">
+        <v-toolbar-title>QC活動管理</v-toolbar-title>
+      </nuxt-link>
       <v-spacer />
       <v-toolbar-items v-if="loginUser">
         <v-icon @click="logout"> mdi-account-arrow-right-outline </v-icon>
