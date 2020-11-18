@@ -1,14 +1,10 @@
 <template>
-  <!-- eslint-disable  -->
-
   <v-dialog
     v-model="createUserDialog"
     persistent
     max-width="500px"
     transition="scroll-y-transition"
   >
-    <!-- eslint-disable  -->
-
     <v-app>
       <v-col cols="12" sm="12" md="12">
         <v-card width="400px" class="mx-auto mt-5 text-center">
@@ -22,29 +18,14 @@
                 ○○○@example.comとすることで、
                 <br />サンプルのメールアドレスで作成することができます。
               </p>
-              <v-text-field
-                v-model="createNewUser.name"
-                prepend-inner-icon="mdi-card-account-details-outline"
-                label="名前を入力する"
-                :rules="[validRules.nameRules.required]"
-                clearable
+              <FormUserName :user-name.sync="createUser.name" :name-label="'登録する名前'" />
+              <FormUserEmail
+                :user-email.sync="createUser.email"
+                :email-label="'登録するメールアドレス'"
               />
-              <v-text-field
-                v-model="createNewUser.email"
-                prepend-inner-icon="mdi-email-outline"
-                label="メールアドレスを入力する"
-                :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
-                clearable
-              />
-              <v-text-field
-                v-model="createNewUser.password"
-                :type="showPassword ? 'text' : 'Password'"
-                prepend-inner-icon="mdi-lock-outline"
-                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                label="パスワードを入力する(6文字以上)"
-                :rules="[validRules.passwordRules.required, validRules.passwordRules.regex]"
-                counter="72"
-                @click:append="showPassword = !showPassword"
+              <FormUserPassword
+                :user-password.sync="createUser.password"
+                :passwordLabel="'登録するパスワード'"
               />
               <v-card-actions>
                 <v-btn color="primary" class="hidden-xs-only" @click="closeCreateUser">
@@ -73,11 +54,18 @@
 
 <script>
 import { mapActions } from 'vuex'
-import FormValidation from '@/mixins/FormValidation.vue'
+import FormUserName from '@/components/commonParts/user/form/FormUserName'
+import FormUserEmail from '@/components/commonParts/user/form/FormUserEmail'
+import FormUserPassword from '@/components/commonParts/user/form/FormUserPassword'
 import LoadingView from '@/mixins/LoadingView.vue'
 
 export default {
-  mixins: [FormValidation, LoadingView],
+  mixins: [LoadingView],
+  components: {
+    FormUserName,
+    FormUserEmail,
+    FormUserPassword
+  },
 
   props: {
     createUserDialog: {

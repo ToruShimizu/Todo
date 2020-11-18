@@ -1,14 +1,10 @@
 <template>
-  <!-- eslint-disable  -->
-
   <v-dialog
     v-model="updatePasswordDialog"
     persistent
     max-width="500px"
     transition="scroll-y-transition"
   >
-    <!-- eslint-disable  -->
-
     <v-app>
       <v-col cols="12" sm="12" md="12">
         <v-card width="400px" class="mx-auto text-center">
@@ -22,29 +18,17 @@
           </v-card-title>
           <v-card-text>
             <v-form ref="form" lazy-validation @click="handleUpdatePassword">
-              <v-text-field
-                v-model="editUser.email"
-                prepend-inner-icon="mdi-email-outline"
-                label="登録されているメールアドレスを入力してください"
-                :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
-                clearable
-              />
-              <v-text-field
-                v-model="editUser.password"
-                :type="showPassword ? 'text' : 'Password'"
-                prepend-inner-icon="mdi-lock-outline"
-                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                label="現在のPassword(6文字以上)"
-                :rules="[validRules.passwordRules.required, validRules.passwordRules.regex]"
-                counter="72"
-                @click:append="showPassword = !showPassword"
+              <FormUserEmail :user-email.sync="editUser.email" :email-label="emailLabel" />
+              <FormUserPassword
+                :user-password.sync="editUser.password"
+                :password-label="passwordLabel"
               />
               <v-text-field
                 v-model="editUser.editPassword"
+                label="'新しいパスワード'"
                 :type="showEditPassword ? 'text' : 'Password'"
                 prepend-inner-icon="mdi-lock-reset"
                 :append-icon="showEditPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                label="新しいPassword(6文字以上)"
                 :rules="[validRules.passwordRules.required, validRules.passwordRules.regex]"
                 counter="72"
                 @click:append="showEditPassword = !showEditPassword"
@@ -74,11 +58,16 @@
 
 <script>
 import { mapActions } from 'vuex'
+import FormUserEmail from '@/components/commonParts/user/form/FormUserEmail'
+import FormUserPassword from '@/components/commonParts/user/form/FormUserPassword'
 import FormValidation from '@/mixins/FormValidation.vue'
 import LoadingView from '@/mixins/LoadingView.vue'
 
 export default {
-  components: {},
+  components: {
+    FormUserEmail,
+    FormUserPassword
+  },
   mixins: [FormValidation, LoadingView],
   props: {
     updatePasswordDialog: {
@@ -99,8 +88,9 @@ export default {
   data() {
     return {
       loadingResetPassword: false,
-      showPassword: false,
-      showEditPassword: false
+      showEditPassword: false,
+      emailLabel: 'メールアドレス',
+      passwordLabel: '現在のパスワード'
     }
   },
   computed: {
@@ -117,6 +107,7 @@ export default {
   methods: {
     async handleUpdatePassword() {
       const editUser = this.editUser
+      console.log(editUser)
       this.loader = null
       if (!editUser.email || !editUser.password || !editUser.editPassword) {
         this.$refs.form.validate()

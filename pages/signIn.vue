@@ -37,23 +37,8 @@
         </div>
         <v-card-text>
           <v-form ref="form" lazy-validation @submit.prevent="login">
-            <v-text-field
-              v-model="signInUser.email"
-              prepend-inner-icon="mdi-email-outline"
-              label="メールアドレスを入力する"
-              :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
-              clearable
-            />
-            <v-text-field
-              v-model="signInUser.password"
-              :type="showPassword ? 'text' : 'Password'"
-              prepend-inner-icon="mdi-lock-outline"
-              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-              label="パスワードを入力する(6文字以上)"
-              :rules="[validRules.passwordRules.required, validRules.passwordRules.regex]"
-              counter="72"
-              @click:append="showPassword = !showPassword"
-            />
+            <FormUserEmail :user-email.sync="signInUser.email" :email-label="'メールアドレス'" />
+            <FormUserPassword :password-label="'パスワード'" />
             <v-btn text color="primary accent-4" class="fill-width" @click="openResetPassword">
               パスワードを忘れた方はこちら</v-btn
             >
@@ -90,15 +75,18 @@
 import { mapActions } from 'vuex'
 import CreateUser from '@/components/CreateUser/CreateUser'
 import ResetPassword from '@/components/ResetPassword/ResetPassword'
-import FormValidation from '@/mixins/FormValidation.vue'
+import FormUserEmail from '@/components/commonParts/user/form/FormUserEmail'
+import FormUserPassword from '@/components/commonParts/user/form/FormUserPassword'
 import LoadingView from '@/mixins/LoadingView.vue'
 
 export default {
   components: {
     CreateUser,
-    ResetPassword
+    ResetPassword,
+    FormUserEmail,
+    FormUserPassword
   },
-  mixins: [FormValidation, LoadingView],
+  mixins: [LoadingView],
 
   data() {
     return {
@@ -108,7 +96,6 @@ export default {
       },
       loadingTestLogin: false,
       loadingLogin: false,
-      showPassword: false,
       createUserDialog: false,
       resetPasswordDialog: false
     }
@@ -141,7 +128,6 @@ export default {
     },
     closeCreateUser() {
       this.createUserDialog = false
-      this.$refs.form.reset()
     },
     openResetPassword() {
       this.resetPasswordDialog = true

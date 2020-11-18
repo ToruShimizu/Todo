@@ -1,14 +1,10 @@
 <template>
-  <!-- eslint-disable  -->
-
   <v-dialog
     v-model="updateEmailDialog"
     persistent
     max-width="400px"
     transition="scroll-y-transition"
   >
-    <!-- eslint-disable  -->
-
     <v-app>
       <v-col cols="12" sm="12" md="12">
         <v-card width="500px" class="mx-auto text-center">
@@ -21,17 +17,14 @@
             <v-card-text>
               現在登録されているメールアドレス<br /><v-icon left>mdi-email-outline</v-icon
               >{{ gettersUserEmail }}
+              <FormUserEmail
+                :user-email.sync="editUser.email"
+                :email-label="'新しいメールアドレス'"
+              />
             </v-card-text>
           </v-card-title>
           <v-card-text>
             <v-form ref="form" lazy-validation @submit.prevent="updateEmail">
-              <v-text-field
-                v-model="editUser.email"
-                prepend-inner-icon="mdi-email-outline"
-                label="新しいメールアドレスを入力"
-                :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
-                clearable
-              />
               <v-card-actions>
                 <v-btn color="primary" @click="selectUpdateEmail = 'closeUpdateEmail'">
                   <v-icon left>mdi-login-variant</v-icon>戻る
@@ -56,11 +49,15 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import FormUserEmail from '@/components/commonParts/user/form/FormUserEmail'
 import FormValidation from '@/mixins/FormValidation.vue'
 import LoadingView from '@/mixins/LoadingView.vue'
 
 export default {
   mixins: [FormValidation, LoadingView],
+  components: {
+    FormUserEmail
+  },
   props: {
     updateEmailDialog: {
       type: Boolean,
@@ -97,6 +94,7 @@ export default {
   methods: {
     async handleUpdateEmail() {
       const editUserEmail = this.editUser.email
+      console.log(editUserEmail)
       if (!editUserEmail) {
         this.loader = null
         this.$refs.form.validate()

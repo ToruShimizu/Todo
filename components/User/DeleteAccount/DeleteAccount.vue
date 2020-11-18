@@ -1,14 +1,10 @@
 <template>
-  <!-- eslint-disable  -->
-
   <v-dialog
     v-model="deleteAccountDialog"
     persistent
     max-width="500px"
     transition="scroll-y-transition"
   >
-    <!-- eslint-disable  -->
-
     <v-app>
       <v-col cols="12" sm="12" md="12">
         <v-card width="400px" class="mx-auto text-center">
@@ -25,22 +21,13 @@
           </v-card-title>
           <v-card-text>
             <v-form ref="form" lazy-validation>
-              <v-text-field
-                v-model="editUser.email"
-                prepend-inner-icon="mdi-email-outline"
-                label="登録されているメールアドレス"
-                :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
-                clearable
+              <FormUserEmail
+                :user-email.sync="editUser.email"
+                :email-label="'現在のメールアドレス'"
               />
-              <v-text-field
-                v-model="editUser.password"
-                :type="showPassword ? 'text' : 'Password'"
-                prepend-inner-icon="mdi-lock-outline"
-                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                label="現在のPassword(6文字以上)"
-                :rules="[validRules.passwordRules.required, validRules.passwordRules.regex]"
-                counter="72"
-                @click:append="showPassword = !showPassword"
+              <FormUserPassword
+                :user-password.sync="editUser.password"
+                :passwordLabel="'現在のパスワード'"
               />
               <v-card-actions>
                 <v-btn color="primary" @click="selectedDeleteAccount = 'closeDeleteAccount'">
@@ -66,11 +53,16 @@
 
 <script>
 import { mapActions } from 'vuex'
-import FormValidation from '@/mixins/FormValidation.vue'
+import FormUserEmail from '@/components/commonParts/user/form/FormUserEmail'
+import FormUserPassword from '@/components/commonParts/user/form/FormUserPassword'
 import LoadingView from '@/mixins/LoadingView.vue'
 
 export default {
-  mixins: [FormValidation, LoadingView],
+  mixins: [LoadingView],
+  components: {
+    FormUserEmail,
+    FormUserPassword
+  },
   props: {
     deleteAccountDialog: {
       type: Boolean,
@@ -90,8 +82,7 @@ export default {
 
   data() {
     return {
-      loadingDeleteUser: false,
-      showPassword: false
+      loadingDeleteUser: false
     }
   },
   computed: {
