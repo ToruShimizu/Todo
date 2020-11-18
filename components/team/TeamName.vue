@@ -11,16 +11,16 @@
       <v-icon v-else>mdi-account-outline</v-icon>
     </v-avatar>
     <h2 class="grey--text font-italic mb-4">{{ teamName }}</h2>
-    <EditTeam />
+    <EditTeamList />
   </v-layout>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import EditTeam from '@/components/team/EditTeam'
+import EditTeamList from '@/components/team/edit/EditTeamList'
 export default {
   components: {
-    EditTeam
+    EditTeamList
   },
   computed: {
     ...mapGetters('modules/team/team', ['teamName']),
