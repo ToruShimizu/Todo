@@ -26,7 +26,7 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   computed: {
-    ...mapState('modules/comment', ['comments']),
+    ...mapState('modules/comment/comment', ['comments']),
     ...mapGetters('modules/user/auth', ['gettersUserName', 'photoURL', 'userEmail'])
   },
   methods: {
@@ -34,7 +34,7 @@ export default {
       if (!confirm('Are you sure?')) return
       this.removeComment({ id: comment.id })
     },
-    ...mapActions('modules/comment', ['removeComment'])
+    ...mapActions('modules/comment/comment', ['removeComment'])
   }
 }
 </script>
