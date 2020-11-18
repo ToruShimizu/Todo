@@ -14,9 +14,8 @@ const mutations = {
     state.team = registrationTeam
     console.log('registrationTeam')
   },
-  updateTeamImageFile(state, photoURL) {
-    console.log(photoURL)
-    state.team.photoURL = photoURL
+  updateTeam(state, updateTeam) {
+    state.team = updateTeam
   },
   registrationMember(state, registrationMember) {
     state.teamMember.unshift(registrationMember)
@@ -84,6 +83,26 @@ const actions = {
     } catch (err) {
       alert('登録に失敗しました。もう一度やり直してください')
       console.log(err);
+    }
+  },
+  async updateTeam({ state, getters }, team) {
+    const imageFile = team.imageFile
+    const imageRef = await storageRef.child(`teamImages/${getters.userUid}/${imageFile.name}`)
+    const snapShot = await imageRef.put(imageFile)
+    const photoURL = await snapShot.ref.getDownloadURL()
+    const updateTeam = {
+      name: team.name,
+      photoURL,
+    }
+    console.log(updateTeam)
+    try {
+      if (getters.userUid) {
+        await db.collection(`users/${getters.userUid}/team`).doc(state.team.id).update(updateTeam)
+        alert('チーム情報の変更が完了しました。')
+        commit('updateTeam', updateTeam)
+      }
+    } catch (err) {
+      console.log(err)
     }
   },
   async removeTeam({ commit, state, getters }) {
