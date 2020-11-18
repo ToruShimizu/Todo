@@ -1,37 +1,34 @@
 <template>
-  <v-dialog
-    v-model="resetPasswordDialog"
-    persistent
-    max-width="400px"
-    transition="scroll-y-transition"
-  >
-    <FormView :title="'パスワード再設定'">
-      <template v-slot:form>
-        <FormCardText>
-          <template v-slot:text>
-            登録されているメールアドレスを入力してください。
-            <br />パスワード再設定のURLが送信されます。
-          </template>
-        </FormCardText>
-        <v-form ref="form" lazy-validation @submit.prevent="passwordReset">
-          <FormUserEmail
-            :user-email.sync="resetUserPassword.email"
-            :email-label="'現在のメールアドレス'"
-          />
-          <SaveAndCloseButton
-            :close-button-title="'close'"
-            :save-button-title="'send'"
-            @close-button="closeResetPassword"
-            @save-button="handleResetPassword"
-          >
-            <template v-slot:save>
-              <v-icon left>mdi-email-send</v-icon>
+  <FormDialog :form-dialog="resetPasswordDialog">
+    <template v-slot:dialog>
+      <FormView :title="'パスワード再設定'">
+        <template v-slot:form>
+          <FormCardText>
+            <template v-slot:text>
+              登録されているメールアドレスを入力してください。
+              <br />パスワード再設定のURLが送信されます。
             </template>
-          </SaveAndCloseButton>
-        </v-form>
-      </template>
-    </FormView>
-  </v-dialog>
+          </FormCardText>
+          <v-form ref="form" lazy-validation @submit.prevent="passwordReset">
+            <FormUserEmail
+              :user-email.sync="resetUserPassword.email"
+              :email-label="'現在のメールアドレス'"
+            />
+            <SaveAndCloseButton
+              :close-button-title="'close'"
+              :save-button-title="'send'"
+              @close-button="closeResetPassword"
+              @save-button="handleResetPassword"
+            >
+              <template v-slot:save>
+                <v-icon left>mdi-email-send</v-icon>
+              </template>
+            </SaveAndCloseButton>
+          </v-form>
+        </template>
+      </FormView>
+    </template>
+  </FormDialog>
 </template>
 
 
@@ -40,17 +37,20 @@ import { mapActions } from 'vuex'
 import SaveAndCloseButton from '@/components/commonParts/button/SaveAndCloseButton'
 import FormCardText from '@/components/commonParts/card/FormCardText'
 import FormView from '@/components/commonParts/form/FormView'
+import FormDialog from '@/components/commonParts/dialog/FormDialog'
 
 export default {
   components: {
     SaveAndCloseButton,
     FormCardText,
-    FormView
+    FormView,
+    FormDialog
   },
   props: {
     resetPasswordDialog: {
       type: Boolean,
-      required: true
+      required: false,
+      default: false
     }
   },
   data() {

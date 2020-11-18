@@ -1,43 +1,43 @@
 <template>
-  <v-dialog
-    v-model="updatePasswordDialog"
-    persistent
-    max-width="500px"
-    transition="scroll-y-transition"
-  >
-    <FormView :title="'パスワード変更'">
-      <template v-slot:form>
-        <FormCardText>
-          <template v-slot:text> ※ 変更完了後にログイン画面に戻ります。 </template>
-        </FormCardText>
-        <v-form ref="form" lazy-validation @click="handleUpdatePassword">
-          <FormUserEmail :user-email.sync="editUser.email" :email-label="'現在のメールアドレス'" />
-          <FormUserPassword
-            :user-password.sync="editUser.password"
-            :password-label="'現在のパスワード'"
-          />
-          <v-text-field
-            v-model="editUser.editPassword"
-            label="'新しいパスワード'"
-            :type="showEditPassword ? 'text' : 'Password'"
-            prepend-inner-icon="mdi-lock-reset"
-            :append-icon="showEditPassword ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[validRules.passwordRules.required, validRules.passwordRules.regex]"
-            counter="72"
-            @click:append="showEditPassword = !showEditPassword"
-          />
-          <SaveAndCloseButton
-            :close-button-title="'close'"
-            :save-button-title="'save'"
-            @save-button="handleUpdatePassword"
-            @close-button="selectedUpdatePassword = 'closeUpdatePassword'"
-          >
-            <template v-slot:save><v-icon left>mdi-account-key-outline </v-icon></template>
-          </SaveAndCloseButton>
-        </v-form>
-      </template>
-    </FormView>
-  </v-dialog>
+  <FormDialog :form-dialog="updatePasswordDialog">
+    <template v-slot:dialog>
+      <FormView :title="'パスワード変更'">
+        <template v-slot:form>
+          <FormCardText>
+            <template v-slot:text> ※ 変更完了後にログイン画面に戻ります。 </template>
+          </FormCardText>
+          <v-form ref="form" lazy-validation @click="handleUpdatePassword">
+            <FormUserEmail
+              :user-email.sync="editUser.email"
+              :email-label="'現在のメールアドレス'"
+            />
+            <FormUserPassword
+              :user-password.sync="editUser.password"
+              :password-label="'現在のパスワード'"
+            />
+            <v-text-field
+              v-model="editUser.editPassword"
+              label="'新しいパスワード'"
+              :type="showEditPassword ? 'text' : 'Password'"
+              prepend-inner-icon="mdi-lock-reset"
+              :append-icon="showEditPassword ? 'mdi-eye' : 'mdi-eye-off'"
+              :rules="[validRules.passwordRules.required, validRules.passwordRules.regex]"
+              counter="72"
+              @click:append="showEditPassword = !showEditPassword"
+            />
+            <SaveAndCloseButton
+              :close-button-title="'close'"
+              :save-button-title="'save'"
+              @save-button="handleUpdatePassword"
+              @close-button="selectedUpdatePassword = 'closeUpdatePassword'"
+            >
+              <template v-slot:save><v-icon left>mdi-account-key-outline </v-icon></template>
+            </SaveAndCloseButton>
+          </v-form>
+        </template>
+      </FormView>
+    </template>
+  </FormDialog>
 </template>
 
 <script>
@@ -48,6 +48,7 @@ import FormUserPassword from '@/components/commonParts/user/form/FormUserPasswor
 import FormView from '@/components/commonParts/form/FormView'
 import FormCardText from '@/components/commonParts/card/FormCardText'
 import FormValidation from '@/mixins/FormValidation.vue'
+import FormDialog from '@/components/commonParts/dialog/FormDialog'
 
 export default {
   mixins: [FormValidation],
@@ -56,7 +57,8 @@ export default {
     FormUserPassword,
     SaveAndCloseButton,
     FormView,
-    FormCardText
+    FormCardText,
+    FormDialog
   },
   props: {
     updatePasswordDialog: {

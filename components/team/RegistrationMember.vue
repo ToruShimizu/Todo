@@ -1,11 +1,6 @@
 <template>
-  <v-dialog
-    v-model="registrationMemberDialog"
-    persistent
-    max-width="600px"
-    transition="scroll-y-transition"
-  >
-    <v-app>
+  <FormDialog :form-dialog="registrationMemberDialog">
+    <template v-slot:dialog>
       <v-col cols="12" sm="12" md="12">
         <v-card width="600px" class="mx-auto">
           <v-card-text>
@@ -64,17 +59,21 @@
           </v-card-actions>
         </v-card>
       </v-col>
-    </v-app>
-  </v-dialog>
+    </template>
+  </FormDialog>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
+import FormDialog from '@/components/commonParts/dialog/FormDialog'
+
 import FormValidation from '@/mixins/FormValidation.vue'
 
 export default {
   mixins: [FormValidation],
-
+  components: {
+    FormDialog
+  },
   props: {
     teamMember: {
       type: Object,

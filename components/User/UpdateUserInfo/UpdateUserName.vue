@@ -1,36 +1,31 @@
 <template>
-  <!-- eslint-disable  -->
-
-  <v-dialog
-    v-model="updateUserNameDialog"
-    persistent
-    max-width="400px"
-    transition="scroll-y-transition"
-  >
-    <FormView :title="'ユーザー名変更'">
-      <template v-slot:form>
-        <FormCardText>
-          <template v-slot:text>
-            現在登録されているユーザー名<br />
-            <v-icon left>mdi-account-outline</v-icon>{{ gettersUserName }}さん
-          </template>
-        </FormCardText>
-        <v-form ref="form" lazy-validation @submit.prevent="updateUserName">
-          <FormUserName :user-name.sync="editUser.name" :name-label="'新しい名前'" />
-          <SaveAndCloseButton
-            :close-button-title="'close'"
-            :save-button-title="'save'"
-            @save-button="handleUpdateUserName"
-            @close-button="selectedUpdateUserName = 'closeUpdateUserName'"
-          >
-            <template v-slot:save
-              ><v-icon left>mdi-badge-account-horizontal-outline</v-icon>
+  <FormDialog :form-dialog="updateUserNameDialog">
+    <template v-slot:dialog>
+      <FormView :title="'ユーザー名変更'">
+        <template v-slot:form>
+          <FormCardText>
+            <template v-slot:text>
+              現在登録されているユーザー名<br />
+              <v-icon left>mdi-account-outline</v-icon>{{ gettersUserName }}さん
             </template>
-          </SaveAndCloseButton>
-        </v-form>
-      </template>
-    </FormView>
-  </v-dialog>
+          </FormCardText>
+          <v-form ref="form" lazy-validation @submit.prevent="updateUserName">
+            <FormUserName :user-name.sync="editUser.name" :name-label="'新しい名前'" />
+            <SaveAndCloseButton
+              :close-button-title="'close'"
+              :save-button-title="'save'"
+              @save-button="handleUpdateUserName"
+              @close-button="selectedUpdateUserName = 'closeUpdateUserName'"
+            >
+              <template v-slot:save
+                ><v-icon left>mdi-badge-account-horizontal-outline</v-icon>
+              </template>
+            </SaveAndCloseButton>
+          </v-form>
+        </template>
+      </FormView>
+    </template>
+  </FormDialog>
 </template>
 
 <script>
@@ -39,13 +34,15 @@ import FormUserName from '@/components/commonParts/user/form/FormUserName'
 import SaveAndCloseButton from '@/components/commonParts/button/SaveAndCloseButton'
 import FormCardText from '@/components/commonParts/card/FormCardText'
 import FormView from '@/components/commonParts/form/FormView'
+import FormDialog from '@/components/commonParts/dialog/FormDialog'
 
 export default {
   components: {
     FormUserName,
     SaveAndCloseButton,
     FormCardText,
-    FormView
+    FormView,
+    FormDialog
   },
 
   props: {

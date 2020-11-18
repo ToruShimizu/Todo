@@ -1,6 +1,6 @@
 <template>
-  <v-dialog v-model="teamDialog" persistent max-width="400px" transition="scroll-y-transition">
-    <v-app>
+  <FormDialog :form-dialog="teamDialog">
+    <template name="dialog">
       <v-col cols="12" sm="12" md="12">
         <v-card class="mx-auto text-center">
           <v-card-title>
@@ -50,8 +50,8 @@
           </v-form>
         </v-card>
       </v-col>
-    </v-app>
-  </v-dialog>
+    </template>
+  </FormDialog>
 </template>
 
 <script>
