@@ -1,10 +1,11 @@
 import { v4 as uuidv4 } from 'uuid'
-import firebase, { db } from '~/plugins/firebase'
+import { db, storageRef } from '~/plugins/firebase'
 
 const state = () => ({
   team: {
     name: '',
     id: '',
+    photoURL: ''
   },
   teamMember: [],
 })
@@ -13,6 +14,10 @@ const mutations = {
     state.team.name = registrationTeam.teamName
     state.team.id = registrationTeam.teamId
     console.log('registrationTeam')
+  },
+  updateTeamImageFile(state, photoURL) {
+    console.log(photoURL)
+    state.team.photoURL = photoURL
   },
   registrationMember(state, registrationMember) {
     state.teamMember.unshift(registrationMember)
@@ -129,7 +134,23 @@ const actions = {
       })
       commit('removeMember', id)
     }
-  }
+  },
+  async uploadTeamImageFile({ getters, commit }, teamImageFile) {
+    const imageRef = await storageRef.child(`teamImages/${getters.userUid}/${teamImageFile.name}`)
+    const snapShot = await imageRef.put(teamImageFile)
+    const photoURL = await snapShot.ref.getDownloadURL()
+    console.log(photoURL)
+    try {
+      if (getters.userUid) {
+        await db.collection(`users/${getters.userUid}/team`).doc(getters.teamId).update({ photoURL: photoURL })
+        alert('プロフィール画像の変更が完了しました。')
+        commit('updateTeamImageFile', photoURL)
+      }
+    } catch (err) {
+      alert('画像の変更に失敗しました。もう一度やり直してください。')
+      console.log(err)
+    }
+  },
 }
 
 const getters = {
@@ -141,6 +162,8 @@ const getters = {
   teamId: (state) => {
     return state.team.id
   },
+  teamPhotoURL: (state) => (state.team.photoURL ? state.team.photoURL : ''),
+
   // uidの取得
   userUid: (state, getters, rootState, rootGetters) => {
     return rootGetters['modules/user/auth/uid']
