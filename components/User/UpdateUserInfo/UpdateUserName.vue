@@ -25,13 +25,8 @@
           </v-card-title>
           <v-card-text>
             <v-form ref="form" lazy-validation @submit.prevent="updateUserName">
-              <v-text-field
-                v-model="editUser.name"
-                prepend-inner-icon="mdi-card-account-details-outline"
-                label="新しい名前を入力してください"
-                :rules="[validRules.nameRules.required]"
-                clearable
-              />
+              <FormUserName :user-name.sync="editUser.name" :name-label="'新しい名前'" />
+
               <v-card-actions>
                 <v-btn color="primary" @click="selectedUpdateUserName = 'closeUpdateUserName'">
                   <v-icon left>mdi-login-variant</v-icon>戻る
@@ -56,11 +51,14 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import FormValidation from '@/mixins/FormValidation.vue'
+import FormUserName from '@/components/commonParts/user/form/FormUserName'
 import LoadingView from '@/mixins/LoadingView.vue'
 
 export default {
-  mixins: [FormValidation, LoadingView],
+  mixins: [LoadingView],
+  components: {
+    FormUserName
+  },
 
   props: {
     updateUserNameDialog: {

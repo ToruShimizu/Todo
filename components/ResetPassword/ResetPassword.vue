@@ -22,12 +22,9 @@
                 登録されているメールアドレスを入力してください。
                 <br />パスワード再設定のURLが送信されます。
               </p>
-              <v-text-field
-                v-model="resetUserPassword.email"
-                prepend-inner-icon="mdi-email-outline"
-                label="登録されているメールアドレス"
-                :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
-                clearable
+              <FormUserEmail
+                :user-email.sync="resetUserPassword.email"
+                :email-label="'現在のメールアドレス'"
               />
               <v-card-actions>
                 <v-btn color="primary" class="hidden-sm-and-up" @click="closeResetPassword">
@@ -56,10 +53,9 @@
 
 <script>
 import { mapActions } from 'vuex'
-import FormValidation from '@/mixins/FormValidation.vue'
 import LoadingView from '@/mixins/LoadingView.vue'
 export default {
-  mixins: [FormValidation, LoadingView],
+  mixins: [LoadingView],
 
   props: {
     resetPasswordDialog: {
