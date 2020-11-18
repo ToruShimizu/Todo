@@ -28,6 +28,8 @@
               <FormUserName :user-name.sync="editUser.name" :name-label="'新しい名前'" />
 
               <SaveAndCloseButton
+                :close-button-title="'close'"
+                :save-button-title="'save'"
                 @save-button="handleUpdateUserName"
                 @close-button="selectedUpdateUserName = 'closeUpdateUserName'"
               >

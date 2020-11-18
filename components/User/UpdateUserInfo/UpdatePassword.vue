@@ -37,6 +37,8 @@
                 @click:append="showEditPassword = !showEditPassword"
               />
               <SaveAndCloseButton
+                :close-button-title="'close'"
+                :save-button-title="'save'"
                 @save-button="handleUpdatePassword"
                 @close-button="selectedUpdatePassword = 'closeUpdatePassword'"
               >
