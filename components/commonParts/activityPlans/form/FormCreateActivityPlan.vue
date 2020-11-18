@@ -67,7 +67,10 @@
               :save-button-title="'save'"
               @save-button="handleSaveActivityPlan"
               @close-button="closeActivityPlan"
-            />
+              ><template v-slot:save>
+                <v-icon>mdi-pencil-plus-outline </v-icon></template
+              ></SaveAndCloseButton
+            >
           </v-form>
         </v-card>
       </v-col>
