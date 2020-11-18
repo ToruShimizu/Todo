@@ -48,9 +48,7 @@
                 >
               </SaveButton>
               <SaveButton :title="'new'" @save-button="openCreateUser">
-                <template v-slot:saveButton>
-                  <v-icon left>mdi-account-plus</v-icon>新規作成はこちら</template
-                >
+                <template v-slot:saveButton> <v-icon left>mdi-account-plus</v-icon></template>
               </SaveButton>
             </v-card-actions>
             <CreateUser
