@@ -10,31 +10,12 @@
           <v-form ref="form" lazy-validation>
             <v-container>
               <v-row>
-                <!-- 活動計画入力エリア -->
+                <!-- カテゴリ入力エリア -->
                 <v-col cols="12" sm="6" md="6">
                   <CategoryCombobox :items="categorys" :category.sync="planContents.category" />
                 </v-col>
                 <!-- 日付入力エリア -->
-                <v-col cols="12" sm="6" md="6">
-                  <v-menu
-                    v-model="dateMenu"
-                    :close-on-content-click="false"
-                    transition="scale-transition"
-                    min-width="290px"
-                  >
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-text-field
-                        v-model="planContents.date"
-                        label="日付"
-                        prepend-inner-icon="mdi-calendar-today"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
-                      ></v-text-field>
-                    </template>
-                    <v-date-picker v-model="planContents.date" no-title @input="dateMenu = false" />
-                  </v-menu>
-                </v-col>
+                <v-col cols="12" sm="6" md="6"><DateForm :date.sync="planContents.date" /> </v-col>
                 <!-- 詳細入力エリア -->
                 <v-col cols="12">
                   <DetailForm :detail.sync="planContents.detail" />
@@ -47,10 +28,8 @@
               :save-button-title="'save'"
               @save-button="handleSaveActivityPlan"
               @close-button="closeActivityPlan"
-              ><template v-slot:save>
-                <v-icon>mdi-pencil-plus-outline </v-icon></template
-              ></SaveAndCloseButton
-            >
+              ><template v-slot:save> <v-icon>mdi-pencil-plus-outline </v-icon></template>
+            </SaveAndCloseButton>
           </v-form>
         </v-card>
       </v-col>
@@ -64,16 +43,15 @@ import SaveAndCloseButton from '@/components/commonParts/button/SaveAndCloseButt
 import FormDialog from '@/components/commonParts/dialog/FormDialog'
 import CategoryCombobox from '@/components/commonParts/activityPlans/input/CategoryCombobox'
 import DetailForm from '@/components/commonParts/activityPlans/input/DetailForm'
-import FormValidation from '@/mixins/FormValidation.vue'
+import DateForm from '@/components/commonParts/activityPlans/input/DateForm'
 
 export default {
-  mixins: [FormValidation],
-
   components: {
     SaveAndCloseButton,
     FormDialog,
     CategoryCombobox,
-    DetailForm
+    DetailForm,
+    DateForm
   },
 
   props: {
@@ -98,11 +76,7 @@ export default {
       detail: false
     }
   },
-  data() {
-    return {
-      dateMenu: false
-    }
-  },
+
   methods: {
     async handleSaveActivityPlan() {
       const planContents = this.planContents
@@ -113,11 +87,14 @@ export default {
       this.$emit('save-activity-plan', planContents)
     },
     closeActivityPlan() {
-      this.$refs.category.reset()
       this.planContents.category = []
       this.planContents.detail = ''
       this.planContents.date = new Date().toISOString().substr(0, 10)
+      this.$refs.category.reset()
       this.$emit('close-activity-plan')
+    },
+    inputDate() {
+      this.dateMenu = false
     }
   }
 }
