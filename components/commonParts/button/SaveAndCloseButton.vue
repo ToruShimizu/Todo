@@ -1,0 +1,25 @@
+<template>
+  <v-card-actions class="justify-end">
+    <CloseButton :title="'CLOSE'" @close-button="closeButton" />
+    <SaveButton :title="'SAVE'" @save-button="saveButton" />
+  </v-card-actions>
+</template>
+
+<script>
+import SaveButton from '@/components/commonParts/button/SaveButton'
+import CloseButton from '@/components/commonParts/button/CloseButton'
+export default {
+  components: {
+    SaveButton,
+    CloseButton
+  },
+  methods: {
+    saveButton() {
+      this.$emit('save-button')
+    },
+    closeButton() {
+      this.$emit('close-button')
+    }
+  }
+}
+</script>
