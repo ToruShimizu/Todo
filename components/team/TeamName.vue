@@ -1,7 +1,7 @@
 <template>
   <v-layout class="justify-center">
     <v-avatar max-width="40" max-height="40">
-      <v-img v-if="photoURL" :src="photoURL" :lazy-src="photoURL">
+      <v-img v-if="teamPhotoURL" :src="teamPhotoURL" :lazy-src="teamPhotoURL">
         <template v-slot:placeholder>
           <v-row class="fill-height ma-0" align="center" justify="center">
             <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
@@ -23,8 +23,7 @@ export default {
     EditTeamList
   },
   computed: {
-    ...mapGetters('modules/team/team', ['teamName']),
-    ...mapGetters('modules/user/auth', ['photoURL'])
+    ...mapGetters('modules/team/team', ['teamName', 'teamPhotoURL'])
   }
 }
 </script>

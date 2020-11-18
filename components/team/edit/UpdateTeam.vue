@@ -8,23 +8,15 @@
     <v-app>
       <v-col cols="12" sm="12" md="12">
         <v-card class="mx-auto text-center">
-          <v-card-titl>
+          <v-card-title>
             <h4 class="headline fill-width">サークル編集</h4>
-          </v-card-titl>
+          </v-card-title>
           <v-form ref="form" lazy-validation>
             <v-container>
               <v-row>
                 <v-col cols="12" sm="12" md="12">
-                  <v-avatar max-width="40" max-height="40">
-                    <v-img v-if="photoURL" :src="photoURL" :lazy-src="photoURL">
-                      <template v-slot:placeholder>
-                        <v-row class="fill-height ma-0" align="center" justify="center">
-                          <v-progress-circular
-                            indeterminate
-                            color="grey lighten-5"
-                          ></v-progress-circular>
-                        </v-row>
-                      </template>
+                  <v-avatar size="100px">
+                    <v-img v-if="teamPhotoURL" :src="teamPhotoURL" :lazy-src="teamPhotoURL">
                     </v-img>
                     <v-icon v-else large>mdi-account-outline</v-icon>
                   </v-avatar>
@@ -42,6 +34,7 @@
                 <v-col cols="12" sm="12" md="12">
                   <v-file-input
                     ref="image"
+                    v-model="teamImageFile"
                     accept="image/*"
                     show-size
                     label="サークルアイコン"
@@ -78,15 +71,26 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      teamImageFile: null
+    }
+  },
   computed: {
-    ...mapGetters('modules/user/auth', ['photoURL'])
+    ...mapGetters('modules/team/team', ['teamPhotoURL'])
   },
   methods: {
-    changeTeamImageFile() {},
+    changeTeamImageFile(event) {
+      const file = event
+      this.teamImageFile = file
+    },
+    handleUpdateTeam() {
+      this.uploadTeamImageFile(this.teamImageFile)
+    },
     closeUpdateTeam() {
       this.$emit('close-update-team')
     },
-    ...mapActions('modules/team/team', ['updateTeam'])
+    ...mapActions('modules/team/team', ['updateTeam', 'uploadTeamImageFile'])
   }
 }
 </script>
