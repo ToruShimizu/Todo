@@ -1,7 +1,8 @@
 <template>
-  <v-btn color="blue darken-1" outlined @click="handleSaveButton"
-    ><span class="font-italic">{{ title }}</span></v-btn
-  >
+  <v-btn color="blue darken-1" outlined @click="handleSaveButton">
+    <v-slot name="saveButton"></v-slot>
+    <span class="font-italic">{{ title }} </span>
+  </v-btn>
 </template>
 
 <script>
