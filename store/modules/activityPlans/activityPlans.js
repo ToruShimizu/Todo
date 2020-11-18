@@ -22,9 +22,15 @@ const mutations = {
     console.log('removePlanContents')
   },
   // 活動計画更新
-  updateActivityPlan(state, activityPlan) {
-    const index = state.activityPlans.findIndex((contents) => contents.id === activityPlan.id)
-    state.activityPlans[index] = activityPlan
+  updateActivityPlan(state, updateActivityPlan) {
+    const index = state.activityPlans.findIndex((contents) => contents.id === updateActivityPlan.id)
+    const activityPlan = state.activityPlans[index]
+    activityPlan.category = updateActivityPlan.category
+    activityPlan.date = updateActivityPlan.date
+    activityPlan.detail = updateActivityPlan.detail
+    activityPlan.done = updateActivityPlan.done
+    activityPlan.id = updateActivityPlan.id
+
     console.log('updateActivityPlan')
   },
   // 活動計画の完了状態切り替え
@@ -63,7 +69,7 @@ const actions = {
   },
   // 活動計画更新
   async updateActivityPlan({ getters, commit }, planContents) {
-    const activityPlanId = planContents.id
+    const id = planContents.id
     const updateActivityPlan = {
       id,
       category: planContents.category,
@@ -73,7 +79,7 @@ const actions = {
       created: firebase.firestore.FieldValue.serverTimestamp()
     }
     if (getters.userUid) {
-      await db.collection(`users/${getters.userUid}/activityPlans`).doc(activityPlanId).update(updateActivityPlan)
+      await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).update(updateActivityPlan)
       commit('updateActivityPlan', updateActivityPlan)
     }
   },
