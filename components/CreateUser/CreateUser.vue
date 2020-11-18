@@ -1,40 +1,37 @@
 <template>
-  <v-dialog
-    v-model="createUserDialog"
-    persistent
-    max-width="500px"
-    transition="scroll-y-transition"
-  >
-    <FormView :title="'新規作成'">
-      <template v-slot:form>
-        <FormCardText>
-          <template v-slot:text> ※ 作成後にログインします。 </template>
-        </FormCardText>
-        <v-form ref="form" lazy-validation @submit.prevent="createUser">
-          <FormUserName :user-name.sync="createUser.name" :name-label="'登録する名前'" />
-          <FormUserEmail
-            :user-email.sync="createUser.email"
-            :email-label="'登録するメールアドレス'"
-          />
-          <FormUserPassword
-            :user-password.sync="createUser.password"
-            :passwordLabel="'登録するパスワード'"
-          />
+  <FormDialog :form-dialog="createUserDialog">
+    <template v-slot:dialog>
+      <FormView :title="'新規作成'">
+        <template v-slot:form>
+          <FormCardText>
+            <template v-slot:text> ※ 作成後にログインします。 </template>
+          </FormCardText>
+          <v-form ref="form" lazy-validation @submit.prevent="createUser">
+            <FormUserName :user-name.sync="createUser.name" :name-label="'登録する名前'" />
+            <FormUserEmail
+              :user-email.sync="createUser.email"
+              :email-label="'登録するメールアドレス'"
+            />
+            <FormUserPassword
+              :user-password.sync="createUser.password"
+              :passwordLabel="'登録するパスワード'"
+            />
 
-          <SaveAndCloseButton
-            :close-button-title="'close'"
-            :save-button-title="'save'"
-            @close-button="closeCreateUser"
-            @save-button="handleCreateUser"
-          >
-            <template v-slot:save>
-              <v-icon left>mdi-account-plus</v-icon>
-            </template>
-          </SaveAndCloseButton>
-        </v-form>
-      </template>
-    </FormView>
-  </v-dialog>
+            <SaveAndCloseButton
+              :close-button-title="'close'"
+              :save-button-title="'save'"
+              @close-button="closeCreateUser"
+              @save-button="handleCreateUser"
+            >
+              <template v-slot:save>
+                <v-icon left>mdi-account-plus</v-icon>
+              </template>
+            </SaveAndCloseButton>
+          </v-form>
+        </template>
+      </FormView>
+    </template>
+  </FormDialog>
 </template>
 
 <script>
@@ -45,6 +42,7 @@ import FormUserPassword from '@/components/commonParts/user/form/FormUserPasswor
 import SaveAndCloseButton from '@/components/commonParts/button/SaveAndCloseButton'
 import FormView from '@/components/commonParts/form/FormView'
 import FormCardText from '@/components/commonParts/card/FormCardText'
+import FormDialog from '@/components/commonParts/dialog/FormDialog'
 
 export default {
   components: {
@@ -53,7 +51,8 @@ export default {
     FormUserPassword,
     SaveAndCloseButton,
     FormView,
-    FormCardText
+    FormCardText,
+    FormDialog
   },
 
   props: {

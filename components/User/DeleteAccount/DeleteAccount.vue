@@ -1,36 +1,36 @@
 <template>
-  <v-dialog
-    v-model="deleteAccountDialog"
-    persistent
-    max-width="500px"
-    transition="scroll-y-transition"
-  >
-    <FormView :title="'アカウント削除'">
-      <template v-slot:form>
-        <FormCardText>
-          <template v-slot:text> ※ 削除後にログイン画面に戻ります。 </template>
-        </FormCardText>
-        <v-form ref="form" lazy-validation>
-          <FormUserEmail :user-email.sync="editUser.email" :email-label="'現在のメールアドレス'" />
-          <FormUserPassword
-            :user-password.sync="editUser.password"
-            :passwordLabel="'現在のパスワード'"
-          />
-          <v-card-actions class="justify-end">
-            <CloseButton
-              title="close"
-              @close-button="selectedDeleteAccount = 'closeDeleteAccount'"
+  <FormDialog :form-dialog="deleteAccountDialog">
+    <template v-slot:dialog>
+      <FormView :title="'アカウント削除'">
+        <template v-slot:form>
+          <FormCardText>
+            <template v-slot:text> ※ 削除後にログイン画面に戻ります。 </template>
+          </FormCardText>
+          <v-form ref="form" lazy-validation>
+            <FormUserEmail
+              :user-email.sync="editUser.email"
+              :email-label="'現在のメールアドレス'"
             />
-            <DeleteButton :title="'delete'" @delete-button="handleDeleteAccount"
-              ><template v-slot:deleteButton>
-                <v-icon left> mdi-account-multiple-remove-outline </v-icon></template
-              ></DeleteButton
-            >
-          </v-card-actions>
-        </v-form>
-      </template>
-    </FormView>
-  </v-dialog>
+            <FormUserPassword
+              :user-password.sync="editUser.password"
+              :passwordLabel="'現在のパスワード'"
+            />
+            <v-card-actions class="justify-end">
+              <CloseButton
+                title="close"
+                @close-button="selectedDeleteAccount = 'closeDeleteAccount'"
+              />
+              <DeleteButton :title="'delete'" @delete-button="handleDeleteAccount"
+                ><template v-slot:deleteButton>
+                  <v-icon left> mdi-account-multiple-remove-outline </v-icon></template
+                ></DeleteButton
+              >
+            </v-card-actions>
+          </v-form>
+        </template>
+      </FormView>
+    </template>
+  </FormDialog>
 </template>
 
 <script>
@@ -41,6 +41,7 @@ import DeleteButton from '@/components/commonParts/button/DeleteButton'
 import CloseButton from '@/components/commonParts/button/CloseButton'
 import FormView from '@/components/commonParts/form/FormView'
 import FormCardText from '@/components/commonParts/card/FormCardText'
+import FormDialog from '@/components/commonParts/dialog/FormDialog'
 
 export default {
   components: {
@@ -49,7 +50,8 @@ export default {
     DeleteButton,
     CloseButton,
     FormView,
-    FormCardText
+    FormCardText,
+    FormDialog
   },
   props: {
     deleteAccountDialog: {

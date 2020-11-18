@@ -1,11 +1,6 @@
 <template>
-  <v-dialog
-    v-model="activityPlanDialog"
-    persistent
-    max-width="600px"
-    transition="scroll-y-transition"
-  >
-    <v-app>
+  <FormDialog :form-dialog="activityPlanDialog">
+    <template v-slot:dialog>
       <v-col cols="12" sm="12" md="12">
         <v-card>
           <v-card-title class="justify-center font-italic grey--text darken">
@@ -74,20 +69,22 @@
           </v-form>
         </v-card>
       </v-col>
-    </v-app>
-  </v-dialog>
+    </template>
+  </FormDialog>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
 import SaveAndCloseButton from '@/components/commonParts/button/SaveAndCloseButton'
+import FormDialog from '@/components/commonParts/dialog/FormDialog'
 import FormValidation from '@/mixins/FormValidation.vue'
 
 export default {
   mixins: [FormValidation],
 
   components: {
-    SaveAndCloseButton
+    SaveAndCloseButton,
+    FormDialog
   },
 
   props: {
