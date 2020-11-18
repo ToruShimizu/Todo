@@ -11,8 +11,7 @@ const state = () => ({
 })
 const mutations = {
   registrationTeam(state, registrationTeam) {
-    state.team.name = registrationTeam.teamName
-    state.team.id = registrationTeam.teamId
+    state.team = registrationTeam
     console.log('registrationTeam')
   },
   updateTeamImageFile(state, photoURL) {
@@ -65,18 +64,27 @@ const actions = {
     })
   },
 
-  async registrationTeamName({ getters, commit }, teamName) {
+  async registrationTeam({ getters, commit }, team) {
+    const imageFile = team.imageFile
+    const imageRef = await storageRef.child(`teamImages/${getters.userUid}/${imageFile.name}`)
+    const snapShot = await imageRef.put(imageFile)
+    const photoURL = await snapShot.ref.getDownloadURL()
     const id = uuidv4()
     const teamId = String(id)
     const registrationTeam = {
-      teamName,
-      teamId,
+      name: team.name,
+      id: teamId,
+      photoURL,
     }
-
-    if (getters.userUid) {
-      await db.collection(`users/${getters.userUid}/team`).doc(teamId).set(registrationTeam)
+    try {
+      if (getters.userUid) {
+        await db.collection(`users/${getters.userUid}/team`).doc(teamId).set(registrationTeam)
+      }
+      commit('registrationTeam', registrationTeam)
+    } catch (err) {
+      alert('登録に失敗しました。もう一度やり直してください')
+      console.log(err);
     }
-    commit('registrationTeam', registrationTeam)
   },
   async removeTeam({ commit, state, getters }) {
     const id = state.team.id
