@@ -12,7 +12,7 @@
               <v-row>
                 <!-- 活動計画入力エリア -->
                 <v-col cols="12" sm="6" md="6">
-                  <PlanCombobox :items="categorys" :category.sync="planContents.category" />
+                  <CategoryCombobox :items="categorys" :category.sync="planContents.category" />
                 </v-col>
 
                 <!-- 日付入力エリア -->
@@ -68,7 +68,7 @@
 import { mapActions } from 'vuex'
 import SaveAndCloseButton from '@/components/commonParts/button/SaveAndCloseButton'
 import FormDialog from '@/components/commonParts/dialog/FormDialog'
-import PlanCombobox from '@/components/commonParts/activityPlans/input/PlanCombobox'
+import CategoryCombobox from '@/components/commonParts/activityPlans/input/CategoryCombobox'
 import FormValidation from '@/mixins/FormValidation.vue'
 
 export default {
@@ -77,7 +77,7 @@ export default {
   components: {
     SaveAndCloseButton,
     FormDialog,
-    PlanCombobox
+    CategoryCombobox
   },
 
   props: {
