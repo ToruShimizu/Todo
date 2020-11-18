@@ -4,16 +4,16 @@
       <v-btn color="teal" dark to="/team" nuxt class="font-italic mr-2">
         <v-icon>mdi-account-edit</v-icon>サークル編集
       </v-btn>
-      <v-btn color="primary " dark @click="openAddActivityPlan" class="ml-2 font-italic">
+      <v-btn color="primary " dark @click="openCreateActivityPlan" class="ml-2 font-italic">
         <v-icon>mdi-pen-plus</v-icon>活動計画作成
       </v-btn>
     </v-layout>
     <AddActivityPlan
       :create-activity-plans.sync="planContents"
       :todo-categorys="todoCategorys"
-      :add-activity-plan-dialog="addActivityPlanDialog"
-      @open-add-activity-plan="openAddActivityPlan"
-      @close-add-activity-plan="closeAddActivityPlan"
+      :create-activity-plan-dialog="createActivityPlanDialog"
+      @open-create-activity-plan="openCreateActivityPlan"
+      @close-activity-plan="closeCreateActivityPlan"
     />
     <v-divider class="mt-4" />
     <v-card class="mb-5">
@@ -102,7 +102,7 @@ export default {
       activityPlansPageSize: 7,
       activityPlansPageLength: 0,
       displayActivityPlans: [],
-      addActivityPlanDialog: false
+      createActivityPlanDialog: false
     }
   },
   watch: {
@@ -194,11 +194,11 @@ export default {
         pageSize * pageNumber
       )
     },
-    openAddActivityPlan() {
-      this.addActivityPlanDialog = true
+    openCreateActivityPlan() {
+      this.createActivityPlanDialog = true
     },
-    closeAddActivityPlan() {
-      this.addActivityPlanDialog = false
+    closeCreateActivityPlan() {
+      this.createActivityPlanDialog = false
     }
   }
 }
