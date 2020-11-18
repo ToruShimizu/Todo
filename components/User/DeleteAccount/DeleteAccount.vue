@@ -29,19 +29,16 @@
                 :user-password.sync="editUser.password"
                 :passwordLabel="'現在のパスワード'"
               />
-              <v-card-actions>
-                <v-btn color="primary" @click="selectedDeleteAccount = 'closeDeleteAccount'">
-                  <v-icon left>mdi-login-variant</v-icon>戻る
-                </v-btn>
-                <v-spacer />
-                <v-btn
-                  color="error"
-                  :loading="loadingDeleteUser"
-                  :disabled="loadingDeleteUser"
-                  @click="handleDeleteAccount"
+              <v-card-actions class="justify-end">
+                <CloseButton
+                  title="close"
+                  @close-button="selectedDeleteAccount = 'closeDeleteAccount'"
+                />
+                <DeleteButton :title="'delete'" @delete-button="handleDeleteAccount"
+                  ><template v-slot:deleteButton>
+                    <v-icon left> mdi-account-multiple-remove-outline </v-icon></template
+                  ></DeleteButton
                 >
-                  <v-icon left> mdi-account-multiple-remove-outline </v-icon>削除
-                </v-btn>
               </v-card-actions>
             </v-form>
           </v-card-text>
@@ -55,13 +52,15 @@
 import { mapActions } from 'vuex'
 import FormUserEmail from '@/components/commonParts/user/form/FormUserEmail'
 import FormUserPassword from '@/components/commonParts/user/form/FormUserPassword'
-import LoadingView from '@/mixins/LoadingView.vue'
+import DeleteButton from '@/components/commonParts/button/DeleteButton'
+import CloseButton from '@/components/commonParts/button/CloseButton'
 
 export default {
-  mixins: [LoadingView],
   components: {
     FormUserEmail,
-    FormUserPassword
+    FormUserPassword,
+    DeleteButton,
+    CloseButton
   },
   props: {
     deleteAccountDialog: {
@@ -79,12 +78,6 @@ export default {
       default: () => {}
     }
   },
-
-  data() {
-    return {
-      loadingDeleteUser: false
-    }
-  },
   computed: {
     selectedDeleteAccount: {
       get() {
@@ -100,16 +93,14 @@ export default {
     async handleDeleteAccount() {
       const editUser = this.editUser
       if (!editUser.password || !editUser.email) {
-        this.loader = null
         this.$refs.form.validate()
         return
       }
-      this.loader = 'loadingDeleteUser'
       await this.deleteAccount({
         email: editUser.email,
         password: editUser.password
       })
-      this.$emit('update:close-delete-user', 'closeDeleteUser')
+      this.$emit('update:close-delete-account', 'closeDeleteAccount')
     },
     ...mapActions('modules/user/userInfo', ['deleteAccount'])
   }
