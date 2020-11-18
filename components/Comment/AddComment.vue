@@ -2,12 +2,13 @@
   <v-col cols="12">
     <v-text-field
       v-model="message"
-      hide-details
+      persistent-hint
       prepend-inner-icon="mdi-message-text-outline"
+      hint="入力後はEnterキーを押してください"
       label="コメントを追加する"
       clearable
       @keypress.enter="handleAddComment"
-    ></v-text-field>
+    />
   </v-col>
 </template>
 
