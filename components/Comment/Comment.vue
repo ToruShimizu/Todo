@@ -5,16 +5,20 @@
         <v-card-title>
           <v-icon small left> mdi-comment-text-outline </v-icon>
           <span class="subtitle-2 font-weight-light">コメント</span>
-          <v-spacer />
           <span class="subtitle-2 font-weight-light">{{ comment.created }}</span>
         </v-card-title>
-        <v-card-text class="body-1 font-weight-bold">
-          "{{ comment.message }}"
-          <v-row align="center" justify="end">
+        <v-card-text class="body-1 font-weight-bold"> "{{ comment.message }}" </v-card-text>
+        <v-card-text>
+          <v-layout>
+            <span v-if="photoURL">
+              {{ photoURL }}
+            </span>
+            <span v-else> <v-icon>mdi-account-outline</v-icon> </span>
+            {{ gettersUserName }}<v-spacer />
             <v-btn icon @click="handleRemoveComment(comment)">
               <v-icon>mdi-delete</v-icon>
             </v-btn>
-          </v-row>
+          </v-layout>
         </v-card-text>
       </v-card>
     </div>
@@ -31,7 +35,7 @@ export default {
   },
   methods: {
     handleRemoveComment(comment) {
-      if (!confirm('Are you sure?')) return
+      if (!confirm(comment, +'を削除しますか?')) return
       this.removeComment({ id: comment.id })
     },
     ...mapActions('modules/comment/comment', ['removeComment'])
