@@ -1,0 +1,16 @@
+<template>
+  <v-btn color="blue darken-1" outlined @click="handleCloseButton"
+    ><span class="font-italic">{{ title }}</span></v-btn
+  >
+</template>
+
+<script>
+export default {
+  props: { title: String },
+  methods: {
+    handleCloseButton() {
+      this.$emit('close-button')
+    }
+  }
+}
+</script>
