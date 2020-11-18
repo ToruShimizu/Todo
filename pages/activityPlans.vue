@@ -1,7 +1,7 @@
 <template>
   <v-container style="max-width: 500px" class="mb-5">
     <v-layout class="justify-center mt-2">
-      <v-btn color="teal" dark to="/createTeam" nuxt class="font-italic mr-2">
+      <v-btn color="teal" dark to="/team" nuxt class="font-italic mr-2">
         <v-icon>mdi-account-edit</v-icon>サークル編集
       </v-btn>
       <v-btn color="primary " dark @click="openAddActivityPlan" class="ml-2 font-italic">

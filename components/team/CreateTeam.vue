@@ -1,9 +1,9 @@
 <template>
   <FormCreateTeam
-    :title="'サークル編集'"
-    :team="editTeam"
-    :team-dialog="updateTeamDialog"
-    @save-team="handleUpdateTeam"
+    :title="'サークル新規作成'"
+    :team="createTeam"
+    :team-dialog="createTeamDialog"
+    @save-team="handleCreateTeam"
     @close-team-dialog="closeTeamDialog"
   />
 </template>
@@ -11,36 +11,28 @@
 import { mapActions } from 'vuex'
 import FormCreateTeam from '@/components/commonParts/team/form/FormCreateTeam'
 export default {
-  components: {
-    FormCreateTeam
-  },
   props: {
-    updateTeamDialog: {
+    createTeamDialog: {
       type: Boolean,
       required: true
     }
   },
   data() {
     return {
-      editTeam: {
+      createTeam: {
         name: '',
         imageFile: null
       }
     }
   },
   methods: {
-    changeTeamImageFile(event) {
-      const file = event
-      this.teamImageFile = file
-    },
-    handleUpdateTeam() {
-      this.uploadTeamImageFile(this.teamImageFile)
+    handleCreateTeam(team) {
+      this.registrationTeam(team)
     },
     closeTeamDialog() {
       this.$emit('close-team-dialog')
     },
-    ...mapActions('modules/team/team', ['updateTeam', 'uploadTeamImageFile'])
+    ...mapActions('modules/team/team', ['registrationTeam', 'uploadTeamImageFile'])
   }
 }
 </script>
-
