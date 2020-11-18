@@ -62,10 +62,10 @@
                 <slot name="comment"></slot>
               </v-row>
             </v-container>
-            <v-card-actions class="justify-end">
-              <v-btn color="blue darken-1" text @click="closeActivityPlan">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="handleSaveActivityPlan">Save</v-btn>
-            </v-card-actions>
+            <SaveAndCloseButton
+              @save-button="handleSaveActivityPlan"
+              @close-button="closeActivityPlan"
+            />
           </v-form>
         </v-card>
       </v-col>
@@ -75,10 +75,15 @@
 
 <script>
 import { mapActions } from 'vuex'
+import SaveAndCloseButton from '@/components/commonParts/button/SaveAndCloseButton'
 import FormValidation from '@/mixins/FormValidation.vue'
 
 export default {
   mixins: [FormValidation],
+
+  components: {
+    SaveAndCloseButton
+  },
 
   props: {
     title: String,

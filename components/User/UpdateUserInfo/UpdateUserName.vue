@@ -27,20 +27,14 @@
             <v-form ref="form" lazy-validation @submit.prevent="updateUserName">
               <FormUserName :user-name.sync="editUser.name" :name-label="'新しい名前'" />
 
-              <v-card-actions>
-                <v-btn color="primary" @click="selectedUpdateUserName = 'closeUpdateUserName'">
-                  <v-icon left>mdi-login-variant</v-icon>戻る
-                </v-btn>
-                <v-spacer />
-                <v-btn
-                  color="success"
-                  :loading="loadingUpdateUserName"
-                  :disabled="loadingUpdateUserName"
-                  @click="handleUpdateUserName"
-                >
-                  <v-icon left> mdi-badge-account-horizontal-outline </v-icon>SAVE
-                </v-btn>
-              </v-card-actions>
+              <SaveAndCloseButton
+                @save-button="handleUpdateUserName"
+                @close-button="selectedUpdateUserName = 'closeUpdateUserName'"
+              >
+                <template v-slot:save
+                  ><v-icon left>mdi-badge-account-horizontal-outline</v-icon>
+                </template>
+              </SaveAndCloseButton>
             </v-form>
           </v-card-text>
         </v-card>
@@ -52,12 +46,12 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import FormUserName from '@/components/commonParts/user/form/FormUserName'
-import LoadingView from '@/mixins/LoadingView.vue'
+import SaveAndCloseButton from '@/components/commonParts/button/SaveAndCloseButton'
 
 export default {
-  mixins: [LoadingView],
   components: {
-    FormUserName
+    FormUserName,
+    SaveAndCloseButton
   },
 
   props: {
@@ -76,11 +70,6 @@ export default {
       default: () => {}
     }
   },
-  data() {
-    return {
-      loadingUpdateUserName: false
-    }
-  },
   computed: {
     selectedUpdateUserName: {
       get() {
@@ -97,11 +86,9 @@ export default {
     async handleUpdateUserName() {
       const editUser = this.editUser
       if (!editUser.name) {
-        this.loader = null
         this.$refs.form.validate()
         return
       }
-      this.loader = 'loadingUpdateUserName'
       await this.updateUserName({
         userName: editUser.name
       })

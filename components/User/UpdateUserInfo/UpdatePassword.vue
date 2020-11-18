@@ -18,10 +18,13 @@
           </v-card-title>
           <v-card-text>
             <v-form ref="form" lazy-validation @click="handleUpdatePassword">
-              <FormUserEmail :user-email.sync="editUser.email" :email-label="emailLabel" />
+              <FormUserEmail
+                :user-email.sync="editUser.email"
+                :email-label="'現在のメールアドレス'"
+              />
               <FormUserPassword
                 :user-password.sync="editUser.password"
-                :password-label="passwordLabel"
+                :password-label="'現在のパスワード'"
               />
               <v-text-field
                 v-model="editUser.editPassword"
@@ -33,21 +36,14 @@
                 counter="72"
                 @click:append="showEditPassword = !showEditPassword"
               />
-              <v-card-actions>
-                <v-btn color="primary" @click="selectedUpdatePassword = 'closeUpdatePassword'">
-                  <v-icon left>mdi-login-variant</v-icon>戻る
-                </v-btn>
-                <v-spacer />
-
-                <v-btn
-                  color="success"
-                  :loading="loadingResetPassword"
-                  :disabled="loadingResetPassword"
-                  @click="handleUpdatePassword"
-                >
-                  <v-icon left>mdi-account</v-icon>SAVE
-                </v-btn>
-              </v-card-actions>
+              <SaveAndCloseButton
+                @save-button="handleUpdatePassword"
+                @close-button="selectedUpdatePassword = 'closeUpdatePassword'"
+              >
+                <template v-slot:save
+                  ><v-icon left>mdi-account-key-outline </v-icon></template
+                ></SaveAndCloseButton
+              >
             </v-form>
           </v-card-text>
         </v-card>
@@ -58,17 +54,18 @@
 
 <script>
 import { mapActions } from 'vuex'
+import SaveAndCloseButton from '@/components/commonParts/button/SaveAndCloseButton'
 import FormUserEmail from '@/components/commonParts/user/form/FormUserEmail'
 import FormUserPassword from '@/components/commonParts/user/form/FormUserPassword'
 import FormValidation from '@/mixins/FormValidation.vue'
-import LoadingView from '@/mixins/LoadingView.vue'
 
 export default {
+  mixins: [FormValidation],
   components: {
     FormUserEmail,
-    FormUserPassword
+    FormUserPassword,
+    SaveAndCloseButton
   },
-  mixins: [FormValidation, LoadingView],
   props: {
     updatePasswordDialog: {
       type: Boolean,
@@ -87,10 +84,7 @@ export default {
   },
   data() {
     return {
-      loadingResetPassword: false,
-      showEditPassword: false,
-      emailLabel: 'メールアドレス',
-      passwordLabel: '現在のパスワード'
+      showEditPassword: false
     }
   },
   computed: {
@@ -107,13 +101,10 @@ export default {
   methods: {
     async handleUpdatePassword() {
       const editUser = this.editUser
-      console.log(editUser)
-      this.loader = null
       if (!editUser.email || !editUser.password || !editUser.editPassword) {
         this.$refs.form.validate()
         return
       }
-      this.loader = 'loadingResetPassword'
       await this.updatePassword({
         updatePassword: editUser.editPassword,
         email: editUser.email,
