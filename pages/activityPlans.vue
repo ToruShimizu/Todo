@@ -1,6 +1,13 @@
 <template>
   <v-container style="max-width: 500px" class="mb-5">
-    <TeamName />
+    <v-layout class="justify-center mt-2">
+      <v-btn color="teal" dark to="/createTeam" nuxt class="font-italic mr-2">
+        <v-icon>mdi-account-edit</v-icon>サークル編集
+      </v-btn>
+      <v-btn color="primary " dark @click="openAddActivityPlan" class="ml-2 font-italic">
+        <v-icon>mdi-pen-plus</v-icon>活動計画作成
+      </v-btn>
+    </v-layout>
     <AddActivityPlan
       :create-activity-plans.sync="planContents"
       :todo-categorys="todoCategorys"
@@ -12,11 +19,6 @@
     <v-card class="mb-5">
       <FilteredActivityPlans :selected-activity-plans-filter.sync="selectActivityPlansFilter" />
       <v-divider />
-      <v-layout class="justify-center mt-2">
-        <v-btn color="primary" dark @click="openAddActivityPlan">
-          <v-icon>mdi-pen-plus</v-icon>活動計画作成
-        </v-btn>
-      </v-layout>
       <v-layout>
         <SearchActivityPlans
           :searched-category-keyword.sync="searchCategoryKeyword"
