@@ -26,8 +26,6 @@
             outlined
             style="border-color: #979797"
             tile
-            :loading="loadingTestLogin"
-            :disabled="loadingTestLogin"
             @click="handleTestLogin"
             ><v-icon>mdi-account-arrow-left-outline </v-icon> テストユーザーでログイン
           </v-btn>
@@ -35,35 +33,34 @@
         <div class="separator separator_login_page">
           <div class="middle_separator">または</div>
         </div>
+        <v-btn text color="primary accent-4" class="fill-width" @click="openResetPassword">
+          パスワードを忘れた方はこちら</v-btn
+        >
         <v-card-text>
           <v-form ref="form" lazy-validation @submit.prevent="login">
             <FormUserEmail :user-email.sync="signInUser.email" :email-label="'メールアドレス'" />
             <FormUserPassword :password-label="'パスワード'" />
-            <v-btn text color="primary accent-4" class="fill-width" @click="openResetPassword">
-              パスワードを忘れた方はこちら</v-btn
-            >
-            <v-card-actions>
-              <v-btn
-                color="primary"
-                :loading="loadingLogin"
-                :disabled="loadingLogin"
-                @click="handleLogin"
-              >
-                <v-icon left>mdi-login-variant</v-icon>ログイン
-              </v-btn>
-              <v-spacer />
-              <v-btn color="success" @click="openCreateUser">
-                <v-icon left>mdi-account-plus</v-icon>新規作成はこちら
-              </v-btn>
-              <CreateUser
-                :create-user-dialog="createUserDialog"
-                @close-create-user="closeCreateUser"
-              />
-              <ResetPassword
-                :reset-password-dialog="resetPasswordDialog"
-                @close-reset-password="closeResetPassword"
-              />
+
+            <v-card-actions class="justify-end">
+              <SaveButton :title="'login'" @save-button="handleLogin">
+                <template v-slot:saveButton
+                  ><v-icon>mdi-account-arrow-left-outline </v-icon></template
+                >
+              </SaveButton>
+              <SaveButton :title="'new'" @save-button="openCreateUser">
+                <template v-slot:saveButton>
+                  <v-icon left>mdi-account-plus</v-icon>新規作成はこちら</template
+                >
+              </SaveButton>
             </v-card-actions>
+            <CreateUser
+              :create-user-dialog="createUserDialog"
+              @close-create-user="closeCreateUser"
+            />
+            <ResetPassword
+              :reset-password-dialog="resetPasswordDialog"
+              @close-reset-password="closeResetPassword"
+            />
           </v-form>
         </v-card-text>
       </v-card>
@@ -77,16 +74,16 @@ import CreateUser from '@/components/CreateUser/CreateUser'
 import ResetPassword from '@/components/ResetPassword/ResetPassword'
 import FormUserEmail from '@/components/commonParts/user/form/FormUserEmail'
 import FormUserPassword from '@/components/commonParts/user/form/FormUserPassword'
-import LoadingView from '@/mixins/LoadingView.vue'
+import SaveButton from '@/components/commonParts/button/SaveButton'
 
 export default {
   components: {
     CreateUser,
     ResetPassword,
     FormUserEmail,
-    FormUserPassword
+    FormUserPassword,
+    SaveButton
   },
-  mixins: [LoadingView],
 
   data() {
     return {
@@ -94,15 +91,12 @@ export default {
         email: '',
         password: ''
       },
-      loadingTestLogin: false,
-      loadingLogin: false,
       createUserDialog: false,
       resetPasswordDialog: false
     }
   },
   methods: {
     handleTestLogin() {
-      this.loader = 'loadingTestLogin'
       this.login({
         email: 'test@example.com',
         password: 'testUser',
@@ -112,11 +106,9 @@ export default {
     async handleLogin() {
       const signInUser = this.signInUser
       if (!signInUser.password || !signInUser.email) {
-        this.loader = null
         this.$refs.form.validate()
         return
       }
-      this.loader = 'loadingLogin'
       await this.login({
         email: signInUser.email,
         password: signInUser.password

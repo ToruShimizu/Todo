@@ -27,23 +27,17 @@
                 :user-password.sync="createUser.password"
                 :passwordLabel="'登録するパスワード'"
               />
-              <v-card-actions>
-                <v-btn color="primary" class="hidden-xs-only" @click="closeCreateUser">
-                  <v-icon left>mdi-login-variant</v-icon>ログイン画面へ戻る
-                </v-btn>
-                <v-btn color="primary" class="hidden-sm-and-up" @click="closeCreateUser">
-                  <v-icon left>mdi-login-variant</v-icon>戻る
-                </v-btn>
-                <v-spacer />
-                <v-btn
-                  color="success"
-                  :loading="loadingCreateUser"
-                  :disabled="loadingCreateUser"
-                  @click="handleCreateUser"
-                >
-                  <v-icon left>mdi-account-plus</v-icon>新規作成
-                </v-btn>
-              </v-card-actions>
+
+              <SaveAndCloseButton
+                :close-button-title="'close'"
+                :save-button-title="'save'"
+                @close-button="closeCreateUser"
+                @save-button="handleCreateUser"
+              >
+                <template v-slot:save>
+                  <v-icon left>mdi-account-plus</v-icon>
+                </template>
+              </SaveAndCloseButton>
             </v-form>
           </v-card-text>
         </v-card>
@@ -57,14 +51,14 @@ import { mapActions } from 'vuex'
 import FormUserName from '@/components/commonParts/user/form/FormUserName'
 import FormUserEmail from '@/components/commonParts/user/form/FormUserEmail'
 import FormUserPassword from '@/components/commonParts/user/form/FormUserPassword'
-import LoadingView from '@/mixins/LoadingView.vue'
+import SaveAndCloseButton from '@/components/commonParts/button/SaveAndCloseButton'
 
 export default {
-  mixins: [LoadingView],
   components: {
     FormUserName,
     FormUserEmail,
-    FormUserPassword
+    FormUserPassword,
+    SaveAndCloseButton
   },
 
   props: {
@@ -79,20 +73,16 @@ export default {
         name: '',
         email: '',
         password: ''
-      },
-      showPassword: false,
-      loadingCreateUser: false
+      }
     }
   },
   methods: {
     async handleCreateUser() {
       const createUser = this.createNewUser
       if (!createUser.password || !createUser.email || !createUser.name) {
-        this.loader = null
         this.$refs.form.validate()
         return
       }
-      this.loader = 'loadingCreateUser'
       await this.createUser({
         email: createUser.email,
         password: createUser.password,
