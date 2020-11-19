@@ -203,8 +203,6 @@ export default {
       return returnvalue
     },
     ...mapGetters('modules/activityPlans/activityPlans', [
-      'remainingAcactivityPlans',
-      'completedactivityPlans',
       'sortByCategory',
       'sortByAscDate',
       'sortByDescDate'
