@@ -1,8 +1,8 @@
 <template>
   <v-container style="max-width: 500px" class="mb-5">
     <v-layout class="justify-center mt-2">
-      <v-btn color="teal" dark to="/team" nuxt class="font-italic mr-2"
-        ><v-icon>mdi-account-edit</v-icon>サークル編集
+      <v-btn color="teal lighten-1" dark to="/team" nuxt class="font-italic mr-2" outlined
+        ><v-icon>mdi-account-edit-outline </v-icon>サークル編集
       </v-btn>
       <BlueDialogButton :title="'活動計画作成'" @dialog-button="openCreateActivityPlan">
         <template v-slot:dialogButton>
