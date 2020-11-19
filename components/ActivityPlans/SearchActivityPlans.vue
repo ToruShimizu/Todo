@@ -7,7 +7,7 @@
       label="カテゴリ検索"
       clearable
       persistent-hint
-      hint="文字入力の場合はEnterキーを押してください"
+      hint="文字入力の場合は入力後Enterキーを押してください"
       @click:clear="$nextTick(() => (searchedCategoryKeyword = null))"
     />
   </v-col>
