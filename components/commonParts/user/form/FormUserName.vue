@@ -3,7 +3,7 @@
     v-model="innerName"
     prepend-inner-icon="mdi-card-account-details-outline"
     :label="nameLabel"
-    :rules="[validRules.nameRules.required]"
+    :rules="nameRules"
     clearable
   />
 </template>
@@ -22,6 +22,11 @@ export default {
       type: String,
       required: false,
       default: ''
+    }
+  },
+  data() {
+    return {
+      nameRules: [(v) => !!v || '名前は必須です。']
     }
   },
   computed: {

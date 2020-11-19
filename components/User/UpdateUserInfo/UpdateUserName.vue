@@ -69,6 +69,7 @@ export default {
       set(closeUpdateUserName) {
         this.$emit('update:close-update-user-name', closeUpdateUserName)
         this.$refs.form.reset()
+        this.editUser.name = ''
       }
     },
     ...mapGetters('modules/user/auth', ['gettersUserName'])
@@ -83,6 +84,7 @@ export default {
       await this.updateUserName({
         userName: editUser.name
       })
+      this.$refs.form.reset()
       this.$emit('update:close-update-user-name', 'closeUpdateUserName')
     },
     ...mapActions('modules/user/userInfo', ['updateUserName'])
