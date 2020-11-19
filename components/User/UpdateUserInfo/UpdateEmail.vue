@@ -9,8 +9,11 @@
               >{{ gettersUserEmail }}
             </template>
           </FormCardText>
-          <FormUserEmail :user-email.sync="editUser.email" :email-label="'新しいメールアドレス'" />
           <v-form ref="form" lazy-validation @submit.prevent="updateEmail">
+            <FormUserEmail
+              :user-email.sync="editUser.email"
+              :email-label="'新しいメールアドレス'"
+            />
             <SaveAndCloseButton
               :close-button-title="'close'"
               :save-button-title="'save'"
@@ -64,21 +67,21 @@ export default {
         return this.selectEditUserInfo
       },
       set(closeUpdateEmail) {
-        this.$emit('update:close-update-email', closeUpdateEmail)
         this.$refs.form.reset()
+        this.editUser.email = ''
+        this.$emit('update:close-update-email', closeUpdateEmail)
       }
     },
     ...mapGetters('modules/user/auth', ['gettersUserEmail'])
   },
   methods: {
-    async handleUpdateEmail() {
+    handleUpdateEmail() {
       const editUserEmail = this.editUser.email
-      console.log(editUserEmail)
       if (!editUserEmail) {
         this.$refs.form.validate()
         return
       }
-      await this.updateEmail({
+      this.updateEmail({
         email: editUserEmail
       })
       this.$emit('update:close-update-email', 'closeUpdateEmail')

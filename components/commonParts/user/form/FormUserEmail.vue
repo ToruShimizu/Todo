@@ -3,16 +3,13 @@
     v-model="innerEmail"
     prepend-inner-icon="mdi-email-edit-outline"
     :label="emailLabel"
-    :rules="[validRules.emailRules.required, validRules.emailRules.regex]"
+    :rules="emailRules"
     clearable
   />
 </template>
 
 <script>
-import FormValidation from '@/mixins/FormValidation.vue'
-
 export default {
-  mixins: [FormValidation],
   props: {
     email: {
       type: String,
@@ -25,7 +22,17 @@ export default {
       default: ''
     }
   },
-
+  data() {
+    return {
+      emailRules: [
+        (v) => !!v || 'Emailは必須です',
+        (v) =>
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+            v
+          ) || 'メールアドレスの形式が違います'
+      ]
+    }
+  },
   computed: {
     innerEmail: {
       get() {
