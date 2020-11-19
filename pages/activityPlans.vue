@@ -1,12 +1,14 @@
 <template>
   <v-container style="max-width: 500px" class="mb-5">
     <v-layout class="justify-center mt-2">
-      <v-btn color="teal" dark to="/team" nuxt class="font-italic mr-2">
-        <v-icon>mdi-account-edit</v-icon>サークル編集
+      <v-btn color="teal" dark to="/team" nuxt class="font-italic mr-2"
+        ><v-icon>mdi-account-edit</v-icon>サークル編集
       </v-btn>
-      <v-btn color="primary " dark @click="openCreateActivityPlan" class="ml-2 font-italic">
-        <v-icon>mdi-pen-plus</v-icon>活動計画作成
-      </v-btn>
+      <BlueDialogButton :title="'活動計画作成'" @dialog-button="openCreateActivityPlan">
+        <template v-slot:dialogButton>
+          <v-icon> mdi-pencil-plus-outline </v-icon>
+        </template>
+      </BlueDialogButton>
     </v-layout>
     <AddActivityPlan
       :create-activity-plans.sync="planContents"
@@ -55,6 +57,7 @@ import SortByActivityPlans from '@/components/ActivityPlans/SortByActivityPlans'
 import Pagination from '@/components/ActivityPlans/Pagination'
 import ActivityPlansTable from '@/components/ActivityPlans/ActivityPlansTable'
 import TeamName from '@/components/team/TeamName'
+import BlueDialogButton from '@/components/commonParts/button/BlueDialogButton'
 
 export default {
   middleware: 'authenticated',
@@ -65,7 +68,8 @@ export default {
     SortByActivityPlans,
     Pagination,
     ActivityPlansTable,
-    TeamName
+    TeamName,
+    BlueDialogButton
   },
   data() {
     return {
