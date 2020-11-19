@@ -1,66 +1,50 @@
 <template>
   <div>
-    <v-btn
-      v-if="team === null"
-      color="teal lighten-1"
-      dark
-      class="font-italic mb-5"
-      outlined
-      @click="openCreateTeam"
-    >
-      <v-icon>mdi-account-plus-outline </v-icon>サークル新規作成
-    </v-btn>
-    <v-menu transition="fab-transition" v-else>
+    <v-menu transition="fab-transition">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn dark color="grey" v-bind="attrs" v-on="on" outlined small class="mt-1 ml-5">
+        <v-btn color="grey" v-bind="attrs" v-on="on" outlined small class="mt-1 ml-5">
           <v-icon> mdi-pencil-outline </v-icon>
         </v-btn>
       </template>
       <v-list>
         <v-list-item>
-          <v-btn text>
-            <v-list-item-title @click="openUpdateTeam">サークル編集</v-list-item-title>
-          </v-btn>
+          <v-list-item-title
+            ><v-btn text @click="openUpdateTeam">
+              <v-icon>mdi-pencil-outline </v-icon>サークル編集</v-btn
+            ></v-list-item-title
+          >
         </v-list-item>
         <v-list-item>
-          <v-btn text>
-            <v-list-item-title @click="handleDeleteTeam">サークル削除</v-list-item-title>
-          </v-btn>
+          <v-list-item-title @click="handleDeleteTeam"
+            ><v-btn text
+              ><v-icon>mdi-account-multiple-remove-outline </v-icon>サークル削除</v-btn
+            ></v-list-item-title
+          >
         </v-list-item>
       </v-list>
     </v-menu>
-    <CreateTeam :create-team-dialog="createTeamDialog" @close-team-dialog="closeCreateTeam" />
     <UpdateTeam :update-team-dialog="updateTeamDialog" @close-team-dialog="closeUpdateTeam" />
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import UpdateTeam from '@/components/team/edit/UpdateTeam'
-import CreateTeam from '@/components/team/CreateTeam'
 export default {
   components: {
-    UpdateTeam,
-    CreateTeam
+    UpdateTeam
   },
   data() {
     return {
-      createTeamDialog: false,
       updateTeamDialog: false
     }
   },
   computed: {
-    ...mapState('modules/team/team', ['team'])
+    ...mapGetters('modules/team/team', ['teamName'])
   },
   methods: {
-    openCreateTeam() {
-      this.createTeamDialog = true
-    },
     openUpdateTeam() {
       this.updateTeamDialog = true
-    },
-    closeCreateTeam() {
-      this.createTeamDialog = false
     },
     closeUpdateTeam() {
       this.updateTeamDialog = false
