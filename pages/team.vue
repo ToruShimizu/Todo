@@ -3,7 +3,7 @@
     <TeamName />
 
     <RegistrationMember
-      :registration-member-dialog="registrationMemberDialog"
+      :member-dialog="registrationMemberDialog"
       :team-member="teamMember"
       :team-roles="teamRoles"
       :improvement-roles="improvementRoles"
