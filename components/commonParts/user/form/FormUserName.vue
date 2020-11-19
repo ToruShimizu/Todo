@@ -8,10 +8,7 @@
   />
 </template>
 <script>
-import FormValidation from '@/mixins/FormValidation.vue'
-
 export default {
-  mixins: [FormValidation],
   props: {
     name: {
       type: String,
