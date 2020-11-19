@@ -24,6 +24,7 @@ import TeamMember from '@/components/team/teamMember'
 import TeamName from '@/components/team/TeamName'
 
 export default {
+  middleware: 'authenticated',
   components: {
     RegistrationMember,
     TeamName

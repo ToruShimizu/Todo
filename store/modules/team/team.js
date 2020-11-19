@@ -30,9 +30,11 @@ const mutations = {
     console.log('updateMember')
 
   },
+  initMember(state) {
+    state.teamMember = []
+  },
   removeTeam(state, id) {
-    const index = state.teamMember.findIndex((member) => member.id === id)
-    state.team.splice(index, 1)
+    state.team = {}
   },
   removeMember(state, id) {
     const index = state.teamMember.findIndex((member) => member.id === id)
@@ -48,28 +50,48 @@ const actions = {
       .collection(`users/${getters.userUid}/team`)
       .get()
     await snapShot.docs.map((doc) => {
-
       const teamData = doc.data()
       commit('registrationTeam', teamData)
     })
     dispatch('fetchMember')
   },
-  async fetchMember({ getters, commit },) {
-    const snapShot = await db.collection(`users/${getters.userUid}/team`).doc(getters.teamId).get()
-    const subCollection = await snapShot.ref.collection('teamMember').get()
-    subCollection.docs.map((doc) => {
-      const member = doc.data()
-      commit('registrationMember', member)
-    })
+  async fetchMember({ state, getters, commit },) {
+    if (state.team) {
+      const snapShot = await db.collection(`users/${getters.userUid}/team`).doc(getters.teamId).get()
+      const subCollection = await snapShot.ref.collection('teamMember').get()
+      commit('initMember')
+      subCollection.docs.map((doc) => {
+        const member = doc.data()
+        commit('registrationMember', member)
+      })
+    }
   },
 
-  async registrationTeam({ getters, commit }, team) {
+  async registrationTeam({ getters, commit, dispatch }, team) {
+    const id = uuidv4()
+    const teamId = String(id)
+    if (team.imageFile) {
+      await dispatch('uploadTeamImageFile', { team, teamId })
+    }
+    const registrationTeam = {
+      name: team.name,
+      id: teamId,
+    }
+    try {
+      if (getters.userUid) {
+        await db.collection(`users/${getters.userUid}/team`).doc(teamId).set(registrationTeam)
+      }
+      commit('registrationTeam', registrationTeam)
+    } catch (err) {
+      alert('登録に失敗しました。もう一度やり直してください')
+      console.log(err);
+    }
+  },
+  async uploadTeamImageFile({ getters, commit }, { team, teamId }) {
     const imageFile = team.imageFile
     const imageRef = await storageRef.child(`teamImages/${getters.userUid}/${imageFile.name}`)
     const snapShot = await imageRef.put(imageFile)
     const photoURL = await snapShot.ref.getDownloadURL()
-    const id = uuidv4()
-    const teamId = String(id)
     const registrationTeam = {
       name: team.name,
       id: teamId,
@@ -85,24 +107,42 @@ const actions = {
       console.log(err);
     }
   },
-  async updateTeam({ state, getters }, team) {
+  async updateTeam({ state, getters, dispatch }, team) {
+    if (team.imageFile) {
+      dispatch('updateTeamImageFile', team)
+    } else {
+      const updateTeam = {
+        name: team.name,
+        photoURL: state.team.photoURL
+      }
+      try {
+        if (getters.userUid) {
+          await db.collection(`users/${getters.userUid}/team`).doc(getters.teamId).update(updateTeam)
+          alert('チーム情報の変更が完了しました。')
+          commit('updateTeam', updateTeam)
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  },
+  async updateTeamImageFile({ getters, commit }, team) {
     const imageFile = team.imageFile
     const imageRef = await storageRef.child(`teamImages/${getters.userUid}/${imageFile.name}`)
     const snapShot = await imageRef.put(imageFile)
     const photoURL = await snapShot.ref.getDownloadURL()
-    const updateTeam = {
+    const registrationTeam = {
       name: team.name,
       photoURL,
     }
-    console.log(updateTeam)
     try {
       if (getters.userUid) {
-        await db.collection(`users/${getters.userUid}/team`).doc(state.team.id).update(updateTeam)
-        alert('チーム情報の変更が完了しました。')
-        commit('updateTeam', updateTeam)
+        await db.collection(`users/${getters.userUid}/team`).doc(getters.teamId).set(registrationTeam)
       }
+      commit('registrationTeam', registrationTeam)
     } catch (err) {
-      console.log(err)
+      alert('登録に失敗しました。もう一度やり直してください')
+      console.log(err);
     }
   },
   async removeTeam({ commit, state, getters }) {
@@ -160,22 +200,6 @@ const actions = {
         await doc.ref.collection('teamMember').doc(id).delete()
       })
       commit('removeMember', id)
-    }
-  },
-  async uploadTeamImageFile({ getters, commit }, teamImageFile) {
-    const imageRef = await storageRef.child(`teamImages/${getters.userUid}/${teamImageFile.name}`)
-    const snapShot = await imageRef.put(teamImageFile)
-    const photoURL = await snapShot.ref.getDownloadURL()
-    console.log(photoURL)
-    try {
-      if (getters.userUid) {
-        await db.collection(`users/${getters.userUid}/team`).doc(getters.teamId).update({ photoURL: photoURL })
-        alert('プロフィール画像の変更が完了しました。')
-        commit('updateTeamImageFile', photoURL)
-      }
-    } catch (err) {
-      alert('画像の変更に失敗しました。もう一度やり直してください。')
-      console.log(err)
     }
   },
 }
