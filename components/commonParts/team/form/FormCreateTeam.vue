@@ -1,6 +1,6 @@
 <template>
   <FormDialog :form-dialog="teamDialog">
-    <template name="dialog">
+    <template v-slot:dialog>
       <v-col cols="12" sm="12" md="12">
         <v-card class="mx-auto text-center">
           <v-card-title>
@@ -69,8 +69,7 @@ export default {
     },
     teamDialog: {
       type: Boolean,
-      required: false,
-      default: false
+      required: true
     }
   },
   computed: {
