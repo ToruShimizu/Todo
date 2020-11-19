@@ -58,15 +58,13 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import SaveAndCloseButton from '@/components/commonParts/button/SaveAndCloseButton'
-import FormView from '@/components/commonParts/form/FormView'
+import FormDialog from '@/components/commonParts/dialog/FormDialog'
 import FormValidation from '@/mixins/FormValidation.vue'
 
 export default {
   mixins: [FormValidation],
   components: {
-    SaveAndCloseButton,
-    FormView
+    FormDialog
   },
 
   props: {
