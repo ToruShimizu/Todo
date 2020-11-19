@@ -1,12 +1,19 @@
 <template>
   <div>
-    <v-btn v-if="team === null" color="teal" dark class="font-italic mb-5" @click="openCreateTeam">
-      <v-icon>mdi-account-plus</v-icon>サークル新規作成
+    <v-btn
+      v-if="team === null"
+      color="teal lighten-1"
+      dark
+      class="font-italic mb-5"
+      outlined
+      @click="openCreateTeam"
+    >
+      <v-icon>mdi-account-plus-outline </v-icon>サークル新規作成
     </v-btn>
     <v-menu transition="fab-transition" v-else>
       <template v-slot:activator="{ on, attrs }">
-        <v-btn dark color="grey" v-bind="attrs" v-on="on" text>
-          <v-icon>mdi-pen </v-icon>
+        <v-btn dark color="grey" v-bind="attrs" v-on="on" outlined small class="mt-1 ml-5">
+          <v-icon> mdi-pencil-outline </v-icon>
         </v-btn>
       </template>
       <v-list>
