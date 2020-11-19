@@ -31,8 +31,7 @@ const mutations = {
 
   },
   removeTeam(state, id) {
-    const index = state.teamMember.findIndex((member) => member.id === id)
-    state.team.splice(index, 1)
+    state.team = {}
   },
   removeMember(state, id) {
     const index = state.teamMember.findIndex((member) => member.id === id)
