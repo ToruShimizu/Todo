@@ -56,10 +56,14 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import FormDialog from '@/components/commonParts/dialog/FormDialog'
 import FormValidation from '@/mixins/FormValidation.vue'
 
 export default {
   mixins: [FormValidation],
+  components: {
+    FormDialog
+  },
 
   props: {
     title: String,
