@@ -30,6 +30,9 @@ const mutations = {
     console.log('updateMember')
 
   },
+  initMember(state) {
+    state.teamMember = []
+  },
   removeTeam(state, id) {
     state.team = {}
   },
@@ -56,6 +59,7 @@ const actions = {
   async fetchMember({ getters, commit },) {
     const snapShot = await db.collection(`users/${getters.userUid}/team`).doc(getters.teamId).get()
     const subCollection = await snapShot.ref.collection('teamMember').get()
+    commit('initMember')
     subCollection.docs.map((doc) => {
       const member = doc.data()
       commit('registrationMember', member)
