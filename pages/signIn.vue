@@ -34,11 +34,13 @@
           <v-card-actions class="justify-end">
             <SaveButton :title="'login'" @save-button="handleLogin">
               <template v-slot:saveButton
-                ><v-icon>mdi-account-arrow-left-outline </v-icon></template
+                ><v-icon left>mdi-account-arrow-left-outline </v-icon></template
               >
             </SaveButton>
             <SaveButton :title="'new'" @save-button="openCreateUser">
-              <template v-slot:saveButton> <v-icon left>mdi-account-plus</v-icon></template>
+              <template v-slot:saveButton>
+                <v-icon left>mdi-account-plus-outline </v-icon></template
+              >
             </SaveButton>
           </v-card-actions>
           <CreateUser :create-user-dialog="createUserDialog" @close-create-user="closeCreateUser" />
