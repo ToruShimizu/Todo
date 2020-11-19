@@ -52,10 +52,40 @@
             </v-row>
           </v-form>
 
-          <!-- <v-card-actions class="justify-end">
-            <v-btn color="primary" @click="closeRegistrationMember" text>close</v-btn>
-            <v-btn color="primary" @click="handleRegistrationMember" text>save</v-btn>
-          </v-card-actions> -->
+                <v-col cols="12" sm="12" md="12">
+                  <v-combobox
+                    v-model="teamMember.role"
+                    :items="teamRoles"
+                    label="サークル役割"
+                    clearable
+                    multiple
+                    small-chips
+                    persistent-hint
+                    dense
+                    prepend-inner-icon="mdi-briefcase-account-outline"
+                    hint="文字入力の場合はEnterキーを押してください"
+                    @click:clear="$nextTick(() => (searchedCategoryKeyword = null))"
+                  >
+                  </v-combobox>
+                </v-col>
+                <v-col cols="12" sm="12" md="12">
+                  <v-combobox
+                    v-model="teamMember.improvementRole"
+                    :items="improvementRoles"
+                    label="改善事例担当"
+                    clearable
+                    persistent-hint
+                    hint="文字入力の場合はEnterキーを押してください"
+                    multiple
+                    small-chips
+                    prepend-inner-icon="mdi-briefcase-outline"
+                    @click:clear="$nextTick(() => (searchedCategoryKeyword = null))"
+                  >
+                  </v-combobox>
+                </v-col>
+              </v-row>
+            </v-form>
+          </v-card-text>
           <SaveAndCloseButton
             :close-button-title="'close'"
             :save-button-title="'save'"
