@@ -50,20 +50,21 @@ const actions = {
       .collection(`users/${getters.userUid}/team`)
       .get()
     await snapShot.docs.map((doc) => {
-
       const teamData = doc.data()
       commit('registrationTeam', teamData)
     })
     dispatch('fetchMember')
   },
-  async fetchMember({ getters, commit },) {
-    const snapShot = await db.collection(`users/${getters.userUid}/team`).doc(getters.teamId).get()
-    const subCollection = await snapShot.ref.collection('teamMember').get()
-    commit('initMember')
-    subCollection.docs.map((doc) => {
-      const member = doc.data()
-      commit('registrationMember', member)
-    })
+  async fetchMember({ state, getters, commit },) {
+    if (state.team) {
+      const snapShot = await db.collection(`users/${getters.userUid}/team`).doc(getters.teamId).get()
+      const subCollection = await snapShot.ref.collection('teamMember').get()
+      commit('initMember')
+      subCollection.docs.map((doc) => {
+        const member = doc.data()
+        commit('registrationMember', member)
+      })
+    }
   },
 
   async registrationTeam({ getters, commit, dispatch }, team) {
