@@ -8,7 +8,7 @@
               <v-row>
                 <!-- カテゴリ入力エリア -->
                 <v-col cols="12" sm="6" md="6">
-                  <CategoryCombobox :items="categorys" :category.sync="planContents.category" />
+                  <CategoryComboBox :items="categorys" :category.sync="planContents.category" />
                 </v-col>
                 <!-- 日付入力エリア -->
                 <v-col cols="12" sm="6" md="6"><DateForm :date.sync="planContents.date" /> </v-col>
@@ -37,7 +37,7 @@
 import { mapActions } from 'vuex'
 import SaveAndCloseButton from '@/components/commonParts/button/SaveAndCloseButton'
 import FormDialog from '@/components/commonParts/dialog/FormDialog'
-import CategoryCombobox from '@/components/commonParts/activityPlans/input/CategoryCombobox'
+import CategoryComboBox from '@/components/commonParts/activityPlans/input/CategoryComboBox'
 import DetailForm from '@/components/commonParts/activityPlans/input/DetailForm'
 import DateForm from '@/components/commonParts/activityPlans/input/DateForm'
 import FormView from '@/components/commonParts/form/FormView'
@@ -46,7 +46,7 @@ export default {
   components: {
     SaveAndCloseButton,
     FormDialog,
-    CategoryCombobox,
+    CategoryComboBox,
     DetailForm,
     DateForm,
     FormView
