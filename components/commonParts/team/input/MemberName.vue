@@ -7,16 +7,12 @@
     clearable
     dense
     prepend-inner-icon="mdi-card-account-details-outline"
-    :rules="[validRules.nameRules.required]"
+    :rules="nameRules"
   />
 </template>
 
 <script>
-import FormValidation from '@/mixins/FormValidation.vue'
-
 export default {
-  mixins: [FormValidation],
-
   props: {
     name: {
       type: String,
@@ -36,6 +32,11 @@ export default {
       set(memberName) {
         this.$emit('update:member-name', memberName)
       }
+    }
+  },
+  data() {
+    return {
+      nameRules: [(v) => !!v || '名前は必須です。']
     }
   }
 }

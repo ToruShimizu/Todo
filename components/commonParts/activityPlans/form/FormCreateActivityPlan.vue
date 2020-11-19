@@ -85,10 +85,10 @@ export default {
       this.$emit('save-activity-plan', planContents)
     },
     closeActivityPlan() {
+      this.$refs.form.reset()
       this.planContents.category = []
       this.planContents.detail = ''
       this.planContents.date = new Date().toISOString().substr(0, 10)
-      this.$refs.category.reset()
       this.$emit('close-activity-plan')
     },
     inputDate() {

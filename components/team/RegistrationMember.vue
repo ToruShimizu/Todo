@@ -38,14 +38,9 @@ export default {
   methods: {
     async handleRegistrationMember() {
       const teamMember = this.teamMember
-
       await this.registrationMember(teamMember)
-      this.closeRegistrationMember()
     },
     closeRegistrationMember() {
-      this.$refs.memberName.reset()
-      this.teamMember.role = ''
-      this.teamMember.improvementRoles = ''
       this.$emit('close-registration-member')
     },
     ...mapActions('modules/team/team', ['registrationMember'])

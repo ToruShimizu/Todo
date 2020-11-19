@@ -81,6 +81,10 @@ export default {
 
   methods: {
     closeMemberDialog() {
+      this.$refs.form.reset()
+      this.teamMember.name = ''
+      this.teamMember.role = ''
+      this.teamMember.improvementRoles = []
       this.$emit('close-member-dialog')
     },
     handleSaveMember() {
@@ -89,6 +93,7 @@ export default {
         return
       }
       this.$emit('save-member')
+      this.closeMemberDialog()
     }
   }
 }

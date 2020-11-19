@@ -20,7 +20,7 @@
                     label="サークル名"
                     persistent-hint
                     hint="サークル名を入力してください"
-                    :rules="[validRules.nameRules.required]"
+                    :rules="nameRules"
                     clearable
                   />
                 </v-col>
@@ -59,10 +59,8 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import FormDialog from '@/components/commonParts/dialog/FormDialog'
-import FormValidation from '@/mixins/FormValidation.vue'
 
 export default {
-  mixins: [FormValidation],
   components: {
     FormDialog
   },
@@ -78,6 +76,11 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      nameRules: [(v) => !!v || '名前は必須です。']
+    }
+  },
   computed: {
     ...mapGetters('modules/team/team', ['teamPhotoURL'])
   },
@@ -87,9 +90,15 @@ export default {
       this.team.imageFile = file
     },
     closeTeamDialog() {
+      this.$refs.form.reset()
+      this.team.name = ''
       this.$emit('close-team-dialog')
     },
     handleSaveTeam() {
+      if (!this.team.name) {
+        this.$refs.form.validate()
+        return
+      }
       const team = this.team
       this.$emit('save-team', team)
     }

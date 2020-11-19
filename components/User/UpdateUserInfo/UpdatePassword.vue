@@ -12,18 +12,16 @@
               :email-label="'現在のメールアドレス'"
             />
             <FormUserPassword
-              :user-password.sync="editUser.password"
+              :user-password="editUser.password"
+              :show-password="showUserPassword"
+              @handle-show-password="toggleShowUserPassword"
               :password-label="'現在のパスワード'"
             />
-            <v-text-field
-              v-model="editUser.editPassword"
-              label="'新しいパスワード'"
-              :type="showEditPassword ? 'text' : 'Password'"
-              prepend-inner-icon="mdi-lock-reset"
-              :append-icon="showEditPassword ? 'mdi-eye' : 'mdi-eye-off'"
-              :rules="[validRules.passwordRules.required, validRules.passwordRules.regex]"
-              counter="72"
-              @click:append="showEditPassword = !showEditPassword"
+            <FormUserPassword
+              :user-password.sync="editUser.editPassword"
+              :show-password.sync="showEditPassword"
+              @handle-show-password="toggleShowEditPassword"
+              :password-label="'新しいパスワード'"
             />
             <SaveAndCloseButton
               :close-button-title="'close'"
@@ -47,11 +45,9 @@ import FormUserEmail from '@/components/commonParts/user/form/FormUserEmail'
 import FormUserPassword from '@/components/commonParts/user/form/FormUserPassword'
 import FormView from '@/components/commonParts/form/FormView'
 import FormCardText from '@/components/commonParts/card/FormCardText'
-import FormValidation from '@/mixins/FormValidation.vue'
 import FormDialog from '@/components/commonParts/dialog/FormDialog'
 
 export default {
-  mixins: [FormValidation],
   components: {
     FormUserEmail,
     FormUserPassword,
@@ -78,6 +74,7 @@ export default {
   },
   data() {
     return {
+      showUserPassword: false,
       showEditPassword: false
     }
   },
@@ -105,6 +102,12 @@ export default {
         password: editUser.password
       })
       this.$emit('update:close-update-password', 'closeUpdatePassword')
+    },
+    toggleShowUserPassword(showPassword) {
+      this.showUserPassword = !this.showUserPassword
+    },
+    toggleShowEditPassword() {
+      this.showEditPassword = !this.showEditPassword
     },
     ...mapActions('modules/user/userInfo', ['updatePassword'])
   }
