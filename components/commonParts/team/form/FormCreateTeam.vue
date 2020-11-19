@@ -1,15 +1,12 @@
 <template>
   <FormDialog :form-dialog="teamDialog">
     <template v-slot:dialog>
-      <v-col cols="12" sm="12" md="12">
-        <v-card class="mx-auto text-center">
-          <v-card-title>
-            <h4 class="headline fill-width">{{ title }}</h4>
-          </v-card-title>
+      <FormView :title="title">
+        <template v-slot:form>
           <v-form ref="form" lazy-validation>
             <v-container>
               <v-row>
-                <v-col cols="12" sm="12" md="12">
+                <v-col cols="12" sm="12" md="12" class="text-center">
                   <v-avatar size="100px">
                     <v-img v-if="teamPhotoURL" :src="teamPhotoURL" :lazy-src="teamPhotoURL">
                     </v-img>
@@ -53,8 +50,8 @@
               </template>
             </SaveAndCloseButton>
           </v-form>
-        </v-card>
-      </v-col>
+        </template>
+      </FormView>
     </template>
   </FormDialog>
 </template>
@@ -62,12 +59,14 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import SaveAndCloseButton from '@/components/commonParts/button/SaveAndCloseButton'
+import FormView from '@/components/commonParts/form/FormView'
 import FormValidation from '@/mixins/FormValidation.vue'
 
 export default {
   mixins: [FormValidation],
   components: {
-    SaveAndCloseButton
+    SaveAndCloseButton,
+    FormView
   },
 
   props: {
