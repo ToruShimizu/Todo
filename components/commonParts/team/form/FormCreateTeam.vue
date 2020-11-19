@@ -42,11 +42,16 @@
                 </v-col>
               </v-row>
             </v-container>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeTeamDialog">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="saveTeam">Save</v-btn>
-            </v-card-actions>
+            <SaveAndCloseButton
+              :close-button-title="'close'"
+              :save-button-title="'save'"
+              @close-button="closeTeamDialog"
+              @save-button="handleSaveTeam"
+            >
+              <template v-slot:save>
+                <v-icon left>mdi-account-plus</v-icon>
+              </template>
+            </SaveAndCloseButton>
           </v-form>
         </v-card>
       </v-col>
@@ -56,10 +61,14 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import SaveAndCloseButton from '@/components/commonParts/button/SaveAndCloseButton'
 import FormValidation from '@/mixins/FormValidation.vue'
 
 export default {
   mixins: [FormValidation],
+  components: {
+    SaveAndCloseButton
+  },
 
   props: {
     title: String,
@@ -83,7 +92,7 @@ export default {
     closeTeamDialog() {
       this.$emit('close-team-dialog')
     },
-    saveTeam() {
+    handleSaveTeam() {
       const team = this.team
       this.$emit('save-team', team)
     }

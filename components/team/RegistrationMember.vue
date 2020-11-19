@@ -53,10 +53,20 @@
               </v-row>
             </v-form>
           </v-card-text>
-          <v-card-actions class="justify-end">
+          <!-- <v-card-actions class="justify-end">
             <v-btn color="primary" @click="closeRegistrationMember" text>close</v-btn>
             <v-btn color="primary" @click="handleRegistrationMember" text>save</v-btn>
-          </v-card-actions>
+          </v-card-actions> -->
+          <SaveAndCloseButton
+            :close-button-title="'close'"
+            :save-button-title="'save'"
+            @close-button="closeRegistrationMember"
+            @save-button="handleRegistrationMember"
+          >
+            <template v-slot:save>
+              <v-icon left>mdi-account-plus</v-icon>
+            </template>
+          </SaveAndCloseButton>
         </v-card>
       </v-col>
     </template>
@@ -66,13 +76,15 @@
 <script>
 import { mapActions } from 'vuex'
 import FormDialog from '@/components/commonParts/dialog/FormDialog'
+import SaveAndCloseButton from '@/components/commonParts/button/SaveAndCloseButton'
 
 import FormValidation from '@/mixins/FormValidation.vue'
 
 export default {
   mixins: [FormValidation],
   components: {
-    FormDialog
+    FormDialog,
+    SaveAndCloseButton
   },
   props: {
     teamMember: {
