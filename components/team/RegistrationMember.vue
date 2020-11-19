@@ -6,86 +6,21 @@
           <v-form ref="form" lazy-validation>
             <v-row>
               <v-col cols="12" sm="12" md="12">
-                <v-text-field
-                  ref="memberName"
-                  v-model="teamMember.name"
-                  label="名前"
-                  required
-                  clearable
-                  dense
-                  prepend-inner-icon="mdi-card-account-details-outline"
-                  :rules="[validRules.nameRules.required]"
-                />
-              </v-col>
-
-              <v-col cols="12" sm="12" md="12">
-                <v-combobox
-                  v-model="teamMember.role"
-                  :items="teamRoles"
-                  label="サークル役割"
-                  clearable
-                  multiple
-                  small-chips
-                  persistent-hint
-                  dense
-                  prepend-inner-icon="mdi-briefcase-account-outline"
-                  hint="文字入力の場合はEnterキーを押してください"
-                  @click:clear="$nextTick(() => (searchedCategoryKeyword = null))"
-                >
-                </v-combobox>
+                <MemberName :name.sync="teamMember.name" :label="'名前'" />
               </v-col>
               <v-col cols="12" sm="12" md="12">
-                <v-combobox
-                  v-model="teamMember.improvementRole"
+                <RoleComboBox :items="teamRoles" :role.sync="teamMember.role" :label="'役割'" />
+              </v-col>
+              <v-col cols="12" sm="12" md="12">
+                <ImprovementRoleComboBox
                   :items="improvementRoles"
-                  label="改善事例担当"
-                  clearable
-                  persistent-hint
-                  hint="文字入力の場合はEnterキーを押してください"
-                  multiple
-                  small-chips
-                  prepend-inner-icon="mdi-briefcase-outline"
-                  @click:clear="$nextTick(() => (searchedCategoryKeyword = null))"
-                >
-                </v-combobox>
+                  :improvementRole.sync="teamMember.improvementRole"
+                  :label="'改善担当'"
+                />
               </v-col>
             </v-row>
           </v-form>
 
-                <v-col cols="12" sm="12" md="12">
-                  <v-combobox
-                    v-model="teamMember.role"
-                    :items="teamRoles"
-                    label="サークル役割"
-                    clearable
-                    multiple
-                    small-chips
-                    persistent-hint
-                    dense
-                    prepend-inner-icon="mdi-briefcase-account-outline"
-                    hint="文字入力の場合はEnterキーを押してください"
-                    @click:clear="$nextTick(() => (searchedCategoryKeyword = null))"
-                  >
-                  </v-combobox>
-                </v-col>
-                <v-col cols="12" sm="12" md="12">
-                  <v-combobox
-                    v-model="teamMember.improvementRole"
-                    :items="improvementRoles"
-                    label="改善事例担当"
-                    clearable
-                    persistent-hint
-                    hint="文字入力の場合はEnterキーを押してください"
-                    multiple
-                    small-chips
-                    prepend-inner-icon="mdi-briefcase-outline"
-                    @click:clear="$nextTick(() => (searchedCategoryKeyword = null))"
-                  >
-                  </v-combobox>
-                </v-col>
-              </v-row>
-            </v-form>
-          </v-card-text>
           <SaveAndCloseButton
             :close-button-title="'close'"
             :save-button-title="'save'"
@@ -106,14 +41,16 @@
 import { mapActions } from 'vuex'
 import FormDialog from '@/components/commonParts/dialog/FormDialog'
 import SaveAndCloseButton from '@/components/commonParts/button/SaveAndCloseButton'
-
-import FormValidation from '@/mixins/FormValidation.vue'
+import MemberName from '@/components/commonParts/team/input/MemberName'
+import RoleComboBox from '@/components/commonParts/team/input/RoleComboBox'
+import ImprovementRoleComboBox from '@/components/commonParts/team/input/ImprovementRoleComboBox'
 
 export default {
-  mixins: [FormValidation],
   components: {
     FormDialog,
-    SaveAndCloseButton
+    SaveAndCloseButton,
+    RoleComboBox,
+    ImprovementRoleComboBox
   },
   props: {
     teamMember: {
