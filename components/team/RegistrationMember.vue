@@ -53,10 +53,6 @@
               </v-row>
             </v-form>
           </v-card-text>
-          <!-- <v-card-actions class="justify-end">
-            <v-btn color="primary" @click="closeRegistrationMember" text>close</v-btn>
-            <v-btn color="primary" @click="handleRegistrationMember" text>save</v-btn>
-          </v-card-actions> -->
           <SaveAndCloseButton
             :close-button-title="'close'"
             :save-button-title="'save'"
