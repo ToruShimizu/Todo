@@ -1,15 +1,12 @@
 <template>
   <FormDialog :form-dialog="teamDialog">
     <template v-slot:dialog>
-      <v-col cols="12" sm="12" md="12">
-        <v-card class="mx-auto text-center">
-          <v-card-title>
-            <h4 class="headline fill-width">{{ title }}</h4>
-          </v-card-title>
+      <FormView :title="title">
+        <template v-slot:form>
           <v-form ref="form" lazy-validation>
             <v-container>
               <v-row>
-                <v-col cols="12" sm="12" md="12">
+                <v-col cols="12" sm="12" md="12" class="text-center">
                   <v-avatar size="100px">
                     <v-img v-if="teamPhotoURL" :src="teamPhotoURL" :lazy-src="teamPhotoURL">
                     </v-img>
@@ -42,14 +39,19 @@
                 </v-col>
               </v-row>
             </v-container>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeTeamDialog">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="saveTeam">Save</v-btn>
-            </v-card-actions>
+            <SaveAndCloseButton
+              :close-button-title="'close'"
+              :save-button-title="'save'"
+              @close-button="closeTeamDialog"
+              @save-button="handleSaveTeam"
+            >
+              <template v-slot:save>
+                <v-icon left>mdi-account-plus</v-icon>
+              </template>
+            </SaveAndCloseButton>
           </v-form>
-        </v-card>
-      </v-col>
+        </template>
+      </FormView>
     </template>
   </FormDialog>
 </template>
@@ -87,7 +89,7 @@ export default {
     closeTeamDialog() {
       this.$emit('close-team-dialog')
     },
-    saveTeam() {
+    handleSaveTeam() {
       const team = this.team
       this.$emit('save-team', team)
     }
