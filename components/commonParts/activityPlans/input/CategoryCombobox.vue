@@ -6,17 +6,13 @@
     :items="items"
     label="やること"
     persistent-hint
+    :rules="categoryRules"
     hint="文字入力の場合はEnterキーを押してください"
-    :rules="[validRules.categoryRules.required]"
   />
 </template>
 
 <script>
-import FormValidation from '@/mixins/FormValidation.vue'
-
 export default {
-  mixins: [FormValidation],
-
   props: {
     items: {
       type: Array,
@@ -36,6 +32,11 @@ export default {
       set(category) {
         this.$emit('update:category', category)
       }
+    }
+  },
+  data() {
+    return {
+      categoryRules: [(v) => v.length > 0 || 'カテゴリは必須です']
     }
   }
 }
