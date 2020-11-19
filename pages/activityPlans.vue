@@ -1,10 +1,25 @@
 <template>
   <v-container style="max-width: 500px" class="mb-5">
     <v-layout class="justify-center mt-2">
-      <v-btn color="teal lighten-1" dark to="/team" nuxt class="font-italic mr-2" outlined
+      <CreateTeam :create-team-dialog="createTeamDialog" @close-team-dialog="closeCreateTeam" />
+      <v-btn
+        color="teal lighten-1"
+        dark
+        class="font-italic mb-5"
+        outlined
+        @click="openCreateTeam"
+        v-if="!teamName"
+      >
+        <v-icon>mdi-account-plus-outline </v-icon>サークル新規作成
+      </v-btn>
+      <v-btn color="teal lighten-1" dark to="/team" nuxt class="font-italic mr-2" outlined v-else
         ><v-icon>mdi-account-edit-outline </v-icon>サークル編集
       </v-btn>
-      <BlueDialogButton :title="'活動計画作成'" @dialog-button="openCreateActivityPlan">
+      <BlueDialogButton
+        :title="'活動計画作成'"
+        @dialog-button="openCreateActivityPlan"
+        v-if="teamName"
+      >
         <template v-slot:dialogButton>
           <v-icon> mdi-pencil-plus-outline </v-icon>
         </template>
@@ -21,7 +36,7 @@
     <v-card class="mb-5">
       <FilteredActivityPlans :selected-activity-plans-filter.sync="selectActivityPlansFilter" />
       <v-divider />
-      <v-layout>
+      <v-layout v-if="teamName">
         <SearchActivityPlans
           :searched-category-keyword.sync="searchCategoryKeyword"
           :todo-categorys="todoCategorys"
@@ -32,6 +47,11 @@
           :sort-activity-plans-states="sortActivityPlansStates"
         />
       </v-layout>
+      <v-layout v-else>
+        <v-card-text class="text-center font-italic grey--text">
+          サークルがありません
+        </v-card-text></v-layout
+      >
       <Pagination
         :set-activity-plans-page.sync="activityPlansPage"
         @change-activity-plans-page="changeActivityPlansPage"
@@ -73,6 +93,11 @@ export default {
   },
   data() {
     return {
+      createTeam: {
+        name: '',
+        imageFile: null
+      },
+      createTeamDialog: false,
       planContents: {
         category: null,
         detail: '',
@@ -203,6 +228,12 @@ export default {
     },
     closeCreateActivityPlan() {
       this.createActivityPlanDialog = false
+    },
+    openCreateTeam() {
+      this.createTeamDialog = true
+    },
+    closeCreateTeam() {
+      this.createTeamDialog = false
     }
   }
 }
