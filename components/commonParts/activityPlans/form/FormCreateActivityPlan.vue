@@ -1,12 +1,8 @@
 <template>
   <FormDialog :form-dialog="activityPlanDialog">
     <template v-slot:dialog>
-      <v-col cols="12" sm="12" md="12">
-        <v-card>
-          <v-card-title class="justify-center font-italic grey--text darken">
-            <span class="headline">{{ title }}</span>
-          </v-card-title>
-          <v-divider></v-divider>
+      <FormView :title="title">
+        <template v-slot:form>
           <v-form ref="form" lazy-validation>
             <v-container>
               <v-row>
@@ -31,8 +27,8 @@
               ><template v-slot:save> <v-icon>mdi-pencil-plus-outline </v-icon></template>
             </SaveAndCloseButton>
           </v-form>
-        </v-card>
-      </v-col>
+        </template>
+      </FormView>
     </template>
   </FormDialog>
 </template>
@@ -44,6 +40,7 @@ import FormDialog from '@/components/commonParts/dialog/FormDialog'
 import CategoryCombobox from '@/components/commonParts/activityPlans/input/CategoryCombobox'
 import DetailForm from '@/components/commonParts/activityPlans/input/DetailForm'
 import DateForm from '@/components/commonParts/activityPlans/input/DateForm'
+import FormView from '@/components/commonParts/form/FormView'
 
 export default {
   components: {
@@ -51,7 +48,8 @@ export default {
     FormDialog,
     CategoryCombobox,
     DetailForm,
-    DateForm
+    DateForm,
+    FormView
   },
 
   props: {
