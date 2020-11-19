@@ -21,9 +21,11 @@
             hide-details
           />
           <v-divider class="mx-4" inset vertical />
-          <v-btn color="primary" dark @click="openRegistrationMember">
-            <v-icon>mdi-account-plus-outline </v-icon>
-          </v-btn>
+          <BlueDialogButton @dialog-button="openRegistrationMember">
+            <template v-slot:dialogButton>
+              <v-icon> mdi-account-plus-outline</v-icon>
+            </template>
+          </BlueDialogButton>
           <v-spacer />
         </v-toolbar>
       </template>
@@ -49,9 +51,12 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import UpdateMember from '@/components/team/edit/UpdateMember'
+import BlueDialogButton from '@/components/commonParts/button/BlueDialogButton'
+
 export default {
   components: {
-    UpdateMember
+    UpdateMember,
+    BlueDialogButton
   },
   props: {
     teamRoles: {
