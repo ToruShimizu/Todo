@@ -34,6 +34,7 @@
             <SaveAndCloseButton
               :close-button-title="'close'"
               :save-button-title="'save'"
+              :loader="null"
               @close-button="closeMemberDialog"
               @save-button="handleSaveMember"
             >
