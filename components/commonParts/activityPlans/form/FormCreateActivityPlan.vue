@@ -16,6 +16,12 @@
                 <v-col cols="12">
                   <DetailForm :detail.sync="planContents.detail" />
                 </v-col>
+                <v-col>
+                  <InChangeForm
+                    :in-charge-member.sync="planContents.inChargeMember"
+                    :items="gettersTeamMember"
+                  />
+                </v-col>
                 <slot name="comment"></slot>
               </v-row>
             </v-container>
@@ -34,12 +40,13 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import SaveAndCloseButton from '@/components/commonParts/button/SaveAndCloseButton'
 import FormDialog from '@/components/commonParts/dialog/FormDialog'
 import CategoryComboBox from '@/components/commonParts/activityPlans/input/CategoryComboBox'
 import DetailForm from '@/components/commonParts/activityPlans/input/DetailForm'
 import DateForm from '@/components/commonParts/activityPlans/input/DateForm'
+import InChangeForm from '@/components/commonParts/activityPlans/input/InChargeForm'
 import FormView from '@/components/commonParts/form/FormView'
 
 export default {
@@ -49,6 +56,7 @@ export default {
     CategoryComboBox,
     DetailForm,
     DateForm,
+    InChangeForm,
     FormView
   },
 
@@ -60,6 +68,7 @@ export default {
       default: () => ({
         category: '',
         detail: '',
+        inChargeMember: [],
         date: new Date().toISOString().substr(0, 10),
         done: false
       })
@@ -74,7 +83,9 @@ export default {
       detail: false
     }
   },
-
+  computed: {
+    ...mapGetters('modules/team/team', ['gettersTeamMember'])
+  },
   methods: {
     async handleSaveActivityPlan() {
       const planContents = this.planContents
