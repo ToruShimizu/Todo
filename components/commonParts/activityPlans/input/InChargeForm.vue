@@ -9,7 +9,7 @@
     multiple
     small-chips
     prepend-inner-icon="mdi-account-tie-outline"
-    @click:clear="$nextTick(() => (innnerInchargeMember = null))"
+    @click:clear="$nextTick(() => (innnerInchargeMember = []))"
   />
 </template>
 
