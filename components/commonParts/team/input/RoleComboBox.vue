@@ -17,6 +17,10 @@
 <script>
 export default {
   props: {
+    teamMember: {
+      type: Object,
+      required: true
+    },
     role: {
       type: Array,
       required: false,
@@ -34,7 +38,7 @@ export default {
   computed: {
     innerRole: {
       get() {
-        return this.role
+        return this.teamMember.role
       },
       set(role) {
         this.$emit('update:role', role)

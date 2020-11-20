@@ -14,10 +14,9 @@
 <script>
 export default {
   props: {
-    name: {
-      type: String,
-      required: false,
-      default: ''
+    teamMember: {
+      type: Object,
+      required: true
     },
     label: {
       type: String,
@@ -27,7 +26,7 @@ export default {
   computed: {
     innerName: {
       get() {
-        return this.name
+        return this.teamMember.name
       },
       set(memberName) {
         this.$emit('update:member-name', memberName)

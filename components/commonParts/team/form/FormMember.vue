@@ -7,13 +7,23 @@
             <v-container>
               <v-row>
                 <v-col cols="12" sm="12" md="12">
-                  <MemberName :member-name.sync="teamMember.name" :label="'名前'" />
+                  <MemberName
+                    :teamMember="teamMember"
+                    :member-name.sync="teamMember.name"
+                    :label="'名前'"
+                  />
                 </v-col>
                 <v-col cols="12" sm="12" md="12">
-                  <RoleComboBox :items="teamRoles" :role.sync="teamMember.role" :label="'役割'" />
+                  <RoleComboBox
+                    :teamMember="teamMember"
+                    :items="teamRoles"
+                    :role.sync="teamMember.role"
+                    :label="'役割'"
+                  />
                 </v-col>
                 <v-col cols="12" sm="12" md="12">
                   <ImprovementRoleComboBox
+                    :teamMember="teamMember"
                     :items="improvementRoles"
                     :improvementRole.sync="teamMember.improvementRole"
                     :label="'改善担当'"
@@ -81,18 +91,21 @@ export default {
 
   methods: {
     closeMemberDialog() {
-      this.$refs.form.reset()
-      this.teamMember.name = ''
-      this.teamMember.role = ''
-      this.teamMember.improvementRoles = []
       this.$emit('close-member-dialog')
     },
-    handleSaveMember() {
+    async handleSaveMember() {
       if (!this.teamMember.name) {
         this.$refs.form.validate()
         return
       }
-      this.$emit('save-member')
+      await this.$emit('save-member')
+      if (!this.teamMember.id) {
+        this.$refs.form.reset()
+        this.teamMember.name = ''
+        this.teamMember.role = []
+        this.teamMember.improvementRoles = []
+        this.closeMemberDialog()
+      }
       this.closeMemberDialog()
     }
   }
