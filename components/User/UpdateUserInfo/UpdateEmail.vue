@@ -17,6 +17,9 @@
             <SaveAndCloseButton
               :close-button-title="'close'"
               :save-button-title="'save'"
+              :loading="loading"
+              :loader="loader"
+              @stop-loading="stopLoading"
               @save-button="handleUpdateEmail"
               @close-button="selectUpdateEmail = 'closeUpdateEmail'"
             >
@@ -59,6 +62,16 @@ export default {
       type: Object,
       required: false,
       default: () => {}
+    },
+    loading: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    loader: {
+      type: null,
+      required: false,
+      default: null
     }
   },
   computed: {
@@ -81,10 +94,18 @@ export default {
         this.$refs.form.validate()
         return
       }
+      this.startLoading()
       this.updateEmail({
         email: editUserEmail
       })
+      this.stopLoading()
       this.$emit('update:close-update-email', 'closeUpdateEmail')
+    },
+    startLoading() {
+      this.$emit('start-loading')
+    },
+    stopLoading() {
+      this.$emit('stop-loading')
     },
     ...mapActions('modules/user/userInfo', ['updateEmail'])
   }

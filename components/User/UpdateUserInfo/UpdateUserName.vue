@@ -14,6 +14,9 @@
             <SaveAndCloseButton
               :close-button-title="'close'"
               :save-button-title="'save'"
+              :loading="loading"
+              :loader="loader"
+              @stop-loading="stopLoading"
               @save-button="handleUpdateUserName"
               @close-button="selectedUpdateUserName = 'closeUpdateUserName'"
             >
@@ -59,6 +62,16 @@ export default {
       type: Object,
       required: false,
       default: () => {}
+    },
+    loading: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    loader: {
+      type: null,
+      required: false,
+      default: null
     }
   },
   computed: {
@@ -81,11 +94,19 @@ export default {
         this.$refs.form.validate()
         return
       }
+      this.startLoading()
       await this.updateUserName({
         userName: editUser.name
       })
       this.$refs.form.reset()
+      this.stopLoading()
       this.$emit('update:close-update-user-name', 'closeUpdateUserName')
+    },
+    startLoading() {
+      this.$emit('start-loading')
+    },
+    stopLoading() {
+      this.$emit('stop-loading')
     },
     ...mapActions('modules/user/userInfo', ['updateUserName'])
   }

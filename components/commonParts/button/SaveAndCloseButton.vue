@@ -1,7 +1,12 @@
 <template>
   <v-card-actions class="justify-end">
     <CloseButton :title="closeButtonTitle" @close-button="closeButton" />
-    <SaveButton :title="saveButtonTitle" @save-button="saveButton"
+    <SaveButton
+      :title="saveButtonTitle"
+      :loader="loader"
+      :loading="loading"
+      @save-button="saveButton"
+      @stop-loading="stopLoading"
       ><template v-slot:saveButton><slot name="save"></slot></template
     ></SaveButton>
   </v-card-actions>
@@ -17,7 +22,16 @@ export default {
       required: true
     },
     saveButtonTitle: {
-      Type: String,
+      type: String,
+      required: true
+    },
+    loading: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    loader: {
+      type: null,
       required: true
     }
   },
@@ -31,6 +45,9 @@ export default {
     },
     closeButton() {
       this.$emit('close-button')
+    },
+    stopLoading() {
+      this.$emit('stop-loading')
     }
   }
 }
