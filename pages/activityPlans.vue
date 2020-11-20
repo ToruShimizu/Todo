@@ -102,6 +102,7 @@ export default {
         category: null,
         detail: '',
         inChargeMember: [],
+        imageFile: null,
         date: new Date().toISOString().substr(0, 10),
         done: false
       },

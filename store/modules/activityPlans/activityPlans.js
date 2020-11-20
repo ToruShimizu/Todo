@@ -1,4 +1,4 @@
-import firebase, { db } from '~/plugins/firebase'
+import firebase, { storageRef, db } from '~/plugins/firebase'
 
 const state = () => ({
   activityPlans: []
@@ -52,9 +52,42 @@ const actions = {
     })
   },
   // 活動計画追加
-  async addActivityPlan({ getters, commit }, planContents) {
+  async addActivityPlan({ getters, commit, dispatch, }, planContents) {
+    console.log(planContents)
     const id = await db.collection(`users/${getters.userUid}/activityPlans`).doc().id
+    if (planContents.imageFile) {
+      await dispatch('uploadPlanContentsImageFile', { planContents, id })
+    } else {
 
+      const createActivityPlan = {
+        id,
+        category: planContents.category,
+        detail: planContents.detail,
+        date: planContents.date,
+        inChargeMember: planContents.inChargeMember,
+        done: false,
+        created: firebase.firestore.FieldValue.serverTimestamp()
+      }
+      try {
+
+        if (getters.userUid) {
+          await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).set(createActivityPlan)
+          commit('addActivityPlan', createActivityPlan)
+          commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
+
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+  },
+  async uploadPlanContentsImageFile({ getters, commit }, { planContents, id }) {
+    const imageFile = planContents.imageFile
+    const imageRef = await storageRef.child(`planContentsImages/${getters.userUid}/${imageFile.name}`)
+    const snapShot = await imageRef.put(imageFile)
+    const photoURL = await snapShot.ref.getDownloadURL()
+    console.log(photoURL)
     const createActivityPlan = {
       id,
       category: planContents.category,
@@ -62,20 +95,19 @@ const actions = {
       date: planContents.date,
       inChargeMember: planContents.inChargeMember,
       done: false,
-      created: firebase.firestore.FieldValue.serverTimestamp()
+      photoURL,
+      created: firebase.firestore.FieldValue.serverTimestamp(),
     }
     try {
-
       if (getters.userUid) {
         await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).set(createActivityPlan)
-        commit('addActivityPlan', createActivityPlan)
-        commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
-
       }
+      commit('addActivityPlan', createActivityPlan)
+      commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
     } catch (err) {
-      console.log(err)
+      alert('登録に失敗しました。もう一度やり直してください')
+      console.log(err);
     }
-
   },
   // 活動計画更新
   async updateActivityPlan({ getters, commit }, planContents) {

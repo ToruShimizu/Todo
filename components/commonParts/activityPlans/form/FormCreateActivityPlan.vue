@@ -16,10 +16,11 @@
                 <v-col cols="12">
                   <DetailForm :detail.sync="planContents.detail" />
                 </v-col>
-                <v-col>
-                  <InChangeForm
-                    :in-charge-member.sync="planContents.inChargeMember"
-                    :items="gettersTeamMember"
+                <v-col cols="12" sm="12" md="12">
+                  <slot name="imageFile"></slot>
+                  <InputFile
+                    :imageFile.sync="planContents.imageFile"
+                    @change-image-file="changeImageFile"
                   />
                 </v-col>
                 <slot name="comment"></slot>
@@ -48,6 +49,7 @@ import DetailForm from '@/components/commonParts/activityPlans/input/DetailForm'
 import DateForm from '@/components/commonParts/activityPlans/input/DateForm'
 import InChangeForm from '@/components/commonParts/activityPlans/input/InChargeForm'
 import FormView from '@/components/commonParts/form/FormView'
+import InputFile from '@/components/commonParts/form/InputFile'
 
 export default {
   components: {
@@ -57,18 +59,20 @@ export default {
     DetailForm,
     DateForm,
     InChangeForm,
-    FormView
+    FormView,
+    InputFile
   },
 
   props: {
     title: String,
     planContents: {
       type: Object,
-      required: false,
+      required: true,
       default: () => ({
         category: '',
         detail: '',
         inChargeMember: [],
+        imageFile: null,
         date: new Date().toISOString().substr(0, 10),
         done: false
       })
@@ -104,6 +108,9 @@ export default {
     },
     inputDate() {
       this.dateMenu = false
+    },
+    changeImageFile(file) {
+      this.planContents.imageFile = file
     }
   }
 }

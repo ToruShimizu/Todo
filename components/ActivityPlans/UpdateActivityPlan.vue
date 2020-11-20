@@ -8,6 +8,9 @@
       @close-activity-plan="closeUpdateActivityPlan"
       @save-activity-plan="handleUpdateActivityPlan"
     >
+      <template v-slot:imageFile v-if="editPlanContents.photoURL">
+        <v-img :src="editPlanContents.photoURL" :lazy-src="editPlanContents.photoURL"> </v-img>
+      </template>
       <template v-slot:comment>
         <AddComment :plan-contents-id="editPlanContents.id" />
         <Comment :planContents-id="editPlanContents.id" />
