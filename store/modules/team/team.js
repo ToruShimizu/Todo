@@ -44,6 +44,7 @@ const mutations = {
 const actions = {
 
   async fetchTeam({ getters, commit, dispatch }) {
+    console.log('ttt')
     const snapShot = await db
       .collection(`users/${getters.userUid}/team`)
       .get()
@@ -80,6 +81,8 @@ const actions = {
         await db.collection(`users/${getters.userUid}/team`).doc(id).set(registrationTeam)
       }
       commit('registrationTeam', registrationTeam)
+      commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
+
     } catch (err) {
       alert('登録に失敗しました。もう一度やり直してください')
       console.log(err);
@@ -100,6 +103,7 @@ const actions = {
         await db.collection(`users/${getters.userUid}/team`).doc(teamId).set(registrationTeam)
       }
       commit('registrationTeam', registrationTeam)
+      commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
     } catch (err) {
       alert('登録に失敗しました。もう一度やり直してください')
       console.log(err);
@@ -118,6 +122,8 @@ const actions = {
           await db.collection(`users/${getters.userUid}/team`).doc(getters.teamId).update(updateTeam)
           alert('チーム情報の変更が完了しました。')
           commit('updateTeam', updateTeam)
+          commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
+
         }
       } catch (err) {
         console.log(err)
@@ -138,6 +144,8 @@ const actions = {
         await db.collection(`users/${getters.userUid}/team`).doc(getters.teamId).set(registrationTeam)
       }
       commit('registrationTeam', registrationTeam)
+      commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
+
     } catch (err) {
       alert('登録に失敗しました。もう一度やり直してください')
       console.log(err);
@@ -150,7 +158,9 @@ const actions = {
   },
 
   async registrationMember({ state, commit, getters }, teamMember) {
-    const id = await db.collection(`users/${getters.userUid}/team`).doc(state.team.id).collection('teamMember').doc().id
+    const uid = String(state.team.id)
+    console.log(uid)
+    const id = await db.collection(`users/${getters.userUid}/team`).doc(uid).collection('teamMember').doc().id
 
     const registrationMember = {
       id,
@@ -182,8 +192,9 @@ const actions = {
           await doc.ref.collection('teamMember').doc(editMember.id).update(editMember
           )
         })
-        await commit('updateMember', editMember
-        )
+        await commit('updateMember', editMember)
+        commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
+
       }
     } catch (err) {
       alert('更新に失敗しました。もう一度やり直しください。')

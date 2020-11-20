@@ -5,6 +5,7 @@ import * as userInfo from './modules/user/userInfo'
 import * as activityPlans from './modules/activityPlans/activityPlans'
 import * as comment from './modules/comment/comment'
 import * as team from './modules/team/team'
+import * as commonParts from './modules/commonParts/commonParts'
 
 
 Vue.use(Vuex)
@@ -16,5 +17,6 @@ export default new Vuex.Store({
     activityPlans,
     comment,
     team,
+    commonParts,
   }
 })
