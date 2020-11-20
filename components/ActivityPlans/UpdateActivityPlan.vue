@@ -9,7 +9,7 @@
       @save-activity-plan="handleUpdateActivityPlan"
     >
       <template v-slot:imageFile v-if="editPlanContents.photoURL">
-        <v-img :src="editPlanContents.photoURL" :lazy-src="editPlanContents.photoURL"> </v-img>
+        <LoadingImg v-if="editPlanContents.photoURL" :src="editPlanContents.photoURL" />
       </template>
       <template v-slot:comment>
         <AddComment :plan-contents-id="editPlanContents.id" />
@@ -22,6 +22,8 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import FormCreateActivityPlan from '@/components/commonParts/activityPlans/form/FormCreateActivityPlan'
+import LoadingImg from '@/components/commonParts/v-img/LoadingImg'
+
 import AddComment from '@/components/Comment/AddComment'
 import Comment from '@/components/Comment/Comment'
 
@@ -29,7 +31,8 @@ export default {
   components: {
     FormCreateActivityPlan,
     AddComment,
-    Comment
+    Comment,
+    LoadingImg
   },
   props: {
     editPlanContents: {

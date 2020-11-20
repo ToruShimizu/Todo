@@ -8,8 +8,7 @@
               <v-row>
                 <v-col cols="12" sm="12" md="12" class="text-center">
                   <v-avatar size="100px">
-                    <v-img v-if="teamPhotoURL" :src="teamPhotoURL" :lazy-src="teamPhotoURL">
-                    </v-img>
+                    <LoadingImg v-if="teamPhotoURL" :src="teamPhotoURL" />
                     <v-icon v-else large>mdi-account-outline</v-icon>
                   </v-avatar>
                 </v-col>
@@ -51,11 +50,13 @@
 import { mapState, mapGetters } from 'vuex'
 import FormDialog from '@/components/commonParts/dialog/FormDialog'
 import InputFile from '@/components/commonParts/form/InputFile'
+import LoadingImg from '@/components/commonParts/v-img/LoadingImg'
 
 export default {
   components: {
     FormDialog,
-    InputFile
+    InputFile,
+    LoadingImg
   },
 
   props: {
