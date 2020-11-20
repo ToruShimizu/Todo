@@ -20,8 +20,11 @@
             <SaveAndCloseButton
               :close-button-title="'close'"
               :save-button-title="'save'"
+              :loader="createUserLoader"
+              :loading="createUserLoading"
               @close-button="closeCreateUser"
               @save-button="handleCreateUser"
+              @stop-loading="stopCreateUserLoading"
             >
               <template v-slot:save>
                 <v-icon left>mdi-account-plus</v-icon>
@@ -67,7 +70,9 @@ export default {
         name: '',
         email: '',
         password: ''
-      }
+      },
+      createUserLoading: false,
+      createUserLoader: null
     }
   },
   methods: {
@@ -77,16 +82,27 @@ export default {
         this.$refs.form.validate()
         return
       }
+      this.startCreateUserLoading()
       await this.createUser({
         email: createUser.email,
         password: createUser.password,
         userName: createUser.name
       })
+      this.stopCreateUserLoading()
     },
     closeCreateUser() {
       this.$emit('close-create-user')
       this.$refs.form.reset()
     },
+    startCreateUserLoading() {
+      this.createUserLoading = true
+      this.loginLoader = this.createUserLoading
+    },
+    stopCreateUserLoading() {
+      this.createUserLoading = false
+      this.loginLoader = this.createUserLoading
+    },
+
     ...mapActions('modules/user/auth', ['createUser'])
   }
 }
