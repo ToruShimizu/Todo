@@ -12,6 +12,12 @@
                 </v-col>
                 <!-- 日付入力エリア -->
                 <v-col cols="12" sm="6" md="6"><DateForm :date.sync="planContents.date" /> </v-col>
+                <v-col cols="12" sm="12" md="12"
+                  ><InChangeForm
+                    :in-charge-member.sync="planContents.inChargeMember"
+                    :items="gettersTeamMember"
+                  />
+                </v-col>
                 <!-- 詳細入力エリア -->
                 <v-col cols="12">
                   <DetailForm :detail.sync="planContents.detail" />
@@ -102,6 +108,7 @@ export default {
     closeActivityPlan() {
       this.$refs.form.reset()
       this.planContents.category = []
+      this.planContents.inChargeMember = []
       this.planContents.detail = ''
       this.planContents.date = new Date().toISOString().substr(0, 10)
       this.$emit('close-activity-plan')
