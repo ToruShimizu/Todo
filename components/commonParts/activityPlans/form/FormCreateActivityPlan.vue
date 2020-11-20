@@ -38,7 +38,7 @@
               :loader="null"
               @save-button="handleSaveActivityPlan"
               @close-button="closeActivityPlan"
-              ><template v-slot:save> <v-icon>mdi-pencil-plus-outline </v-icon></template>
+              ><template v-slot:save> <v-icon left>mdi-pencil-plus-outline </v-icon></template>
             </SaveAndCloseButton>
           </v-form>
         </template>
