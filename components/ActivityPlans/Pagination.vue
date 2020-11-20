@@ -27,7 +27,6 @@ export default {
         return this.activityPlansPage
       },
       set(setActivityPlansPage) {
-        console.log(setActivityPlansPage)
         this.$emit('update:set-activity-plans-page', setActivityPlansPage)
       }
     }

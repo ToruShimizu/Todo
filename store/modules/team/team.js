@@ -44,7 +44,6 @@ const mutations = {
 const actions = {
 
   async fetchTeam({ getters, commit, dispatch }) {
-    console.log('ttt')
     const snapShot = await db
       .collection(`users/${getters.userUid}/team`)
       .get()
@@ -115,7 +114,6 @@ const actions = {
     } else {
       const updateTeam = {
         name: team.name,
-        photoURL: state.team.photoURL
       }
       try {
         if (getters.userUid) {
@@ -123,9 +121,9 @@ const actions = {
           alert('チーム情報の変更が完了しました。')
           commit('updateTeam', updateTeam)
           commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
-
         }
       } catch (err) {
+        alert('変更に失敗しました。もう一度やり直してください')
         console.log(err)
       }
     }
@@ -147,14 +145,20 @@ const actions = {
       commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
 
     } catch (err) {
-      alert('登録に失敗しました。もう一度やり直してください')
+      alert('変更に失敗しました。もう一度やり直してください')
       console.log(err);
     }
   },
   async removeTeam({ commit, state, getters }) {
     const id = state.team.id
-    await db.collection(`users/${getters.userUid}/team`).doc(id).delete()
-    commit('removeTeam', id)
+    try {
+
+      await db.collection(`users/${getters.userUid}/team`).doc(id).delete()
+      commit('removeTeam', id)
+    } catch (err) {
+      alert('削除に失敗しました。もう一度やり直してください')
+      console.log(err)
+    }
   },
 
   async registrationMember({ state, commit, getters }, teamMember) {
@@ -177,12 +181,13 @@ const actions = {
           .doc(id)
           .set(registrationMember)
       }
+      commit('registrationMember', registrationMember)
+      commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
     }
     catch (err) {
       alert('登録に失敗しました。もう一度やり直してください。')
       console.log(err);
     }
-    commit('registrationMember', registrationMember)
   },
   async updateMember({ getters, commit }, editMember) {
     try {
@@ -203,12 +208,18 @@ const actions = {
   },
   async removeMember({ commit, getters }, teamMember) {
     const id = teamMember.id;
-    if (getters.userUid) {
-      const snapShot = await db.collection(`users/${getters.userUid}/team`).get()
-      snapShot.docs.map(async (doc) => {
-        await doc.ref.collection('teamMember').doc(id).delete()
-      })
-      commit('removeMember', id)
+    try {
+
+      if (getters.userUid) {
+        const snapShot = await db.collection(`users/${getters.userUid}/team`).get()
+        snapShot.docs.map(async (doc) => {
+          await doc.ref.collection('teamMember').doc(id).delete()
+        })
+        commit('removeMember', id)
+      }
+    } catch (err) {
+      alert('削除に失敗しました。もう一度やり直してください')
+      console.log(err)
     }
   },
 }

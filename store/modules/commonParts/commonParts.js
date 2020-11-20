@@ -4,12 +4,10 @@ const state = () => ({
 const mutations = {
   openSnackbar(state) {
     state.snackbar = true
-    console.log(state.snackbar)
 
   },
   closeSnackbar(state) {
     state.snackbar = false
-    console.log(state.snackbar)
   }
 
 

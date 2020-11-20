@@ -40,7 +40,6 @@ export default {
   },
   watch: {
     loader() {
-      console.log('watch')
       setTimeout(() => {
         this.stopLoading()
       }, 2000)
