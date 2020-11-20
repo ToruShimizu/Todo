@@ -27,6 +27,7 @@ const mutations = {
     activityPlan.category = updateActivityPlan.category
     activityPlan.date = updateActivityPlan.date
     activityPlan.detail = updateActivityPlan.detail
+    activityPlan.inChargeMember = updateActivityPlan.inChargeMember
     activityPlan.done = updateActivityPlan.done
     activityPlan.id = updateActivityPlan.id
 
@@ -59,6 +60,7 @@ const actions = {
       category: planContents.category,
       detail: planContents.detail,
       date: planContents.date,
+      inChargeMember: planContents.inChargeMember,
       done: false,
       created: firebase.firestore.FieldValue.serverTimestamp()
     }
@@ -75,6 +77,7 @@ const actions = {
       category: planContents.category,
       date: planContents.date,
       detail: planContents.detail,
+      inChargeMember: planContents.inChargeMember,
       done: false,
       created: firebase.firestore.FieldValue.serverTimestamp()
     }
