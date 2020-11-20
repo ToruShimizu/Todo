@@ -8,6 +8,15 @@
       <nuxt-link to="/activityPlans" class="white--text">
         <v-toolbar-title>QC活動管理</v-toolbar-title>
       </nuxt-link>
+      <v-btn
+        text
+        nuxt
+        to="/activityPlans"
+        color="indigo darken-2"
+        v-if="this.$route.path === '/team'"
+      >
+        <v-icon color="white">mdi-arrow-left-bold-box-outline </v-icon>
+      </v-btn>
       <v-spacer />
       <v-toolbar-items v-if="loginUser">
         <v-icon @click="logout"> mdi-account-arrow-right-outline </v-icon>
