@@ -24,7 +24,7 @@
               @stop-loading="stopResetPasswordLoading"
             >
               <template v-slot:save>
-                <v-icon left>mdi-email-send</v-icon>
+                <v-icon left>mdi-email-send-outline</v-icon>
               </template>
             </SaveAndCloseButton>
           </v-form>

@@ -8,6 +8,7 @@
           @click="handleSaveButton"
           :loading="loading"
           :disabled="loading"
+          class="ml-2"
         >
           <slot name="saveButton"> </slot>
           <span class="font-italic">{{ title }} </span>

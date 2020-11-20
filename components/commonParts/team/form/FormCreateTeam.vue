@@ -36,7 +36,7 @@
               @save-button="handleSaveTeam"
             >
               <template v-slot:save>
-                <v-icon left>mdi-account-plus</v-icon>
+                <v-icon left>mdi-account-plus-outline </v-icon>
               </template>
             </SaveAndCloseButton>
           </v-form>
