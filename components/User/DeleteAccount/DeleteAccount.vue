@@ -20,7 +20,12 @@
                 title="close"
                 @close-button="selectedDeleteAccount = 'closeDeleteAccount'"
               />
-              <DeleteButton :title="'delete'" @delete-button="handleDeleteAccount"
+              <DeleteButton
+                :title="'delete'"
+                @delete-button="handleDeleteAccount"
+                :loading="loading"
+                :loader="loader"
+                @stop-loading="stopLoading"
                 ><template v-slot:deleteButton>
                   <v-icon left> mdi-account-multiple-remove-outline </v-icon></template
                 ></DeleteButton
@@ -67,6 +72,16 @@ export default {
       type: Object,
       required: false,
       default: () => {}
+    },
+    loading: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    loader: {
+      type: null,
+      required: false,
+      default: null
     }
   },
   computed: {
@@ -87,11 +102,20 @@ export default {
         this.$refs.form.validate()
         return
       }
+      this.startLoading()
       await this.deleteAccount({
         email: editUser.email,
         password: editUser.password
       })
+      this.stopLoading()
       this.$emit('update:close-delete-account', 'closeDeleteAccount')
+    },
+
+    startLoading() {
+      this.$emit('start-loading')
+    },
+    stopLoading() {
+      this.$emit('stop-loading')
     },
     ...mapActions('modules/user/userInfo', ['deleteAccount'])
   }

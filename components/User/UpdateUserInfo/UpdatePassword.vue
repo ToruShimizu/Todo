@@ -12,20 +12,23 @@
               :email-label="'現在のメールアドレス'"
             />
             <FormUserPassword
-              :user-password="editUser.password"
+              :user-password.sync="editUser.password"
               :show-password="showUserPassword"
               @handle-show-password="toggleShowUserPassword"
               :password-label="'現在のパスワード'"
             />
             <FormUserPassword
               :user-password.sync="editUser.editPassword"
-              :show-password.sync="showEditPassword"
+              :show-password="showEditPassword"
               @handle-show-password="toggleShowEditPassword"
               :password-label="'新しいパスワード'"
             />
             <SaveAndCloseButton
               :close-button-title="'close'"
               :save-button-title="'save'"
+              :loading="loading"
+              :loader="loader"
+              @stop-loading="stopLoading"
               @save-button="handleUpdatePassword"
               @close-button="selectedUpdatePassword = 'closeUpdatePassword'"
             >
@@ -70,6 +73,16 @@ export default {
       type: Object,
       required: false,
       default: () => {}
+    },
+    loading: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    loader: {
+      type: null,
+      required: false,
+      default: null
     }
   },
   data() {
@@ -92,15 +105,18 @@ export default {
   methods: {
     async handleUpdatePassword() {
       const editUser = this.editUser
+      console.log(editUser)
       if (!editUser.email || !editUser.password || !editUser.editPassword) {
         this.$refs.form.validate()
         return
       }
+      this.startLoading()
       await this.updatePassword({
         updatePassword: editUser.editPassword,
         email: editUser.email,
         password: editUser.password
       })
+      this.stopLoading()
       this.$emit('update:close-update-password', 'closeUpdatePassword')
     },
     toggleShowUserPassword(showPassword) {
@@ -108,6 +124,12 @@ export default {
     },
     toggleShowEditPassword() {
       this.showEditPassword = !this.showEditPassword
+    },
+    startLoading() {
+      this.$emit('start-loading')
+    },
+    stopLoading() {
+      this.$emit('stop-loading')
     },
     ...mapActions('modules/user/userInfo', ['updatePassword'])
   }

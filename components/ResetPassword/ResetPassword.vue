@@ -15,10 +15,13 @@
               :email-label="'現在のメールアドレス'"
             />
             <SaveAndCloseButton
+              :loading="resetPasswordLoading"
+              :loader="resetPasswordLoader"
               :close-button-title="'close'"
               :save-button-title="'send'"
               @close-button="closeResetPassword"
               @save-button="handleResetPassword"
+              @stop-loading="stopResetPasswordLoading"
             >
               <template v-slot:save>
                 <v-icon left>mdi-email-send</v-icon>
@@ -57,7 +60,9 @@ export default {
     return {
       resetUserPassword: {
         email: ''
-      }
+      },
+      resetPasswordLoading: false,
+      resetPasswordLoader: null
     }
   },
   methods: {
@@ -70,14 +75,24 @@ export default {
         this.$refs.form.validate()
         return
       }
+      this.startResetPasswordLoading()
       await this.resetPassword({
         email: resetUserPassword.email
       })
+      this.stopResetPasswordLoading()
       this.closeResetPassword()
     },
     closeResetPassword() {
       this.$emit('close-reset-password')
       this.$refs.form.reset()
+    },
+    startResetPasswordLoading() {
+      this.resetPasswordLoading = true
+      this.loginLoader = this.resetPasswordLoading
+    },
+    stopResetPasswordLoading() {
+      this.resetPasswordLoading = false
+      this.loginLoader = this.resetPasswordLoading
     },
     ...mapActions('modules/user/userInfo', ['resetPassword'])
   }
