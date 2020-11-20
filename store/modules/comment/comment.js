@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid'
 import { db } from '~/plugins/firebase'
 
 const state = () => ({
@@ -37,7 +36,8 @@ const actions = {
       '時' +
       date.getMinutes() +
       '分'
-    const commentId = uuidv4()
+    const commentId = await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).collection(`comments/${getters.userUid}/message`).doc().id
+
     const comment = {
       message,
       id: commentId,

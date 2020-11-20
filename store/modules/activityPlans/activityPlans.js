@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid'
 import firebase, { db } from '~/plugins/firebase'
 
 const state = () => ({
@@ -53,9 +52,10 @@ const actions = {
   },
   // 活動計画追加
   async addActivityPlan({ getters, commit }, planContents) {
-    const activityPlanId = uuidv4()
+    const id = await db.collection(`users/${getters.userUid}/activityPlans`).doc().id
+
     const createActivityPlan = {
-      id: activityPlanId,
+      id,
       category: planContents.category,
       detail: planContents.detail,
       date: planContents.date,
@@ -63,7 +63,7 @@ const actions = {
       created: firebase.firestore.FieldValue.serverTimestamp()
     }
     if (getters.userUid) {
-      await db.collection(`users/${getters.userUid}/activityPlans`).doc(activityPlanId).set(createActivityPlan)
+      await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).set(createActivityPlan)
     }
     commit('addActivityPlan', createActivityPlan)
   },
