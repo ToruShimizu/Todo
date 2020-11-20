@@ -194,7 +194,7 @@ const actions = {
     const id = teamMember.id;
     if (getters.userUid) {
       const snapShot = await db.collection(`users/${getters.userUid}/team`).get()
-      snapShot.forEach(async (doc) => {
+      snapShot.docs.map(async (doc) => {
         await doc.ref.collection('teamMember').doc(id).delete()
       })
       commit('removeMember', id)
