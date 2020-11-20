@@ -91,18 +91,21 @@ export default {
 
   methods: {
     closeMemberDialog() {
-      this.$refs.form.reset()
-      this.teamMember.name = ''
-      this.teamMember.role = ''
-      this.teamMember.improvementRoles = []
       this.$emit('close-member-dialog')
     },
-    handleSaveMember() {
+    async handleSaveMember() {
       if (!this.teamMember.name) {
         this.$refs.form.validate()
         return
       }
-      this.$emit('save-member')
+      await this.$emit('save-member')
+      if (!this.teamMember.id) {
+        this.$refs.form.reset()
+        this.teamMember.name = ''
+        this.teamMember.role = []
+        this.teamMember.improvementRoles = []
+        this.closeMemberDialog()
+      }
       this.closeMemberDialog()
     }
   }
