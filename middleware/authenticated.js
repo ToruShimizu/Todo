@@ -13,7 +13,7 @@ export default function ({ store, redirect, route }) {
       store.dispatch('modules/user/auth/setLoginUser', userInfo)
       // firestoreかデータを取得する
       store.dispatch('modules/activityPlans/activityPlans/fetchActivityPlans')
-      store.dispatch('modules/team/team/fetchTeamData')
+      store.dispatch('modules/team/team/fetchTeam')
     } else if (route.path === '/signIn') {
       return redirect('/activityPlans')
     } else {

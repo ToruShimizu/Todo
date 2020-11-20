@@ -43,8 +43,7 @@ const mutations = {
 }
 const actions = {
 
-  async fetchTeamData({ getters, commit, dispatch }) {
-    console.log(getters.userUid)
+  async fetchTeam({ getters, commit, dispatch }) {
     const snapShot = await db
       .collection(`users/${getters.userUid}/team`)
       .get()
@@ -55,8 +54,9 @@ const actions = {
     dispatch('fetchMember')
   },
   async fetchMember({ state, getters, commit },) {
-    if (state.team) {
-      const snapShot = await db.collection(`users/${getters.userUid}/team`).doc(getters.teamId).get()
+    const id = state.team.id
+    if (id) {
+      const snapShot = await db.collection(`users/${getters.userUid}/team`).doc(id).get()
       const subCollection = await snapShot.ref.collection('teamMember').get()
       commit('initMember')
       subCollection.docs.map((doc) => {
@@ -194,7 +194,7 @@ const actions = {
     const id = teamMember.id;
     if (getters.userUid) {
       const snapShot = await db.collection(`users/${getters.userUid}/team`).get()
-      snapShot.forEach(async (doc) => {
+      snapShot.docs.map(async (doc) => {
         await doc.ref.collection('teamMember').doc(id).delete()
       })
       commit('removeMember', id)
