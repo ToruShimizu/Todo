@@ -88,14 +88,14 @@ export default {
     ...mapGetters('modules/user/auth', ['gettersUserEmail'])
   },
   methods: {
-    handleUpdateEmail() {
+    async handleUpdateEmail() {
       const editUserEmail = this.editUser.email
       if (!editUserEmail) {
         this.$refs.form.validate()
         return
       }
       this.startLoading()
-      this.updateEmail({
+      await this.updateEmail({
         email: editUserEmail
       })
       this.stopLoading()
