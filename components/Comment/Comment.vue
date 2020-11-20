@@ -16,7 +16,7 @@
             <span v-else> <v-icon>mdi-account-outline</v-icon> </span>
             {{ gettersUserName }}<v-spacer />
             <v-btn icon @click="handleRemoveComment(comment)">
-              <v-icon>mdi-delete</v-icon>
+              <v-icon>mdi-delete-outline</v-icon>
             </v-btn>
           </v-layout>
         </v-card-text>

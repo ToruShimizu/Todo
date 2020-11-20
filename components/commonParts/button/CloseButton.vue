@@ -1,6 +1,6 @@
 <template>
   <v-btn color="blue darken-1" outlined @click="handleCloseButton">
-    <v-icon left>mdi-exit-to-app </v-icon>
+    <v-icon left>mdi-arrow-left-bold-box-outline </v-icon>
     <span class="font-italic">{{ title }}</span>
   </v-btn>
 </template>
