@@ -16,6 +16,10 @@
 <script>
 export default {
   props: {
+    teamMember: {
+      type: Object,
+      required: true
+    },
     improvementRole: {
       type: Array,
       required: false,
@@ -33,7 +37,7 @@ export default {
   computed: {
     innnerImprovementRole: {
       get() {
-        return this.improvementRole
+        return this.teamMember.improvementRole
       },
       set(improvementRole) {
         this.$emit('update:improvementRole', improvementRole)
