@@ -213,6 +213,12 @@ const getters = {
   },
   teamPhotoURL: (state) => (state.team.photoURL ? state.team.photoURL : ''),
 
+  // メンバーの名前を取得
+  gettersTeamMember: (state) => {
+    return state.teamMember.map((member) => {
+      return member.name
+    })
+  },
   // uidの取得
   userUid: (state, getters, rootState, rootGetters) => {
     return rootGetters['modules/user/auth/uid']
