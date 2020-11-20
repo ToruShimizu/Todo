@@ -101,6 +101,7 @@ export default {
       planContents: {
         category: null,
         detail: '',
+        inChargeMember: [],
         date: new Date().toISOString().substr(0, 10),
         done: false
       },
