@@ -8,6 +8,7 @@
         class="font-italic mb-5"
         outlined
         @click="openCreateTeam"
+        @close-team-dialog="closeCreateTeam"
         v-if="!teamName"
       >
         <v-icon>mdi-account-plus-outline </v-icon>サークル新規作成

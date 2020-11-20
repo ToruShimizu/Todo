@@ -28,6 +28,7 @@ export default {
   methods: {
     handleCreateTeam(team) {
       this.registrationTeam(team)
+      this.closeTeamDialog()
     },
     closeTeamDialog() {
       this.$emit('close-team-dialog')
