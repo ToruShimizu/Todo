@@ -25,17 +25,7 @@
                   />
                 </v-col>
                 <v-col cols="12" sm="12" md="12">
-                  <v-file-input
-                    ref="image"
-                    v-model="team.imageFile"
-                    accept="image/*"
-                    show-size
-                    label="サークルアイコン"
-                    persistent-hint
-                    hint="ファイル選択画面が開きます"
-                    prepend-icon="mdi-image"
-                    @change="changeTeamImageFile"
-                  />
+                  <InputFile :imageFile="team.imageFile" @change-image-file="changeImageFile" />
                 </v-col>
               </v-row>
             </v-container>
@@ -60,10 +50,12 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import FormDialog from '@/components/commonParts/dialog/FormDialog'
+import InputFile from '@/components/commonParts/form/InputFile'
 
 export default {
   components: {
-    FormDialog
+    FormDialog,
+    InputFile
   },
 
   props: {
@@ -86,8 +78,7 @@ export default {
     ...mapGetters('modules/team/team', ['teamPhotoURL'])
   },
   methods: {
-    changeTeamImageFile(event) {
-      const file = event
+    changeImageFile(file) {
       this.team.imageFile = file
     },
     closeTeamDialog() {
