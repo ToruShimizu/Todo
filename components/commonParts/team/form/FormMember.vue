@@ -8,14 +8,14 @@
               <v-row>
                 <v-col cols="12" sm="12" md="12">
                   <MemberName
-                    :teamMember="teamMember"
+                    :team-member="teamMember"
                     :member-name.sync="teamMember.name"
                     :label="'名前'"
                   />
                 </v-col>
                 <v-col cols="12" sm="12" md="12">
                   <RoleComboBox
-                    :teamMember="teamMember"
+                    :team-member="teamMember"
                     :items="teamRoles"
                     :role.sync="teamMember.role"
                     :label="'役割'"
@@ -23,9 +23,9 @@
                 </v-col>
                 <v-col cols="12" sm="12" md="12">
                   <ImprovementRoleComboBox
-                    :teamMember="teamMember"
+                    :team-member="teamMember"
                     :items="improvementRoles"
-                    :improvementRole.sync="teamMember.improvementRole"
+                    :improvement-role.sync="teamMember.improvementRole"
                     :label="'改善担当'"
                   />
                 </v-col>
