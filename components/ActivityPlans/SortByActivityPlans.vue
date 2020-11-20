@@ -5,7 +5,7 @@
       :items="sortActivityPlansStates"
       label="並べ替え"
       single-line
-    ></v-select>
+    />
   </v-col>
 </template>
 
