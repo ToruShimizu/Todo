@@ -64,10 +64,18 @@ const actions = {
       done: false,
       created: firebase.firestore.FieldValue.serverTimestamp()
     }
-    if (getters.userUid) {
-      await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).set(createActivityPlan)
+    try {
+
+      if (getters.userUid) {
+        await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).set(createActivityPlan)
+        commit('addActivityPlan', createActivityPlan)
+        commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
+
+      }
+    } catch (err) {
+      console.log(err)
     }
-    commit('addActivityPlan', createActivityPlan)
+
   },
   // 活動計画更新
   async updateActivityPlan({ getters, commit }, planContents) {
@@ -81,9 +89,16 @@ const actions = {
       done: false,
       created: firebase.firestore.FieldValue.serverTimestamp()
     }
-    if (getters.userUid) {
-      await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).update(updateActivityPlan)
-      commit('updateActivityPlan', updateActivityPlan)
+    try {
+
+      if (getters.userUid) {
+        await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).update(updateActivityPlan)
+        commit('updateActivityPlan', updateActivityPlan)
+        commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
+      }
+    }
+    catch (err) {
+      log(err)
     }
   },
   // 活動計画削除

@@ -16,9 +16,9 @@ const actions = {
       await userInfo.updateProfile({
         photoURL
       })
-      alert('プロフィール画像の変更が完了しました。')
       // ログインユーザーの情報を更新
       commit('modules/user/auth/setLoginUser', userInfo, { root: true })
+      commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
     } catch (err) {
       alert('画像の変更に失敗しました。もう一度やり直してください。')
       console.log(err)
@@ -36,8 +36,9 @@ const actions = {
         await userInfo.updateProfile({
           displayName: userName
         })
-        alert('ユーザー名の変更が完了しました。')
         commit('modules/user/auth/setLoginUser', userInfo, { root: true })
+        commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
+
       } catch (err) {
         alert('ユーザー名の変更に失敗しました。もう一度やり直してください。')
         console.log(err)
@@ -52,8 +53,9 @@ const actions = {
     } else {
       try {
         await userInfo.updateEmail(email)
-        alert('新しいメールアドレスの登録が完了しました。')
         commit('modules/user/auth/setLoginUser', userInfo, { root: true })
+        commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
+
       } catch (err) {
         alert('新しいメールアドレスの登録に失敗しました。もう一度やり直してください。')
         console.log(err)
