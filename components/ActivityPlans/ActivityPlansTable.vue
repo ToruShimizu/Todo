@@ -116,7 +116,7 @@ export default {
       this.doneActivityPlan({ planContents: contents, id: contents.id })
     },
     async openUpdateActivityPlan(contents) {
-      const id = String(contents.id)
+      const id = contents.id
       await this.fetchComments(id)
       this.editPlanContents = Object.assign({}, contents)
       this.updateActivityPlanDialog = true

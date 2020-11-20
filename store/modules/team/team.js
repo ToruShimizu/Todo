@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid'
 import { db, storageRef } from '~/plugins/firebase'
 
 const state = () => ({
@@ -68,18 +67,17 @@ const actions = {
   },
 
   async registrationTeam({ getters, commit, dispatch }, team) {
-    const id = uuidv4()
-    const teamId = String(id)
+    const id = await db.collection(`users/${getters.userUid}/team`).doc().id
     if (team.imageFile) {
-      await dispatch('uploadTeamImageFile', { team, teamId })
+      await dispatch('uploadTeamImageFile', { team, id })
     }
     const registrationTeam = {
       name: team.name,
-      id: teamId,
+      id
     }
     try {
       if (getters.userUid) {
-        await db.collection(`users/${getters.userUid}/team`).doc(teamId).set(registrationTeam)
+        await db.collection(`users/${getters.userUid}/team`).doc(id).set(registrationTeam)
       }
       commit('registrationTeam', registrationTeam)
     } catch (err) {
@@ -151,11 +149,11 @@ const actions = {
     commit('removeTeam', id)
   },
 
-  async registrationMember({ commit, getters }, teamMember) {
-    const id = uuidv4()
-    const memberId = String(id)
+  async registrationMember({ state, commit, getters }, teamMember) {
+    const id = await db.collection(`users/${getters.userUid}/team`).doc(state.team.id).collection('teamMember').doc().id
+
     const registrationMember = {
-      id: memberId,
+      id,
       name: teamMember.name,
       role: teamMember.role,
       improvementRole: teamMember.improvementRole
@@ -166,7 +164,7 @@ const actions = {
           .collection(`users/${getters.userUid}/team`)
           .doc(getters.teamId)
           .collection('teamMember')
-          .doc(memberId)
+          .doc(id)
           .set(registrationMember)
       }
     }
