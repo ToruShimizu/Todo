@@ -4,13 +4,7 @@
       <template>
         <v-avatar max-width="40" max-height="40">
           <template v-if="teamPhotoURL">
-            <v-img :src="teamPhotoURL" :lazy-src="teamPhotoURL">
-              <template v-slot:placeholder>
-                <v-row class="fill-height ma-0" align="center" justify="center">
-                  <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                </v-row>
-              </template>
-            </v-img>
+            <LoadingImg v-if="teamPhotoURL" :src="teamPhotoURL" />
           </template>
           <v-icon v-else>mdi-account-outline</v-icon>
         </v-avatar>
@@ -24,9 +18,12 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import EditTeamList from '@/components/team/edit/EditTeamList'
+import LoadingImg from '@/components/commonParts/v-img/LoadingImg'
+
 export default {
   components: {
-    EditTeamList
+    EditTeamList,
+    LoadingImg
   },
   computed: {
     ...mapGetters('modules/team/team', ['teamName', 'teamPhotoURL'])
