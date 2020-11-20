@@ -42,6 +42,7 @@
             <SaveAndCloseButton
               :close-button-title="'close'"
               :save-button-title="'save'"
+              :loader="null"
               @close-button="closeTeamDialog"
               @save-button="handleSaveTeam"
             >
