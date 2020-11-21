@@ -14,7 +14,9 @@
             <v-icon>mdi-delete-outline </v-icon>
           </v-btn>
         </v-col>
-        <LoadingImg v-if="editPlanContents.photoURL" :src="editPlanContents.photoURL" />
+        <v-col cols="12" sm="12" md="12">
+          <LoadingImg v-if="editPlanContents.photoURL" :src="editPlanContents.photoURL" />
+        </v-col>
       </template>
       <template v-slot:comment>
         <AddComment :plan-contents-id="editPlanContents.id" />
