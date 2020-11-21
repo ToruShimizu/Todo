@@ -187,6 +187,26 @@ const actions = {
     })
     commit('doneActivityPlan', planContents)
   },
+  async updateImageFile({ getters, commit }, planContents) {
+    const id = planContents.id
+    const imageFile = planContents.imageFile
+    const imageRef = await storageRef.child(`planContentsImages/${id}/${imageFile.name}`)
+    const snapShot = await imageRef.put(imageFile)
+    const photoURL = await snapShot.ref.getDownloadURL()
+
+    try {
+      if (getters.userUid) {
+        await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).update(updateActivityPlan)
+        commit('updateActivityPlan', updateActivityPlan)
+        commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
+        planContents.photoURL = photoURL
+        planContents.imageFile = null
+      }
+    }
+    catch (err) {
+      console.log(err)
+    }
+  },
   async removePlanContentsImage({ commit, getters }, planContents) {
     const id = planContents.id
     const imageRef = await storageRef.child(`planContentsImages/${id}/${planContents.fileName}`)
