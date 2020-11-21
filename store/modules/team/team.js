@@ -115,10 +115,11 @@ const actions = {
     } else {
       const updateTeam = {
         name: team.name,
+        id: team.id
       }
       try {
         if (getters.userUid) {
-          await db.collection(`users/${getters.userUid}/team`).doc(getters.teamId).update(updateTeam)
+          await db.collection(`users/${getters.userUid}/team`).doc(team.id).update(updateTeam)
           alert('チーム情報の変更が完了しました。')
           commit('updateTeam', updateTeam)
           commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
