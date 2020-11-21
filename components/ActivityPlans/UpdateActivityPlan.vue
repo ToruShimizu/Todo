@@ -7,6 +7,7 @@
       :categorys="todoCategorys"
       @close-activity-plan="closeUpdateActivityPlan"
       @save-activity-plan="handleUpdateActivityPlan"
+      @update-image-file="handleUpdateImageFile"
     >
       <template v-slot:imageFile v-if="editPlanContents.photoURL">
         <v-col cols="12" sm="12" md="12" class="pa-0 text-right">
@@ -74,9 +75,13 @@ export default {
     handleRemovePlanContensImage() {
       this.removePlanContentsImage(this.editPlanContents)
     },
+    handleUpdateImageFile(planContents) {
+      this.updateImageFile(planContents)
+    },
     ...mapActions('modules/activityPlans/activityPlans', [
       'updateActivityPlan',
-      'removePlanContentsImage'
+      'removePlanContentsImage',
+      'updateImageFile'
     ])
   }
 }
