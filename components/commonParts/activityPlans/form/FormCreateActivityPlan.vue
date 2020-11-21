@@ -22,8 +22,8 @@
                 <v-col cols="12">
                   <DetailForm :detail.sync="planContents.detail" />
                 </v-col>
+                <slot name="imageFile"></slot>
                 <v-col cols="12" sm="12" md="12">
-                  <slot name="imageFile"></slot>
                   <InputFile
                     :imageFile.sync="planContents.imageFile"
                     @change-image-file="changeImageFile"
