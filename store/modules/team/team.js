@@ -70,22 +70,22 @@ const actions = {
     const id = await db.collection(`users/${getters.userUid}/team`).doc().id
     if (team.imageFile) {
       await dispatch('uploadTeamImageFile', { team, id })
-    }
-    const registrationTeam = {
-      name: team.name,
-      id
-    }
-    try {
-      if (getters.userUid) {
-        await db.collection(`users/${getters.userUid}/team`).doc(id).set(registrationTeam)
+    } else {
+      const registrationTeam = {
+        name: team.name,
+        id
       }
-      commit('registrationTeam', registrationTeam)
-      commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
+      try {
+        if (getters.userUid) {
+          await db.collection(`users/${getters.userUid}/team`).doc(id).set(registrationTeam)
+        }
+        commit('registrationTeam', registrationTeam)
+        commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
 
-    } catch (err) {
-      alert('登録に失敗しました。もう一度やり直してください')
-      console.log(err);
-
+      } catch (err) {
+        alert('登録に失敗しました。もう一度やり直してください')
+        console.log(err);
+      }
     }
   },
   async uploadTeamImageFile({ getters, commit }, { team, id }) {
