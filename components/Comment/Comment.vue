@@ -10,10 +10,16 @@
         <v-card-text class="body-1 font-weight-bold"> "{{ comment.message }}" </v-card-text>
         <v-card-text>
           <v-layout>
-            <span v-if="photoURL">
-              {{ photoURL }}
-            </span>
-            <span v-else> <v-icon>mdi-account-outline</v-icon> </span>
+            <v-avatar max-width="50" max-height="50">
+              <v-img v-if="photoURL" :src="photoURL" :lazy-src="photoURL">
+                <template v-slot:placeholder>
+                  <v-row class="fill-height ma-0" align="center" justify="center">
+                    <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                  </v-row>
+                </template>
+              </v-img>
+              <v-icon v-else>mdi-account-outline</v-icon>
+            </v-avatar>
             {{ gettersUserName }}<v-spacer />
             <v-btn icon @click="handleRemoveComment(comment)">
               <v-icon>mdi-delete-outline</v-icon>
@@ -27,8 +33,12 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
+import LoadingImg from '@/components/commonParts/v-img/LoadingImg'
 
 export default {
+  components: {
+    LoadingImg
+  },
   computed: {
     ...mapState('modules/comment/comment', ['comments']),
     ...mapGetters('modules/user/auth', ['gettersUserName', 'photoURL', 'userEmail'])
