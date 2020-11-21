@@ -85,21 +85,22 @@ const actions = {
     } catch (err) {
       alert('登録に失敗しました。もう一度やり直してください')
       console.log(err);
+
     }
   },
-  async uploadTeamImageFile({ getters, commit }, { team, teamId }) {
+  async uploadTeamImageFile({ getters, commit }, { team, id }) {
     const imageFile = team.imageFile
     const imageRef = await storageRef.child(`teamImages/${getters.userUid}/${imageFile.name}`)
     const snapShot = await imageRef.put(imageFile)
     const photoURL = await snapShot.ref.getDownloadURL()
     const registrationTeam = {
       name: team.name,
-      id: teamId,
+      id,
       photoURL,
     }
     try {
       if (getters.userUid) {
-        await db.collection(`users/${getters.userUid}/team`).doc(teamId).set(registrationTeam)
+        await db.collection(`users/${getters.userUid}/team`).doc(id).set(registrationTeam)
       }
       commit('registrationTeam', registrationTeam)
       commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
