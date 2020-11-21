@@ -36,6 +36,11 @@ const mutations = {
   // 活動計画の完了状態切り替え
   doneActivityPlan(state, planContents) {
     planContents.done = !planContents.done
+  },
+  removePhotoURL(state, id) {
+    const index = state.activityPlans.findIndex((contents) => contents.id === id)
+    state.activityPlans[index].photoURL = null
+
   }
 }
 const actions = {
@@ -84,7 +89,7 @@ const actions = {
   },
   async uploadPlanContentsImageFile({ getters, commit }, { planContents, id }) {
     const imageFile = planContents.imageFile
-    const imageRef = await storageRef.child(`planContentsImages/${getters.userUid}/${imageFile.name}`)
+    const imageRef = await storageRef.child(`planContentsImages/${id}/${imageFile.name}`)
     const snapShot = await imageRef.put(imageFile)
     const photoURL = await snapShot.ref.getDownloadURL()
     console.log(photoURL)
@@ -95,6 +100,7 @@ const actions = {
       date: planContents.date,
       inChargeMember: planContents.inChargeMember,
       done: false,
+      fileName: imageFile.name,
       photoURL,
       created: firebase.firestore.FieldValue.serverTimestamp(),
     }
@@ -147,7 +153,18 @@ const actions = {
       done: !planContents.done
     })
     commit('doneActivityPlan', planContents)
-  }
+  },
+  async removePlanContentsImage({ commit, getters }, planContents) {
+    const id = planContents.id
+    const imageRef = await storageRef.child(`planContentsImages/${id}/${planContents.fileName}`)
+    try {
+      await imageRef.delete()
+      await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).update({ photoURL: null })
+      commit('removePhotoURL', id)
+    } catch (err) {
+      console.log(err)
+    }
+  },
 }
 
 const getters = {
