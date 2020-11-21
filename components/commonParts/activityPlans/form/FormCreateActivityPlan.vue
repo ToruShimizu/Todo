@@ -119,6 +119,7 @@ export default {
     },
     changeImageFile(file) {
       this.planContents.imageFile = file
+      this.$emit('update-image-file', this.planContents)
     }
   }
 }
