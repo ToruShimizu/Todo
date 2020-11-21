@@ -194,6 +194,7 @@ const actions = {
       await imageRef.delete()
       await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).update({ photoURL: null })
       commit('removePhotoURL', id)
+      planContents.photoURL = null
     } catch (err) {
       console.log(err)
     }
