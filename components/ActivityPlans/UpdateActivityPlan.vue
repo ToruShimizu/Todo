@@ -9,6 +9,11 @@
       @save-activity-plan="handleUpdateActivityPlan"
     >
       <template v-slot:imageFile v-if="editPlanContents.photoURL">
+        <v-col cols="12" sm="12" md="12" class="pa-0 text-right">
+          <v-btn text x-small @click="handleRemovePlanContensImage">
+            <v-icon>mdi-delete-outline </v-icon>
+          </v-btn>
+        </v-col>
         <LoadingImg v-if="editPlanContents.photoURL" :src="editPlanContents.photoURL" />
       </template>
       <template v-slot:comment>
@@ -64,7 +69,13 @@ export default {
     closeUpdateActivityPlan() {
       this.$emit('close-update-activity-plan')
     },
-    ...mapActions('modules/activityPlans/activityPlans', ['updateActivityPlan'])
+    handleRemovePlanContensImage() {
+      this.removePlanContentsImage(this.editPlanContents)
+    },
+    ...mapActions('modules/activityPlans/activityPlans', [
+      'updateActivityPlan',
+      'removePlanContentsImage'
+    ])
   }
 }
 </script>
