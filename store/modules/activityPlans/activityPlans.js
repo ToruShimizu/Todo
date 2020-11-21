@@ -30,6 +30,8 @@ const mutations = {
     activityPlan.inChargeMember = updateActivityPlan.inChargeMember
     activityPlan.done = updateActivityPlan.done
     activityPlan.id = updateActivityPlan.id
+    activityPlan.photoURL = updateActivityPlan.photoURL
+    activityPlan.fileName = updateActivityPlan.fileName
 
     console.log('updateActivityPlan')
   },
@@ -116,8 +118,38 @@ const actions = {
     }
   },
   // 活動計画更新
-  async updateActivityPlan({ getters, commit }, planContents) {
+  async updateActivityPlan({ getters, commit, dispatch }, planContents) {
     const id = planContents.id
+    if (planContents.imageFile) {
+      await dispatch('updatePlanContentsImageFile', { planContents, id })
+    } else {
+      const updateActivityPlan = {
+        id,
+        category: planContents.category,
+        date: planContents.date,
+        detail: planContents.detail,
+        inChargeMember: planContents.inChargeMember,
+        done: false,
+        created: firebase.firestore.FieldValue.serverTimestamp()
+      }
+      try {
+
+        if (getters.userUid) {
+          await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).update(updateActivityPlan)
+          commit('updateActivityPlan', updateActivityPlan)
+          commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
+        }
+      }
+      catch (err) {
+        log(err)
+      }
+    }
+  },
+  async updatePlanContentsImageFile({ getters, commit }, { planContents, id }) {
+    const imageFile = planContents.imageFile
+    const imageRef = await storageRef.child(`planContentsImages/${id}/${imageFile.name}`)
+    const snapShot = await imageRef.put(imageFile)
+    const photoURL = await snapShot.ref.getDownloadURL()
     const updateActivityPlan = {
       id,
       category: planContents.category,
@@ -125,10 +157,11 @@ const actions = {
       detail: planContents.detail,
       inChargeMember: planContents.inChargeMember,
       done: false,
+      photoURL,
+      fileName: imageFile.name,
       created: firebase.firestore.FieldValue.serverTimestamp()
     }
     try {
-
       if (getters.userUid) {
         await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).update(updateActivityPlan)
         commit('updateActivityPlan', updateActivityPlan)
@@ -136,7 +169,7 @@ const actions = {
       }
     }
     catch (err) {
-      log(err)
+      console.log(err)
     }
   },
   // 活動計画削除
