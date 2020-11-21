@@ -70,36 +70,37 @@ const actions = {
     const id = await db.collection(`users/${getters.userUid}/team`).doc().id
     if (team.imageFile) {
       await dispatch('uploadTeamImageFile', { team, id })
-    }
-    const registrationTeam = {
-      name: team.name,
-      id
-    }
-    try {
-      if (getters.userUid) {
-        await db.collection(`users/${getters.userUid}/team`).doc(id).set(registrationTeam)
+    } else {
+      const registrationTeam = {
+        name: team.name,
+        id
       }
-      commit('registrationTeam', registrationTeam)
-      commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
+      try {
+        if (getters.userUid) {
+          await db.collection(`users/${getters.userUid}/team`).doc(id).set(registrationTeam)
+        }
+        commit('registrationTeam', registrationTeam)
+        commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
 
-    } catch (err) {
-      alert('登録に失敗しました。もう一度やり直してください')
-      console.log(err);
+      } catch (err) {
+        alert('登録に失敗しました。もう一度やり直してください')
+        console.log(err);
+      }
     }
   },
-  async uploadTeamImageFile({ getters, commit }, { team, teamId }) {
+  async uploadTeamImageFile({ getters, commit }, { team, id }) {
     const imageFile = team.imageFile
     const imageRef = await storageRef.child(`teamImages/${getters.userUid}/${imageFile.name}`)
     const snapShot = await imageRef.put(imageFile)
     const photoURL = await snapShot.ref.getDownloadURL()
     const registrationTeam = {
       name: team.name,
-      id: teamId,
+      id,
       photoURL,
     }
     try {
       if (getters.userUid) {
-        await db.collection(`users/${getters.userUid}/team`).doc(teamId).set(registrationTeam)
+        await db.collection(`users/${getters.userUid}/team`).doc(id).set(registrationTeam)
       }
       commit('registrationTeam', registrationTeam)
       commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
@@ -114,10 +115,11 @@ const actions = {
     } else {
       const updateTeam = {
         name: team.name,
+        id: team.id
       }
       try {
         if (getters.userUid) {
-          await db.collection(`users/${getters.userUid}/team`).doc(getters.teamId).update(updateTeam)
+          await db.collection(`users/${getters.userUid}/team`).doc(team.id).update(updateTeam)
           alert('チーム情報の変更が完了しました。')
           commit('updateTeam', updateTeam)
           commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
