@@ -109,7 +109,7 @@ const actions = {
       console.log(err);
     }
   },
-  async updateTeam({ getters, dispatch }, team) {
+  async updateTeam({ getters, dispatch, commit }, team) {
     const id = getters.teamId;
     if (team.imageFile) {
       dispatch('updateTeamImageFile', team)
