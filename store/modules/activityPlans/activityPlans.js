@@ -68,6 +68,8 @@ const actions = {
       date: planContents.date,
       inChargeMember: planContents.inChargeMember,
       done: false,
+      fileName: planContents.fileName,
+      photoURL: planContents.photoURL,
       created: firebase.firestore.FieldValue.serverTimestamp()
     }
     try {
@@ -80,33 +82,14 @@ const actions = {
       console.log(err)
     }
   },
-  async uploadPlanContentsImageFile({ getters, commit }, { planContents, id }) {
+  async uploadPlanContentsImageFile({ dispatch, getters }, planContents) {
     const imageFile = planContents.imageFile
-    const imageRef = await storageRef.child(`planContentsImages/${id}/${imageFile.name}`)
+    const imageRef = await storageRef.child(`planContentsImages/${getters.userUid}/${imageFile.name}`)
     const snapShot = await imageRef.put(imageFile)
     const photoURL = await snapShot.ref.getDownloadURL()
-    console.log(photoURL)
-    const createActivityPlan = {
-      id,
-      category: planContents.category,
-      detail: planContents.detail,
-      date: planContents.date,
-      inChargeMember: planContents.inChargeMember,
-      done: false,
-      fileName: imageFile.name,
-      photoURL,
-      created: firebase.firestore.FieldValue.serverTimestamp(),
-    }
-    try {
-      if (getters.userUid) {
-        await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).set(createActivityPlan)
-      }
-      commit('addActivityPlan', createActivityPlan)
-      commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
-    } catch (err) {
-      alert('登録に失敗しました。もう一度やり直してください')
-      console.log(err);
-    }
+    planContents.photoURL = photoURL
+    planContents.fileName = imageFile.name
+    dispatch('addActivityPlan', planContents)
   },
   // 活動計画更新
   async updateActivityPlan({ getters, commit }, planContents) {
