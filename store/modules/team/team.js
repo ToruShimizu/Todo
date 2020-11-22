@@ -109,17 +109,18 @@ const actions = {
       console.log(err);
     }
   },
-  async updateTeam({ state, getters, dispatch }, team) {
+  async updateTeam({ getters, dispatch }, team) {
+    const id = getters.teamId;
     if (team.imageFile) {
       dispatch('updateTeamImageFile', team)
     } else {
       const updateTeam = {
         name: team.name,
-        id: team.id
+        id
       }
       try {
         if (getters.userUid) {
-          await db.collection(`users/${getters.userUid}/team`).doc(team.id).update(updateTeam)
+          await db.collection(`users/${getters.userUid}/team`).doc(id).update(updateTeam)
           alert('チーム情報の変更が完了しました。')
           commit('updateTeam', updateTeam)
           commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
@@ -151,8 +152,8 @@ const actions = {
       console.log(err);
     }
   },
-  async removeTeam({ commit, state, getters }) {
-    const id = state.team.id
+  async removeTeam({ commit, getters }) {
+    const id = getters.teamId
     try {
 
       await db.collection(`users/${getters.userUid}/team`).doc(id).delete()
