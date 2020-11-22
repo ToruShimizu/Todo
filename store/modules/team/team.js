@@ -164,9 +164,8 @@ const actions = {
     }
   },
 
-  async registrationMember({ state, commit, getters }, teamMember) {
-    const uid = String(state.team.id)
-    console.log(uid)
+  async registrationMember({ getters, commit }, teamMember) {
+    const teamId = getters.teamId
     const id = await db.collection(`users/${getters.userUid}/team`).doc(uid).collection('teamMember').doc().id
 
     const registrationMember = {
@@ -179,7 +178,7 @@ const actions = {
       if (getters.userUid) {
         await db
           .collection(`users/${getters.userUid}/team`)
-          .doc(getters.teamId)
+          .doc(teamId)
           .collection('teamMember')
           .doc(id)
           .set(registrationMember)
