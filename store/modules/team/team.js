@@ -66,37 +66,13 @@ const actions = {
     }
   },
 
-  async registrationTeam({ getters, commit, dispatch }, team) {
+  async registrationTeam({ getters, commit }, team) {
     const id = await db.collection(`users/${getters.userUid}/team`).doc().id
-    if (team.imageFile) {
-      await dispatch('uploadTeamImageFile', { team, id })
-    } else {
-      const registrationTeam = {
-        name: team.name,
-        id
-      }
-      try {
-        if (getters.userUid) {
-          await db.collection(`users/${getters.userUid}/team`).doc(id).set(registrationTeam)
-        }
-        commit('registrationTeam', registrationTeam)
-        commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
-
-      } catch (err) {
-        alert('登録に失敗しました。もう一度やり直してください')
-        console.log(err);
-      }
-    }
-  },
-  async uploadTeamImageFile({ getters, commit }, { team, id }) {
-    const imageFile = team.imageFile
-    const imageRef = await storageRef.child(`teamImages/${getters.userUid}/${imageFile.name}`)
-    const snapShot = await imageRef.put(imageFile)
-    const photoURL = await snapShot.ref.getDownloadURL()
     const registrationTeam = {
-      name: team.name,
       id,
-      photoURL,
+      name: team.name,
+      fileName: team.fileName,
+      photoURL: team.photoURL,
     }
     try {
       if (getters.userUid) {
@@ -104,10 +80,21 @@ const actions = {
       }
       commit('registrationTeam', registrationTeam)
       commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
+
     } catch (err) {
       alert('登録に失敗しました。もう一度やり直してください')
       console.log(err);
     }
+  },
+  async uploadTeamImageFile({ getters, dispatch }, team) {
+    const imageFile = team.imageFile
+    const imageRef = await storageRef.child(`teamImages/${getters.userUid}/${imageFile.name}`)
+    const snapShot = await imageRef.put(imageFile)
+    const photoURL = await snapShot.ref.getDownloadURL()
+
+    team.fileName = imageFile.name
+    team.photoURL = photoURL
+    dispatch('registrationTeam', team)
   },
   async updateTeam({ getters, dispatch, commit }, team) {
     const id = getters.teamId;
