@@ -193,6 +193,17 @@ const actions = {
     const imageRef = await storageRef.child(`planContentsImages/${id}/${imageFile.name}`)
     const snapShot = await imageRef.put(imageFile)
     const photoURL = await snapShot.ref.getDownloadURL()
+    const updateActivityPlan = {
+      id,
+      category: planContents.category,
+      date: planContents.date,
+      detail: planContents.detail,
+      inChargeMember: planContents.inChargeMember,
+      done: false,
+      photoURL,
+      fileName: imageFile.name,
+      created: firebase.firestore.FieldValue.serverTimestamp()
+    }
 
     try {
       if (getters.userUid) {
