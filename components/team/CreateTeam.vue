@@ -26,8 +26,13 @@ export default {
     }
   },
   methods: {
-    handleCreateTeam(team) {
-      this.registrationTeam(team)
+    async handleCreateTeam() {
+      const team = this.createTeam
+      if (team.imageFile) {
+        await this.uploadTeamImageFile(team)
+      } else {
+        await this.registrationTeam(team)
+      }
       this.closeTeamDialog()
     },
     closeTeamDialog() {
