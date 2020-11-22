@@ -59,35 +59,26 @@ const actions = {
     })
   },
   // 活動計画追加
-  async addActivityPlan({ getters, commit, dispatch, }, planContents) {
-    console.log(planContents)
+  async addActivityPlan({ getters, commit }, planContents) {
     const id = await db.collection(`users/${getters.userUid}/activityPlans`).doc().id
-    if (planContents.imageFile) {
-      await dispatch('uploadPlanContentsImageFile', { planContents, id })
-    } else {
-
-      const createActivityPlan = {
-        id,
-        category: planContents.category,
-        detail: planContents.detail,
-        date: planContents.date,
-        inChargeMember: planContents.inChargeMember,
-        done: false,
-        created: firebase.firestore.FieldValue.serverTimestamp()
-      }
-      try {
-
-        if (getters.userUid) {
-          await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).set(createActivityPlan)
-          commit('addActivityPlan', createActivityPlan)
-          commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
-
-        }
-      } catch (err) {
-        console.log(err)
-      }
+    const createActivityPlan = {
+      id,
+      category: planContents.category,
+      detail: planContents.detail,
+      date: planContents.date,
+      inChargeMember: planContents.inChargeMember,
+      done: false,
+      created: firebase.firestore.FieldValue.serverTimestamp()
     }
-
+    try {
+      if (getters.userUid) {
+        await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).set(createActivityPlan)
+        commit('addActivityPlan', createActivityPlan)
+        commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
+      }
+    } catch (err) {
+      console.log(err)
+    }
   },
   async uploadPlanContentsImageFile({ getters, commit }, { planContents, id }) {
     const imageFile = planContents.imageFile
@@ -118,31 +109,26 @@ const actions = {
     }
   },
   // 活動計画更新
-  async updateActivityPlan({ getters, commit, dispatch }, planContents) {
+  async updateActivityPlan({ getters, commit }, planContents) {
     const id = planContents.id
-    if (planContents.imageFile) {
-      await dispatch('updatePlanContentsImageFile', { planContents, id })
-    } else {
-      const updateActivityPlan = {
-        id,
-        category: planContents.category,
-        date: planContents.date,
-        detail: planContents.detail,
-        inChargeMember: planContents.inChargeMember,
-        done: false,
-        created: firebase.firestore.FieldValue.serverTimestamp()
+    const updateActivityPlan = {
+      id,
+      category: planContents.category,
+      date: planContents.date,
+      detail: planContents.detail,
+      inChargeMember: planContents.inChargeMember,
+      done: false,
+      created: firebase.firestore.FieldValue.serverTimestamp()
+    }
+    try {
+      if (getters.userUid) {
+        await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).update(updateActivityPlan)
+        commit('updateActivityPlan', updateActivityPlan)
+        commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
       }
-      try {
-
-        if (getters.userUid) {
-          await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).update(updateActivityPlan)
-          commit('updateActivityPlan', updateActivityPlan)
-          commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
-        }
-      }
-      catch (err) {
-        log(err)
-      }
+    }
+    catch (err) {
+      log(err)
     }
   },
   async updatePlanContentsImageFile({ getters, commit }, { planContents, id }) {
