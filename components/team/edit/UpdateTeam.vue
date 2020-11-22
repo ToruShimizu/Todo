@@ -24,18 +24,25 @@ export default {
     return {
       editTeam: {
         name: '',
-        imageFile: null
+        imageFile: null,
+        fileName: '',
+        photoURL: ''
       }
     }
   },
   methods: {
-    handleUpdateTeam(team) {
-      this.updateTeam(team)
+    async handleUpdateTeam() {
+      const team = this.editTeam
+      if (team.imageFile) {
+        await this.updateTeamImageFile(team)
+      } else {
+        await this.updateTeam(team)
+      }
     },
     closeTeamDialog() {
       this.$emit('close-team-dialog')
     },
-    ...mapActions('modules/team/team', ['updateTeam'])
+    ...mapActions('modules/team/team', ['updateTeam', 'updateTeamImageFile'])
   }
 }
 </script>
