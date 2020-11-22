@@ -66,37 +66,13 @@ const actions = {
     }
   },
 
-  async registrationTeam({ getters, commit, dispatch }, team) {
+  async registrationTeam({ getters, commit }, team) {
     const id = await db.collection(`users/${getters.userUid}/team`).doc().id
-    if (team.imageFile) {
-      await dispatch('uploadTeamImageFile', { team, id })
-    } else {
-      const registrationTeam = {
-        name: team.name,
-        id
-      }
-      try {
-        if (getters.userUid) {
-          await db.collection(`users/${getters.userUid}/team`).doc(id).set(registrationTeam)
-        }
-        commit('registrationTeam', registrationTeam)
-        commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
-
-      } catch (err) {
-        alert('登録に失敗しました。もう一度やり直してください')
-        console.log(err);
-      }
-    }
-  },
-  async uploadTeamImageFile({ getters, commit }, { team, id }) {
-    const imageFile = team.imageFile
-    const imageRef = await storageRef.child(`teamImages/${getters.userUid}/${imageFile.name}`)
-    const snapShot = await imageRef.put(imageFile)
-    const photoURL = await snapShot.ref.getDownloadURL()
     const registrationTeam = {
-      name: team.name,
       id,
-      photoURL,
+      name: team.name,
+      fileName: team.fileName,
+      photoURL: team.photoURL,
     }
     try {
       if (getters.userUid) {
@@ -104,58 +80,55 @@ const actions = {
       }
       commit('registrationTeam', registrationTeam)
       commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
+
     } catch (err) {
       alert('登録に失敗しました。もう一度やり直してください')
       console.log(err);
     }
   },
-  async updateTeam({ getters, dispatch, commit }, team) {
-    const id = getters.teamId;
-    if (team.imageFile) {
-      dispatch('updateTeamImageFile', team)
-    } else {
-      const updateTeam = {
-        name: team.name,
-        id
-      }
-      try {
-        if (getters.userUid) {
-          await db.collection(`users/${getters.userUid}/team`).doc(id).update(updateTeam)
-          alert('チーム情報の変更が完了しました。')
-          commit('updateTeam', updateTeam)
-          commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
-        }
-      } catch (err) {
-        alert('変更に失敗しました。もう一度やり直してください')
-        console.log(err)
-      }
-    }
-  },
-  async updateTeamImageFile({ getters, commit }, team) {
+  async uploadTeamImageFile({ getters, dispatch }, team) {
     const imageFile = team.imageFile
     const imageRef = await storageRef.child(`teamImages/${getters.userUid}/${imageFile.name}`)
     const snapShot = await imageRef.put(imageFile)
     const photoURL = await snapShot.ref.getDownloadURL()
-    const registrationTeam = {
+
+    team.fileName = imageFile.name
+    team.photoURL = photoURL
+    dispatch('registrationTeam', team)
+  },
+  async updateTeam({ getters, dispatch, commit }, team) {
+    const id = getters.teamId;
+    const updateTeam = {
+      id,
       name: team.name,
-      photoURL,
+      fileName: team.fileName,
+      photoURL: team.photoURL,
     }
     try {
       if (getters.userUid) {
-        await db.collection(`users/${getters.userUid}/team`).doc(getters.teamId).set(registrationTeam)
+        await db.collection(`users/${getters.userUid}/team`).doc(id).update(updateTeam)
+        alert('チーム情報の変更が完了しました。')
+        commit('updateTeam', updateTeam)
+        commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
       }
-      commit('registrationTeam', registrationTeam)
-      commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
-
     } catch (err) {
       alert('変更に失敗しました。もう一度やり直してください')
-      console.log(err);
+      console.log(err)
     }
+  },
+  async updateTeamImageFile({ getters, dispatch }, team) {
+    const imageFile = team.imageFile
+    const imageRef = await storageRef.child(`teamImages/${getters.userUid}/${imageFile.name}`)
+    const snapShot = await imageRef.put(imageFile)
+    const photoURL = await snapShot.ref.getDownloadURL()
+
+    team.fileName = imageFile.name
+    team.photoURL = photoURL
+    dispatch('updateTeam', team)
   },
   async removeTeam({ commit, getters }) {
     const id = getters.teamId
     try {
-
       await db.collection(`users/${getters.userUid}/team`).doc(id).delete()
       commit('removeTeam', id)
     } catch (err) {

@@ -92,8 +92,7 @@ export default {
         this.$refs.form.validate()
         return
       }
-      const team = this.team
-      this.$emit('save-team', team)
+      this.$emit('save-team')
     }
   }
 }

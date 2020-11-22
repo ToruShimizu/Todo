@@ -41,13 +41,20 @@ export default {
   },
   methods: {
     async handleCreateActivityPlan(planContents) {
-      await this.addActivityPlan(planContents)
+      if (planContents.imageFile) {
+        await this.uploadPlanContentsImageFile(planContents)
+      } else {
+        await this.addActivityPlan(planContents)
+      }
       this.closeActivityPlan()
     },
     closeActivityPlan() {
       this.$emit('close-activity-plan')
     },
-    ...mapActions('modules/activityPlans/activityPlans', ['addActivityPlan'])
+    ...mapActions('modules/activityPlans/activityPlans', [
+      'addActivityPlan',
+      'uploadPlanContentsImageFile'
+    ])
   }
 }
 </script>
