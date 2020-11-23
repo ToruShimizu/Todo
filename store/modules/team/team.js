@@ -67,7 +67,10 @@ const actions = {
   },
 
   async registrationTeam({ getters, commit }, team) {
-    const id = await db.collection(`users/${getters.userUid}/team`).doc().id
+    let id = await db.collection(`users/${getters.userUid}/team`).doc().id
+    if (team.id) {
+      id = team.id
+    }
     const registrationTeam = {
       id,
       name: team.name,
@@ -87,13 +90,15 @@ const actions = {
     }
   },
   async uploadTeamImageFile({ getters, dispatch }, team) {
+    const id = await db.collection(`users/${getters.userUid}/team`).doc().id
     const imageFile = team.imageFile
-    const imageRef = await storageRef.child(`teamImages/${getters.userUid}/${imageFile.name}`)
+    const imageRef = await storageRef.child(`teamImages/${id}/${imageFile.name}`)
     const snapShot = await imageRef.put(imageFile)
     const photoURL = await snapShot.ref.getDownloadURL()
 
     team.fileName = imageFile.name
     team.photoURL = photoURL
+    team.id = id
     dispatch('registrationTeam', team)
   },
   async updateTeam({ getters, dispatch, commit }, team) {
@@ -118,7 +123,7 @@ const actions = {
   },
   async updateTeamImageFile({ getters, dispatch }, team) {
     const imageFile = team.imageFile
-    const imageRef = await storageRef.child(`teamImages/${getters.userUid}/${imageFile.name}`)
+    const imageRef = await storageRef.child(`teamImages/${team.id}/${imageFile.name}`)
     const snapShot = await imageRef.put(imageFile)
     const photoURL = await snapShot.ref.getDownloadURL()
 
@@ -126,12 +131,12 @@ const actions = {
     team.photoURL = photoURL
     dispatch('updateTeam', team)
   },
-  async removeTeam({ commit, dispatch, getters }) {
+  async removeTeam({ commit, getters, dispatch }) {
     const id = getters.teamId
     try {
       await db.collection(`users/${getters.userUid}/team`).doc(id).delete()
-      await commit('removeTeam', id)
-      await dispatch('modules/activityPlans/activityPlans/allRemoveActivityPlan', null, { root: true })
+      commit('removeTeam', id)
+      dispatch('modules/activityPlans/activityPlans/allRemoveActivityPlan', null, { root: true })
     } catch (err) {
       alert('削除に失敗しました。もう一度やり直してください')
       console.log(err)
@@ -141,7 +146,6 @@ const actions = {
   async registrationMember({ getters, commit }, teamMember) {
     const teamId = getters.teamId
     const id = await db.collection(`users/${getters.userUid}/team`).doc(uid).collection('teamMember').doc().id
-
     const registrationMember = {
       id,
       name: teamMember.name,
