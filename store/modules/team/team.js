@@ -126,11 +126,12 @@ const actions = {
     team.photoURL = photoURL
     dispatch('updateTeam', team)
   },
-  async removeTeam({ commit, getters }) {
+  async removeTeam({ commit, dispatch, getters }) {
     const id = getters.teamId
     try {
       await db.collection(`users/${getters.userUid}/team`).doc(id).delete()
-      commit('removeTeam', id)
+      await commit('removeTeam', id)
+      await dispatch('modules/activityPlans/activityPlans/allRemoveActivityPlan', null, { root: true })
     } catch (err) {
       alert('削除に失敗しました。もう一度やり直してください')
       console.log(err)
@@ -197,6 +198,14 @@ const actions = {
       console.log(err)
     }
   },
+  async allRemoveMember({ commit, getters }, id) {
+    const snapShot = await db.collection(`users/${getters.userUid}/team`).doc(id).get()
+    const subCollection = await snapShot.ref.collection('teamMember').get()
+    subCollection.docs.map(async (doc) => {
+      snapShot.ref.collection('teamMember').doc(doc.id).delete()
+    })
+    commit('initMember')
+  }
 }
 
 const getters = {
