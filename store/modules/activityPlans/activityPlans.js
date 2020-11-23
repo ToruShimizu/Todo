@@ -134,6 +134,16 @@ const actions = {
       commit('removeActivityPlan', { activityPlanId })
     }
   },
+  async allRemoveActivityPlan({ commit, getters }) {
+    const snapShot = await db
+      .collection(`users/${getters.userUid}/activityPlans`)
+      .orderBy('created', 'desc')
+      .get()
+    snapShot.docs.map(async (doc) => {
+      await db.collection(`users/${getters.userUid}/activityPlans`).doc(doc.id).delete()
+      commit('initActivityPlans')
+    })
+  },
   // 活動計画の完了状態切り替え
   async doneActivityPlan({ getters, commit }, { planContents, id }) {
     await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).update({
