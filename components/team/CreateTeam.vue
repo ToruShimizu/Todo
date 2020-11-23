@@ -21,7 +21,9 @@ export default {
     return {
       createTeam: {
         name: '',
-        imageFile: null
+        imageFile: null,
+        fileName: '',
+        photoURL: ''
       }
     }
   },
