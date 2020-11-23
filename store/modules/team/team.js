@@ -140,8 +140,7 @@ const actions = {
 
   async registrationMember({ getters, commit }, teamMember) {
     const teamId = getters.teamId
-    const id = await db.collection(`users/${getters.userUid}/team`).doc(uid).collection('teamMember').doc().id
-
+    const id = await db.collection(`users/${getters.userUid}/team`).doc(teamId).collection('teamMember').doc().id
     const registrationMember = {
       id,
       name: teamMember.name,
