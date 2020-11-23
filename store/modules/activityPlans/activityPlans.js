@@ -60,7 +60,10 @@ const actions = {
   },
   // 活動計画追加
   async addActivityPlan({ getters, commit }, planContents) {
-    const id = await db.collection(`users/${getters.userUid}/activityPlans`).doc().id
+    let id = await db.collection(`users/${getters.userUid}/activityPlans`).doc().id
+    if (planContents.id) {
+      id = planContents.id
+    }
     const createActivityPlan = {
       id,
       category: planContents.category,
@@ -83,12 +86,14 @@ const actions = {
     }
   },
   async uploadPlanContentsImageFile({ dispatch, getters }, planContents) {
+    const id = await db.collection(`users/${getters.userUid}/activityPlans`).doc().id
     const imageFile = planContents.imageFile
-    const imageRef = await storageRef.child(`planContentsImages/${getters.userUid}/${imageFile.name}`)
+    const imageRef = await storageRef.child(`planContentsImages/${id}/${imageFile.name}`)
     const snapShot = await imageRef.put(imageFile)
     const photoURL = await snapShot.ref.getDownloadURL()
     planContents.photoURL = photoURL
     planContents.fileName = imageFile.name
+    planContents.id = id
     dispatch('addActivityPlan', planContents)
   },
   // 活動計画更新
