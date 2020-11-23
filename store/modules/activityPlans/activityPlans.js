@@ -102,13 +102,14 @@ const actions = {
       inChargeMember: planContents.inChargeMember,
       done: false,
       photoURL: planContents.photoURL,
-      fileName: imageFile.name,
+      fileName: planContents.fileName,
       created: firebase.firestore.FieldValue.serverTimestamp()
     }
     try {
       if (getters.userUid) {
         await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).update(updateActivityPlan)
         commit('updateActivityPlan', updateActivityPlan)
+        planContents.imageFile = null
         commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
       }
     }
@@ -116,15 +117,16 @@ const actions = {
       log(err)
     }
   },
-  async updatePlanContentsImageFile({ dispatch }, { planContents, id }) {
+  async updatePlanContentsImageFile({ dispatch }, planContents) {
+    const id = planContents.id
     const imageFile = planContents.imageFile
     const imageRef = await storageRef.child(`planContentsImages/${id}/${imageFile.name}`)
     const snapShot = await imageRef.put(imageFile)
     const photoURL = await snapShot.ref.getDownloadURL()
 
     planContents.photoURL = photoURL
-    planContents.fileName = imageFile
-    dispatch('updatePlanContentsImageFile', planContents)
+    planContents.fileName = imageFile.name
+    dispatch('updateActivityPlan', planContents)
   },
   // 活動計画削除
   async removeActivityPlan({ getters, commit }, { id }) {
@@ -150,37 +152,6 @@ const actions = {
       done: !planContents.done
     })
     commit('doneActivityPlan', planContents)
-  },
-  async updateImageFile({ getters, commit }, planContents) {
-    const id = planContents.id
-    const imageFile = planContents.imageFile
-    const imageRef = await storageRef.child(`planContentsImages/${id}/${imageFile.name}`)
-    const snapShot = await imageRef.put(imageFile)
-    const photoURL = await snapShot.ref.getDownloadURL()
-    const updateActivityPlan = {
-      id,
-      category: planContents.category,
-      date: planContents.date,
-      detail: planContents.detail,
-      inChargeMember: planContents.inChargeMember,
-      done: false,
-      photoURL,
-      fileName: imageFile.name,
-      created: firebase.firestore.FieldValue.serverTimestamp()
-    }
-
-    try {
-      if (getters.userUid) {
-        await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).update(updateActivityPlan)
-        commit('updateActivityPlan', updateActivityPlan)
-        commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
-        planContents.photoURL = photoURL
-        planContents.imageFile = null
-      }
-    }
-    catch (err) {
-      console.log(err)
-    }
   },
   async removePlanContentsImage({ commit, getters }, planContents) {
     const id = planContents.id
