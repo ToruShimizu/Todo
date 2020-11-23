@@ -131,12 +131,12 @@ const actions = {
     team.photoURL = photoURL
     dispatch('updateTeam', team)
   },
-  async removeTeam({ commit, getters }) {
+  async removeTeam({ commit, getters, dispatch }) {
     const id = getters.teamId
     try {
       await db.collection(`users/${getters.userUid}/team`).doc(id).delete()
       commit('removeTeam', id)
-      await dispatch('modules/activityPlans/activityPlans/allRemoveActivityPlan', null, { root: true })
+      dispatch('modules/activityPlans/activityPlans/allRemoveActivityPlan', null, { root: true })
     } catch (err) {
       alert('削除に失敗しました。もう一度やり直してください')
       console.log(err)
