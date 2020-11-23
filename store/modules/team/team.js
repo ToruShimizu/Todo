@@ -131,7 +131,7 @@ const actions = {
     try {
       await db.collection(`users/${getters.userUid}/team`).doc(id).delete()
       await commit('removeTeam', id)
-      await dispatch('allRemoveMember', id)
+      await dispatch('modules/activityPlans/activityPlans/allRemoveActivityPlan', null, { root: true })
     } catch (err) {
       alert('削除に失敗しました。もう一度やり直してください')
       console.log(err)
