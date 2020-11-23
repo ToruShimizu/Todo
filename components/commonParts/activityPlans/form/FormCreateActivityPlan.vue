@@ -78,8 +78,10 @@ export default {
       default: () => ({
         category: '',
         detail: '',
-        inChargeMember: [],
         imageFile: null,
+        inChargeMember: [],
+        fileName: '',
+        photoURL: '',
         date: new Date().toISOString().substr(0, 10),
         done: false
       })
