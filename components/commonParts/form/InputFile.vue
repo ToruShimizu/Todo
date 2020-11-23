@@ -45,8 +45,10 @@ export default {
       this.$refs.image.$refs.input.click()
     },
     changeImageFile(event) {
-      const file = event
-      this.$emit('change-image-file', file)
+      if (event) {
+        const file = event
+        this.$emit('change-image-file', file)
+      }
     }
   }
 }
