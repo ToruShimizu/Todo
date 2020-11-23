@@ -76,12 +76,12 @@ export default {
       this.removePlanContentsImage(this.editPlanContents)
     },
     handleUpdateImageFile(planContents) {
-      this.updateImageFile(planContents)
+      this.updatePlanContentsImageFile(planContents)
     },
     ...mapActions('modules/activityPlans/activityPlans', [
       'updateActivityPlan',
       'removePlanContentsImage',
-      'updateImageFile'
+      'updatePlanContentsImageFile'
     ])
   }
 }
