@@ -197,6 +197,14 @@ const actions = {
       console.log(err)
     }
   },
+  async allRemoveMember({ commit, getters }) {
+    const snapShot = await db.collection(`users/${getters.userUid}/team`).doc(getters.teamId).get()
+    const subCollection = await snapShot.ref.collection('teamMember').get()
+    subCollection.docs.map(async (doc) => {
+      snapShot.ref.collection('teamMember').doc(doc.id).delete()
+    })
+    commit('initMember')
+  }
 }
 
 const getters = {
