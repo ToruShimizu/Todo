@@ -1,57 +1,10 @@
 <template>
   <div>
-    <v-card>
-      <v-simple-table fixed-header>
-        <template v-slot:default>
-          <thead>
-            <tr>
-              <th class="text-left">状態</th>
-              <th class="text-left">やること</th>
-              <th class="text-left">日付</th>
-              <th class="text-left">削除</th>
-            </tr>
-          </thead>
-          <tbody>
-            <template v-for="contents in displayActivityPlans">
-              <transition :key="contents.catgorys" name="list">
-                <tr>
-                  <td>
-                    <v-btn icon @click="toggleDoneActivityPlan(contents)">
-                      <v-icon :class="(!contents.done && 'grey--text') || 'primary--text'"
-                        >mdi-check-circle-outline</v-icon
-                      >
-                    </v-btn>
-                  </td>
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <td
-                        v-bind="attrs"
-                        :class="(contents.done && 'grey--text') || 'primary--text'"
-                        v-on="on"
-                        @click="openUpdateActivityPlan(contents)"
-                      >
-                        {{ contents.category }}
-                      </td>
-                    </template>
-                    <span>{{ contents.category }}の詳細を開く</span>
-                  </v-tooltip>
-                  <td :class="(contents.done && 'grey--text') || 'black--text'" class="pa-0">
-                    {{ contents.date }}
-                  </td>
-                  <td>
-                    <v-btn icon>
-                      <v-icon @click="handleRemoveActivityPlan(contents)"
-                        >mdi-delete-outline</v-icon
-                      >
-                    </v-btn>
-                  </td>
-                </tr>
-              </transition>
-            </template>
-          </tbody>
-        </template>
-      </v-simple-table>
-    </v-card>
+    <ActivityPlansCard
+      :display-activity-plans="displayActivityPlans"
+      @toggle-done-activity-plan="toggleDoneActivityPlan"
+      @handle-remove-activity-plan="handleRemoveActivityPlan"
+    />
     <UpdateActivityPlan
       :edit-plan-contents="editPlanContents"
       :todo-categorys="todoCategorys"
@@ -64,9 +17,11 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import UpdateActivityPlan from '@/components/ActivityPlans/UpdateActivityPlan'
+import ActivityPlansCard from '@/components/ActivityPlans/ActivityPlansCard'
 export default {
   components: {
-    UpdateActivityPlan
+    UpdateActivityPlan,
+    ActivityPlansCard
   },
   props: {
     displayActivityPlans: {
@@ -112,7 +67,6 @@ export default {
       this.removeActivityPlan({ id: contents.id })
     },
     toggleDoneActivityPlan(contents) {
-      console.log(contents)
       this.doneActivityPlan({ planContents: contents, id: contents.id })
     },
     async openUpdateActivityPlan(contents) {
