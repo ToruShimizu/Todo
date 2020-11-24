@@ -17,9 +17,29 @@
 
             <v-card-subtitle v-text="contents.date" class="pb-0 mt-1"></v-card-subtitle>
             <v-spacer />
-            <v-btn icon>
-              <v-icon @click="handleRemoveActivityPlan(contents)">mdi-delete-outline</v-icon>
-            </v-btn>
+            <v-menu transition="slide-y-transition" bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon v-bind="attrs" v-on="on">
+                  <v-icon> mdi-dots-vertical</v-icon>
+                </v-btn>
+              </template>
+              <v-list>
+                <v-list-item class="px-0">
+                  <v-list-item-title>
+                    <v-btn text @click="openActivityPlan(contents)">
+                      <v-icon>mdi-pencil-outline </v-icon>編集
+                    </v-btn>
+                  </v-list-item-title>
+                </v-list-item>
+                <v-list-item class="px-0">
+                  <v-list-item-title>
+                    <v-btn text @click="handleRemoveActivityPlan(contents)">
+                      <v-icon>mdi-delete-outline</v-icon>削除
+                    </v-btn>
+                  </v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
           </v-card-actions>
 
           <v-card-actions>
