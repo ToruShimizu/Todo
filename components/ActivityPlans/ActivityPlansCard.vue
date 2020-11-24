@@ -11,7 +11,7 @@
             </v-btn>
             <v-card-title
               :class="(contents.done && 'grey--text') || 'black--text'"
-              class="headline pa-0"
+              class="pa-0"
               v-text="contents.category"
             ></v-card-title>
 
