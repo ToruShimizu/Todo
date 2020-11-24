@@ -4,6 +4,7 @@
       :display-activity-plans="displayActivityPlans"
       @toggle-done-activity-plan="toggleDoneActivityPlan"
       @handle-remove-activity-plan="handleRemoveActivityPlan"
+      @open-activity-plan="openUpdateActivityPlan"
     />
     <UpdateActivityPlan
       :edit-plan-contents="editPlanContents"

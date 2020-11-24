@@ -75,6 +75,9 @@ export default {
     },
     toggleDoneActivityPlan(contents) {
       this.$emit('toggle-done-activity-plan', contents)
+    },
+    openActivityPlan(contents) {
+      this.$emit('open-activity-plan', contents)
     }
   }
 }
