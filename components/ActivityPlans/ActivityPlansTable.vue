@@ -88,14 +88,3 @@ export default {
 }
 </script>
 
-<style>
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.8s;
-}
-.list-enter,
-.list-leave-to {
-  opacity: 0;
-  transform: translateY(100%);
-}
-</style>
