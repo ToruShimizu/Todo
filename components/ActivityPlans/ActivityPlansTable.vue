@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <div>
     <v-card>
       <v-simple-table fixed-header>
         <template v-slot:default>
@@ -58,7 +58,7 @@
       :update-activity-plan-dialog="updateActivityPlanDialog"
       @close-update-activity-plan="closeUpdateActivityPlan"
     />
-  </v-app>
+  </div>
 </template>
 
 <script>
