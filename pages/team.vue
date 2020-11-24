@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <div>
     <TeamName />
 
     <RegistrationMember
@@ -14,7 +14,7 @@
       :improvement-roles="improvementRoles"
       :team-roles="teamRoles"
     />
-  </v-app>
+  </div>
 </template>
 
 <script>
