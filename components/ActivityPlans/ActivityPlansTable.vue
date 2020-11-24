@@ -26,15 +26,6 @@ export default {
   },
   props: {
     displayActivityPlans: {
-      type: Array
-    },
-    searchActivityPlans: {
-      type: Array
-    },
-    sortByActivityPlans: {
-      type: Array
-    },
-    displayActivityPlans: {
       type: Array,
       required: true
     },
@@ -45,22 +36,9 @@ export default {
   },
   data() {
     return {
-      planContentsHeaders: [
-        { text: '状態', value: 'done', align: 'start', sortable: false },
-        {
-          text: ' カテゴリ',
-          value: 'category',
-          sortable: false
-        },
-        { text: '期限', value: 'date' },
-        { text: '削除', value: 'remove', sortable: false }
-      ],
       editPlanContents: {},
       updateActivityPlanDialog: false
     }
-  },
-  computed: {
-    ...mapState('modules/activityPlans/activityPlans', ['activityPlans'])
   },
   methods: {
     handleRemoveActivityPlan(contents) {

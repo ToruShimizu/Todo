@@ -59,9 +59,6 @@
         :activity-plans-page-length="activityPlansPageLength"
       />
       <ActivityPlansTable
-        :activityPlansFiltered="activityPlansFiltered"
-        :searchActivityPlans="searchActivityPlans"
-        :sortByActivityPlans="sortByActivityPlans"
         :display-activity-plans="displayActivityPlans"
         :todo-categorys="todoCategorys"
       />
