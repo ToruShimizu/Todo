@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="formDialog" persistent max-width="600px" transition="scroll-y-transition">
+  <v-dialog v-model="formDialog" persistent max-width="500px" transition="scroll-y-transition">
     <slot name="dialog"></slot>
   </v-dialog>
 </template>

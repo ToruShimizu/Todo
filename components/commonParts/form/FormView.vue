@@ -1,5 +1,5 @@
 <template>
-  <v-card width="100%" class="mx-auto">
+  <v-card width="500px" class="mx-auto">
     <v-card-title class="justify-center font-italic grey--text darken">
       <span class="headline">{{ title }}</span>
     </v-card-title>
