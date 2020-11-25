@@ -22,14 +22,12 @@
               />
               <DeleteButton
                 :title="'delete'"
-                @delete-button="handleDeleteAccount"
                 :loading="loading"
                 :loader="loader"
+                :icon="'mdi-account-multiple-remove-outline'"
+                @delete-button="handleDeleteAccount"
                 @stop-loading="stopLoading"
-                ><template v-slot:deleteButton>
-                  <v-icon left> mdi-account-multiple-remove-outline </v-icon></template
-                ></DeleteButton
-              >
+              />
             </v-card-actions>
           </v-form>
         </template>

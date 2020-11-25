@@ -18,13 +18,10 @@
       </v-btn>
       <BlueDialogButton
         :title="'活動計画作成'"
+        :icon="'mdi-pencil-plus-outline'"
         @dialog-button="openCreateActivityPlan"
         v-if="teamName"
-      >
-        <template v-slot:dialogButton>
-          <v-icon> mdi-pencil-plus-outline </v-icon>
-        </template>
-      </BlueDialogButton>
+      />
     </v-layout>
     <AddActivityPlan
       :create-activity-plans.sync="planContents"
