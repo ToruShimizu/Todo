@@ -27,7 +27,11 @@
         </v-list-item>
       </v-list>
     </v-menu>
-    <UpdateTeam :update-team-dialog="updateTeamDialog" @close-team-dialog="closeUpdateTeam" />
+    <UpdateTeam
+      :update-team-dialog="updateTeamDialog"
+      @close-team-dialog="closeUpdateTeam"
+      :edit-team="editTeam"
+    />
   </div>
 </template>
 
@@ -42,6 +46,12 @@ export default {
   },
   data() {
     return {
+      editTeam: {
+        name: '',
+        imageFile: null,
+        fileName: '',
+        photoURL: ''
+      },
       updateTeamDialog: false
     }
   },
@@ -50,6 +60,7 @@ export default {
   },
   methods: {
     openUpdateTeam() {
+      this.editTeam.name = this.teamName
       this.updateTeamDialog = true
     },
     closeUpdateTeam() {
