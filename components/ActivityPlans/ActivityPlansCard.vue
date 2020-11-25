@@ -48,12 +48,8 @@
           <v-card-actions>
             <v-card-subtitle v-text="contents.inChargeMember" class="py-0 mt-1"></v-card-subtitle>
             <v-spacer />
-            <v-btn icon>
-              <v-icon> mdi-file-image-outline </v-icon>
-            </v-btn>
-            <v-btn icon>
-              <v-icon>mdi-comment-text-outline </v-icon>
-            </v-btn>
+            <IconButton :icon="'mdi-file-image-outline'" />
+            <IconButton :icon="'mdi-comment-text-outline '" />
           </v-card-actions>
         </v-card>
       </transition>
@@ -62,7 +58,11 @@
 </template>
 
 <script>
+import IconButton from '@/components/commonParts/button/IconButton'
 export default {
+  components: {
+    IconButton
+  },
   props: {
     displayActivityPlans: {
       type: Array,
