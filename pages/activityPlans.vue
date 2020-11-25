@@ -174,7 +174,7 @@ export default {
       const activityPlans = this.sortByActivityPlans
       const searchCategory = this.searchCategoryKeyword
       if (this.searchCategoryKeyword === null) {
-        return this.activityPlans
+        return this.sortByActivityPlans
       }
 
       return activityPlans.filter((activityPlan) => {
