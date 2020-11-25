@@ -7,8 +7,9 @@
       :loading="loading"
       @save-button="saveButton"
       @stop-loading="stopLoading"
-      ><template v-slot:saveButton><slot name="save"></slot></template
-    ></SaveButton>
+      :icon="icon"
+    >
+    </SaveButton>
   </v-card-actions>
 </template>
 
@@ -17,6 +18,7 @@ import SaveButton from '@/components/commonParts/button/SaveButton'
 import CloseButton from '@/components/commonParts/button/CloseButton'
 export default {
   props: {
+    icon: String,
     closeButtonTitle: {
       type: String,
       required: true
