@@ -17,10 +17,9 @@
             :loading="testLoginLoading"
             @login="handleTestLogin"
             @stop-loading="stopTestLoginLoading"
+            :icon="'mdi-account-arrow-left-outline'"
+            :title="'テストユーザーとしてログイン'"
           >
-            <template v-slot:icon>
-              <v-icon>mdi-account-arrow-left-outline </v-icon> テストユーザーでログイン
-            </template>
           </LoginButton>
         </template>
       </FormCardText>
@@ -45,13 +44,14 @@
             :loading="loginLoading"
             @save-button="handleLogin"
             @stop-loading="stopLoginLoading"
+            :icon="'mdi-account-arrow-left-outline '"
           >
-            <template v-slot:saveButton
-              ><v-icon left>mdi-account-arrow-left-outline </v-icon></template
-            >
           </SaveButton>
-          <SaveButton :title="'new'" @save-button="openCreateUser">
-            <template v-slot:saveButton> <v-icon left>mdi-account-plus-outline </v-icon></template>
+          <SaveButton
+            :title="'new'"
+            @save-button="openCreateUser"
+            :icon="'mdi-account-plus-outline'"
+          >
           </SaveButton>
         </v-card-actions>
         <CreateUser :create-user-dialog="createUserDialog" @close-create-user="closeCreateUser" />

@@ -13,6 +13,8 @@
           :loading="loading"
           :disabled="loading"
         >
+          <v-icon>{{ icon }}</v-icon>
+          {{ title }}
           <slot name="icon"></slot>
         </v-btn>
       </template>
@@ -27,6 +29,8 @@ export default {
     Loading
   },
   props: {
+    icon: String,
+    title: String,
     loading: {
       type: Boolean,
       required: false,

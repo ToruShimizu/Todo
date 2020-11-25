@@ -10,7 +10,7 @@
           :disabled="loading"
           class="ml-2"
         >
-          <slot name="saveButton"> </slot>
+          <v-icon left>{{ icon }} </v-icon>
           <span class="font-italic">{{ title }} </span>
         </v-btn>
       </template>
@@ -26,6 +26,7 @@ export default {
     Loading
   },
   props: {
+    icon: String,
     title: String,
     loading: {
       type: Boolean,

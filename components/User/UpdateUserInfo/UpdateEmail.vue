@@ -19,12 +19,11 @@
               :save-button-title="'save'"
               :loading="loading"
               :loader="loader"
+              :icon="'mdi-email-edit-outline'"
               @stop-loading="stopLoading"
               @save-button="handleUpdateEmail"
               @close-button="selectUpdateEmail = 'closeUpdateEmail'"
-            >
-              <template v-slot:save><v-icon left>mdi-email-edit-outline</v-icon></template>
-            </SaveAndCloseButton>
+            />
           </v-form>
         </template>
       </FormView>
