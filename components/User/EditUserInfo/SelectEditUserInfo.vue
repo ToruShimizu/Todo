@@ -27,7 +27,7 @@
           />
         </v-list-item-title>
       </v-list-item>
-      <v-list-item @click="selectedEditUserInfo = 'openUpdateEmail'">
+      <v-list-item>
         <v-list-item-title>
           <TextButton
             @handle-text-button="selectedEditUserInfo = 'openUpdateEmail'"
@@ -45,7 +45,7 @@
           />
         </v-list-item-title>
       </v-list-item>
-      <v-list-item @click="selectedEditUserInfo = 'openDeleteAccount'">
+      <v-list-item>
         <v-list-item-title>
           <TextButton
             @handle-text-button="selectedEditUserInfo = 'openDeleteAccount'"
