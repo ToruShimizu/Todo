@@ -1,6 +1,6 @@
 <template>
   <v-col cols="12">
-    <template v-for="contents in displayActivityPlans">
+    <template>
       <transition :key="contents.catgorys" name="list">
         <v-card class="mb-2">
           <v-card-actions>
@@ -50,7 +50,7 @@
             <v-card-subtitle v-text="contents.detail" class="py-0 mt-1"></v-card-subtitle>
           </v-card-actions>
           <v-card-actions>
-            <v-card-subtitle v-text="contents.inChargeMember" class="py-0 mt-1"></v-card-subtitle>
+            <v-card-subtitle class="py-0 mt-1">担当:{{ inChargeMember }}</v-card-subtitle>
             <v-spacer />
             <IconButton :icon="'mdi-file-image-outline'" />
             {{ contents.photoURL ? '1' : '' }}
@@ -71,9 +71,14 @@ export default {
     TextButton
   },
   props: {
-    displayActivityPlans: {
-      type: Array,
+    contents: {
+      type: Object,
       required: true
+    }
+  },
+  computed: {
+    inChargeMember() {
+      return this.contents.inChargeMember.join(',')
     }
   },
   methods: {
