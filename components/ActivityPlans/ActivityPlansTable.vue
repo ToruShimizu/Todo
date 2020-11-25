@@ -1,7 +1,9 @@
 <template>
   <div>
     <ActivityPlansCard
-      :display-activity-plans="displayActivityPlans"
+      v-for="contents in displayActivityPlans"
+      :key="contents.categorys"
+      :contents="contents"
       @toggle-done-activity-plan="toggleDoneActivityPlan"
       @handle-remove-activity-plan="handleRemoveActivityPlan"
       @open-activity-plan="openUpdateActivityPlan"
@@ -16,7 +18,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 import UpdateActivityPlan from '@/components/ActivityPlans/UpdateActivityPlan'
 import ActivityPlansCard from '@/components/ActivityPlans/ActivityPlansCard'
 export default {
