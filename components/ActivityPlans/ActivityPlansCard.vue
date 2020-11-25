@@ -1,22 +1,34 @@
 <template>
-  <v-col cols="12">
+  <div>
     <template>
       <transition :key="contents.catgorys" name="list">
         <v-card class="mb-2">
-          <v-card-actions>
-            <v-btn icon @click="toggleDoneActivityPlan(contents)">
-              <v-icon :class="(!contents.done && 'grey--text') || 'primary--text'"
-                >mdi-check-circle-outline
-              </v-icon>
-            </v-btn>
-            <v-card-title
-              :class="(contents.done && 'grey--text') || 'black--text'"
-              class="pa-0"
-              v-text="contents.category"
-            ></v-card-title>
+          <v-card-actions class="pa-0">
+            <v-card-title class="pa-1">
+              <v-btn icon @click="toggleDoneActivityPlan(contents)">
+                <v-icon :class="(!contents.done && 'grey--text') || 'primary--text'"
+                  >mdi-check-circle-outline
+                </v-icon>
+              </v-btn>
+              <v-card-title
+                :class="(contents.done && 'grey--text') || 'black--text'"
+                class="pa-0 hidden-sm-and-down"
+                v-text="contents.category"
+              ></v-card-title>
+              <v-card-subtitle
+                :class="
+                  (contents.done && 'grey--text text-decoration-line-through') || 'black--text'
+                "
+                class="pa-0 mt-1 hidden-sm-and-up"
+                v-text="contents.category"
+              ></v-card-subtitle>
+            </v-card-title>
 
-            <v-card-subtitle v-text="planContentsDateRangeText" class="pb-0 mt-1"></v-card-subtitle>
             <v-spacer />
+            <v-card-subtitle class="pa-0 mt-1">
+              <v-icon class="mb-1">mdi-account-outline </v-icon>
+              {{ inChargeMember }}
+            </v-card-subtitle>
             <v-menu transition="slide-y-transition" bottom>
               <template v-slot:activator="{ on, attrs }">
                 <v-btn icon v-bind="attrs" v-on="on">
@@ -47,10 +59,13 @@
           </v-card-actions>
 
           <v-card-actions>
-            <v-card-subtitle v-text="contents.detail" class="py-0 mt-1"></v-card-subtitle>
+            <v-card-subtitle v-if="contents.detail" class="py-0 mt-1">
+              "{{ contents.detail }}"
+            </v-card-subtitle>
           </v-card-actions>
           <v-card-actions>
-            <v-card-subtitle class="py-0 mt-1">担当:{{ inChargeMember }}</v-card-subtitle>
+            <v-card-subtitle v-text="planContentsDateRangeText" class="pb-0 mt-1"></v-card-subtitle>
+
             <v-spacer />
             <IconButton :icon="'mdi-file-image-outline'" />
             {{ contents.photoURL ? '1' : '' }}
@@ -59,7 +74,7 @@
         </v-card>
       </transition>
     </template>
-  </v-col>
+  </div>
 </template>
 
 <script>
