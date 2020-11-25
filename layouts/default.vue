@@ -1,7 +1,9 @@
 <template>
   <v-app dark>
     <Header />
-    <nuxt />
+    <transition name="page">
+      <nuxt />
+    </transition>
     <DoneSnackbar />
     <v-footer color="indigo darken-2" fixed>
       <span class="grey--text text--lighten-2">&copy; {{ new Date().getFullYear() }}</span>
@@ -24,5 +26,11 @@ export default {
 <style>
 a {
   text-decoration: none;
+}
+.page-enter {
+  opacity: 0;
+}
+.page-enter-active {
+  transition: opacity 1s;
 }
 </style>
