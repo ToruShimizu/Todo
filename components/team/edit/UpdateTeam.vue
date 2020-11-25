@@ -18,16 +18,10 @@ export default {
     updateTeamDialog: {
       type: Boolean,
       required: true
-    }
-  },
-  data() {
-    return {
-      editTeam: {
-        name: '',
-        imageFile: null,
-        fileName: '',
-        photoURL: ''
-      }
+    },
+    editTeam: {
+      type: Object,
+      required: true
     }
   },
   methods: {
