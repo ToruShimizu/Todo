@@ -9,35 +9,49 @@
         </v-list-item-content>
       </v-list-item>
       <v-divider />
-      <v-list-item @click="selectedEditUserInfo = 'openUpdateUserName'">
+      <v-list-item>
         <v-list-item-title>
-          <v-btn text>
-            <v-icon> mdi-badge-account-horizontal-outline </v-icon>
-            ユーザー名変更
-          </v-btn>
+          <TextButton
+            @handle-text-button="selectedEditUserInfo = 'openUpdateUserName'"
+            :icon="'mdi-badge-account-horizontal-outline'"
+            :title="'ユーザー名変更'"
+          />
         </v-list-item-title>
       </v-list-item>
       <v-list-item>
         <v-list-item-title>
-          <v-btn text @click="handleSelectUserImageFile">
-            <v-icon> mdi-file-account-outline </v-icon>
-            プロフィール画像変更
-          </v-btn>
+          <TextButton
+            @handle-text-button="handleSelectUserImageFile"
+            :icon="'mdi-file-account-outline'"
+            :title="'プロフィール画像変更'"
+          />
         </v-list-item-title>
       </v-list-item>
       <v-list-item @click="selectedEditUserInfo = 'openUpdateEmail'">
         <v-list-item-title>
-          <v-btn text> <v-icon>mdi-email-edit-outline </v-icon>メールアドレス変更 </v-btn>
+          <TextButton
+            @handle-text-button="selectedEditUserInfo = 'openUpdateEmail'"
+            :icon="'mdi-email-edit-outline'"
+            :title="'メールアドレス変更'"
+          />
         </v-list-item-title>
       </v-list-item>
-      <v-list-item @click="selectedEditUserInfo = 'openUpdatePassword'">
+      <v-list-item>
         <v-list-item-title>
-          <v-btn text> <v-icon>mdi-account-key-outline </v-icon>パスワード変更 </v-btn>
+          <TextButton
+            @handle-text-button="selectedEditUserInfo = 'openUpdatePassword'"
+            :icon="'mdi-account-key-outline'"
+            :title="'パスワード変更'"
+          />
         </v-list-item-title>
       </v-list-item>
       <v-list-item @click="selectedEditUserInfo = 'openDeleteAccount'">
         <v-list-item-title>
-          <v-btn text> <v-icon> mdi-account-remove-outline </v-icon>アカウント削除 </v-btn>
+          <TextButton
+            @handle-text-button="selectedEditUserInfo = 'openDeleteAccount'"
+            :icon="'mdi-account-remove-outline'"
+            :title="'アカウント削除 '"
+          />
         </v-list-item-title>
       </v-list-item>
     </v-list>
@@ -46,7 +60,12 @@
 
 <script>
 import { mapState } from 'vuex'
+import TextButton from '@/components/commonParts/button/TextButton/TextButton'
+
 export default {
+  components: {
+    TextButton
+  },
   props: {
     selectEditUserInfo: {
       type: String,

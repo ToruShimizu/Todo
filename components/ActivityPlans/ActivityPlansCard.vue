@@ -26,16 +26,20 @@
               <v-list>
                 <v-list-item class="px-0">
                   <v-list-item-title>
-                    <v-btn text @click="openActivityPlan(contents)">
-                      <v-icon>mdi-pencil-outline </v-icon>編集
-                    </v-btn>
+                    <TextButton
+                      @handle-text-button="openActivityPlan(contents)"
+                      :icon="'mdi-pencil-outline '"
+                      :title="'編集'"
+                    />
                   </v-list-item-title>
                 </v-list-item>
                 <v-list-item class="px-0">
                   <v-list-item-title>
-                    <v-btn text @click="handleRemoveActivityPlan(contents)">
-                      <v-icon>mdi-delete-outline</v-icon>削除
-                    </v-btn>
+                    <TextButton
+                      @handle-text-button="handleRemoveActivityPlan(contents)"
+                      :icon="'mdi-delete-outline'"
+                      :title="'削除'"
+                    />
                   </v-list-item-title>
                 </v-list-item>
               </v-list>
@@ -59,9 +63,11 @@
 
 <script>
 import IconButton from '@/components/commonParts/button/IconButton'
+import TextButton from '@/components/commonParts/button/TextButton/Textbutton'
 export default {
   components: {
-    IconButton
+    IconButton,
+    TextButton
   },
   props: {
     displayActivityPlans: {
