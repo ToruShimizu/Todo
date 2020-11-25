@@ -64,8 +64,19 @@
             </v-card-subtitle>
           </v-card-actions>
           <v-card-actions>
-            <v-card-subtitle v-text="planContentsDateRangeText" class="pb-0 mt-1"></v-card-subtitle>
-
+            <v-fab-transition>
+              <v-card-subtitle class="pa-0 mt-1" v-if="contents.done">
+                <v-icon> mdi-check </v-icon>
+                {{ contents.completionDate }}
+              </v-card-subtitle>
+            </v-fab-transition>
+            <v-fab-transition>
+              <v-card-subtitle
+                v-if="!contents.done"
+                v-text="planContentsDateRangeText"
+                class="pb-0 mt-1"
+              ></v-card-subtitle>
+            </v-fab-transition>
             <v-spacer />
             <IconButton :icon="'mdi-file-image-outline'" />
             {{ contents.photoURL ? '1' : '' }}
