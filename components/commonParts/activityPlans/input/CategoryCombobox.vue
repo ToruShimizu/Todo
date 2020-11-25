@@ -36,7 +36,7 @@ export default {
   },
   data() {
     return {
-      categoryRules: [(v) => v.length > 0 || 'カテゴリは必須です']
+      categoryRules: [(v) => !!v || 'カテゴリは必須です']
     }
   }
 }
