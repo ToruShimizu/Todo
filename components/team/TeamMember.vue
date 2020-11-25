@@ -21,11 +21,10 @@
             hide-details
           />
           <v-divider class="mx-4" inset vertical />
-          <BlueDialogButton @dialog-button="openRegistrationMember">
-            <template v-slot:dialogButton>
-              <v-icon> mdi-account-plus-outline</v-icon>
-            </template>
-          </BlueDialogButton>
+          <BlueDialogButton
+            @dialog-button="openRegistrationMember"
+            :icon="'mdi-account-plus-outline'"
+          />
           <v-spacer />
         </v-toolbar>
       </template>
