@@ -43,6 +43,10 @@ const mutations = {
     const index = state.activityPlans.findIndex((contents) => contents.id === id)
     state.activityPlans[index].photoURL = null
 
+  },
+  updateCompletionDate(state, { completionDate, id }) {
+    const index = state.activityPlans.findIndex((contents) => contents.id === id)
+    state.activityPlans[index].completionDate = completionDate
   }
 }
 const actions = {
@@ -69,6 +73,7 @@ const actions = {
       category: planContents.category,
       detail: planContents.detail,
       date: planContents.date,
+      completionDate: null,
       inChargeMember: planContents.inChargeMember,
       done: false,
       fileName: planContents.fileName,
@@ -119,7 +124,20 @@ const actions = {
       }
     }
     catch (err) {
-      log(err)
+      console.log(err)
+    }
+  },
+  async updateCompletionDate({ commit, getters }, planContents) {
+    const id = planContents.id
+    const completionDate = new Date().toISOString().substr(0, 10)
+    try {
+      if (getters.userUid) {
+        await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).update({ completionDate })
+        commit('updateCompletionDate', { completionDate, id })
+      }
+    }
+    catch (err) {
+      console.log(err)
     }
   },
   async updatePlanContentsImageFile({ dispatch }, planContents) {
@@ -152,10 +170,13 @@ const actions = {
     })
   },
   // 活動計画の完了状態切り替え
-  async doneActivityPlan({ getters, commit }, { planContents, id }) {
+  async doneActivityPlan({ getters, commit, dispatch }, { planContents, id }) {
     await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).update({
       done: !planContents.done
     })
+    if (!planContents.done) {
+      dispatch('updateCompletionDate', planContents)
+    }
     commit('doneActivityPlan', planContents)
   },
   async removePlanContentsImage({ commit, getters }, planContents) {
