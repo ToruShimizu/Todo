@@ -170,10 +170,13 @@ const actions = {
     })
   },
   // 活動計画の完了状態切り替え
-  async doneActivityPlan({ getters, commit }, { planContents, id }) {
+  async doneActivityPlan({ getters, commit, dispatch }, { planContents, id }) {
     await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).update({
       done: !planContents.done
     })
+    if (!planContents.done) {
+      dispatch('updateCompletionDate', planContents)
+    }
     commit('doneActivityPlan', planContents)
   },
   async removePlanContentsImage({ commit, getters }, planContents) {
