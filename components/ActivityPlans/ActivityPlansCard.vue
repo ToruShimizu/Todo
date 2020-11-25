@@ -15,7 +15,7 @@
               v-text="contents.category"
             ></v-card-title>
 
-            <v-card-subtitle v-text="contents.date" class="pb-0 mt-1"></v-card-subtitle>
+            <v-card-subtitle v-text="planContentsDateRangeText" class="pb-0 mt-1"></v-card-subtitle>
             <v-spacer />
             <v-menu transition="slide-y-transition" bottom>
               <template v-slot:activator="{ on, attrs }">
@@ -79,6 +79,9 @@ export default {
   computed: {
     inChargeMember() {
       return this.contents.inChargeMember.join(',')
+    },
+    planContentsDateRangeText() {
+      return this.contents.date.join('~')
     }
   },
   methods: {

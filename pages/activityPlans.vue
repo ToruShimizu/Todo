@@ -100,7 +100,7 @@ export default {
         inChargeMember: [],
         fileName: '',
         photoURL: '',
-        date: new Date().toISOString().substr(0, 10),
+        date: [new Date().toISOString().substr(0, 10)],
         done: false
       },
       todoCategorys: [

@@ -3,30 +3,37 @@
     v-model="dateMenu"
     :close-on-content-click="false"
     transition="scale-transition"
+    offset-y
     min-width="290px"
   >
     <template v-slot:activator="{ on, attrs }">
       <v-text-field
-        v-model="innerDate"
+        v-model="dateRangeText"
         label="日付"
         prepend-inner-icon="mdi-calendar-today"
         readonly
         v-bind="attrs"
         v-on="on"
-        :close-on-content-click="false"
       ></v-text-field>
     </template>
-    <v-date-picker v-model="innerDate" no-title @click="menu = false" />
+    <v-date-picker v-model="innerDate" no-title range>
+      <v-spacer />
+      <TextButton :title="'close'" class="primary--text" @handle-text-button="closeDateMenu" />
+    </v-date-picker>
   </v-menu>
 </template>
 
 <script>
+import TextButton from '@/components/commonParts/button/textButton/TextButton'
 export default {
+  components: {
+    TextButton
+  },
   props: {
     date: {
-      type: String,
+      type: Array,
       required: false,
-      default: new Date().toISOString().substr(0, 10)
+      default: [new Date().toISOString().substr(0, 10)]
     }
   },
   data() {
@@ -41,11 +48,22 @@ export default {
         return this.date
       },
       set(date) {
-        this.dateMenu = false
         this.$emit('update:date', date)
+      }
+    },
+    dateRangeText: {
+      get() {
+        return this.innerDate.join('~')
+      },
+      set(dateRangeText) {
+        return dateRangeText
       }
     }
   },
-  metods: {}
+  methods: {
+    closeDateMenu() {
+      this.dateMenu = false
+    }
+  }
 }
 </script>

@@ -82,7 +82,7 @@ export default {
         inChargeMember: [],
         fileName: '',
         photoURL: '',
-        date: new Date().toISOString().substr(0, 10),
+        date: [new Date().toISOString().substr(0, 10)],
         done: false
       })
     },
@@ -113,7 +113,10 @@ export default {
       this.planContents.category = []
       this.planContents.inChargeMember = []
       this.planContents.detail = ''
-      this.planContents.date = new Date().toISOString().substr(0, 10)
+      this.planContents.date = [
+        new Date().toISOString().substr(0, 10),
+        new Date().toISOString().substr(0, 10)
+      ]
       this.$emit('close-activity-plan')
     },
     inputDate() {
