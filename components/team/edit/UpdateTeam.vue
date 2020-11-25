@@ -32,6 +32,7 @@ export default {
       } else {
         await this.updateTeam(team)
       }
+      this.closeTeamDialog()
     },
     closeTeamDialog() {
       this.$emit('close-team-dialog')
