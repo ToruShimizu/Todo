@@ -9,7 +9,7 @@
           :loading="loading"
           :disabled="loading"
         >
-          <slot name="deleteButton"></slot>
+          <v-icon left>{{ icon }}</v-icon>
           <span class="font-italic">{{ title }}</span>
         </v-btn>
       </template>
@@ -27,6 +27,7 @@ export default {
   },
   props: {
     title: String,
+    icon: String,
     loading: {
       type: Boolean,
       required: false,
