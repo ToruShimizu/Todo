@@ -11,9 +11,10 @@
     >
       <template v-slot:imageFile v-if="editPlanContents.photoURL">
         <v-col cols="12" sm="12" md="12" class="pa-0 text-right">
-          <v-btn text x-small @click="handleRemovePlanContensImage">
-            <v-icon>mdi-delete-outline </v-icon>
-          </v-btn>
+          <TextButton
+            :icon="'mdi-delete-outline'"
+            @handle-text-button="handleRemovePlanContensImage"
+          />
         </v-col>
         <v-col cols="12" sm="12" md="12">
           <LoadingImg v-if="editPlanContents.photoURL" :src="editPlanContents.photoURL" />
@@ -31,7 +32,7 @@
 import { mapState, mapActions } from 'vuex'
 import FormCreateActivityPlan from '@/components/commonParts/activityPlans/form/FormCreateActivityPlan'
 import LoadingImg from '@/components/commonParts/v-img/LoadingImg'
-
+import TextButton from '@/components/commonParts/button/TextButton/TextButton'
 import AddComment from '@/components/Comment/AddComment'
 import Comment from '@/components/Comment/Comment'
 
@@ -40,7 +41,8 @@ export default {
     FormCreateActivityPlan,
     AddComment,
     Comment,
-    LoadingImg
+    LoadingImg,
+    TextButton
   },
   props: {
     editPlanContents: {

@@ -8,18 +8,22 @@
       </template>
       <v-list>
         <v-list-item>
-          <v-list-item-title
-            ><v-btn text @click="openUpdateTeam">
-              <v-icon>mdi-pencil-outline </v-icon>サークル編集</v-btn
-            ></v-list-item-title
-          >
+          <v-list-item-title>
+            <TextButton
+              @handle-text-button="openUpdateTeam"
+              :icon="'mdi-pencil-outline'"
+              :title="'サークル編集'"
+            />
+          </v-list-item-title>
         </v-list-item>
         <v-list-item>
-          <v-list-item-title @click="handleDeleteTeam"
-            ><v-btn text
-              ><v-icon>mdi-account-multiple-remove-outline </v-icon>サークル削除</v-btn
-            ></v-list-item-title
-          >
+          <v-list-item-title>
+            <TextButton
+              @handle-text-button="handleDeleteTeam"
+              :icon="'mdi-account-multiple-remove-outline'"
+              :title="'サークル削除'"
+            />
+          </v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
@@ -30,9 +34,11 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import UpdateTeam from '@/components/team/edit/UpdateTeam'
+import TextButton from '@/components/commonParts/button/TextButton/TextButton'
 export default {
   components: {
-    UpdateTeam
+    UpdateTeam,
+    TextButton
   },
   data() {
     return {

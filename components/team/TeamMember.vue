@@ -30,12 +30,8 @@
         </v-toolbar>
       </template>
       <template v-slot:item.actions="{ item }">
-        <v-btn text x-small @click="openUpdateMember(item)">
-          <v-icon small> mdi-pencil </v-icon>
-        </v-btn>
-        <v-btn text x-small @click="handleRemoveMember(item)">
-          <v-icon small> mdi-delete </v-icon>
-        </v-btn>
+        <TextButtonXSmall :icon="'mdi-pencil'" @handle-text-button="openUpdateMember(item)" />
+        <TextButtonXSmall :icon="'mdi-delete'" @handle-text-button="handleRemoveMember(item)" />
       </template>
     </v-data-table>
     <UpdateMember
@@ -52,11 +48,13 @@
 import { mapState, mapActions } from 'vuex'
 import UpdateMember from '@/components/team/edit/UpdateMember'
 import BlueDialogButton from '@/components/commonParts/button/BlueDialogButton'
+import TextButtonXSmall from '@/components/commonParts/button/textButton/TextButtonXSmall'
 
 export default {
   components: {
     UpdateMember,
-    BlueDialogButton
+    BlueDialogButton,
+    TextButtonXSmall
   },
   props: {
     teamRoles: {
