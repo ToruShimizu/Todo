@@ -22,14 +22,11 @@
               :save-button-title="'save'"
               :loader="createUserLoader"
               :loading="createUserLoading"
+              :icon="'mdi-account-plus-outline'"
               @close-button="closeCreateUser"
               @save-button="handleCreateUser"
               @stop-loading="stopCreateUserLoading"
-            >
-              <template v-slot:save>
-                <v-icon left>mdi-account-plus-outline </v-icon>
-              </template>
-            </SaveAndCloseButton>
+            />
           </v-form>
         </template>
       </FormView>

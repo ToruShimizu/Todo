@@ -16,14 +16,11 @@
               :save-button-title="'save'"
               :loading="loading"
               :loader="loader"
+              :icon="'mdi-badge-account-horizontal-outline'"
               @stop-loading="stopLoading"
               @save-button="handleUpdateUserName"
               @close-button="selectedUpdateUserName = 'closeUpdateUserName'"
-            >
-              <template v-slot:save
-                ><v-icon left>mdi-badge-account-horizontal-outline</v-icon>
-              </template>
-            </SaveAndCloseButton>
+            />
           </v-form>
         </template>
       </FormView>

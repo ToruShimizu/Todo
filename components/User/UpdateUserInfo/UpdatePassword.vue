@@ -28,12 +28,11 @@
               :save-button-title="'save'"
               :loading="loading"
               :loader="loader"
+              :icon="'mdi-account-key-outline '"
               @stop-loading="stopLoading"
               @save-button="handleUpdatePassword"
               @close-button="selectedUpdatePassword = 'closeUpdatePassword'"
-            >
-              <template v-slot:save><v-icon left>mdi-account-key-outline </v-icon></template>
-            </SaveAndCloseButton>
+            />
           </v-form>
         </template>
       </FormView>

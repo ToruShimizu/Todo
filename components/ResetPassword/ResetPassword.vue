@@ -19,14 +19,11 @@
               :loader="resetPasswordLoader"
               :close-button-title="'close'"
               :save-button-title="'send'"
+              :icon="'mdi-email-send-outline'"
               @close-button="closeResetPassword"
               @save-button="handleResetPassword"
               @stop-loading="stopResetPasswordLoading"
-            >
-              <template v-slot:save>
-                <v-icon left>mdi-email-send-outline</v-icon>
-              </template>
-            </SaveAndCloseButton>
+            />
           </v-form>
         </template>
       </FormView>

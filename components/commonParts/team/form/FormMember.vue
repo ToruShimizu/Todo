@@ -35,13 +35,10 @@
               :close-button-title="'close'"
               :save-button-title="'save'"
               :loader="null"
+              :icon="'mdi-account-plus-outline '"
               @close-button="closeMemberDialog"
               @save-button="handleSaveMember"
-            >
-              <template v-slot:save>
-                <v-icon left>mdi-account-plus-outline </v-icon>
-              </template>
-            </SaveAndCloseButton>
+            />
           </v-form>
         </template>
       </FormView>
