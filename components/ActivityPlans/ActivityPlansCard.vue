@@ -53,6 +53,7 @@
             <v-card-subtitle v-text="contents.inChargeMember" class="py-0 mt-1"></v-card-subtitle>
             <v-spacer />
             <IconButton :icon="'mdi-file-image-outline'" />
+            {{ contents.photoURL ? '1' : '' }}
             <IconButton :icon="'mdi-comment-text-outline '" />
           </v-card-actions>
         </v-card>
@@ -83,6 +84,7 @@ export default {
       this.$emit('toggle-done-activity-plan', contents)
     },
     openActivityPlan(contents) {
+      console.log(contents)
       this.$emit('open-activity-plan', contents)
     }
   }
