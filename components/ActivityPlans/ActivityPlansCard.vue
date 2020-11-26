@@ -78,7 +78,12 @@
               ></v-card-subtitle>
             </v-fab-transition>
             <v-spacer />
-            <IconButton :icon="'mdi-file-image-outline'" />
+            <ActivityPlansImageFile
+              :contents="contents"
+              :image-file-dialog="imageFileDialog"
+              @close-image-file="closeImageFile"
+            />
+            <IconButton :icon="'mdi-file-image-outline'" @handle-icon-button="openImageFile" />
             {{ contents.photoURL ? '1' : '' }}
             <IconButton :icon="'mdi-comment-text-outline '" />
           </v-card-actions>
@@ -89,17 +94,25 @@
 </template>
 
 <script>
+import ActivityPlansImageFile from '@/components/ActivityPlans/ActivityPlansImageFile'
 import IconButton from '@/components/commonParts/button/IconButton'
 import TextButton from '@/components/commonParts/button/TextButton/Textbutton'
 export default {
   components: {
     IconButton,
-    TextButton
+    TextButton,
+    ActivityPlansImageFile
   },
   props: {
     contents: {
       type: Object,
       required: true
+    }
+  },
+  data() {
+    return {
+      imageFileDialog: false,
+      editImageFile: ''
     }
   },
   computed: {
@@ -120,6 +133,12 @@ export default {
     openActivityPlan(contents) {
       console.log(contents)
       this.$emit('open-activity-plan', contents)
+    },
+    openImageFile() {
+      this.imageFileDialog = true
+    },
+    closeImageFile() {
+      this.imageFileDialog = false
     }
   }
 }
