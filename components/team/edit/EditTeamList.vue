@@ -56,11 +56,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('modules/team/team', ['teamName'])
+    ...mapGetters('modules/team/team', ['teamName', 'teamPhotoURL'])
   },
   methods: {
     openUpdateTeam() {
       this.editTeam.name = this.teamName
+      this.editTeam.photoURL = this.teamPhotoURL
       this.updateTeamDialog = true
     },
     closeUpdateTeam() {
