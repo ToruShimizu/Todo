@@ -1,8 +1,8 @@
 <template>
   <div>
     <template>
-      <transition :key="contents.catgorys" name="list">
-        <v-card class="mb-2">
+      <transition-group name="card-anim">
+        <v-card class="mb-2" :key="contents.id">
           <v-card-actions class="pa-0">
             <v-card-title class="pa-1">
               <v-btn icon @click="toggleDoneActivityPlan(contents)">
@@ -92,7 +92,7 @@
             <IconButton :icon="'mdi-comment-text-outline '" />
           </v-card-actions>
         </v-card>
-      </transition>
+      </transition-group>
     </template>
   </div>
 </template>
@@ -111,6 +111,9 @@ export default {
     contents: {
       type: Object,
       required: true
+    },
+    index: {
+      type: Number
     }
   },
   data() {
@@ -148,14 +151,28 @@ export default {
 }
 </script>
 
+
 <style scoped>
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.8s;
-}
-.list-enter,
-.list-leave-to {
+.card-anim-enter-active {
+  animation: fadeInUp 0.7s;
+  animation-delay: 0.4s;
   opacity: 0;
-  transform: translateX(100%);
+}
+.card-anim-leave-active {
+  animation: fadeInUp 0.7s reverse;
+}
+
+@keyframes fadeInUp {
+  0% {
+    transform: translateY(60px);
+    opacity: 0;
+  }
+  60% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
 }
 </style>
