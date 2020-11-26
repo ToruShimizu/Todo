@@ -1,8 +1,8 @@
 <template>
   <div>
     <ActivityPlansCard
-      v-for="contents in displayActivityPlans"
-      :key="contents.categorys"
+      v-for="(contents, index) in displayActivityPlans"
+      :key="index"
       :contents="contents"
       @toggle-done-activity-plan="toggleDoneActivityPlan"
       @handle-remove-activity-plan="handleRemoveActivityPlan"
