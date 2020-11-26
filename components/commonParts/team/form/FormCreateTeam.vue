@@ -7,8 +7,13 @@
             <v-container>
               <v-row>
                 <v-col cols="12" sm="12" md="12" class="text-center">
-                  <v-avatar size="100px">
-                    <LoadingImg v-if="teamPhotoURL" :src="teamPhotoURL" />
+                  <v-avatar size="200px">
+                    <LoadingImg
+                      v-if="teamPhotoURL"
+                      :src="teamPhotoURL"
+                      :width="'200'"
+                      :height="'200'"
+                    />
                     <v-icon v-else large>mdi-account-outline</v-icon>
                   </v-avatar>
                 </v-col>
