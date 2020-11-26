@@ -5,8 +5,8 @@
       :lazy-src="src"
       aspect-ratio="1"
       class="grey lighten-2"
-      max-width="200"
-      max-height="150"
+      :max-width="width"
+      :max-height="height"
     >
       <template v-slot:placeholder>
         <v-row class="fill-height ma-0" align="center" justify="center">
@@ -23,6 +23,16 @@ export default {
     src: {
       type: String,
       required: true
+    },
+    width: {
+      type: String,
+      required: false,
+      default: ''
+    },
+    height: {
+      type: String,
+      required: false,
+      default: ''
     }
   },
   methods: {
