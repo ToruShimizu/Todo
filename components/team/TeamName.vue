@@ -1,16 +1,16 @@
 <template>
   <div>
-    <v-layout class="justify-center">
+    <v-layout class="justify-center mb-5">
       <template>
-        <v-avatar max-width="40" max-height="40">
+        <v-avatar size="70px">
           <template v-if="teamPhotoURL">
-            <LoadingImg v-if="teamPhotoURL" :src="teamPhotoURL" />
+            <LoadingImg v-if="teamPhotoURL" :src="teamPhotoURL" :width="'70'" :height="'70'" />
           </template>
           <v-icon v-else>mdi-account-outline</v-icon>
         </v-avatar>
-        <h2 class="grey--text font-italic mb-4">{{ teamName }}</h2>
       </template>
-      <EditTeamList />
+      <h2 class="grey--text font-italic mt-3 ml-2">{{ teamName }}</h2>
+      <EditTeamList class="mt-3" />
     </v-layout>
   </div>
 </template>
