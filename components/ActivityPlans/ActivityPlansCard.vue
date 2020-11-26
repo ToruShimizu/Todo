@@ -83,8 +83,12 @@
               :image-file-dialog="imageFileDialog"
               @close-image-file="closeImageFile"
             />
-            <IconButton :icon="'mdi-file-image-outline'" @handle-icon-button="openImageFile" />
-            {{ contents.photoURL ? '1' : '' }}
+            <template v-if="contents.photoURL">
+              <IconButton :icon="'mdi-file-image-outline'" @handle-icon-button="openImageFile" />1
+            </template>
+            <template v-else>
+              <v-icon>mdi-file-image-outline</v-icon>
+            </template>
             <IconButton :icon="'mdi-comment-text-outline '" />
           </v-card-actions>
         </v-card>
