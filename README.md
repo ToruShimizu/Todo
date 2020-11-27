@@ -34,5 +34,5 @@ firebase
 
 ## Author
 
-・ GithubURL: (https://github.com/ToruShimizu)
+・ GithubURL: ![Github_URL](https://github.com/ToruShimizu)
 ## License
