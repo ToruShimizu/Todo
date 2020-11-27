@@ -1,14 +1,6 @@
 import { db } from '~/plugins/firebase'
 
-const state = () => ({
-  comments: []
-})
 const mutations = {
-  // コメントの追加処理
-  addComment(state, comment) {
-    state.comments.push(comment)
-    console.log('addComments')
-  },
   // コメント削除
   removeComment(state, { id }) {
     const index = state.comments.findIndex((comment) => comment.id === id)
@@ -39,6 +31,7 @@ const actions = {
     const commentId = await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).collection(`comments/${getters.userUid}/message`).doc().id
 
     const comment = {
+      activityPlanId: id,
       message,
       id: commentId,
       created: createTime
@@ -51,7 +44,8 @@ const actions = {
         .doc(commentId)
         .set(comment)
     }
-    commit('addComment', comment)
+    commit('modules/activityPlans/activityPlans/addComment', { comment, id }, { root: true })
+
   },
   // コメントの削除
   async removeComment({ getters, commit }, { id }) {
@@ -87,7 +81,6 @@ const getters = {
 
 export default {
   namespaced: true,
-  state,
   getters,
   actions,
   mutations
