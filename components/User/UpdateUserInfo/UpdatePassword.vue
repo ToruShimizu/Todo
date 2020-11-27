@@ -28,7 +28,7 @@
               :save-button-title="'save'"
               :loading="loading"
               :loader="loader"
-              :icon="'mdi-account-key-outline '"
+              :icon="'mdi-account-key'"
               @stop-loading="stopLoading"
               @save-button="handleUpdatePassword"
               @close-button="selectedUpdatePassword = 'closeUpdatePassword'"

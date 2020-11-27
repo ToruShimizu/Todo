@@ -19,7 +19,7 @@
               :loader="resetPasswordLoader"
               :close-button-title="'close'"
               :save-button-title="'send'"
-              :icon="'mdi-email-send-outline'"
+              :icon="'mdi-email-send'"
               @close-button="closeResetPassword"
               @save-button="handleResetPassword"
               @stop-loading="stopResetPasswordLoading"

@@ -19,7 +19,7 @@
               :save-button-title="'save'"
               :loading="loading"
               :loader="loader"
-              :icon="'mdi-email-edit-outline'"
+              :icon="'mdi-email-edit'"
               @stop-loading="stopLoading"
               @save-button="handleUpdateEmail"
               @close-button="selectUpdateEmail = 'closeUpdateEmail'"

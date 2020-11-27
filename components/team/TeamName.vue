@@ -6,10 +6,10 @@
           <template v-if="teamPhotoURL">
             <LoadingImg v-if="teamPhotoURL" :src="teamPhotoURL" :width="'70'" :height="'70'" />
           </template>
-          <v-icon v-else>mdi-account-outline</v-icon>
+          <v-icon v-else class="blue--grey darken-1">mdi-account-outline</v-icon>
         </v-avatar>
       </template>
-      <h2 class="grey--text font-italic mt-3 ml-2">{{ teamName }}</h2>
+      <h2 class="blue--grey--text darken-1 font-italic mt-3 ml-2">{{ teamName }}</h2>
       <EditTeamList class="mt-3" />
     </v-layout>
   </div>

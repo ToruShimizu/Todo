@@ -37,7 +37,7 @@
               :close-button-title="'close'"
               :save-button-title="'save'"
               :loader="null"
-              :icon="'mdi-account-plus-outline '"
+              :icon="'mdi-account-plus'"
               @close-button="closeTeamDialog"
               @save-button="handleSaveTeam"
             />
@@ -52,13 +52,15 @@
 import { mapState, mapGetters } from 'vuex'
 import FormDialog from '@/components/commonParts/dialog/FormDialog'
 import InputFile from '@/components/commonParts/form/InputFile'
+import FormView from '@/components/commonParts/form/FormView'
 import LoadingImg from '@/components/commonParts/v-img/LoadingImg'
 
 export default {
   components: {
     FormDialog,
     InputFile,
-    LoadingImg
+    LoadingImg,
+    FormView
   },
 
   props: {

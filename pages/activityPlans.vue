@@ -1,24 +1,23 @@
 <template>
   <v-container style="max-width: 500px" class="mb-5">
-    <v-layout class="justify-center mt-2">
+    <v-layout class="justify-center">
       <CreateTeam :create-team-dialog="createTeamDialog" @close-team-dialog="closeCreateTeam" />
       <v-btn
         color="teal lighten-1"
         dark
         class="font-italic mb-5"
-        outlined
         @click="openCreateTeam"
         @close-team-dialog="closeCreateTeam"
         v-if="!teamName"
       >
-        <v-icon>mdi-account-plus-outline </v-icon>サークル新規作成
+        <v-icon>mdi-account-plus</v-icon>サークル新規作成
       </v-btn>
-      <v-btn color="teal lighten-1" dark to="/team" nuxt class="font-italic mr-2" outlined v-else
-        ><v-icon>mdi-account-edit-outline </v-icon>サークル編集
+      <v-btn color="teal lighten-1" dark to="/team" nuxt class="font-italic mr-2" v-else
+        ><v-icon>mdi-account-edit</v-icon>サークル編集
       </v-btn>
       <BlueDialogButton
         :title="'活動計画作成'"
-        :icon="'mdi-pencil-plus-outline'"
+        :icon="'mdi-pencil-plus'"
         @dialog-button="openCreateActivityPlan"
         v-if="teamName"
       />

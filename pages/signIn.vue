@@ -44,14 +44,10 @@
             :loading="loginLoading"
             @save-button="handleLogin"
             @stop-loading="stopLoginLoading"
-            :icon="'mdi-account-arrow-left-outline '"
+            :icon="'mdi-account-arrow-left'"
           >
           </SaveButton>
-          <SaveButton
-            :title="'new'"
-            @save-button="openCreateUser"
-            :icon="'mdi-account-plus-outline'"
-          >
+          <SaveButton :title="'new'" @save-button="openCreateUser" :icon="'mdi-account-plus'">
           </SaveButton>
         </v-card-actions>
         <CreateUser :create-user-dialog="createUserDialog" @close-create-user="closeCreateUser" />

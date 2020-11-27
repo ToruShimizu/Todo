@@ -35,12 +35,13 @@
                   <v-icon> mdi-dots-vertical</v-icon>
                 </v-btn>
               </template>
-              <v-list>
+              <v-list color="blue-grey darken-4">
                 <v-list-item class="px-0">
                   <v-list-item-title>
                     <TextButton
+                      class="white--text font-weight-bold"
                       @handle-text-button="openActivityPlan(contents)"
-                      :icon="'mdi-pencil-outline '"
+                      :icon="'mdi-pencil'"
                       :title="'編集'"
                     />
                   </v-list-item-title>
@@ -48,8 +49,9 @@
                 <v-list-item class="px-0">
                   <v-list-item-title>
                     <TextButton
+                      class="white--text font-weight-bold"
                       @handle-text-button="handleRemoveActivityPlan(contents)"
-                      :icon="'mdi-delete-outline'"
+                      :icon="'mdi-delete'"
                       :title="'削除'"
                     />
                   </v-list-item-title>

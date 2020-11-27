@@ -16,7 +16,7 @@
               :save-button-title="'save'"
               :loading="loading"
               :loader="loader"
-              :icon="'mdi-badge-account-horizontal-outline'"
+              :icon="'mdi-badge-account-horizontal'"
               @stop-loading="stopLoading"
               @save-button="handleUpdateUserName"
               @close-button="selectedUpdateUserName = 'closeUpdateUserName'"

@@ -35,7 +35,7 @@
               :close-button-title="'close'"
               :save-button-title="'save'"
               :loader="null"
-              :icon="'mdi-account-plus-outline '"
+              :icon="'mdi-account-plus'"
               @close-button="closeMemberDialog"
               @save-button="handleSaveMember"
             />
