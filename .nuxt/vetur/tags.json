@@ -1,4 +1,28 @@
 {
+  "Header": {
+    "description": "Auto imported from components/Header/Header.vue"
+  },
+  "LazyHeader": {
+    "description": "Auto imported from components/Header/Header.vue"
+  },
+  "CreateUser": {
+    "description": "Auto imported from components/CreateUser/CreateUser.vue"
+  },
+  "LazyCreateUser": {
+    "description": "Auto imported from components/CreateUser/CreateUser.vue"
+  },
+  "ActivityPlansCard": {
+    "description": "Auto imported from components/ActivityPlans/ActivityPlansCard.vue"
+  },
+  "LazyActivityPlansCard": {
+    "description": "Auto imported from components/ActivityPlans/ActivityPlansCard.vue"
+  },
+  "ActivityPlansImageFile": {
+    "description": "Auto imported from components/ActivityPlans/ActivityPlansImageFile.vue"
+  },
+  "LazyActivityPlansImageFile": {
+    "description": "Auto imported from components/ActivityPlans/ActivityPlansImageFile.vue"
+  },
   "ActivityPlansTable": {
     "description": "Auto imported from components/ActivityPlans/ActivityPlansTable.vue"
   },
@@ -41,35 +65,53 @@
   "LazyUpdateActivityPlan": {
     "description": "Auto imported from components/ActivityPlans/UpdateActivityPlan.vue"
   },
-  "Header": {
-    "description": "Auto imported from components/Header/Header.vue"
-  },
-  "LazyHeader": {
-    "description": "Auto imported from components/Header/Header.vue"
-  },
-  "AddComment": {
-    "description": "Auto imported from components/Comment/AddComment.vue"
-  },
-  "LazyAddComment": {
-    "description": "Auto imported from components/Comment/AddComment.vue"
-  },
-  "Comment": {
-    "description": "Auto imported from components/Comment/Comment.vue"
-  },
-  "LazyComment": {
-    "description": "Auto imported from components/Comment/Comment.vue"
-  },
-  "CreateUser": {
-    "description": "Auto imported from components/CreateUser/CreateUser.vue"
-  },
-  "LazyCreateUser": {
-    "description": "Auto imported from components/CreateUser/CreateUser.vue"
-  },
   "ResetPassword": {
     "description": "Auto imported from components/ResetPassword/ResetPassword.vue"
   },
   "LazyResetPassword": {
     "description": "Auto imported from components/ResetPassword/ResetPassword.vue"
+  },
+  "AddComment": {
+    "description": "Auto imported from components/comment/AddComment.vue"
+  },
+  "LazyAddComment": {
+    "description": "Auto imported from components/comment/AddComment.vue"
+  },
+  "Comment": {
+    "description": "Auto imported from components/comment/Comment.vue"
+  },
+  "LazyComment": {
+    "description": "Auto imported from components/comment/Comment.vue"
+  },
+  "CommentView": {
+    "description": "Auto imported from components/comment/CommentView.vue"
+  },
+  "LazyCommentView": {
+    "description": "Auto imported from components/comment/CommentView.vue"
+  },
+  "CreateTeam": {
+    "description": "Auto imported from components/team/CreateTeam.vue"
+  },
+  "LazyCreateTeam": {
+    "description": "Auto imported from components/team/CreateTeam.vue"
+  },
+  "RegistrationMember": {
+    "description": "Auto imported from components/team/RegistrationMember.vue"
+  },
+  "LazyRegistrationMember": {
+    "description": "Auto imported from components/team/RegistrationMember.vue"
+  },
+  "TeamMember": {
+    "description": "Auto imported from components/team/TeamMember.vue"
+  },
+  "LazyTeamMember": {
+    "description": "Auto imported from components/team/TeamMember.vue"
+  },
+  "TeamName": {
+    "description": "Auto imported from components/team/TeamName.vue"
+  },
+  "LazyTeamName": {
+    "description": "Auto imported from components/team/TeamName.vue"
   },
   "SideNav": {
     "description": "Auto imported from components/Header/SideNav/SideNav.vue"
@@ -82,6 +124,18 @@
   },
   "LazyDeleteAccount": {
     "description": "Auto imported from components/User/DeleteAccount/DeleteAccount.vue"
+  },
+  "EditUserInfo": {
+    "description": "Auto imported from components/User/EditUserInfo/EditUserInfo.vue"
+  },
+  "LazyEditUserInfo": {
+    "description": "Auto imported from components/User/EditUserInfo/EditUserInfo.vue"
+  },
+  "SelectEditUserInfo": {
+    "description": "Auto imported from components/User/EditUserInfo/SelectEditUserInfo.vue"
+  },
+  "LazySelectEditUserInfo": {
+    "description": "Auto imported from components/User/EditUserInfo/SelectEditUserInfo.vue"
   },
   "UpdateEmail": {
     "description": "Auto imported from components/User/UpdateUserInfo/UpdateEmail.vue"
@@ -107,16 +161,196 @@
   "LazyUpdateUserName": {
     "description": "Auto imported from components/User/UpdateUserInfo/UpdateUserName.vue"
   },
-  "EditUserInfo": {
-    "description": "Auto imported from components/User/EditUserInfo/EditUserInfo.vue"
+  "FormDialog": {
+    "description": "Auto imported from components/commonParts/dialog/FormDialog.vue"
   },
-  "LazyEditUserInfo": {
-    "description": "Auto imported from components/User/EditUserInfo/EditUserInfo.vue"
+  "LazyFormDialog": {
+    "description": "Auto imported from components/commonParts/dialog/FormDialog.vue"
   },
-  "SelectEditUserInfo": {
-    "description": "Auto imported from components/User/EditUserInfo/SelectEditUserInfo.vue"
+  "BlueDialogButton": {
+    "description": "Auto imported from components/commonParts/button/BlueDialogButton.vue"
   },
-  "LazySelectEditUserInfo": {
-    "description": "Auto imported from components/User/EditUserInfo/SelectEditUserInfo.vue"
+  "LazyBlueDialogButton": {
+    "description": "Auto imported from components/commonParts/button/BlueDialogButton.vue"
+  },
+  "CloseButton": {
+    "description": "Auto imported from components/commonParts/button/CloseButton.vue"
+  },
+  "LazyCloseButton": {
+    "description": "Auto imported from components/commonParts/button/CloseButton.vue"
+  },
+  "DeleteButton": {
+    "description": "Auto imported from components/commonParts/button/DeleteButton.vue"
+  },
+  "LazyDeleteButton": {
+    "description": "Auto imported from components/commonParts/button/DeleteButton.vue"
+  },
+  "IconButton": {
+    "description": "Auto imported from components/commonParts/button/IconButton.vue"
+  },
+  "LazyIconButton": {
+    "description": "Auto imported from components/commonParts/button/IconButton.vue"
+  },
+  "Loading": {
+    "description": "Auto imported from components/commonParts/button/Loading.vue"
+  },
+  "LazyLoading": {
+    "description": "Auto imported from components/commonParts/button/Loading.vue"
+  },
+  "LoginButton": {
+    "description": "Auto imported from components/commonParts/button/LoginButton.vue"
+  },
+  "LazyLoginButton": {
+    "description": "Auto imported from components/commonParts/button/LoginButton.vue"
+  },
+  "SaveAndCloseButton": {
+    "description": "Auto imported from components/commonParts/button/SaveAndCloseButton.vue"
+  },
+  "LazySaveAndCloseButton": {
+    "description": "Auto imported from components/commonParts/button/SaveAndCloseButton.vue"
+  },
+  "SaveButton": {
+    "description": "Auto imported from components/commonParts/button/SaveButton.vue"
+  },
+  "LazySaveButton": {
+    "description": "Auto imported from components/commonParts/button/SaveButton.vue"
+  },
+  "FormCardText": {
+    "description": "Auto imported from components/commonParts/card/FormCardText.vue"
+  },
+  "LazyFormCardText": {
+    "description": "Auto imported from components/commonParts/card/FormCardText.vue"
+  },
+  "FormView": {
+    "description": "Auto imported from components/commonParts/form/FormView.vue"
+  },
+  "LazyFormView": {
+    "description": "Auto imported from components/commonParts/form/FormView.vue"
+  },
+  "InputFile": {
+    "description": "Auto imported from components/commonParts/form/InputFile.vue"
+  },
+  "LazyInputFile": {
+    "description": "Auto imported from components/commonParts/form/InputFile.vue"
+  },
+  "DoneSnackbar": {
+    "description": "Auto imported from components/commonParts/snackbar/DoneSnackbar.vue"
+  },
+  "LazyDoneSnackbar": {
+    "description": "Auto imported from components/commonParts/snackbar/DoneSnackbar.vue"
+  },
+  "LoadingImg": {
+    "description": "Auto imported from components/commonParts/v-img/LoadingImg.vue"
+  },
+  "LazyLoadingImg": {
+    "description": "Auto imported from components/commonParts/v-img/LoadingImg.vue"
+  },
+  "FormCreateActivityPlan": {
+    "description": "Auto imported from components/commonParts/activityPlans/form/FormCreateActivityPlan.vue"
+  },
+  "LazyFormCreateActivityPlan": {
+    "description": "Auto imported from components/commonParts/activityPlans/form/FormCreateActivityPlan.vue"
+  },
+  "CategoryCombobox": {
+    "description": "Auto imported from components/commonParts/activityPlans/input/CategoryCombobox.vue"
+  },
+  "LazyCategoryCombobox": {
+    "description": "Auto imported from components/commonParts/activityPlans/input/CategoryCombobox.vue"
+  },
+  "DateForm": {
+    "description": "Auto imported from components/commonParts/activityPlans/input/DateForm.vue"
+  },
+  "LazyDateForm": {
+    "description": "Auto imported from components/commonParts/activityPlans/input/DateForm.vue"
+  },
+  "DetailForm": {
+    "description": "Auto imported from components/commonParts/activityPlans/input/DetailForm.vue"
+  },
+  "LazyDetailForm": {
+    "description": "Auto imported from components/commonParts/activityPlans/input/DetailForm.vue"
+  },
+  "InChargeForm": {
+    "description": "Auto imported from components/commonParts/activityPlans/input/InChargeForm.vue"
+  },
+  "LazyInChargeForm": {
+    "description": "Auto imported from components/commonParts/activityPlans/input/InChargeForm.vue"
+  },
+  "TextButton": {
+    "description": "Auto imported from components/commonParts/button/textButton/TextButton.vue"
+  },
+  "LazyTextButton": {
+    "description": "Auto imported from components/commonParts/button/textButton/TextButton.vue"
+  },
+  "TextButtonXSmall": {
+    "description": "Auto imported from components/commonParts/button/textButton/TextButtonXSmall.vue"
+  },
+  "LazyTextButtonXSmall": {
+    "description": "Auto imported from components/commonParts/button/textButton/TextButtonXSmall.vue"
+  },
+  "EditTeamList": {
+    "description": "Auto imported from components/team/edit/EditTeamList.vue"
+  },
+  "LazyEditTeamList": {
+    "description": "Auto imported from components/team/edit/EditTeamList.vue"
+  },
+  "UpdateMember": {
+    "description": "Auto imported from components/team/edit/UpdateMember.vue"
+  },
+  "LazyUpdateMember": {
+    "description": "Auto imported from components/team/edit/UpdateMember.vue"
+  },
+  "UpdateTeam": {
+    "description": "Auto imported from components/team/edit/UpdateTeam.vue"
+  },
+  "LazyUpdateTeam": {
+    "description": "Auto imported from components/team/edit/UpdateTeam.vue"
+  },
+  "ImprovementRoleComboBox": {
+    "description": "Auto imported from components/commonParts/team/input/ImprovementRoleComboBox.vue"
+  },
+  "LazyImprovementRoleComboBox": {
+    "description": "Auto imported from components/commonParts/team/input/ImprovementRoleComboBox.vue"
+  },
+  "MemberName": {
+    "description": "Auto imported from components/commonParts/team/input/MemberName.vue"
+  },
+  "LazyMemberName": {
+    "description": "Auto imported from components/commonParts/team/input/MemberName.vue"
+  },
+  "RoleComboBox": {
+    "description": "Auto imported from components/commonParts/team/input/RoleComboBox.vue"
+  },
+  "LazyRoleComboBox": {
+    "description": "Auto imported from components/commonParts/team/input/RoleComboBox.vue"
+  },
+  "FormCreateTeam": {
+    "description": "Auto imported from components/commonParts/team/form/FormCreateTeam.vue"
+  },
+  "LazyFormCreateTeam": {
+    "description": "Auto imported from components/commonParts/team/form/FormCreateTeam.vue"
+  },
+  "FormMember": {
+    "description": "Auto imported from components/commonParts/team/form/FormMember.vue"
+  },
+  "LazyFormMember": {
+    "description": "Auto imported from components/commonParts/team/form/FormMember.vue"
+  },
+  "FormUserEmail": {
+    "description": "Auto imported from components/commonParts/user/form/FormUserEmail.vue"
+  },
+  "LazyFormUserEmail": {
+    "description": "Auto imported from components/commonParts/user/form/FormUserEmail.vue"
+  },
+  "FormUserName": {
+    "description": "Auto imported from components/commonParts/user/form/FormUserName.vue"
+  },
+  "LazyFormUserName": {
+    "description": "Auto imported from components/commonParts/user/form/FormUserName.vue"
+  },
+  "FormUserPassword": {
+    "description": "Auto imported from components/commonParts/user/form/FormUserPassword.vue"
+  },
+  "LazyFormUserPassword": {
+    "description": "Auto imported from components/commonParts/user/form/FormUserPassword.vue"
   }
 }

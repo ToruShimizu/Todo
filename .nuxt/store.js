@@ -20,8 +20,10 @@ let store = {};
   store.modules = store.modules || {}
 
   resolveStoreModules(require('../store/store.js'), 'store.js')
-  resolveStoreModules(require('../store/modules/comment.js'), 'modules/comment.js')
   resolveStoreModules(require('../store/modules/activityPlans/activityPlans.js'), 'modules/activityPlans/activityPlans.js')
+  resolveStoreModules(require('../store/modules/comment/comment.js'), 'modules/comment/comment.js')
+  resolveStoreModules(require('../store/modules/commonParts/commonParts.js'), 'modules/commonParts/commonParts.js')
+  resolveStoreModules(require('../store/modules/team/team.js'), 'modules/team/team.js')
   resolveStoreModules(require('../store/modules/user/auth.js'), 'modules/user/auth.js')
   resolveStoreModules(require('../store/modules/user/userInfo.js'), 'modules/user/userInfo.js')
 
@@ -32,8 +34,10 @@ let store = {};
     module.hot.accept([
       '../store/index.js',
       '../store/store.js',
-      '../store/modules/comment.js',
       '../store/modules/activityPlans/activityPlans.js',
+      '../store/modules/comment/comment.js',
+      '../store/modules/commonParts/commonParts.js',
+      '../store/modules/team/team.js',
       '../store/modules/user/auth.js',
       '../store/modules/user/userInfo.js',
     ], () => {

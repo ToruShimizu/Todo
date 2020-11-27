@@ -13,8 +13,8 @@ import { createStore } from './store.js'
 
 /* Plugins */
 
-import nuxt_plugin_plugin_795c17fe from 'nuxt_plugin_plugin_795c17fe' // Source: ./components/plugin.js (mode: 'all')
-import nuxt_plugin_plugin_1e34b78d from 'nuxt_plugin_plugin_1e34b78d' // Source: ./vuetify/plugin.js (mode: 'all')
+import nuxt_plugin_plugin_f8b1220a from 'nuxt_plugin_plugin_f8b1220a' // Source: ./components/plugin.js (mode: 'all')
+import nuxt_plugin_plugin_f5f0a25a from 'nuxt_plugin_plugin_f5f0a25a' // Source: ./vuetify/plugin.js (mode: 'all')
 
 // Component: <ClientOnly>
 Vue.component(ClientOnly.name, ClientOnly)
@@ -71,7 +71,7 @@ async function createApp(ssrContext, config = {}) {
   // here we inject the router and store to all child components,
   // making them available everywhere as `this.$router` and `this.$store`.
   const app = {
-    head: {"titleTemplate":"%s - Todo-List","title":"Todo-List","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"ToDo # Overview このアプリはタスクのリスト作成、状態管理ができるアプリです。\u003Cbr\u003E # Description このアプリではタスクのリストを作成することができます。\u003Cbr\u003E タスクには日付、詳細、コメントを追加することが可能で、\u003Cbr\u003E チェックボックスにより完了状態の切り替えを行うこともできます。\u003Cbr\u003E また、ユーザーを作成することにより自分だけのオリジナルのリストを作成することができます。 # Demo"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.ico"},{"rel":"stylesheet","type":"text\u002Fcss","href":"https:\u002F\u002Ffonts.googleapis.com\u002Fcss?family=Roboto:100,300,400,500,700,900&display=swap"},{"rel":"stylesheet","type":"text\u002Fcss","href":"https:\u002F\u002Fcdn.jsdelivr.net\u002Fnpm\u002F@mdi\u002Ffont@latest\u002Fcss\u002Fmaterialdesignicons.min.css"}],"style":[],"script":[]},
+    head: {"titleTemplate":"%s - Todo-List","title":"Todo-List","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"QC-Circle-Management-App ## Overview このアプリはQCサークル活動（小集団改善活動）を管理するアプリです。"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.ico"},{"rel":"stylesheet","type":"text\u002Fcss","href":"https:\u002F\u002Ffonts.googleapis.com\u002Fcss?family=Roboto:100,300,400,500,700,900&display=swap"},{"rel":"stylesheet","type":"text\u002Fcss","href":"https:\u002F\u002Fcdn.jsdelivr.net\u002Fnpm\u002F@mdi\u002Ffont@latest\u002Fcss\u002Fmaterialdesignicons.min.css"}],"style":[],"script":[]},
 
     store,
     router,
@@ -200,12 +200,12 @@ async function createApp(ssrContext, config = {}) {
   }
   // Plugin execution
 
-  if (typeof nuxt_plugin_plugin_795c17fe === 'function') {
-    await nuxt_plugin_plugin_795c17fe(app.context, inject)
+  if (typeof nuxt_plugin_plugin_f8b1220a === 'function') {
+    await nuxt_plugin_plugin_f8b1220a(app.context, inject)
   }
 
-  if (typeof nuxt_plugin_plugin_1e34b78d === 'function') {
-    await nuxt_plugin_plugin_1e34b78d(app.context, inject)
+  if (typeof nuxt_plugin_plugin_f5f0a25a === 'function') {
+    await nuxt_plugin_plugin_f5f0a25a(app.context, inject)
   }
 
   // Lock enablePreview in context

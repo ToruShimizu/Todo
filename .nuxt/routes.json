@@ -2,15 +2,22 @@
   {
     "name": "activityPlans",
     "path": "/activityPlans",
-    "component": "/Users/Toru/ToDo/pages/activityPlans.vue",
+    "component": "/Users/Toru/Desktop/QC-Circle-Management-App/pages/activityPlans.vue",
     "chunkName": "pages/activityPlans",
-    "_name": "_1aa39070"
+    "_name": "_fd12f094"
   },
   {
     "name": "signIn",
     "path": "/signIn",
-    "component": "/Users/Toru/ToDo/pages/signIn.vue",
+    "component": "/Users/Toru/Desktop/QC-Circle-Management-App/pages/signIn.vue",
     "chunkName": "pages/signIn",
-    "_name": "_14038586"
+    "_name": "_cbaf6e92"
+  },
+  {
+    "name": "team",
+    "path": "/team",
+    "component": "/Users/Toru/Desktop/QC-Circle-Management-App/pages/team.vue",
+    "chunkName": "pages/team",
+    "_name": "_455f8d12"
   }
 ]
