@@ -29,7 +29,6 @@
                     @change-image-file="changeImageFile"
                   />
                 </v-col>
-                <slot name="comment"></slot>
               </v-row>
             </v-container>
             <SaveAndCloseButton
