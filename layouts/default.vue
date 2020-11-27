@@ -1,11 +1,11 @@
 <template>
-  <v-app dark>
+  <v-app :style="{ background: $vuetify.theme.themes.light.mainBackground }">
     <Header />
     <transition name="page">
       <nuxt />
     </transition>
     <DoneSnackbar />
-    <v-footer color="indigo darken-2" fixed>
+    <v-footer color="#051e34" fixed>
       <span class="grey--text text--lighten-2">&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
   </v-app>

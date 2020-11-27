@@ -1,9 +1,9 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-model="sideNavDrawer" app clipped>
+    <v-navigation-drawer v-model="sideNavDrawer" app clipped color="blue-grey darken-4">
       <SideNav />
     </v-navigation-drawer>
-    <v-app-bar color="indigo darken-2" dark app clipped-left>
+    <v-app-bar color="#051e34" dark app clipped-left>
       <v-app-bar-nav-icon @click="sideNavDrawer = !sideNavDrawer"></v-app-bar-nav-icon>
       <nuxt-link to="/activityPlans" class="white--text">
         <v-toolbar-title>QC活動管理</v-toolbar-title>

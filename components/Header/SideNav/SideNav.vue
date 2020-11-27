@@ -2,7 +2,7 @@
   <v-container>
     <v-list-item>
       <v-list-item-content>
-        <v-list-item-title class="title grey--text text--darken-2"
+        <v-list-item-title class="title white--text font-weight-bold"
           >ログインユーザー
         </v-list-item-title>
       </v-list-item-content>
@@ -10,27 +10,29 @@
     <v-divider />
     <v-list dense nav>
       <v-list-item-content v-if="loginUser">
-        <v-list-item-title class="title grey--text text--darken-2">
+        <v-list-item-title class="title white--text font-weight-bold">
           <v-avatar max-width="50" max-height="50">
             <v-img v-if="photoURL" :src="photoURL" :lazy-src="photoURL">
               <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
-                  <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                  <v-progress-circular indeterminate color="white"></v-progress-circular>
                 </v-row>
               </template>
             </v-img>
-            <v-icon v-else>mdi-account-outline</v-icon>
+            <v-icon v-else color="white">mdi-account</v-icon>
           </v-avatar>
           {{ gettersUserName }}
         </v-list-item-title>
-        <v-list-item-title class="title grey--text text--darken-2">
-          <v-icon>mdi-email-outline</v-icon>
+        <v-list-item-title class="title white--text">
+          <v-icon color="white">mdi-email</v-icon>
           {{ gettersUserEmail }}
         </v-list-item-title>
       </v-list-item-content>
       <v-list-item>
         <v-list-item-content v-if="!loginUser">
-          <v-list-item-title>ログインユーザーはいません</v-list-item-title>
+          <v-list-item-title class="white--text font-weight-bold"
+            >ログインユーザーはいません</v-list-item-title
+          >
         </v-list-item-content>
       </v-list-item>
     </v-list>
