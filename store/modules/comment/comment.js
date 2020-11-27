@@ -1,12 +1,6 @@
 import { db } from '~/plugins/firebase'
 
 const mutations = {
-  // コメント削除
-  removeComment(state, { id }) {
-    const index = state.comments.findIndex((comment) => comment.id === id)
-    state.comments.splice(index, 1)
-    console.log('removeComment')
-  },
   // コメントの初期化
   initComments(state) {
     state.comments = []
@@ -48,13 +42,13 @@ const actions = {
 
   },
   // コメントの削除
-  async removeComment({ getters, commit }, { id }) {
+  async removeComment({ getters, commit }, comment) {
     if (getters.userUid) {
       const snapShot = await db.collection(`users/${getters.userUid}/activityPlans`).get()
-      snapShot.forEach(async (doc) => {
-        await doc.ref.collection(`comments/${getters.userUid}/message`).doc(id).delete()
+      snapShot.docs.map(async (doc) => {
+        await doc.ref.collection(`comments/${getters.userUid}/message`).doc(comment.id).delete()
       })
-      commit('removeComment', { id })
+      commit('modules/activityPlans/activityPlans/removeComment', comment, { root: true })
     }
   },
   // コメントの取得
