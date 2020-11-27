@@ -16,9 +16,9 @@
         :rotate="270"
         :size="45"
         class="ml-1"
-        color="success"
-        >{{ completionRateOfActivityPlans }}</v-progress-circular
-      >
+        color="#1976d2"
+        >{{ completionRateOfActivityPlans }}
+      </v-progress-circular>
     </v-tab>
   </v-tabs>
 </template>
