@@ -52,6 +52,14 @@ const mutations = {
     const index = state.activityPlans.findIndex((contents) => contents.id === id)
     state.activityPlans[index].comments.unshift(comment)
   },
+  // コメント削除
+  removeComment(state, comment) {
+    const id = comment.id
+    const activityPlanIndex = state.activityPlans.findIndex((contents) => contents.id === comment.activityPlanId)
+    const commentIndex = state.activityPlans[activityPlanIndex].comments.findIndex((comment) => comment.id === id)
+    state.activityPlans[activityPlanIndex].comments.splice(commentIndex, 1)
+    console.log('removeComment')
+  },
 }
 const actions = {
   // firestoreからactivityPlanのデータを取り出す
