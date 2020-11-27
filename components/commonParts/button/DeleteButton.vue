@@ -3,8 +3,8 @@
     <Loading>
       <template v-slot:loading>
         <v-btn
+          class="white--text"
           color="red darken-1"
-          outlined
           @click="handleDeleteButton"
           :loading="loading"
           :disabled="loading"

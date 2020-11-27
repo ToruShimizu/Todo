@@ -2,16 +2,17 @@
   <div>
     <v-menu transition="fab-transition">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="grey" v-bind="attrs" v-on="on" outlined small class="mt-1 ml-5">
-          <v-icon> mdi-pencil-outline </v-icon>
+        <v-btn color="blue--grey darken-1" v-bind="attrs" v-on="on" small text class="mt-1 ml-5">
+          <v-icon class="blue--grey darken-1"> mdi-pencil </v-icon>
         </v-btn>
       </template>
-      <v-list>
+      <v-list color="blue-grey darken-4">
         <v-list-item>
           <v-list-item-title>
             <TextButton
+              class="white--text font-weight-bold"
               @handle-text-button="openUpdateTeam"
-              :icon="'mdi-pencil-outline'"
+              :icon="'mdi-pencil'"
               :title="'サークル編集'"
             />
           </v-list-item-title>
@@ -19,8 +20,9 @@
         <v-list-item>
           <v-list-item-title>
             <TextButton
+              class="white--text font-weight-bold"
               @handle-text-button="handleDeleteTeam"
-              :icon="'mdi-account-multiple-remove-outline'"
+              :icon="'mdi-account-multiple-remove'"
               :title="'サークル削除'"
             />
           </v-list-item-title>

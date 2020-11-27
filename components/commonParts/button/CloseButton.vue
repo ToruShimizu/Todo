@@ -1,6 +1,6 @@
 <template>
-  <v-btn color="blue darken-1" outlined @click="handleCloseButton" class="mr-2">
-    <v-icon left>mdi-arrow-left-bold-box-outline </v-icon>
+  <v-btn color="blue accent-3" @click="handleCloseButton" class="mr-2 white--text">
+    <v-icon left>mdi-arrow-left-bold-box </v-icon>
     <span class="font-italic">{{ title }}</span>
   </v-btn>
 </template>
