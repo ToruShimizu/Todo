@@ -89,7 +89,13 @@
             <template v-else>
               <v-icon>mdi-file-image-outline</v-icon>
             </template>
-            <IconButton :icon="'mdi-comment-text-outline '" />
+            <CommentView
+              :comment-dialog="commentDialog"
+              @close-comment="closeComment"
+              :plan-contents-id="contents.id"
+            />
+
+            <IconButton :icon="'mdi-comment-text-outline '" @handle-icon-button="openComment" />
           </v-card-actions>
         </v-card>
       </transition-group>
@@ -99,13 +105,15 @@
 
 <script>
 import ActivityPlansImageFile from '@/components/ActivityPlans/ActivityPlansImageFile'
+import CommentView from '@/components/comment/CommentView'
 import IconButton from '@/components/commonParts/button/IconButton'
 import TextButton from '@/components/commonParts/button/TextButton/Textbutton'
 export default {
   components: {
     IconButton,
     TextButton,
-    ActivityPlansImageFile
+    ActivityPlansImageFile,
+    CommentView
   },
   props: {
     contents: {
@@ -118,6 +126,7 @@ export default {
   },
   data() {
     return {
+      commentDialog: false,
       imageFileDialog: false,
       editImageFile: ''
     }
@@ -146,6 +155,12 @@ export default {
     },
     closeImageFile() {
       this.imageFileDialog = false
+    },
+    openComment() {
+      this.commentDialog = true
+    },
+    closeComment() {
+      this.commentDialog = false
     }
   }
 }

@@ -20,10 +20,6 @@
           <LoadingImg v-if="editPlanContents.photoURL" :src="editPlanContents.photoURL" />
         </v-col>
       </template>
-      <template v-slot:comment>
-        <AddComment :plan-contents-id="editPlanContents.id" />
-        <Comment :planContents-id="editPlanContents.id" />
-      </template>
     </FormCreateActivityPlan>
   </div>
 </template>
@@ -33,14 +29,10 @@ import { mapState, mapActions } from 'vuex'
 import FormCreateActivityPlan from '@/components/commonParts/activityPlans/form/FormCreateActivityPlan'
 import LoadingImg from '@/components/commonParts/v-img/LoadingImg'
 import TextButton from '@/components/commonParts/button/TextButton/TextButton'
-import AddComment from '@/components/Comment/AddComment'
-import Comment from '@/components/Comment/Comment'
 
 export default {
   components: {
     FormCreateActivityPlan,
-    AddComment,
-    Comment,
     LoadingImg,
     TextButton
   },
@@ -62,9 +54,6 @@ export default {
     return {
       updateDateMenu: false
     }
-  },
-  computed: {
-    ...mapState('modules/comment/comment', ['comment'])
   },
   methods: {
     async handleUpdateActivityPlan(planContents) {

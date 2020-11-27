@@ -1,0 +1,47 @@
+<template>
+  <FormDialog :form-dialog="commentDialog">
+    <template v-slot:dialog>
+      <FormView :title="'コメント'">
+        <template v-slot:form style="relative">
+          <AddComment :plan-contents-id="planContentsId" />
+          <Comment />
+          <v-card-actions class="justify-end">
+            <TextButton :title="'close'" class="primary--text" @handle-text-button="closeComment" />
+          </v-card-actions>
+        </template>
+      </FormView>
+    </template>
+  </FormDialog>
+</template>
+
+<script>
+import FormDialog from '@/components/commonParts/dialog/FormDialog'
+import FormView from '@/components/commonParts/form/FormView'
+import AddComment from '@/components/comment/AddComment'
+import Comment from '@/components/comment/Comment'
+
+export default {
+  components: {
+    FormDialog,
+    FormView,
+    AddComment,
+    Comment
+  },
+  props: {
+    commentDialog: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    planContentsId: {
+      type: String,
+      required: true
+    }
+  },
+  methods: {
+    closeComment() {
+      this.$emit('close-comment')
+    }
+  }
+}
+</script>
