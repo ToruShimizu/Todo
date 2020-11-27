@@ -15,7 +15,7 @@ export default function ({ store, redirect, route }) {
       store.dispatch('modules/activityPlans/activityPlans/fetchActivityPlans')
       store.dispatch('modules/team/team/fetchTeam')
     } else if (route.path === '/signIn') {
-      return redirect('/activityPlans')
+      return redirect('/')
     } else {
       return redirect('/signIn')
     }
