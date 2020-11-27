@@ -94,10 +94,10 @@
             <CommentView
               :comment-dialog="commentDialog"
               @close-comment="closeComment"
-              :plan-contents-id="contents.id"
+              :plan-contents="contents"
             />
-
             <IconButton :icon="'mdi-comment-text-outline '" @handle-icon-button="openComment" />
+            {{ contents.comments.length }}
           </v-card-actions>
         </v-card>
       </transition-group>

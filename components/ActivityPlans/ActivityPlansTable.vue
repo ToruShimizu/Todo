@@ -52,7 +52,6 @@ export default {
     },
     async openUpdateActivityPlan(contents) {
       const id = contents.id
-      await this.fetchComments(id)
       this.editPlanContents = Object.assign({}, contents)
       this.updateActivityPlanDialog = true
     },

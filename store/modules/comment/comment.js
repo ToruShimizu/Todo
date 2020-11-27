@@ -1,20 +1,6 @@
 import { db } from '~/plugins/firebase'
 
-const state = () => ({
-  comments: []
-})
 const mutations = {
-  // コメントの追加処理
-  addComment(state, comment) {
-    state.comments.push(comment)
-    console.log('addComments')
-  },
-  // コメント削除
-  removeComment(state, { id }) {
-    const index = state.comments.findIndex((comment) => comment.id === id)
-    state.comments.splice(index, 1)
-    console.log('removeComment')
-  },
   // コメントの初期化
   initComments(state) {
     state.comments = []
@@ -39,6 +25,7 @@ const actions = {
     const commentId = await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).collection(`comments/${getters.userUid}/message`).doc().id
 
     const comment = {
+      activityPlanId: id,
       message,
       id: commentId,
       created: createTime
@@ -51,16 +38,17 @@ const actions = {
         .doc(commentId)
         .set(comment)
     }
-    commit('addComment', comment)
+    commit('modules/activityPlans/activityPlans/addComment', { comment, id }, { root: true })
+
   },
   // コメントの削除
-  async removeComment({ getters, commit }, { id }) {
+  async removeComment({ getters, commit }, comment) {
     if (getters.userUid) {
       const snapShot = await db.collection(`users/${getters.userUid}/activityPlans`).get()
-      snapShot.forEach(async (doc) => {
-        await doc.ref.collection(`comments/${getters.userUid}/message`).doc(id).delete()
+      snapShot.docs.map(async (doc) => {
+        await doc.ref.collection(`comments/${getters.userUid}/message`).doc(comment.id).delete()
       })
-      commit('removeComment', { id })
+      commit('modules/activityPlans/activityPlans/removeComment', comment, { root: true })
     }
   },
   // コメントの取得
@@ -71,9 +59,10 @@ const actions = {
       .collection(`comments/${getters.userUid}/message`)
       .orderBy('created', 'desc')
       .get()
-    subCollection.forEach((doc) => {
+    subCollection.docs.map((doc) => {
       const comment = doc.data()
-      commit('addComment', comment)
+      const commentId = comment.activityPlanId
+      commit('modules/activityPlans/activityPlans/addComment', { comment, id: commentId }, { root: true })
     })
   }
 }
@@ -87,7 +76,6 @@ const getters = {
 
 export default {
   namespaced: true,
-  state,
   getters,
   actions,
   mutations

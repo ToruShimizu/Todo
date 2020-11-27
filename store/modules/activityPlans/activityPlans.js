@@ -47,11 +47,23 @@ const mutations = {
   updateCompletionDate(state, { completionDate, id }) {
     const index = state.activityPlans.findIndex((contents) => contents.id === id)
     state.activityPlans[index].completionDate = completionDate
-  }
+  },
+  addComment(state, { comment, id }) {
+    const index = state.activityPlans.findIndex((contents) => contents.id === id)
+    state.activityPlans[index].comments.unshift(comment)
+  },
+  // コメント削除
+  removeComment(state, comment) {
+    const id = comment.id
+    const activityPlanIndex = state.activityPlans.findIndex((contents) => contents.id === comment.activityPlanId)
+    const commentIndex = state.activityPlans[activityPlanIndex].comments.findIndex((comment) => comment.id === id)
+    state.activityPlans[activityPlanIndex].comments.splice(commentIndex, 1)
+    console.log('removeComment')
+  },
 }
 const actions = {
   // firestoreからactivityPlanのデータを取り出す
-  async fetchActivityPlans({ getters, commit }) {
+  async fetchActivityPlans({ getters, commit, dispatch }) {
     const snapShot = await db
       .collection(`users/${getters.userUid}/activityPlans`)
       .orderBy('created', 'desc')
@@ -60,6 +72,7 @@ const actions = {
     snapShot.docs.map((doc) => {
       const planContents = doc.data()
       commit('addActivityPlan', planContents)
+      dispatch('modules/comment/comment/fetchComments', planContents.id, { root: true })
     })
   },
   // 活動計画追加
@@ -78,6 +91,7 @@ const actions = {
       done: false,
       fileName: planContents.fileName,
       photoURL: planContents.photoURL,
+      comments: [],
       created: firebase.firestore.FieldValue.serverTimestamp()
     }
     try {
@@ -113,6 +127,7 @@ const actions = {
       done: false,
       photoURL: planContents.photoURL,
       fileName: planContents.fileName,
+      comments: planContents.comments,
       created: firebase.firestore.FieldValue.serverTimestamp()
     }
     try {
@@ -237,7 +252,7 @@ const getters = {
     return state.activityPlans.slice().sort((a, b) => {
       if (a.date < b.date) return -1
     })
-  }
+  },
 }
 
 export default {

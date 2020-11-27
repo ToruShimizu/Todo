@@ -38,14 +38,19 @@ export default {
   components: {
     LoadingImg
   },
+  props: {
+    comments: {
+      type: Array,
+      required: false
+    }
+  },
   computed: {
-    ...mapState('modules/comment/comment', ['comments']),
     ...mapGetters('modules/user/auth', ['gettersUserName', 'photoURL', 'userEmail'])
   },
   methods: {
     handleRemoveComment(comment) {
-      if (!confirm(comment, +'を削除しますか?')) return
-      this.removeComment({ id: comment.id })
+      if (!confirm(comment.message + 'を削除しますか?')) return
+      this.removeComment(comment)
     },
     ...mapActions('modules/comment/comment', ['removeComment'])
   }
