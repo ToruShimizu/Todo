@@ -22,6 +22,8 @@ QC-Circle-Management-App
 3.サークル作成後、メンバー登録と活動計画作成ができるようになります。
 
 ![メンバー登録画面](https://user-images.githubusercontent.com/65491855/100456945-7c4d4100-3104-11eb-90e9-55f6798578f9.png)
+
+![活動計画作成画面](https://user-images.githubusercontent.com/65491855/100459456-d7813280-3108-11eb-828f-9d78c5a551b5.png)
  
 4.活動計画の一覧画面には、完了・未完了の切り替え、完了状態の絞り込み、検索機能、ソート機能が備わっています。
 
@@ -33,9 +35,11 @@ QC-Circle-Management-App
 
 6.活動計画表示カードの右下のコメントアイコンを選択されますとコメント機能を利用することができます。
 
-![活動計画一覧画面](https://user-images.githubusercontent.com/65491855/100457229-03021e00-3105-11eb-9f74-c36894d0a8b3.png)
+![コメント画面](https://user-images.githubusercontent.com/65491855/100460338-56c33600-310a-11eb-8e7e-b81002a0008e.png)
 
 7.左側のサイドメニューよりログインユーザーの編集が行えます（テストユーザーは不可）。
+
+![ユーザー情報編集画面](https://user-images.githubusercontent.com/65491855/100460432-7fe3c680-310a-11eb-98a7-4010774c4359.png)
 ## Dependency
 
 - @nuxt/cli "2.13.2"
