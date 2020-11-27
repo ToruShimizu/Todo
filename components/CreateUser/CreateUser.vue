@@ -22,7 +22,7 @@
               :save-button-title="'save'"
               :loader="createUserLoader"
               :loading="createUserLoading"
-              :icon="'mdi-account-plus-outline'"
+              :icon="'mdi-account-plus'"
               @close-button="closeCreateUser"
               @save-button="handleCreateUser"
               @stop-loading="stopCreateUserLoading"

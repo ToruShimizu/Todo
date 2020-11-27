@@ -35,7 +35,7 @@
               :close-button-title="'close'"
               :save-button-title="'save'"
               :loader="null"
-              :icon="'mdi-pencil-plus-outline'"
+              :icon="'mdi-pencil-plus'"
               @save-button="handleSaveActivityPlan"
               @close-button="closeActivityPlan"
             />

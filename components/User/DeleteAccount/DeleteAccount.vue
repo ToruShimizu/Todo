@@ -24,7 +24,7 @@
                 :title="'delete'"
                 :loading="loading"
                 :loader="loader"
-                :icon="'mdi-account-multiple-remove-outline'"
+                :icon="'mdi-account-multiple-remove'"
                 @delete-button="handleDeleteAccount"
                 @stop-loading="stopLoading"
               />

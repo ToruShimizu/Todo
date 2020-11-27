@@ -3,12 +3,11 @@
     <Loading>
       <template v-slot:loading>
         <v-btn
-          color="blue darken-1"
-          outlined
+          color="blue accent-3"
           @click="handleSaveButton"
           :loading="loading"
           :disabled="loading"
-          class="ml-2"
+          class="ml-2 white--text"
         >
           <v-icon left>{{ icon }} </v-icon>
           <span class="font-italic">{{ title }} </span>

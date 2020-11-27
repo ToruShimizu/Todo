@@ -3,17 +3,16 @@
     <v-list v-if="loginUser">
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="title grey--text text--darken-2"
-            >ユーザー情報編集
-          </v-list-item-title>
+          <v-list-item-title class="title white--text">ユーザー情報編集 </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
       <v-divider />
       <v-list-item>
         <v-list-item-title>
           <TextButton
+            class="white--text font-weight-bold"
             @handle-text-button="selectedEditUserInfo = 'openUpdateUserName'"
-            :icon="'mdi-badge-account-horizontal-outline'"
+            :icon="'mdi-badge-account-horizontal'"
             :title="'ユーザー名変更'"
           />
         </v-list-item-title>
@@ -21,8 +20,9 @@
       <v-list-item>
         <v-list-item-title>
           <TextButton
+            class="white--text font-weight-bold"
             @handle-text-button="handleSelectUserImageFile"
-            :icon="'mdi-file-account-outline'"
+            :icon="'mdi-file-account'"
             :title="'プロフィール画像変更'"
           />
         </v-list-item-title>
@@ -30,8 +30,9 @@
       <v-list-item>
         <v-list-item-title>
           <TextButton
+            class="white--text font-weight-bold"
             @handle-text-button="selectedEditUserInfo = 'openUpdateEmail'"
-            :icon="'mdi-email-edit-outline'"
+            :icon="'mdi-email-edit'"
             :title="'メールアドレス変更'"
           />
         </v-list-item-title>
@@ -39,8 +40,9 @@
       <v-list-item>
         <v-list-item-title>
           <TextButton
+            class="white--text font-weight-bold"
             @handle-text-button="selectedEditUserInfo = 'openUpdatePassword'"
-            :icon="'mdi-account-key-outline'"
+            :icon="'mdi-account'"
             :title="'パスワード変更'"
           />
         </v-list-item-title>
@@ -48,8 +50,9 @@
       <v-list-item>
         <v-list-item-title>
           <TextButton
+            class="white--text font-weight-bold"
             @handle-text-button="selectedEditUserInfo = 'openDeleteAccount'"
-            :icon="'mdi-account-remove-outline'"
+            :icon="'mdi-account-remove'"
             :title="'アカウント削除 '"
           />
         </v-list-item-title>

@@ -1,5 +1,5 @@
 <template>
-  <v-btn color="blue darken-1" outlined @click="handleDialogButton">
+  <v-btn color="blue accent-3" @click="handleDialogButton" class="white--text">
     <v-icon>{{ icon }}</v-icon>
     <span class="font-italic">{{ title }} </span>
   </v-btn>
