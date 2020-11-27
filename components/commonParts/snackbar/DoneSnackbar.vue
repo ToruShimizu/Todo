@@ -1,5 +1,5 @@
 <template>
-  <v-snackbar v-model="snackbar" color="grey darken-3">
+  <v-snackbar v-model="snackbar" color="grey darken-3" 　:top="true">
     <div class="text-center">
       <v-icon color="cyan accent-2">mdi-check-circle </v-icon>
       <span class="font-italic white--text">{{ title }}</span>
