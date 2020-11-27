@@ -65,9 +65,10 @@ const actions = {
       .collection(`comments/${getters.userUid}/message`)
       .orderBy('created', 'desc')
       .get()
-    subCollection.forEach((doc) => {
+    subCollection.docs.map((doc) => {
       const comment = doc.data()
-      commit('addComment', comment)
+      const commentId = comment.activityPlanId
+      commit('modules/activityPlans/activityPlans/addComment', { comment, id: commentId }, { root: true })
     })
   }
 }
