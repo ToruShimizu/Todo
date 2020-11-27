@@ -55,7 +55,7 @@ const mutations = {
 }
 const actions = {
   // firestoreからactivityPlanのデータを取り出す
-  async fetchActivityPlans({ getters, commit }) {
+  async fetchActivityPlans({ getters, commit, dispatch }) {
     const snapShot = await db
       .collection(`users/${getters.userUid}/activityPlans`)
       .orderBy('created', 'desc')
@@ -64,6 +64,7 @@ const actions = {
     snapShot.docs.map((doc) => {
       const planContents = doc.data()
       commit('addActivityPlan', planContents)
+      dispatch('modules/comment/comment/fetchComments', planContents.id, { root: true })
     })
   },
   // 活動計画追加
