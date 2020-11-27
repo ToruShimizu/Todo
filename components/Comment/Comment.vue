@@ -38,8 +38,13 @@ export default {
   components: {
     LoadingImg
   },
+  props: {
+    comments: {
+      type: Array,
+      required: false
+    }
+  },
   computed: {
-    ...mapState('modules/comment/comment', ['comments']),
     ...mapGetters('modules/user/auth', ['gettersUserName', 'photoURL', 'userEmail'])
   },
   methods: {
