@@ -47,7 +47,11 @@ const mutations = {
   updateCompletionDate(state, { completionDate, id }) {
     const index = state.activityPlans.findIndex((contents) => contents.id === id)
     state.activityPlans[index].completionDate = completionDate
-  }
+  },
+  addComment(state, { comment, id }) {
+    const index = state.activityPlans.findIndex((contents) => contents.id === id)
+    state.activityPlans[index].comments.unshift(comment)
+  },
 }
 const actions = {
   // firestoreからactivityPlanのデータを取り出す
@@ -78,6 +82,7 @@ const actions = {
       done: false,
       fileName: planContents.fileName,
       photoURL: planContents.photoURL,
+      comments: [],
       created: firebase.firestore.FieldValue.serverTimestamp()
     }
     try {
@@ -113,6 +118,7 @@ const actions = {
       done: false,
       photoURL: planContents.photoURL,
       fileName: planContents.fileName,
+      comments: planContents.comments,
       created: firebase.firestore.FieldValue.serverTimestamp()
     }
     try {
@@ -237,7 +243,7 @@ const getters = {
     return state.activityPlans.slice().sort((a, b) => {
       if (a.date < b.date) return -1
     })
-  }
+  },
 }
 
 export default {
