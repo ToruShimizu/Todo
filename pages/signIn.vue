@@ -1,5 +1,5 @@
 <template>
-  <FormView :title="'ログインはこちら'">
+  <FormView :title="'ログインはこちら'" class="mt-8 py-5">
     <template v-slot:form>
       <FormCardText>
         <template v-slot:text>

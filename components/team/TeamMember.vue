@@ -1,5 +1,5 @@
 <template>
-  <v-layout class="justify-center">
+  <v-layout class="justify-center mb-8">
     <v-data-table
       :headers="memberHeaders"
       :items="teamMember"

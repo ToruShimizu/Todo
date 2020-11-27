@@ -1,5 +1,5 @@
 <template>
-  <v-container style="max-width: 500px" class="mb-5">
+  <v-container style="max-width: 500px" class="mb-5 py-5">
     <v-layout class="justify-center">
       <CreateTeam :create-team-dialog="createTeamDialog" @close-team-dialog="closeCreateTeam" />
       <v-btn
