@@ -27,6 +27,10 @@ export default {
 a {
   text-decoration: none;
 }
+html {
+  height: 100%;
+  background: #f5f5f5;
+}
 .page-enter {
   opacity: 0;
 }

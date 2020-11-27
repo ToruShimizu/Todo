@@ -48,6 +48,6 @@ export default {
 
 <style>
 .v-application--wrap {
-  min-height: 10vh;
+  min-height: 7vh;
 }
 </style>
