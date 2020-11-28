@@ -91,11 +91,6 @@
               @open-image-file="openImageFile"
             />
           </v-list-item>
-          <ActivityPlansImageFile
-            :contents="contents"
-            :image-file-dialog="imageFileDialog"
-            @close-image-file="closeImageFile"
-          />
         </v-card>
       </transition-group>
     </template>
@@ -103,7 +98,6 @@
 </template>
 
 <script>
-import ActivityPlansImageFile from '@/components/ActivityPlans/ActivityPlansImageFile'
 import ActivityPlansThumbnail from '@/components/ActivityPlans/ActivityPlansThumbnail'
 import CommentView from '@/components/comment/CommentView'
 import IconButton from '@/components/commonParts/button/IconButton'
@@ -112,7 +106,6 @@ export default {
   components: {
     IconButton,
     TextButton,
-    ActivityPlansImageFile,
     CommentView,
     ActivityPlansThumbnail
   },
@@ -128,7 +121,6 @@ export default {
   data() {
     return {
       commentDialog: false,
-      imageFileDialog: false,
       editImageFile: ''
     }
   },
@@ -150,12 +142,6 @@ export default {
     openActivityPlan(contents) {
       console.log(contents)
       this.$emit('open-activity-plan', contents)
-    },
-    openImageFile() {
-      this.imageFileDialog = true
-    },
-    closeImageFile() {
-      this.imageFileDialog = false
     },
     openComment() {
       this.commentDialog = true
