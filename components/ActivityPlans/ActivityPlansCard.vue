@@ -2,7 +2,7 @@
   <div>
     <template>
       <transition-group name="card-anim">
-        <v-card class="mb-２" :key="contents.id">
+        <v-card class="mb-5" :key="contents.id">
           <v-card-actions class="pa-0">
             <v-card-title class="pa-1">
               <v-btn icon @click="toggleDoneActivityPlan(contents)">
@@ -31,10 +31,6 @@
             <IconButton :icon="'mdi-comment-text-outline '" @handle-icon-button="openComment" />
             {{ contents.comments.length }}
             <v-spacer />
-            <v-card-subtitle class="pa-0 mt-1">
-              <v-icon class="mb-1">mdi-account-outline </v-icon>
-              {{ inChargeMember }}
-            </v-card-subtitle>
             <v-menu transition="slide-y-transition" bottom>
               <template v-slot:activator="{ on, attrs }">
                 <v-btn icon v-bind="attrs" v-on="on">
@@ -65,38 +61,41 @@
               </v-list>
             </v-menu>
           </v-card-actions>
-
-          <v-card-actions>
-            <v-card-subtitle v-if="contents.detail" class="py-0 mt-1">
-              "{{ contents.detail }}"
-            </v-card-subtitle>
-          </v-card-actions>
-          <v-card-actions>
-            <v-fab-transition>
-              <v-card-subtitle class="pa-0 mt-1" v-if="contents.done">
+          <v-list-item three-line>
+            <v-list-item-content class="py-0 mt-1">
+              <v-list-item-title v-if="contents.detail">
+                "{{ contents.detail }}"
+              </v-list-item-title>
+              <v-list-item-subtitle class="pa-0 mt-1">
+                <v-icon class="mb-1">mdi-account-outline </v-icon>
+                {{ inChargeMember }}
+              </v-list-item-subtitle>
+              <v-list-item-subtitle class="pa-0 mt-1" v-if="contents.done">
                 <v-icon> mdi-check </v-icon>
-                {{ contents.completionDate }}
-              </v-card-subtitle>
-            </v-fab-transition>
-            <v-fab-transition>
-              <v-card-subtitle
-                v-if="!contents.done"
-                v-text="planContentsDateRangeText"
-                class="pb-0 mt-1"
-              ></v-card-subtitle>
-            </v-fab-transition>
-            <ActivityPlansImageFile
-              :contents="contents"
-              :image-file-dialog="imageFileDialog"
-              @close-image-file="closeImageFile"
-            />
+                {{ contents.completionDate }}</v-list-item-subtitle
+              >
+              <v-fade-transition>
+                <v-list-item-subtitle
+                  class="pa-0 mt-1"
+                  v-text="planContentsDateRangeText"
+                  v-if="!contents.done"
+                >
+                </v-list-item-subtitle>
+              </v-fade-transition>
+            </v-list-item-content>
 
             <ActivityPlansThumbnail
+              class="mb-2"
               v-if="contents.photoURL"
               :photoURL="contents.photoURL"
               @open-image-file="openImageFile"
             />
-          </v-card-actions>
+          </v-list-item>
+          <ActivityPlansImageFile
+            :contents="contents"
+            :image-file-dialog="imageFileDialog"
+            @close-image-file="closeImageFile"
+          />
         </v-card>
       </transition-group>
     </template>
@@ -193,3 +192,4 @@ export default {
   }
 }
 </style>
+
