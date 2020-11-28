@@ -161,12 +161,6 @@
   "LazyUpdateUserName": {
     "description": "Auto imported from components/User/UpdateUserInfo/UpdateUserName.vue"
   },
-  "FormDialog": {
-    "description": "Auto imported from components/commonParts/dialog/FormDialog.vue"
-  },
-  "LazyFormDialog": {
-    "description": "Auto imported from components/commonParts/dialog/FormDialog.vue"
-  },
   "BlueDialogButton": {
     "description": "Auto imported from components/commonParts/button/BlueDialogButton.vue"
   },
@@ -221,6 +215,12 @@
   "LazyFormCardText": {
     "description": "Auto imported from components/commonParts/card/FormCardText.vue"
   },
+  "FormDialog": {
+    "description": "Auto imported from components/commonParts/dialog/FormDialog.vue"
+  },
+  "LazyFormDialog": {
+    "description": "Auto imported from components/commonParts/dialog/FormDialog.vue"
+  },
   "FormView": {
     "description": "Auto imported from components/commonParts/form/FormView.vue"
   },
@@ -244,6 +244,24 @@
   },
   "LazyLoadingImg": {
     "description": "Auto imported from components/commonParts/v-img/LoadingImg.vue"
+  },
+  "EditTeamList": {
+    "description": "Auto imported from components/team/edit/EditTeamList.vue"
+  },
+  "LazyEditTeamList": {
+    "description": "Auto imported from components/team/edit/EditTeamList.vue"
+  },
+  "UpdateMember": {
+    "description": "Auto imported from components/team/edit/UpdateMember.vue"
+  },
+  "LazyUpdateMember": {
+    "description": "Auto imported from components/team/edit/UpdateMember.vue"
+  },
+  "UpdateTeam": {
+    "description": "Auto imported from components/team/edit/UpdateTeam.vue"
+  },
+  "LazyUpdateTeam": {
+    "description": "Auto imported from components/team/edit/UpdateTeam.vue"
   },
   "FormCreateActivityPlan": {
     "description": "Auto imported from components/commonParts/activityPlans/form/FormCreateActivityPlan.vue"
@@ -287,23 +305,17 @@
   "LazyTextButtonXSmall": {
     "description": "Auto imported from components/commonParts/button/textButton/TextButtonXSmall.vue"
   },
-  "EditTeamList": {
-    "description": "Auto imported from components/team/edit/EditTeamList.vue"
+  "FormCreateTeam": {
+    "description": "Auto imported from components/commonParts/team/form/FormCreateTeam.vue"
   },
-  "LazyEditTeamList": {
-    "description": "Auto imported from components/team/edit/EditTeamList.vue"
+  "LazyFormCreateTeam": {
+    "description": "Auto imported from components/commonParts/team/form/FormCreateTeam.vue"
   },
-  "UpdateMember": {
-    "description": "Auto imported from components/team/edit/UpdateMember.vue"
+  "FormMember": {
+    "description": "Auto imported from components/commonParts/team/form/FormMember.vue"
   },
-  "LazyUpdateMember": {
-    "description": "Auto imported from components/team/edit/UpdateMember.vue"
-  },
-  "UpdateTeam": {
-    "description": "Auto imported from components/team/edit/UpdateTeam.vue"
-  },
-  "LazyUpdateTeam": {
-    "description": "Auto imported from components/team/edit/UpdateTeam.vue"
+  "LazyFormMember": {
+    "description": "Auto imported from components/commonParts/team/form/FormMember.vue"
   },
   "ImprovementRoleComboBox": {
     "description": "Auto imported from components/commonParts/team/input/ImprovementRoleComboBox.vue"
@@ -322,18 +334,6 @@
   },
   "LazyRoleComboBox": {
     "description": "Auto imported from components/commonParts/team/input/RoleComboBox.vue"
-  },
-  "FormCreateTeam": {
-    "description": "Auto imported from components/commonParts/team/form/FormCreateTeam.vue"
-  },
-  "LazyFormCreateTeam": {
-    "description": "Auto imported from components/commonParts/team/form/FormCreateTeam.vue"
-  },
-  "FormMember": {
-    "description": "Auto imported from components/commonParts/team/form/FormMember.vue"
-  },
-  "LazyFormMember": {
-    "description": "Auto imported from components/commonParts/team/form/FormMember.vue"
   },
   "FormUserEmail": {
     "description": "Auto imported from components/commonParts/user/form/FormUserEmail.vue"
