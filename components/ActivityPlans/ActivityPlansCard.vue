@@ -85,11 +85,7 @@
             "{{ contents.detail }}"
           </v-card-subtitle>
           <v-list-item v-if="contents.photoURL">
-            <ActivityPlansThumbnail
-              class="mx-auto mb-3"
-              :photoURL="contents.photoURL"
-              @open-image-file="openImageFile"
-            />
+            <ActivityPlansThumbnail class="mx-auto mb-3" :photoURL="contents.photoURL" />
           </v-list-item>
         </v-card>
       </transition-group>
