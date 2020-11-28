@@ -17,7 +17,13 @@
           />
         </v-col>
         <v-col cols="12" sm="12" md="12">
-          <LoadingImg v-if="editPlanContents.photoURL" :src="editPlanContents.photoURL" />
+          <LoadingImg
+            class="mx-auto"
+            v-if="editPlanContents.photoURL"
+            :src="editPlanContents.photoURL"
+            :width="'200'"
+            :height="'200'"
+          />
         </v-col>
       </template>
     </FormCreateActivityPlan>
