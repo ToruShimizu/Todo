@@ -2,7 +2,7 @@
   <div>
     <template>
       <transition-group name="card-anim">
-        <v-card class="mb-2" :key="contents.id">
+        <v-card class="mb-２" :key="contents.id">
           <v-card-actions class="pa-0">
             <v-card-title class="pa-1">
               <v-btn icon @click="toggleDoneActivityPlan(contents)">
@@ -23,7 +23,13 @@
                 v-text="contents.category"
               ></v-card-subtitle>
             </v-card-title>
-
+            <CommentView
+              :comment-dialog="commentDialog"
+              @close-comment="closeComment"
+              :plan-contents="contents"
+            />
+            <IconButton :icon="'mdi-comment-text-outline '" @handle-icon-button="openComment" />
+            {{ contents.comments.length }}
             <v-spacer />
             <v-card-subtitle class="pa-0 mt-1">
               <v-icon class="mb-1">mdi-account-outline </v-icon>
@@ -79,25 +85,17 @@
                 class="pb-0 mt-1"
               ></v-card-subtitle>
             </v-fab-transition>
-            <v-spacer />
             <ActivityPlansImageFile
               :contents="contents"
               :image-file-dialog="imageFileDialog"
               @close-image-file="closeImageFile"
             />
-            <template v-if="contents.photoURL">
-              <IconButton :icon="'mdi-file-image-outline'" @handle-icon-button="openImageFile" />1
-            </template>
-            <template v-else>
-              <v-icon>mdi-file-image-outline</v-icon>
-            </template>
-            <CommentView
-              :comment-dialog="commentDialog"
-              @close-comment="closeComment"
-              :plan-contents="contents"
+
+            <ActivityPlansThumbnail
+              v-if="contents.photoURL"
+              :photoURL="contents.photoURL"
+              @open-image-file="openImageFile"
             />
-            <IconButton :icon="'mdi-comment-text-outline '" @handle-icon-button="openComment" />
-            {{ contents.comments.length }}
           </v-card-actions>
         </v-card>
       </transition-group>
@@ -107,6 +105,7 @@
 
 <script>
 import ActivityPlansImageFile from '@/components/ActivityPlans/ActivityPlansImageFile'
+import ActivityPlansThumbnail from '@/components/ActivityPlans/ActivityPlansThumbnail'
 import CommentView from '@/components/comment/CommentView'
 import IconButton from '@/components/commonParts/button/IconButton'
 import TextButton from '@/components/commonParts/button/TextButton/Textbutton'
@@ -115,7 +114,8 @@ export default {
     IconButton,
     TextButton,
     ActivityPlansImageFile,
-    CommentView
+    CommentView,
+    ActivityPlansThumbnail
   },
   props: {
     contents: {
