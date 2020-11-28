@@ -1,5 +1,6 @@
 <template>
   <v-img
+    v-if="src"
     :src="src"
     :lazy-src="src"
     aspect-ratio="1"
@@ -21,7 +22,8 @@ export default {
   props: {
     src: {
       type: String,
-      required: true
+      required: false,
+      default: ''
     },
     width: {
       type: String,
