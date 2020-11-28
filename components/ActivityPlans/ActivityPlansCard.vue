@@ -2,7 +2,7 @@
   <div>
     <template>
       <transition-group name="card-anim">
-        <v-card class="mb-5" :key="contents.id">
+        <v-card class="mb-5 elevation-5" :key="contents.id">
           <v-card-actions class="pa-0">
             <v-card-title class="pa-1">
               <v-btn icon @click="toggleDoneActivityPlan(contents)">
@@ -61,32 +61,32 @@
               </v-list>
             </v-menu>
           </v-card-actions>
-          <v-list-item three-line>
-            <v-list-item-content class="py-0 mt-1">
-              <v-list-item-title v-if="contents.detail">
-                "{{ contents.detail }}"
-              </v-list-item-title>
-              <v-list-item-subtitle class="pa-0 mt-1">
-                <v-icon class="mb-1">mdi-account-outline </v-icon>
-                {{ inChargeMember }}
-              </v-list-item-subtitle>
-              <v-list-item-subtitle class="pa-0 mt-1" v-if="contents.done">
+          <v-card-actions>
+            <template v-if="contents.done">
+              <v-card-subtitle class="pa-0">
                 <v-icon> mdi-check </v-icon>
-                {{ contents.completionDate }}</v-list-item-subtitle
-              >
-              <v-fade-transition>
-                <v-list-item-subtitle
-                  class="pa-0 mt-1"
-                  v-text="planContentsDateRangeText"
-                  v-if="!contents.done"
-                >
-                </v-list-item-subtitle>
-              </v-fade-transition>
-            </v-list-item-content>
+                {{ contents.completionDate }}
+              </v-card-subtitle>
+            </template>
+            <template v-else>
+              <v-card-subtitle class="pa-0">
+                <v-icon>mdi-calendar-range </v-icon>
+                {{ planContentsDateRangeText }}
+              </v-card-subtitle>
+            </template>
+            <v-spacer />
+            <v-card-subtitle class="pa-0">
+              <v-icon class="mb-1">mdi-account-outline </v-icon>
+              {{ inChargeMember }}
+            </v-card-subtitle>
+          </v-card-actions>
 
+          <v-card-subtitle v-if="contents.detail" class="mb-2 pa-0 text-center">
+            "{{ contents.detail }}"
+          </v-card-subtitle>
+          <v-list-item v-if="contents.photoURL">
             <ActivityPlansThumbnail
-              class="mb-2"
-              v-if="contents.photoURL"
+              class="mx-auto mb-3"
               :photoURL="contents.photoURL"
               @open-image-file="openImageFile"
             />
@@ -169,6 +169,10 @@ export default {
 
 
 <style scoped>
+.headline {
+  text-overflow: inherit;
+  white-space: unset;
+}
 .card-anim-enter-active {
   animation: fadeInUp 0.7s;
   animation-delay: 0.4s;
