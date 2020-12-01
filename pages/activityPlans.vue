@@ -49,12 +49,12 @@
           サークルがありません
         </v-card-text></v-layout
       >
-      <Pagination
+      <ActivityPlansPagination
         :set-activity-plans-page.sync="activityPlansPage"
         @change-activity-plans-page="changeActivityPlansPage"
         :activity-plans-page-length="activityPlansPageLength"
       />
-      <ActivityPlansTable
+      <ActivityPlansView
         :display-activity-plans="displayActivityPlans"
         :todo-categorys="todoCategorys"
       />
