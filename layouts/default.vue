@@ -2,7 +2,9 @@
   <v-app :style="{ background: $vuetify.theme.themes.dark.mainBackground }">
     <Header />
     <transition name="page">
-      <nuxt />
+      <v-main>
+        <nuxt />
+      </v-main>
     </transition>
     <DoneSnackbar />
     <v-footer color="#051e34" fixed>
