@@ -27,9 +27,6 @@ export default {
       message: ''
     }
   },
-  computed: {
-    ...mapState('modules/activity-plans/activityPlans', ['comments'])
-  },
   methods: {
     handleAddComment() {
       this.addComment({

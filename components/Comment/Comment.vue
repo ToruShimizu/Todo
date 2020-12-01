@@ -45,7 +45,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('modules/user/auth', ['gettersUserName', 'photoURL', 'userEmail'])
+    ...mapGetters('modules/user/auth', ['gettersUserName', 'photoURL'])
   },
   methods: {
     handleRemoveComment(comment) {

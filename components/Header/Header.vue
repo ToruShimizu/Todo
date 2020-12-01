@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <div>
     <v-navigation-drawer v-model="sideNavDrawer" app clipped color="blue-grey darken-4">
       <SideNav />
     </v-navigation-drawer>
@@ -16,7 +16,7 @@
         <v-icon @click="logout"> mdi-account-arrow-right-outline </v-icon>
       </v-toolbar-items>
     </v-app-bar>
-  </v-app>
+  </div>
 </template>
 
 <script>
@@ -40,8 +40,3 @@ export default {
 }
 </script>
 
-<style>
-.v-application--wrap {
-  min-height: 7vh;
-}
-</style>
