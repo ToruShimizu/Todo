@@ -7,18 +7,15 @@ const mutations = {
   // データを初期化する
   initActivityPlans(state) {
     state.activityPlans = []
-    console.log('initActivityPlans')
   },
   // 活動計画追加
   addActivityPlan(state, activityPlan) {
     state.activityPlans.unshift(activityPlan)
-    console.log('addActivityPlan')
   },
   // 活動計画削除
   removeActivityPlan(state, { activityPlanId }) {
     const index = state.activityPlans.findIndex((activityPlan) => activityPlan.id === activityPlanId)
     state.activityPlans.splice(index, 1)
-    console.log('removePlanContents')
   },
   // 活動計画更新
   updateActivityPlan(state, updateActivityPlan) {
@@ -33,7 +30,6 @@ const mutations = {
     activityPlan.photoURL = updateActivityPlan.photoURL
     activityPlan.fileName = updateActivityPlan.fileName
 
-    console.log('updateActivityPlan')
   },
   // 活動計画の完了状態切り替え
   doneActivityPlan(state, planContents) {
@@ -51,7 +47,6 @@ const mutations = {
   // コメントの初期化
   initComments(state) {
     state.comments = []
-    console.log('initComments')
   },
   addComment(state, { comment, id }) {
     const index = state.activityPlans.findIndex((contents) => contents.id === id)
@@ -63,7 +58,6 @@ const mutations = {
     const activityPlanIndex = state.activityPlans.findIndex((contents) => contents.id === comment.activityPlanId)
     const commentIndex = state.activityPlans[activityPlanIndex].comments.findIndex((comment) => comment.id === id)
     state.activityPlans[activityPlanIndex].comments.splice(commentIndex, 1)
-    console.log('removeComment')
   },
 }
 const actions = {
@@ -80,7 +74,6 @@ const actions = {
       return doc.data().id
     })
     id.map((doc) => {
-      console.log(doc)
       dispatch('fetchComments', doc)
     })
   },
@@ -277,7 +270,6 @@ const actions = {
     const snapShot = await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).get()
     const subCollection = await snapShot.ref.collection(`comments/${getters.userUid}/message`).get()
     subCollection.docs.map(async (doc) => {
-      console.log(doc);
       snapShot.ref.collection(`comments/${getters.userUid}/message`).doc(doc.id).delete()
     })
   }

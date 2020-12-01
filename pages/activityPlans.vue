@@ -151,8 +151,6 @@ export default {
 
           break
         case 'active':
-          console.log(activityPlans)
-
           returnvalue = activityPlans.filter((activityPlan) => !activityPlan.done)
 
           break

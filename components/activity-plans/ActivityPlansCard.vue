@@ -132,7 +132,6 @@ export default {
       this.$emit('toggle-done-activity-plan', contents)
     },
     openActivityPlan(contents) {
-      console.log(contents)
       this.$emit('open-activity-plan', contents)
     },
     openComment() {

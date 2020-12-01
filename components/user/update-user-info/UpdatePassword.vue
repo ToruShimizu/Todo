@@ -104,7 +104,6 @@ export default {
   methods: {
     async handleUpdatePassword() {
       const editUser = this.editUser
-      console.log(editUser)
       if (!editUser.email || !editUser.password || !editUser.editPassword) {
         this.$refs.form.validate()
         return

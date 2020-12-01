@@ -14,14 +14,12 @@ const mutations = {
   },
   registrationTeam(state, registrationTeam) {
     state.team = registrationTeam
-    console.log('registrationTeam')
   },
   updateTeam(state, updateTeam) {
     state.team = updateTeam
   },
   registrationMember(state, registrationMember) {
     state.teamMember.unshift(registrationMember)
-    console.log('registrationMember')
   },
   updateMember(state, editMember) {
     const index = state.teamMember.findIndex((member) => member.id === editMember.id)
@@ -29,7 +27,6 @@ const mutations = {
     teamMember.name = editMember.name
     teamMember.role = editMember.role
     teamMember.improvementRole = editMember.improvementRole
-    console.log('updateMember')
 
   },
   initMember(state) {

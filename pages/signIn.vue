@@ -106,7 +106,6 @@ export default {
       })
     },
     async handleLogin() {
-      console.log(this.signInUser)
       const signInUser = this.signInUser
       if (!signInUser.password || !signInUser.email) {
         this.$refs.form.validate()

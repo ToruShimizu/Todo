@@ -27,7 +27,6 @@ const actions = {
   // ユーザー情報の更新
   // FIXME:ユーザーのstate更新
   async updateUserName({ commit }, { userName, file }) {
-    console.log('auth', file)
     const userInfo = await firebase.auth().currentUser
     if (userInfo.displayName === 'テストユーザー') {
       alert('テストユーザーは変更できません')

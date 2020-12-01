@@ -9,12 +9,10 @@ const mutations = {
   // ログインユーザー情報の取得
   setLoginUser(state, userInfo) {
     state.loginUser = userInfo
-    console.log('setLoginUser')
   },
   // ログインユーザー情報の削除
   deleteLoginUser(state) {
     state.loginUser = null
-    console.log('deleteLoginUser')
   }
 }
 
@@ -28,7 +26,6 @@ const actions = {
   },
   // ログインユーザー情報の削除
   deleteLoginUser({ commit }) {
-    commit('deleteLoginUser')
   },
   // Googleログイン
   async googleLogin() {
@@ -58,7 +55,6 @@ const actions = {
   async logout({ commit }) {
     await auth.signOut()
     alert('ログアウトしました。')
-    console.log('logout')
     commit('deleteLoginUser')
   },
   // ユーザー作成してからそのままログインする

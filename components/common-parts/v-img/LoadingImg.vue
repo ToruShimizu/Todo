@@ -38,7 +38,6 @@ export default {
   },
   methods: {
     handleDeleteImage() {
-      console.log('jj')
       this.$emit('delete-image')
     },
     handleImageFile() {
