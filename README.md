@@ -1,53 +1,80 @@
+# readme-test
 # Name
 QC-Circle-Management-App
 ## Overview
-このアプリはQCサークル活動（小集団改善活動）を管理するアプリです。
+このアプリはQCサークル活動（小集団改善活動）を管理するアプリです。  
+(QCサークルとは同じ職場内で品質管理活動を自発的に小グループで行う活動です。)  
+## DEMO ##  
+![デモ動画](https://user-images.githubusercontent.com/65491855/100514423-e70b8480-31b7-11eb-9cd4-fe30b11b9249.gif)  
 ## Description
-このアプリでは、QCサークル活動における様々なタスクの進捗管理を行うことができます。
+このアプリでは、QCサークル活動における様々なタスクの進捗管理を行うことができます。  
 
 - QCサークルの作成
-- QCサークルメンバーの登録
+- QCサークルメンバーの名前、サークル内の役割の登録
 - QCサークル活動の活動計画の作成
 - 活動計画の進捗管理
-- 改善事例作成におけるタスクの管理 
-## Usage
-1.「テストユーザーとしてログイン」を選択されますとそのままログインできます。または、新規作成、各種ログイン機能をご利用ください。
+- 改善事例作成のタスク管理  
+## Features
+1. **ログイン**  
+    1. 「テストユーザーとしてログイン」を選択されますとそのままログインできます。
+    2. テストユーザー以外でログインする場合は新規作成、各種ログイン機能をご利用ください。  
+    3. ログイン後、左側のサイドメニューよりログインユーザーの編集が行えます（テストユーザーは不可）。  
+   ![ログイン画面](https://user-images.githubusercontent.com/65491855/100514762-b11bcf80-31ba-11eb-87bc-aa9fca87f2fc.png)  
+2. **サークル作成**  
+    1. ログイン後に表示される、サークル新規作成をクリックしてサークルを作成します。  
+    2. サークル作成後にサークル名の右側のアイコンより編集、削除を行うことができます。  
+    3. サークル作成後、サークルメンバーの登録、編集、削除を行うことができます。  
+   ![サークル表示画面](https://user-images.githubusercontent.com/65491855/100514697-220eb780-31ba-11eb-8938-4e77863d55a0.png)  
+3. **活動計画作成**  
+    1. 活動計画の一覧表示画面では活動計画の作成、編集、削除を行うことができます。  
+    2. 活動計画のタイトル右側にあるアイコンを選択されますとコメント機能を利用することができます。  
+   ![活動計画一覧画面](https://user-images.githubusercontent.com/65491855/100514654-fb508100-31b9-11eb-992c-e904c1654d25.png)  
+4. **機能一覧**  
+    - ユーザー登録、ログイン機能  
+    - 投稿機能  
+      - テキスト
+      - 画像 
+    - コメント機能
+    - ページネーション機能
+    - タスクの状態管理
+    - 検索機能
+    - 絞り込み機能
+    - ソート機能  
+5. **実装予定機能**  
+    - スタンプ機能
+    - ブックマーク機能
+    - タスクの期限通知機能
+    - ユーザー間のデータの共有化  
+    - 活動計画作成時の担当メンバー選択時にサークル内の役割も連動させて自動入力する。
+    - サークルメンバー登録をFirebaseに登録されているユーザー情報で行えるようにする。
+## Requirement
+| Package |   Ver.    |
+| :-----: | :-------: |
+|  Node   | "14.15.1" |
+|   npm   | "6.14.9"  |
 
-![ログイン画面](https://user-images.githubusercontent.com/65491855/100456674-26789900-3104-11eb-8aa3-33aaf530b430.png)
-
-2.サークル新規作成画面にてサークルを作成。
-
-![トップページ](https://user-images.githubusercontent.com/65491855/100456897-6770ad80-3104-11eb-85c7-401711dd252a.png)
-
-3.サークル作成後、メンバー登録と活動計画作成ができるようになります。
-
-![メンバー登録画面](https://user-images.githubusercontent.com/65491855/100456945-7c4d4100-3104-11eb-90e9-55f6798578f9.png)
-
-![活動計画作成画面](https://user-images.githubusercontent.com/65491855/100459456-d7813280-3108-11eb-828f-9d78c5a551b5.png)
+## Installation
+```
+$ nodebrew install-binar v14.15.1
+$ npm install -g npm@6.14.9  
+```
  
-4.活動計画の一覧画面には、完了・未完了の切り替え、完了状態の絞り込み、検索機能、ソート機能が備わっています。
-
-![活動計画一覧画面](https://user-images.githubusercontent.com/65491855/100457022-9dae2d00-3104-11eb-9799-6c20abfdab6b.png)
-
-5.活動計画には画像ファイルを登録することができ、登録後に一覧画面のファイルアイコンより確認することができます。
-
-![画像ファイル画面](https://user-images.githubusercontent.com/65491855/100457155-de0dab00-3104-11eb-8112-6a5356e69078.png)
-
-6.活動計画表示カードの右下のコメントアイコンを選択されますとコメント機能を利用することができます。
-
-![コメント画面](https://user-images.githubusercontent.com/65491855/100460338-56c33600-310a-11eb-8e7e-b81002a0008e.png)
-
-7.左側のサイドメニューよりログインユーザーの編集が行えます（テストユーザーは不可）。
-
-![ユーザー情報編集画面](https://user-images.githubusercontent.com/65491855/100460432-7fe3c680-310a-11eb-98a7-4010774c4359.png)
-## Dependency
-
-- @nuxt/cli "2.13.2"
-- Vuetify "1.11.2"
-- firebase
+## Usage  
+```
+$ git clone https://github.com/ToruShimizu/QC-Circle-Management-App.git  
+$ cd QC-Circle-Management-App  
+$ npm run dev
+```
 
 
+## Technology  
+| Framework |   Ver.   |
+| :-------: | :------: |
+|  Nuxt.js  | "2.14.7" |
+|  Vuetify  | "1.11.2" |
+- DB
+  - Firebase
 ## Author
 
-・ GithubURL: ![Github_URL](https://github.com/ToruShimizu)
+・ [@ToruShimizu](https://github.com/ToruShimizu)(GitHub)
 ## License
