@@ -74,7 +74,8 @@ const actions = {
       return doc.data().id
     })
     id.map((doc) => {
-      dispatch('fetchComments', doc)
+      const activityPlansId = doc
+      dispatch('fetchComments', activityPlansId)
     })
   },
   // 活動計画追加
