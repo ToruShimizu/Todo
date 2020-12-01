@@ -18,7 +18,7 @@ const actions = {
       })
       // ログインユーザーの情報を更新
       commit('modules/user/auth/setLoginUser', userInfo, { root: true })
-      commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
+      commit('modules/common-parts/commonParts/openSnackbar', null, { root: true })
     } catch (err) {
       alert('画像の変更に失敗しました。もう一度やり直してください。')
       console.log(err)
@@ -37,7 +37,7 @@ const actions = {
           displayName: userName
         })
         commit('modules/user/auth/setLoginUser', userInfo, { root: true })
-        commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
+        commit('modules/common-parts/commonParts/openSnackbar', null, { root: true })
 
       } catch (err) {
         alert('ユーザー名の変更に失敗しました。もう一度やり直してください。')
@@ -54,7 +54,7 @@ const actions = {
       try {
         await userInfo.updateEmail(email)
         commit('modules/user/auth/setLoginUser', userInfo, { root: true })
-        commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
+        commit('modules/common-parts/commonParts/openSnackbar', null, { root: true })
 
       } catch (err) {
         alert('新しいメールアドレスの登録に失敗しました。もう一度やり直してください。')

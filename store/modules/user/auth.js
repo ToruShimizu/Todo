@@ -22,7 +22,7 @@ const actions = {
   // ログインユーザー情報の取得
   async setLoginUser({ commit, dispatch }, userInfo) {
     await commit('setLoginUser', userInfo)
-    dispatch('modules/activityPlans/activityPlans/fetchActivityPlans', null, { root: true })
+    dispatch('modules/activity-plans/activityPlans/fetchActivityPlans', null, { root: true })
     dispatch('modules/team/team/fetchTeam', null, { root: true })
 
   },

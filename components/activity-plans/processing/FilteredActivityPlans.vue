@@ -43,12 +43,12 @@ export default {
         this.$emit('update:selected-activity-plans-filter', selectedActivityPlansFilter)
       }
     },
-    ...mapGetters('modules/activityPlans/activityPlans', [
+    ...mapGetters('modules/activity-plans/activityPlans', [
       'completedActivityPlansLength',
       'remainingActivityPlansLength',
       'completionRateOfActivityPlans'
     ]),
-    ...mapState('modules/activityPlans/activityPlans', ['activityPlans'])
+    ...mapState('modules/activity-plans/activityPlans', ['activityPlans'])
   }
 }
 </script>

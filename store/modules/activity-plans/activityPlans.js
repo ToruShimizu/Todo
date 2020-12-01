@@ -107,7 +107,7 @@ const actions = {
       if (getters.userUid) {
         await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).set(createActivityPlan)
         commit('addActivityPlan', createActivityPlan)
-        commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
+        commit('modules/common-parts/commonParts/openSnackbar', null, { root: true })
       }
     } catch (err) {
       console.log(err)
@@ -144,7 +144,7 @@ const actions = {
         await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).update(updateActivityPlan)
         commit('updateActivityPlan', updateActivityPlan)
         planContents.imageFile = null
-        commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
+        commit('modules/common-parts/commonParts/openSnackbar', null, { root: true })
       }
     }
     catch (err) {

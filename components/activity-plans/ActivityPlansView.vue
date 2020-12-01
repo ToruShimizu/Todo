@@ -57,11 +57,11 @@ export default {
     closeUpdateActivityPlan() {
       this.updateActivityPlanDialog = false
     },
-    ...mapActions('modules/activityPlans/activityPlans', [
+    ...mapActions('modules/activity-plans/activityPlans', [
       'removeActivityPlan',
       'doneActivityPlan'
     ]),
-    ...mapActions('modules/activityPlans/activityPlans', ['fetchComments'])
+    ...mapActions('modules/activity-plans/activityPlans', ['fetchComments'])
   }
 }
 </script>

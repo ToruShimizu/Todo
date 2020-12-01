@@ -75,7 +75,7 @@ export default {
     handleUpdateImageFile(planContents) {
       this.updatePlanContentsImageFile(planContents)
     },
-    ...mapActions('modules/activityPlans/activityPlans', [
+    ...mapActions('modules/activity-plans/activityPlans', [
       'updateActivityPlan',
       'removePlanContentsImage',
       'updatePlanContentsImageFile'

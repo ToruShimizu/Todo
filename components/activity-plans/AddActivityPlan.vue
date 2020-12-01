@@ -53,7 +53,7 @@ export default {
     closeActivityPlan() {
       this.$emit('close-activity-plan')
     },
-    ...mapActions('modules/activityPlans/activityPlans', [
+    ...mapActions('modules/activity-plans/activityPlans', [
       'addActivityPlan',
       'uploadPlanContentsImageFile'
     ])

@@ -197,14 +197,14 @@ export default {
       }
       return returnvalue
     },
-    ...mapGetters('modules/activityPlans/activityPlans', [
+    ...mapGetters('modules/activity-plans/activityPlans', [
       'sortByCategory',
       'sortByAscDate',
       'sortByDescDate'
     ]),
     ...mapGetters('modules/user/auth', ['photoURL']),
     ...mapGetters('modules/team/team', ['teamName']),
-    ...mapState('modules/activityPlans/activityPlans', ['activityPlans'])
+    ...mapState('modules/activity-plans/activityPlans', ['activityPlans'])
   },
   methods: {
     // ページ番号のボタンが押された時にページを切り替える
