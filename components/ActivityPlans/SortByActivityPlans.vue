@@ -13,9 +13,9 @@
 export default {
   props: {
     selectSortActivityPlans: {
-      type: Array,
+      type: String,
       required: false,
-      default: () => []
+      default: ''
     },
     sortActivityPlansStates: {
       type: Array,
