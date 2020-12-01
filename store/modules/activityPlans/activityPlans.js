@@ -48,6 +48,11 @@ const mutations = {
     const index = state.activityPlans.findIndex((contents) => contents.id === id)
     state.activityPlans[index].completionDate = completionDate
   },
+  // コメントの初期化
+  initComments(state) {
+    state.comments = []
+    console.log('initComments')
+  },
   addComment(state, { comment, id }) {
     const index = state.activityPlans.findIndex((contents) => contents.id === id)
     state.activityPlans[index].comments.unshift(comment)
@@ -69,10 +74,14 @@ const actions = {
       .orderBy('created', 'desc')
       .get()
     commit('initActivityPlans')
-    snapShot.docs.map((doc) => {
+    const id = snapShot.docs.map((doc) => {
       const planContents = doc.data()
       commit('addActivityPlan', planContents)
-      dispatch('modules/comment/comment/fetchComments', planContents.id, { root: true })
+      return doc.data().id
+    })
+    id.map((doc) => {
+      console.log(doc)
+      dispatch('fetchComments', doc)
     })
   },
   // 活動計画追加
@@ -206,6 +215,63 @@ const actions = {
       console.log(err)
     }
   },
+  // コメントの追加処理
+  async addComment({ getters, commit }, { id, message }) {
+    const date = new Date()
+    const createTime =
+      date.getFullYear() +
+      '年' +
+      (date.getMonth() + 1) +
+      '月' +
+      date.getDate() +
+      '日' +
+      date.getHours() +
+      '時' +
+      date.getMinutes() +
+      '分'
+    const commentId = await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).collection(`comments/${getters.userUid}/message`).doc().id
+
+    const comment = {
+      activityPlanId: id,
+      message,
+      id: commentId,
+      created: createTime
+    }
+    if (getters.userUid) {
+      await db
+        .collection(`users/${getters.userUid}/activityPlans`)
+        .doc(id)
+        .collection(`comments/${getters.userUid}/message`)
+        .doc(commentId)
+        .set(comment)
+    }
+    commit('addComment', { comment, id })
+
+  },
+  // コメントの削除
+  async removeComment({ getters, commit }, comment) {
+    if (getters.userUid) {
+      const snapShot = await db.collection(`users/${getters.userUid}/activityPlans`).get()
+      snapShot.docs.map(async (doc) => {
+        await doc.ref.collection(`comments/${getters.userUid}/message`).doc(comment.id).delete()
+      })
+      commit('removeComment', comment)
+    }
+  },
+  // コメントの取得
+  async fetchComments({ getters, commit }, id) {
+    commit('initComments')
+    const snapShot = await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).get()
+    const subCollection = await snapShot.ref
+      .collection(`comments/${getters.userUid}/message`)
+      .orderBy('created', 'desc')
+      .get()
+    subCollection.docs.map((doc) => {
+      const comment = doc.data()
+      const commentId = comment.activityPlanId
+      commit('addComment', { comment, id: commentId })
+    })
+  }
 }
 
 const getters = {
