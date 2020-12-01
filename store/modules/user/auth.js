@@ -10,6 +10,9 @@ const mutations = {
   setLoginUser(state, userInfo) {
     state.loginUser = userInfo
   },
+  updateUserAvatar(state, photoURL) {
+    state.loginUser.photoURL = photoURL;
+  },
   // ログインユーザー情報の削除
   deleteLoginUser(state) {
     state.loginUser = null

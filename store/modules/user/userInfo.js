@@ -17,7 +17,7 @@ const actions = {
         photoURL
       })
       // ログインユーザーの情報を更新
-      commit('modules/user/auth/setLoginUser', userInfo, { root: true })
+      commit('modules/user/auth/updateUserAvatar', photoURL, { root: true })
       commit('modules/common-parts/commonParts/openSnackbar', null, { root: true })
     } catch (err) {
       alert('画像の変更に失敗しました。もう一度やり直してください。')
