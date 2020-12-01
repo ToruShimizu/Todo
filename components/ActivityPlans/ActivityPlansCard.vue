@@ -109,15 +109,11 @@ export default {
     contents: {
       type: Object,
       required: true
-    },
-    index: {
-      type: Number
     }
   },
   data() {
     return {
-      commentDialog: false,
-      editImageFile: ''
+      commentDialog: false
     }
   },
   computed: {
@@ -151,10 +147,6 @@ export default {
 
 
 <style scoped>
-.headline {
-  text-overflow: inherit;
-  white-space: unset;
-}
 .card-anim-enter-active {
   animation: fadeInUp 0.7s;
   animation-delay: 0.4s;
