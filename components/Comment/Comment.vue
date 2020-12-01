@@ -52,7 +52,7 @@ export default {
       if (!confirm(comment.message + 'を削除しますか?')) return
       this.removeComment(comment)
     },
-    ...mapActions('modules/comment/comment', ['removeComment'])
+    ...mapActions('modules/activityPlans/activityPlans', ['removeComment'])
   }
 }
 </script>
