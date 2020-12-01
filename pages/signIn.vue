@@ -34,7 +34,7 @@
           :password-label="'パスワード'"
           :user-password.sync="signInUser.password"
         />
-        <v-btn text color="primary accent-4" class="fill-width" @click="openResetPassword">
+        <v-btn text color="primary accent-4" @click="openResetPassword">
           ※パスワードを忘れた方はこちら</v-btn
         >
         <v-card-actions class="justify-end">
@@ -65,12 +65,12 @@
 
 <script>
 import { mapActions } from 'vuex'
-import CreateUser from '@/components/CreateUser/CreateUser'
-import ResetPassword from '@/components/ResetPassword/ResetPassword'
-import FormUserEmail from '@/components/commonParts/user/form/FormUserEmail'
-import FormUserPassword from '@/components/commonParts/user/form/FormUserPassword'
-import SaveButton from '@/components/commonParts/button/SaveButton'
-import FormView from '@/components/commonParts/form/FormView'
+import CreateUser from '@/components/user/create-user/CreateUser'
+import ResetPassword from '@/components/reset-password/ResetPassword'
+import FormUserEmail from '@/components/common-parts/user/form/FormUserEmail'
+import FormUserPassword from '@/components/common-parts/user/form/FormUserPassword'
+import SaveButton from '@/components/common-parts/button/SaveButton'
+import FormView from '@/components/common-parts/form/FormView'
 
 export default {
   components: {
@@ -106,7 +106,6 @@ export default {
       })
     },
     async handleLogin() {
-      console.log(this.signInUser)
       const signInUser = this.signInUser
       if (!signInUser.password || !signInUser.email) {
         this.$refs.form.validate()

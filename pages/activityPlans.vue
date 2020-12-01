@@ -49,12 +49,12 @@
           サークルがありません
         </v-card-text></v-layout
       >
-      <Pagination
+      <ActivityPlansPagination
         :set-activity-plans-page.sync="activityPlansPage"
         @change-activity-plans-page="changeActivityPlansPage"
         :activity-plans-page-length="activityPlansPageLength"
       />
-      <ActivityPlansTable
+      <ActivityPlansView
         :display-activity-plans="displayActivityPlans"
         :todo-categorys="todoCategorys"
       />
@@ -64,14 +64,14 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import AddActivityPlan from '@/components/ActivityPlans/AddActivityPlan'
-import FilteredActivityPlans from '@/components/ActivityPlans/FilteredActivityPlans'
-import SearchActivityPlans from '@/components/ActivityPlans/SearchActivityPlans'
-import SortByActivityPlans from '@/components/ActivityPlans/SortByActivityPlans'
-import Pagination from '@/components/ActivityPlans/Pagination'
-import ActivityPlansTable from '@/components/ActivityPlans/ActivityPlansTable'
+import AddActivityPlan from '@/components/activity-plans/AddActivityPlan'
+import FilteredActivityPlans from '@/components/activity-plans/processing/FilteredActivityPlans'
+import SearchActivityPlans from '@/components/activity-plans/processing/SearchActivityPlans'
+import SortByActivityPlans from '@/components/activity-plans/processing/SortByActivityPlans'
+import ActivityPlansPagination from '@/components/activity-plans/processing/ActivityPlansPagination'
+import ActivityPlansView from '@/components/activity-plans/ActivityPlansView'
 import TeamName from '@/components/team/TeamName'
-import BlueDialogButton from '@/components/commonParts/button/BlueDialogButton'
+import BlueDialogButton from '@/components/common-parts/button/BlueDialogButton'
 
 export default {
   middleware: 'authenticated',
@@ -80,8 +80,8 @@ export default {
     FilteredActivityPlans,
     SearchActivityPlans,
     SortByActivityPlans,
-    Pagination,
-    ActivityPlansTable,
+    ActivityPlansPagination,
+    ActivityPlansView,
     TeamName,
     BlueDialogButton
   },
@@ -151,8 +151,6 @@ export default {
 
           break
         case 'active':
-          console.log(activityPlans)
-
           returnvalue = activityPlans.filter((activityPlan) => !activityPlan.done)
 
           break
@@ -197,14 +195,14 @@ export default {
       }
       return returnvalue
     },
-    ...mapGetters('modules/activityPlans/activityPlans', [
+    ...mapGetters('modules/activity-plans/activityPlans', [
       'sortByCategory',
       'sortByAscDate',
       'sortByDescDate'
     ]),
     ...mapGetters('modules/user/auth', ['photoURL']),
     ...mapGetters('modules/team/team', ['teamName']),
-    ...mapState('modules/activityPlans/activityPlans', ['activityPlans'])
+    ...mapState('modules/activity-plans/activityPlans', ['activityPlans'])
   },
   methods: {
     // ページ番号のボタンが押された時にページを切り替える

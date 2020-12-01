@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import FormDialog from '@/components/commonParts/dialog/FormDialog'
-import FormView from '@/components/commonParts/form/FormView'
+import FormDialog from '@/components/common-parts/dialog/FormDialog'
+import FormView from '@/components/common-parts/form/FormView'
 import AddComment from '@/components/comment/AddComment'
 import Comment from '@/components/comment/Comment'
 

@@ -32,7 +32,7 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
-import LoadingImg from '@/components/commonParts/v-img/LoadingImg'
+import LoadingImg from '@/components/common-parts/v-img/LoadingImg'
 
 export default {
   components: {
@@ -45,14 +45,14 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('modules/user/auth', ['gettersUserName', 'photoURL', 'userEmail'])
+    ...mapGetters('modules/user/auth', ['gettersUserName', 'photoURL'])
   },
   methods: {
     handleRemoveComment(comment) {
       if (!confirm(comment.message + 'を削除しますか?')) return
       this.removeComment(comment)
     },
-    ...mapActions('modules/activityPlans/activityPlans', ['removeComment'])
+    ...mapActions('modules/activity-plans/activityPlans', ['removeComment'])
   }
 }
 </script>

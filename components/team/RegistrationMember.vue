@@ -12,7 +12,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import FormMember from '@/components/commonParts/team/form/FormMember'
+import FormMember from '@/components/common-parts/team/form/FormMember'
 export default {
   components: {
     FormMember

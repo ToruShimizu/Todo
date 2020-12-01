@@ -18,7 +18,7 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import EditTeamList from '@/components/team/edit/EditTeamList'
-import LoadingImg from '@/components/commonParts/v-img/LoadingImg'
+import LoadingImg from '@/components/common-parts/v-img/LoadingImg'
 
 export default {
   components: {

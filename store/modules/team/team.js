@@ -14,14 +14,12 @@ const mutations = {
   },
   registrationTeam(state, registrationTeam) {
     state.team = registrationTeam
-    console.log('registrationTeam')
   },
   updateTeam(state, updateTeam) {
     state.team = updateTeam
   },
   registrationMember(state, registrationMember) {
     state.teamMember.unshift(registrationMember)
-    console.log('registrationMember')
   },
   updateMember(state, editMember) {
     const index = state.teamMember.findIndex((member) => member.id === editMember.id)
@@ -29,7 +27,6 @@ const mutations = {
     teamMember.name = editMember.name
     teamMember.role = editMember.role
     teamMember.improvementRole = editMember.improvementRole
-    console.log('updateMember')
 
   },
   initMember(state) {
@@ -86,7 +83,7 @@ const actions = {
         await db.collection(`users/${getters.userUid}/team`).doc(id).set(registrationTeam)
       }
       commit('registrationTeam', registrationTeam)
-      commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
+      commit('modules/common-parts/commonParts/openSnackbar', null, { root: true })
 
     } catch (err) {
       alert('登録に失敗しました。もう一度やり直してください')
@@ -118,7 +115,7 @@ const actions = {
         await db.collection(`users/${getters.userUid}/team`).doc(id).update(updateTeam)
         alert('チーム情報の変更が完了しました。')
         commit('updateTeam', updateTeam)
-        commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
+        commit('modules/common-parts/commonParts/openSnackbar', null, { root: true })
       }
     } catch (err) {
       alert('変更に失敗しました。もう一度やり直してください')
@@ -140,7 +137,7 @@ const actions = {
     try {
       await db.collection(`users/${getters.userUid}/team`).doc(id).delete()
       commit('removeTeam', id)
-      await dispatch('modules/activityPlans/activityPlans/allRemoveActivityPlan', null, { root: true })
+      await dispatch('modules/activity-plans/activityPlans/allRemoveActivityPlan', null, { root: true })
       this.$router.push({ path: '/' })
     } catch (err) {
       alert('削除に失敗しました。もう一度やり直してください')
@@ -167,7 +164,7 @@ const actions = {
           .set(registrationMember)
       }
       commit('registrationMember', registrationMember)
-      commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
+      commit('modules/common-parts/commonParts/openSnackbar', null, { root: true })
     }
     catch (err) {
       alert('登録に失敗しました。もう一度やり直してください。')
@@ -183,7 +180,7 @@ const actions = {
           )
         })
         await commit('updateMember', editMember)
-        commit('modules/commonParts/commonParts/openSnackbar', null, { root: true })
+        commit('modules/common-parts/commonParts/openSnackbar', null, { root: true })
 
       }
     } catch (err) {
