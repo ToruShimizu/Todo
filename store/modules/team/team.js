@@ -9,6 +9,9 @@ const state = () => ({
   teamMember: [],
 })
 const mutations = {
+  initTeam(state) {
+    state.team = {}
+  },
   registrationTeam(state, registrationTeam) {
     state.team = registrationTeam
     console.log('registrationTeam')
@@ -44,6 +47,7 @@ const mutations = {
 const actions = {
 
   async fetchTeam({ getters, commit, dispatch }) {
+    commit('initTeam')
     const snapShot = await db
       .collection(`users/${getters.userUid}/team`)
       .get()
