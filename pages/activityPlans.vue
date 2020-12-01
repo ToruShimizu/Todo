@@ -132,16 +132,12 @@ export default {
       createActivityPlanDialog: false
     }
   },
+  mounted() {
+    this.activityPlansPagination()
+  },
   watch: {
     activityPlansFiltered() {
-      let displayActivityPlans = this.displayActivityPlans
-      const pageSize = this.activityPlansPageSize
-      const activityPlans = this.activityPlansFiltered
-
-      this.displayActivityPlans = activityPlans.slice(0, pageSize)
-      this.activityPlansPageLength = Math.ceil(activityPlans.length / pageSize)
-      this.activityPlansPage = 1
-      this.changeActivityPlansPage(this.activityPlansPage)
+      this.activityPlansPagination()
     }
   },
   // 完了状態の絞り込み
@@ -196,7 +192,8 @@ export default {
           break
 
         default:
-          returnvalue = this.activityPlans
+          returnvalue = this.sortByCategory
+          break
       }
       return returnvalue
     },
@@ -230,6 +227,15 @@ export default {
     },
     closeCreateTeam() {
       this.createTeamDialog = false
+    },
+    activityPlansPagination() {
+      const pageSize = this.activityPlansPageSize
+      const activityPlans = this.activityPlansFiltered
+
+      this.displayActivityPlans = activityPlans.slice(0, pageSize)
+      this.activityPlansPageLength = Math.ceil(activityPlans.length / pageSize)
+      this.activityPlansPage = 1
+      this.changeActivityPlansPage(this.activityPlansPage)
     }
   }
 }
