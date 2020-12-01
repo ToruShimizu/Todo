@@ -23,7 +23,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('modules/common-parts/common-parts', ['snackbar'])
+    ...mapState('modules/common-parts/commonParts', ['snackbar'])
   },
   methods: {
     ...mapMutations('modules/common-parts/commonParts', ['closeSnackbar'])
