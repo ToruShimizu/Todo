@@ -32,7 +32,7 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
-import LoadingImg from '@/components/commonParts/v-img/LoadingImg'
+import LoadingImg from '@/components/common-parts/v-img/LoadingImg'
 
 export default {
   components: {

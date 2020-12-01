@@ -46,8 +46,8 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import UpdateMember from '@/components/team/edit/UpdateMember'
-import BlueDialogButton from '@/components/commonParts/button/BlueDialogButton'
-import TextButtonXSmall from '@/components/commonParts/button/textButton/TextButtonXSmall'
+import BlueDialogButton from '@/components/common-parts/button/BlueDialogButton'
+import TextButtonXSmall from '@/components/common-parts/button/text-button/TextButtonXSmall'
 
 export default {
   components: {

@@ -65,12 +65,12 @@
 
 <script>
 import { mapActions } from 'vuex'
-import CreateUser from '@/components/CreateUser/CreateUser'
-import ResetPassword from '@/components/ResetPassword/ResetPassword'
-import FormUserEmail from '@/components/commonParts/user/form/FormUserEmail'
-import FormUserPassword from '@/components/commonParts/user/form/FormUserPassword'
-import SaveButton from '@/components/commonParts/button/SaveButton'
-import FormView from '@/components/commonParts/form/FormView'
+import CreateUser from '@/components/user/create-user/CreateUser'
+import ResetPassword from '@/components/reset-password/ResetPassword'
+import FormUserEmail from '@/components/common-parts/user/form/FormUserEmail'
+import FormUserPassword from '@/components/common-parts/user/form/FormUserPassword'
+import SaveButton from '@/components/common-parts/button/SaveButton'
+import FormView from '@/components/common-parts/form/FormView'
 
 export default {
   components: {

@@ -9,7 +9,7 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
-import FormCreateTeam from '@/components/commonParts/team/form/FormCreateTeam'
+import FormCreateTeam from '@/components/common-parts/team/form/FormCreateTeam'
 export default {
   components: {
     FormCreateTeam

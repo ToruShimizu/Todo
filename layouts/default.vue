@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import Header from '@/components/Header/Header'
-import DoneSnackbar from '@/components/commonParts/snackbar/DoneSnackbar'
+import Header from '@/components/header/Header'
+import DoneSnackbar from '@/components/common-parts/snackbar/DoneSnackbar'
 
 export default {
   components: {

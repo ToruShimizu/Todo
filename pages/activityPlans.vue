@@ -64,14 +64,14 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import AddActivityPlan from '@/components/ActivityPlans/AddActivityPlan'
-import FilteredActivityPlans from '@/components/ActivityPlans/FilteredActivityPlans'
-import SearchActivityPlans from '@/components/ActivityPlans/SearchActivityPlans'
-import SortByActivityPlans from '@/components/ActivityPlans/SortByActivityPlans'
-import Pagination from '@/components/ActivityPlans/Pagination'
-import ActivityPlansTable from '@/components/ActivityPlans/ActivityPlansTable'
+import AddActivityPlan from '@/components/activity-plans/AddActivityPlan'
+import FilteredActivityPlans from '@/components/activity-plans/FilteredActivityPlans'
+import SearchActivityPlans from '@/components/activity-plans/SearchActivityPlans'
+import SortByActivityPlans from '@/components/activity-plans/SortByActivityPlans'
+import ActivityPlansPagination from '@/components/activity-plans/ActivityPlansPagination'
+import ActivityPlansView from '@/components/activity-plans/ActivityPlansView'
 import TeamName from '@/components/team/TeamName'
-import BlueDialogButton from '@/components/commonParts/button/BlueDialogButton'
+import BlueDialogButton from '@/components/common-parts/button/BlueDialogButton'
 
 export default {
   middleware: 'authenticated',
@@ -80,8 +80,8 @@ export default {
     FilteredActivityPlans,
     SearchActivityPlans,
     SortByActivityPlans,
-    Pagination,
-    ActivityPlansTable,
+    ActivityPlansPagination,
+    ActivityPlansView,
     TeamName,
     BlueDialogButton
   },
