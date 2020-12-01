@@ -51,7 +51,6 @@ export default {
       this.doneActivityPlan({ planContents: contents, id: contents.id })
     },
     async openUpdateActivityPlan(contents) {
-      const id = contents.id
       this.editPlanContents = Object.assign({}, contents)
       this.updateActivityPlanDialog = true
     },
@@ -62,7 +61,7 @@ export default {
       'removeActivityPlan',
       'doneActivityPlan'
     ]),
-    ...mapActions('modules/comment/comment', ['fetchComments'])
+    ...mapActions('modules/activityPlans/activityPlans', ['fetchComments'])
   }
 }
 </script>
