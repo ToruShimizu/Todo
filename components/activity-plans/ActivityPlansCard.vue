@@ -94,7 +94,7 @@
 </template>
 
 <script>
-import ActivityPlansThumbnail from '@/components/activity-plans/ActivityPlansThumbnail'
+import ActivityPlansThumbnail from '@/components/activity-plans/image-file/ActivityPlansThumbnail'
 import CommentView from '@/components/comment/CommentView'
 import IconButton from '@/components/common-parts/button/IconButton'
 import TextButton from '@/components/common-parts/button/text-button/Textbutton'
