@@ -20,20 +20,22 @@ const mutations = {
 
 const actions = {
   // ログインユーザー情報の取得
-  setLoginUser({ commit }, userInfo) {
-    commit('setLoginUser', userInfo)
+  async setLoginUser({ commit, dispatch }, userInfo) {
+    await commit('setLoginUser', userInfo)
+    dispatch('modules/activityPlans/activityPlans/fetchActivityPlans', null, { root: true })
+    dispatch('modules/team/team/fetchTeam', null, { root: true })
+
   },
   // ログインユーザー情報の削除
   deleteLoginUser({ commit }) {
     commit('deleteLoginUser')
   },
   // Googleログイン
-  async googleLogin({ commit }) {
+  async googleLogin() {
     try {
       const provider = new firebase.auth.GoogleAuthProvider()
       await auth.signInWithPopup(provider).then((result) => {
         alert('ようこそ ' + result.user.displayName + 'さん!')
-        commit('setLoginUser')
         this.$router.push({ path: '/' })
       })
     } catch (err) {
@@ -46,7 +48,6 @@ const actions = {
       await firebase.auth().signInWithEmailAndPassword(email, password)
       const userInfo = await firebase.auth().currentUser
       alert('ようこそ' + userInfo.displayName + 'さん!')
-      commit('setLoginUser', userInfo)
       // サインイン成功後にトップページに遷移する
       this.$router.push({ path: '/' })
     } catch {
