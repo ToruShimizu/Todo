@@ -176,11 +176,12 @@ const actions = {
     dispatch('updateActivityPlan', planContents)
   },
   // 活動計画削除
-  async removeActivityPlan({ getters, commit }, { id }) {
+  async removeActivityPlan({ getters, commit, dispatch }, { id }) {
     const activityPlanId = id
     if (getters.userUid) {
       await db.collection(`users/${getters.userUid}/activityPlans`).doc(activityPlanId).delete()
       commit('removeActivityPlan', { activityPlanId })
+      dispatch('allRemoveComment', id)
     }
   },
   async allRemoveActivityPlan({ commit, getters }) {
@@ -251,11 +252,11 @@ const actions = {
   // コメントの削除
   async removeComment({ getters, commit }, comment) {
     if (getters.userUid) {
-      const snapShot = await db.collection(`users/${getters.userUid}/activityPlans`).get()
+      const snapShot = await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).get()
       snapShot.docs.map(async (doc) => {
         await doc.ref.collection(`comments/${getters.userUid}/message`).doc(comment.id).delete()
       })
-      commit('removeComment', comment)
+      commit('allRemoveComment', id)
     }
   },
   // コメントの取得
@@ -270,6 +271,14 @@ const actions = {
       const comment = doc.data()
       const commentId = comment.activityPlanId
       commit('addComment', { comment, id: commentId })
+    })
+  },
+  async allRemoveComment({ commit, getters }, id) {
+    const snapShot = await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).get()
+    const subCollection = await snapShot.ref.collection(`comments/${getters.userUid}/message`).get()
+    subCollection.docs.map(async (doc) => {
+      console.log(doc);
+      snapShot.ref.collection(`comments/${getters.userUid}/message`).doc(doc.id).delete()
     })
   }
 }
