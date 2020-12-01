@@ -34,7 +34,7 @@
           :password-label="'パスワード'"
           :user-password.sync="signInUser.password"
         />
-        <v-btn text color="primary accent-4" class="fill-width" @click="openResetPassword">
+        <v-btn text color="primary accent-4" @click="openResetPassword">
           ※パスワードを忘れた方はこちら</v-btn
         >
         <v-card-actions class="justify-end">

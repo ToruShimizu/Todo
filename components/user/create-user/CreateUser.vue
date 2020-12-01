@@ -104,8 +104,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-.fill-width {
-  width: 100%;
-}
-</style>
