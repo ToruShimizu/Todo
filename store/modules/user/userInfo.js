@@ -98,6 +98,7 @@ const actions = {
         alert('ユーザー情報を削除しました。ログイン画面に戻ります。')
         commit('modules/user/auth/deleteLoginUser', null, { root: true })
       } catch (err) {
+        alert('ユーザー情報の削除に失敗しました。もう一度やり直しください。')
         console.log(err)
       }
     }
