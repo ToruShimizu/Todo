@@ -10,6 +10,12 @@ const mutations = {
   setLoginUser(state, userInfo) {
     state.loginUser = userInfo
   },
+  updateUserName(state, userName) {
+    state.loginUser.displayName = userName;
+  },
+  updateUserEmail(state, userEmail) {
+    state.loginUser.email = userEmail;
+  },
   updateUserAvatar(state, photoURL) {
     state.loginUser.photoURL = photoURL;
   },

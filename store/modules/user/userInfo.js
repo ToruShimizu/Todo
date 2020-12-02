@@ -35,7 +35,7 @@ const actions = {
         await userInfo.updateProfile({
           displayName: userName
         })
-        commit('modules/user/auth/setLoginUser', userInfo, { root: true })
+        commit('modules/user/auth/updateUserName', userName, { root: true })
         commit('modules/common-parts/commonParts/openSnackbar', null, { root: true })
 
       } catch (err) {
@@ -52,7 +52,7 @@ const actions = {
     } else {
       try {
         await userInfo.updateEmail(email)
-        commit('modules/user/auth/setLoginUser', userInfo, { root: true })
+        commit('modules/user/auth/updateUserEmail', email, { root: true })
         commit('modules/common-parts/commonParts/openSnackbar', null, { root: true })
 
       } catch (err) {
