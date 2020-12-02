@@ -68,7 +68,7 @@ const actions = {
     commit('deleteLoginUser')
   },
   // ユーザー作成してからそのままログインする
-  async createUser({ dispatch }, { email, password, userName }) {
+  async createUser({ dispatch, commit }, { email, password, userName }) {
     try {
       const newUser = await auth.createUserWithEmailAndPassword(email, password)
       await newUser.user.updateProfile({
@@ -76,6 +76,7 @@ const actions = {
       })
       alert('ユーザーの作成に成功しました。このままログインします。')
       await dispatch('login', { email, password })
+      commit('updateUserName', userName)
       email = null
       password = null
       userName = null
