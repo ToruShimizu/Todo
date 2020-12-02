@@ -13,8 +13,7 @@ export default {
   props: {
     activityPlansPage: {
       type: Number,
-      required: false,
-      default: 1
+      required: true
     },
     activityPlansPageLength: {
       type: Number,
@@ -27,7 +26,7 @@ export default {
         return this.activityPlansPage
       },
       set(setActivityPlansPage) {
-        this.$emit('update:set-activity-plans-page', setActivityPlansPage)
+        this.$emit('update:activity-plans-page', setActivityPlansPage)
       }
     }
   },
