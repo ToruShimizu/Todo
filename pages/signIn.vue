@@ -32,7 +32,9 @@
         <FormUserEmail :user-email.sync="signInUser.email" :email-label="'メールアドレス'" />
         <FormUserPassword
           :password-label="'パスワード'"
+          :show-password="signInshowPassword"
           :user-password.sync="signInUser.password"
+          @handle-show-password="toggleSignInShowPassword"
         />
         <v-btn text color="primary accent-4" @click="openResetPassword">
           ※パスワードを忘れた方はこちら</v-btn
@@ -92,6 +94,7 @@ export default {
       resetPasswordDialog: false,
       testLoginLoading: false,
       loginLoading: false,
+      signInshowPassword: false,
       resetPasswordLoading: false,
       loginLoader: null
     }
@@ -154,6 +157,9 @@ export default {
     stopResetPasswordLoading() {
       this.resetPasswordLoading = false
       this.loginLoader = this.resetPasswordLoading
+    },
+    toggleSignInShowPassword() {
+      this.signInshowPassword = !this.signInshowPassword
     },
     ...mapActions('modules/user/auth', ['googleLogin', 'login'])
   }
