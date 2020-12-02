@@ -105,7 +105,6 @@ export default {
         email: editUser.email,
         password: editUser.password
       })
-      this.stopLoading()
       this.$emit('update:close-delete-account', 'closeDeleteAccount')
     },
 

@@ -114,7 +114,6 @@ export default {
         email: editUser.email,
         password: editUser.password
       })
-      this.stopLoading()
       this.$emit('update:close-update-password', 'closeUpdatePassword')
     },
     toggleShowUserPassword(showPassword) {

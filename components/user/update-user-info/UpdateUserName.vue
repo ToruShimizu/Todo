@@ -96,7 +96,6 @@ export default {
         userName: editUser.name
       })
       this.$refs.form.reset()
-      this.stopLoading()
       this.$emit('update:close-update-user-name', 'closeUpdateUserName')
     },
     startLoading() {
