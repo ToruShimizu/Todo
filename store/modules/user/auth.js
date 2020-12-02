@@ -29,6 +29,7 @@ const actions = {
   },
   // ログインユーザー情報の削除
   deleteLoginUser({ commit }) {
+    commit('deleteLoginUser')
   },
   // Googleログイン
   async googleLogin() {
@@ -36,7 +37,7 @@ const actions = {
       const provider = new firebase.auth.GoogleAuthProvider()
       await auth.signInWithPopup(provider).then((result) => {
         alert('ようこそ ' + result.user.displayName + 'さん!')
-        this.$router.push({ path: '/' })
+        this.$router.push({ path: '/activityPlans' })
       })
     } catch (err) {
       alert('ログインに失敗しました。もう一度やり直してください。')
@@ -49,7 +50,7 @@ const actions = {
       const userInfo = await firebase.auth().currentUser
       alert('ようこそ' + userInfo.displayName + 'さん!')
       // サインイン成功後にトップページに遷移する
-      this.$router.push({ path: '/' })
+      this.$router.push({ path: '/activityPlans' })
     } catch {
       alert('ログインに失敗しました。もう一度やり直してください。')
     }
