@@ -49,6 +49,9 @@ export default {
   methods: {
     handleDeleteButton() {
       this.$emit('delete-button')
+    },
+    stopLoading() {
+      this.$emit('stop-loading')
     }
   }
 }
