@@ -1,10 +1,5 @@
 import firebase, { auth, storageRef } from '~/plugins/firebase'
 
-// initial state
-const state = () => ({})
-
-const mutations = {}
-
 const actions = {
   // ユーザープロフィール画像の追加
   async uploadUserImageFile({ getters, commit }, userAvatarFile) {
@@ -25,7 +20,6 @@ const actions = {
     }
   },
   // ユーザー情報の更新
-  // FIXME:ユーザーのstate更新
   async updateUserName({ commit }, { userName, file }) {
     const userInfo = await firebase.auth().currentUser
     if (userInfo.displayName === 'テストユーザー') {
@@ -119,8 +113,6 @@ const getters = {
 
 export default {
   namespaced: true,
-  state,
   getters,
   actions,
-  mutations
 }
