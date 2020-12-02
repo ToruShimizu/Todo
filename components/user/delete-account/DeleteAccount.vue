@@ -96,6 +96,7 @@ export default {
       },
       set(closeDeleteAccount) {
         this.$emit('update:close-delete-account', closeDeleteAccount)
+        this.$refs.form.reset()
       }
     }
   },
@@ -111,7 +112,6 @@ export default {
         email: editUser.email,
         password: editUser.password
       })
-      this.$refs.form.reset()
       this.$emit('update:close-delete-account', 'closeDeleteAccount')
     },
 
