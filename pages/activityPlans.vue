@@ -165,13 +165,12 @@ export default {
     // タスクの検索
     searchActivityPlans() {
       const activityPlans = this.sortByActivityPlans
-      const searchCategory = this.searchCategoryKeyword
       if (this.searchCategoryKeyword === null) {
         return this.sortByActivityPlans
       }
 
       return activityPlans.filter((activityPlan) => {
-        return activityPlan.category.includes(searchCategory)
+        return activityPlan.category.includes(this.searchCategoryKeyword.toUpperCase())
       })
     },
     sortByActivityPlans() {
