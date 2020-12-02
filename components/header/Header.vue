@@ -5,10 +5,16 @@
     </v-navigation-drawer>
     <v-app-bar color="#051e34" dark app clipped-left>
       <v-app-bar-nav-icon @click="sideNavDrawer = !sideNavDrawer"></v-app-bar-nav-icon>
-      <nuxt-link to="/" class="white--text">
+      <nuxt-link to="/activityPlans" class="white--text">
         <v-toolbar-title>QC活動管理</v-toolbar-title>
       </nuxt-link>
-      <v-btn text nuxt to="/" color="indigo darken-2" v-if="this.$route.path === '/team'">
+      <v-btn
+        text
+        nuxt
+        to="/activityPlans"
+        color="indigo darken-2"
+        v-if="this.$route.path === '/team'"
+      >
         <v-icon color="white">mdi-arrow-left-bold-box-outline </v-icon>
       </v-btn>
       <v-spacer />

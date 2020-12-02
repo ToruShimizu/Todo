@@ -138,7 +138,7 @@ const actions = {
       await db.collection(`users/${getters.userUid}/team`).doc(id).delete()
       commit('removeTeam', id)
       await dispatch('modules/activity-plans/activityPlans/allRemoveActivityPlan', null, { root: true })
-      this.$router.push({ path: '/' })
+      this.$router.push({ path: 'activityPlans' })
     } catch (err) {
       alert('削除に失敗しました。もう一度やり直してください')
       console.log(err)
