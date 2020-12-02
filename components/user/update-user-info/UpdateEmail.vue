@@ -97,7 +97,7 @@ export default {
       await this.updateEmail({
         email: editUserEmail
       })
-      this.$emit('update:close-update-email', 'closeUpdateEmail')
+      this.$emit('close-update-email', 'closeUpdateEmail')
     },
     startLoading() {
       this.$emit('start-loading')
