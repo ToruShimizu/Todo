@@ -120,10 +120,6 @@ export default {
         password: signInUser.password
       })
       this.stopLoginLoading()
-
-      // // this.$refs.form.reset()
-      // this.signInUser.email = ''
-      // this.signInUser.password = ''
     },
     openCreateUser() {
       this.createUserDialog = true
