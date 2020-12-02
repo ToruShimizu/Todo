@@ -50,7 +50,7 @@
         </v-card-text></v-layout
       >
       <ActivityPlansPagination
-        :set-activity-plans-page.sync="activityPlansPage"
+        :activity-plans-page.sync="activityPlansPage"
         @change-activity-plans-page="changeActivityPlansPage"
         :activity-plans-page-length="activityPlansPageLength"
       />
