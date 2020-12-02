@@ -38,7 +38,7 @@ export default {
         role: [],
         improvementRole: []
       },
-      teamRoles: ['リーダー', 'サブリーダー', 'レクリエーション', '安全', '6S'],
+      teamRoles: ['リーダー', 'サブリーダー', 'レクリエーション', '安全', '6S', '書記', '改善'],
       improvementRoles: [
         'テーマリーダー',
         'サブリーダー',
