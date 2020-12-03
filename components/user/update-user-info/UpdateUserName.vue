@@ -10,7 +10,7 @@
             </template>
           </FormCardText>
           <v-form ref="form" lazy-validation @submit.prevent="updateUserName">
-            <FormUserName :user-name.sync="editUser.name" :name-label="'新しい名前'" />
+            <FormUserName :user-name.sync="editUser.name" :name-label="'新しいユーザー名'" />
             <SaveAndCloseButton
               :close-button-title="'close'"
               :save-button-title="'save'"
@@ -96,7 +96,6 @@ export default {
         userName: editUser.name
       })
       this.$refs.form.reset()
-      this.stopLoading()
       this.$emit('update:close-update-user-name', 'closeUpdateUserName')
     },
     startLoading() {

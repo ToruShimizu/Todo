@@ -1,10 +1,5 @@
 import firebase, { auth, storageRef } from '~/plugins/firebase'
 
-// initial state
-const state = () => ({})
-
-const mutations = {}
-
 const actions = {
   // ユーザープロフィール画像の追加
   async uploadUserImageFile({ getters, commit }, userAvatarFile) {
@@ -25,7 +20,6 @@ const actions = {
     }
   },
   // ユーザー情報の更新
-  // FIXME:ユーザーのstate更新
   async updateUserName({ commit }, { userName, file }) {
     const userInfo = await firebase.auth().currentUser
     if (userInfo.displayName === 'テストユーザー') {
@@ -35,7 +29,7 @@ const actions = {
         await userInfo.updateProfile({
           displayName: userName
         })
-        commit('modules/user/auth/setLoginUser', userInfo, { root: true })
+        commit('modules/user/auth/updateUserName', userName, { root: true })
         commit('modules/common-parts/commonParts/openSnackbar', null, { root: true })
 
       } catch (err) {
@@ -52,7 +46,7 @@ const actions = {
     } else {
       try {
         await userInfo.updateEmail(email)
-        commit('modules/user/auth/setLoginUser', userInfo, { root: true })
+        commit('modules/user/auth/updateUserEmail', email, { root: true })
         commit('modules/common-parts/commonParts/openSnackbar', null, { root: true })
 
       } catch (err) {
@@ -104,6 +98,7 @@ const actions = {
         alert('ユーザー情報を削除しました。ログイン画面に戻ります。')
         commit('modules/user/auth/deleteLoginUser', null, { root: true })
       } catch (err) {
+        alert('ユーザー情報の削除に失敗しました。もう一度やり直しください。')
         console.log(err)
       }
     }
@@ -119,8 +114,6 @@ const getters = {
 
 export default {
   namespaced: true,
-  state,
   getters,
   actions,
-  mutations
 }

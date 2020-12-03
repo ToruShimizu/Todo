@@ -12,7 +12,9 @@
               :email-label="'現在のメールアドレス'"
             />
             <FormUserPassword
+              :show-password="deleteAccountShowPassword"
               :user-password.sync="editUser.password"
+              @handle-show-password="toggleDeleteAccountShowPassword"
               :passwordLabel="'現在のパスワード'"
             />
             <v-card-actions class="justify-end">
@@ -82,6 +84,11 @@ export default {
       default: null
     }
   },
+  data() {
+    return {
+      deleteAccountShowPassword: false
+    }
+  },
   computed: {
     selectedDeleteAccount: {
       get() {
@@ -105,7 +112,6 @@ export default {
         email: editUser.email,
         password: editUser.password
       })
-      this.stopLoading()
       this.$emit('update:close-delete-account', 'closeDeleteAccount')
     },
 
@@ -114,6 +120,9 @@ export default {
     },
     stopLoading() {
       this.$emit('stop-loading')
+    },
+    toggleDeleteAccountShowPassword() {
+      this.deleteAccountShowPassword = !this.deleteAccountShowPassword
     },
     ...mapActions('modules/user/userInfo', ['deleteAccount'])
   }
