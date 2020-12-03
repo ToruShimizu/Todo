@@ -4,7 +4,8 @@ QC-Circle-Management-App
 このアプリはQCサークル活動（小集団改善活動）を管理するアプリです。  
 (QCサークルとは同じ職場内で品質管理活動を自発的に小グループで行う活動です。)  
 ## DEMO ##  
-・ <https://qc-circle-management-app.netlify.app>  
+・ [接続先URL]<https://qc-circle-management-app.netlify.app>  
+
 ![デモ動画](https://user-images.githubusercontent.com/65491855/100514423-e70b8480-31b7-11eb-9cd4-fe30b11b9249.gif)  
 ## Description
 このアプリでは、QCサークル活動における様々なタスクの進捗管理を行うことができます。  
