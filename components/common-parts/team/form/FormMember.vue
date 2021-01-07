@@ -6,36 +6,38 @@
           <v-form ref="form" lazy-validation>
             <v-container>
               <v-row>
+                <!-- メンバー名入力フォーム -->
                 <v-col cols="12" sm="12" md="12">
                   <MemberName
                     :team-member="teamMember"
                     :member-name.sync="teamMember.name"
-                    :label="'名前'"
+                    label="名前"
                   />
                 </v-col>
+                <!-- 役割入力フォーム -->
                 <v-col cols="12" sm="12" md="12">
                   <RoleComboBox
                     :team-member="teamMember"
                     :items="teamRoles"
                     :role.sync="teamMember.role"
-                    :label="'役割'"
+                    label="役割"
                   />
                 </v-col>
+                <!-- 改善担当入力フォーム -->
                 <v-col cols="12" sm="12" md="12">
                   <ImprovementRoleComboBox
                     :team-member="teamMember"
                     :items="improvementRoles"
                     :improvement-role.sync="teamMember.improvementRole"
-                    :label="'改善担当'"
+                    label="改善担当"
                   />
                 </v-col>
               </v-row>
             </v-container>
             <SaveAndCloseButton
-              :close-button-title="'close'"
-              :save-button-title="'save'"
-              :loader="null"
-              :icon="'mdi-account-plus'"
+              close-button-title="close"
+              save-button-title="save"
+              icon="mdi-account-plus"
               @close-button="closeMemberDialog"
               @save-button="handleSaveMember"
             />

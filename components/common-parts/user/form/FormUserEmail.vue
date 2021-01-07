@@ -13,20 +13,18 @@ export default {
   props: {
     email: {
       type: String,
-      required: false,
       default: ''
     },
     emailLabel: {
       type: String,
-      required: false,
       default: ''
     }
   },
   data() {
     return {
       emailRules: [
-        (v) => !!v || 'Emailは必須です',
-        (v) =>
+        v => !!v || 'Emailは必須です',
+        v =>
           /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
             v
           ) || 'メールアドレスの形式が違います'

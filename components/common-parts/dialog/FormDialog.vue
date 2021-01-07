@@ -9,7 +9,6 @@ export default {
   props: {
     formDialog: {
       type: Boolean,
-      required: false,
       default: false
     }
   }

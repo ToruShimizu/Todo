@@ -22,7 +22,6 @@ export default {
     },
     improvementRole: {
       type: Array,
-      required: false,
       default: () => []
     },
     items: {

@@ -1,19 +1,14 @@
 <template>
   <div>
-    <Loading>
-      <template v-slot:loading>
-        <v-btn
-          color="blue accent-3"
-          @click="handleSaveButton"
-          :loading="loading"
-          :disabled="loading"
-          class="ml-2 white--text"
-        >
-          <v-icon left>{{ icon }} </v-icon>
-          <span class="font-italic">{{ title }} </span>
-        </v-btn>
-      </template>
-    </Loading>
+    <v-btn
+      color="blue accent-3"
+      @click="handleSaveButton"
+      :loading="loading"
+      class="ml-2 white--text"
+    >
+      <v-icon left>{{ icon }} </v-icon>
+      <span class="font-italic">{{ title }} </span>
+    </v-btn>
   </div>
 </template>
 
@@ -24,28 +19,13 @@ export default {
     title: String,
     loading: {
       type: Boolean,
-      required: false,
       default: false
-    },
-    loader: {
-      type: null,
-      required: false,
-      default: null
     }
   },
-  watch: {
-    loader() {
-      setTimeout(() => {
-        this.stopLoading()
-      }, 2000)
-    }
-  },
+
   methods: {
     handleSaveButton() {
       this.$emit('save-button')
-    },
-    stopLoading() {
-      this.$emit('stop-loading')
     }
   }
 }

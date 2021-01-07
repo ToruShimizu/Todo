@@ -11,7 +11,6 @@ export default {
   props: {
     detail: {
       type: String,
-      required: false,
       default: ''
     }
   },

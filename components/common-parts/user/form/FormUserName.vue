@@ -12,18 +12,16 @@ export default {
   props: {
     name: {
       type: String,
-      required: false,
       default: ''
     },
     nameLabel: {
       type: String,
-      required: false,
       default: ''
     }
   },
   data() {
     return {
-      nameRules: [(v) => !!v || '名前は必須です。']
+      nameRules: [v => !!v || '名前は必須です。']
     }
   },
   computed: {

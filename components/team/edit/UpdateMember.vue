@@ -1,6 +1,6 @@
 <template>
   <FormMember
-    :title="'メンバー編集'"
+    title="メンバー編集"
     :team-member="editMember"
     :team-roles="teamRoles"
     :member-dialog="updateMemberDialog"
@@ -28,11 +28,12 @@ export default {
     },
     updateMemberDialog: {
       type: Boolean,
-      required: false
+      default: false
     }
   },
 
   methods: {
+    // メンバー更新
     async handleUpdateMember() {
       const editMember = this.editMember
       await this.updateMember(editMember)

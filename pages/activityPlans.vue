@@ -1,27 +1,30 @@
 <template>
   <v-container style="max-width: 500px" class="mb-5 py-5">
     <v-layout class="justify-center">
+      <!-- サークル作成ダイアログ（チームが作成されていない時に表示） -->
       <CreateTeam :create-team-dialog="createTeamDialog" @close-team-dialog="closeCreateTeam" />
       <v-btn
+        v-if="!teamName"
         color="teal lighten-1"
         dark
         class="font-italic mb-5"
         @click="openCreateTeam"
         @close-team-dialog="closeCreateTeam"
-        v-if="!teamName"
       >
         <v-icon>mdi-account-plus</v-icon>サークル新規作成
       </v-btn>
       <v-btn color="teal lighten-1" dark to="/team" nuxt class="font-italic mr-2" v-else
         ><v-icon>mdi-account-edit</v-icon>サークル編集
       </v-btn>
+      <!-- 活動計画作成ダイアログを開くボタン -->
       <BlueDialogButton
-        :title="'活動計画作成'"
-        :icon="'mdi-pencil-plus'"
-        @dialog-button="openCreateActivityPlan"
         v-if="teamName"
+        title="活動計画作成"
+        icon="mdi-pencil-plus"
+        @dialog-button="openCreateActivityPlan"
       />
     </v-layout>
+    <!-- 活動計画作成ダイアログ -->
     <AddActivityPlan
       :create-activity-plans.sync="planContents"
       :todo-categorys="todoCategorys"
@@ -31,14 +34,17 @@
     />
     <v-divider class="mt-4" />
     <v-card class="mb-5">
+      <!-- 完了状態に応じた絞り込み -->
       <FilteredActivityPlans :selected-activity-plans-filter.sync="selectActivityPlansFilter" />
       <v-divider />
+      <!-- チームが作成されている時に表示 -->
       <v-layout v-if="teamName">
+        <!-- 活動計画検索 -->
         <SearchActivityPlans
           :searched-category-keyword.sync="searchCategoryKeyword"
           :todo-categorys="todoCategorys"
         />
-
+        <!-- 活動計画の並び替え -->
         <SortByActivityPlans
           :selected-sort-activity-plans.sync="selectSortActivityPlans"
           :sort-activity-plans-states="sortActivityPlansStates"
@@ -49,11 +55,13 @@
           サークルがありません
         </v-card-text></v-layout
       >
+      <!-- ページネーション -->
       <ActivityPlansPagination
         :activity-plans-page.sync="activityPlansPage"
         @change-activity-plans-page="changeActivityPlansPage"
         :activity-plans-page-length="activityPlansPageLength"
       />
+      <!-- 活動計画一覧 -->
       <ActivityPlansView
         :display-activity-plans="displayActivityPlans"
         :todo-categorys="todoCategorys"
@@ -145,7 +153,7 @@ export default {
       }
       return returnvalue
     },
-    // タスクの検索
+    // 活動計画の検索
     searchActivityPlans() {
       const activityPlans = this.sortByActivityPlans
       if (this.searchCategoryKeyword === null) {
@@ -156,6 +164,7 @@ export default {
         return activityPlan.category.includes(this.searchCategoryKeyword.toUpperCase())
       })
     },
+    // 活動計画の並べ替え
     sortByActivityPlans() {
       let returnvalue
       switch (this.selectSortActivityPlans) {
@@ -208,6 +217,7 @@ export default {
     closeCreateTeam() {
       this.createTeamDialog = false
     },
+    // ページネーション機能
     activityPlansPagination() {
       const pageSize = this.activityPlansPageSize
       const activityPlans = this.activityPlansFiltered

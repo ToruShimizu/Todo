@@ -1,6 +1,6 @@
 <template>
   <FormMember
-    :title="'メンバー登録'"
+    title="メンバー登録"
     :team-member="teamMember"
     :team-roles="teamRoles"
     :member-dialog="memberDialog"
@@ -32,6 +32,7 @@ export default {
     }
   },
   methods: {
+    // メンバー登録
     async handleRegistrationMember() {
       const teamMember = this.teamMember
       await this.registrationMember(teamMember)

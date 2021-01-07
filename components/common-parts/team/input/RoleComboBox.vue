@@ -23,7 +23,6 @@ export default {
     },
     role: {
       type: Array,
-      required: false,
       default: () => []
     },
     items: {

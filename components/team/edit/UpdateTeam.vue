@@ -1,6 +1,6 @@
 <template>
   <FormCreateTeam
-    :title="'サークル編集'"
+    title="サークル編集"
     :team="editTeam"
     :team-dialog="updateTeamDialog"
     @save-team="handleUpdateTeam"
@@ -21,6 +21,7 @@ export default {
     }
   },
   methods: {
+    // サークル更新
     async handleUpdateTeam() {
       const team = this.editTeam
       if (team.imageFile) {

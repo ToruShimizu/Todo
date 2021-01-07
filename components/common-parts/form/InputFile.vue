@@ -25,7 +25,6 @@ export default {
   props: {
     imageFile: {
       type: null,
-      required: false,
       default: null
     }
   },

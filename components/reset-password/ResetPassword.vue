@@ -1,7 +1,7 @@
 <template>
   <FormDialog :form-dialog="resetPasswordDialog">
     <template v-slot:dialog>
-      <FormView :title="'パスワード再設定'">
+      <FormView title="パスワード再設定">
         <template v-slot:form>
           <FormCardText>
             <template v-slot:text>
@@ -12,17 +12,15 @@
           <v-form ref="form" lazy-validation @submit.prevent="passwordReset">
             <FormUserEmail
               :user-email.sync="resetUserPassword.email"
-              :email-label="'現在のメールアドレス'"
+              email-label="現在のメールアドレス"
             />
             <SaveAndCloseButton
               :loading="resetPasswordLoading"
-              :loader="resetPasswordLoader"
-              :close-button-title="'close'"
-              :save-button-title="'send'"
-              :icon="'mdi-email-send'"
+              close-button-title="close"
+              save-button-title="send"
+              icon="mdi-email-send"
               @close-button="closeResetPassword"
               @save-button="handleResetPassword"
-              @stop-loading="stopResetPasswordLoading"
             />
           </v-form>
         </template>
@@ -38,7 +36,6 @@ export default {
   props: {
     resetPasswordDialog: {
       type: Boolean,
-      required: false,
       default: false
     }
   },
@@ -47,38 +44,33 @@ export default {
       resetUserPassword: {
         email: ''
       },
-      resetPasswordLoading: false,
-      resetPasswordLoader: null
+      resetPasswordLoading: false
     }
   },
   methods: {
+    // パスワードリセット実行
     async handleResetPassword() {
       const resetUserPassword = this.resetUserPassword
       if (resetUserPassword.email === 'test@example.com') {
+        // ローディングをON
+        resetPasswordLoading = true
         alert('テストユーザーはパスワードを再設定することはできません')
         return
       } else if (!resetUserPassword.email) {
         this.$refs.form.validate()
         return
       }
-      this.startResetPasswordLoading()
       await this.resetPassword({
         email: resetUserPassword.email
       })
-      this.stopResetPasswordLoading()
       this.closeResetPassword()
+      // ローディングをOFF
+      resetPasswordLoading = false
     },
+    // ダイアログを閉じる
     closeResetPassword() {
       this.$emit('close-reset-password')
       this.$refs.form.reset()
-    },
-    startResetPasswordLoading() {
-      this.resetPasswordLoading = true
-      this.loginLoader = this.resetPasswordLoading
-    },
-    stopResetPasswordLoading() {
-      this.resetPasswordLoading = false
-      this.loginLoader = this.resetPasswordLoading
     },
     ...mapActions('modules/user/userInfo', ['resetPassword'])
   }

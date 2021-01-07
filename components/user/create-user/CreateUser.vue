@@ -1,31 +1,29 @@
 <template>
   <FormDialog :form-dialog="createUserDialog">
     <template v-slot:dialog>
-      <FormView :title="'新規作成'">
+      <FormView title="新規作成">
         <template v-slot:form>
           <FormCardText>
             <template v-slot:text> ※ 作成後にログインします。 </template>
           </FormCardText>
           <v-form ref="form" lazy-validation @submit.prevent="createUser">
-            <FormUserName :user-name.sync="createNewUser.name" :name-label="'登録する名前'" />
+            <FormUserName :user-name.sync="createNewUser.name" name-label="登録する名前" />
             <FormUserEmail
               :user-email.sync="createNewUser.email"
-              :email-label="'登録するメールアドレス'"
+              email-label="登録するメールアドレス"
             />
             <FormUserPassword
               :user-password.sync="createNewUser.password"
-              :passwordLabel="'登録するパスワード'"
+              passwordLabel="登録するパスワード"
             />
 
             <SaveAndCloseButton
-              :close-button-title="'close'"
-              :save-button-title="'save'"
-              :loader="createUserLoader"
+              close-button-title="close"
+              save-button-title="save"
               :loading="createUserLoading"
-              :icon="'mdi-account-plus'"
+              icon="mdi-account-plus"
               @close-button="closeCreateUser"
               @save-button="handleCreateUser"
-              @stop-loading="stopCreateUserLoading"
             />
           </v-form>
         </template>
@@ -51,36 +49,32 @@ export default {
         email: '',
         password: ''
       },
-      createUserLoading: false,
-      createUserLoader: null
+      createUserLoading: false
     }
   },
   methods: {
+    // ユーザー作成
     async handleCreateUser() {
       const createUser = this.createNewUser
       if (!createUser.password || !createUser.email || !createUser.name) {
         this.$refs.form.validate()
         return
       }
-      this.startCreateUserLoading()
+      // ローディングをON
+      this.createUserLoading = true
+
       await this.createUser({
         email: createUser.email,
         password: createUser.password,
         userName: createUser.name
       })
-      this.stopCreateUserLoading()
+      // ローディングをOFF
+      this.createUserLoading = false
+      this.closeCreateUser()
     },
     closeCreateUser() {
       this.$emit('close-create-user')
       this.$refs.form.reset()
-    },
-    startCreateUserLoading() {
-      this.createUserLoading = true
-      this.loginLoader = this.createUserLoading
-    },
-    stopCreateUserLoading() {
-      this.createUserLoading = false
-      this.loginLoader = this.createUserLoading
     },
 
     ...mapActions('modules/user/auth', ['createUser'])

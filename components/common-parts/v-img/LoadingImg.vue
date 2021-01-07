@@ -22,18 +22,15 @@ export default {
   props: {
     src: {
       type: String,
-      required: false,
       default: ''
     },
     width: {
       type: String,
-      required: false,
-      default: ''
+      default: '100%'
     },
     height: {
       type: String,
-      required: false,
-      default: ''
+      default: '200'
     }
   },
   methods: {

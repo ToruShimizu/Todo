@@ -8,15 +8,12 @@
               <v-row>
                 <v-col cols="12" sm="12" md="12" class="text-center">
                   <v-avatar size="200px">
-                    <LoadingImg
-                      v-if="teamPhotoURL"
-                      :src="teamPhotoURL"
-                      :width="'200'"
-                      :height="'200'"
-                    />
+                    <!-- チーム画像 -->
+                    <LoadingImg v-if="teamPhotoURL" :src="teamPhotoURL" width="200" />
                     <v-icon v-else large>mdi-account-outline</v-icon>
                   </v-avatar>
                 </v-col>
+                <!-- サークル名入力 -->
                 <v-col cols="12" sm="12" md="12">
                   <v-text-field
                     v-model="team.name"
@@ -28,16 +25,17 @@
                     clearable
                   />
                 </v-col>
+                <!-- サークル画像選択 -->
                 <v-col cols="12" sm="12" md="12">
                   <InputFile :imageFile="team.imageFile" @change-image-file="changeImageFile" />
                 </v-col>
               </v-row>
             </v-container>
+            <!-- 保存、閉じるボタン -->
             <SaveAndCloseButton
-              :close-button-title="'close'"
-              :save-button-title="'save'"
-              :loader="null"
-              :icon="'mdi-account-plus'"
+              close-button-title="close"
+              save-button-title="save"
+              icon="mdi-account-plus"
               @close-button="closeTeamDialog"
               @save-button="handleSaveTeam"
             />
@@ -72,14 +70,17 @@ export default {
     ...mapGetters('modules/team/team', ['teamPhotoURL'])
   },
   methods: {
+    // 画像ファイル変換
     changeImageFile(file) {
       this.team.imageFile = file
     },
+    // サークル作成ダイアログを閉じる
     closeTeamDialog() {
       this.$refs.form.reset()
       this.team.name = ''
       this.$emit('close-team-dialog')
     },
+    // サークル作成
     handleSaveTeam() {
       if (!this.team.name) {
         this.$refs.form.validate()

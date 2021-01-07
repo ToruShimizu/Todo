@@ -23,14 +23,15 @@
           <v-divider class="mx-4" inset vertical />
           <BlueDialogButton
             @dialog-button="openRegistrationMember"
-            :icon="'mdi-account-plus-outline'"
+            icon="mdi-account-plus-outline"
           />
           <v-spacer />
         </v-toolbar>
       </template>
+
       <template v-slot:item.actions="{ item }">
-        <TextButtonXSmall :icon="'mdi-pencil'" @handle-text-button="openUpdateMember(item)" />
-        <TextButtonXSmall :icon="'mdi-delete'" @handle-text-button="handleRemoveMember(item)" />
+        <AppButtonXSmall icon="mdi-pencil" @handle-text-button="openUpdateMember(item)" />
+        <AppButtonXSmall icon="mdi-delete" @handle-text-button="handleRemoveMember(item)" />
       </template>
     </v-data-table>
     <UpdateMember
@@ -82,6 +83,7 @@ export default {
     ...mapState('modules/team/team', ['teamMember'])
   },
   methods: {
+    // メンバー削除
     handleRemoveMember(item) {
       if (!confirm(item.name + 'を削除しますか？')) return
       this.removeMember(item)
@@ -89,10 +91,12 @@ export default {
     openRegistrationMember() {
       this.$emit('open-registration-member')
     },
+    // メンバー編集ダイアログを開く
     openUpdateMember(item) {
       this.editMember = Object.assign({}, item)
       this.updateMemberDialog = true
     },
+    // メンバー編集ダイアログを閉じる
     closeUpdateMember() {
       this.updateMemberDialog = false
     },

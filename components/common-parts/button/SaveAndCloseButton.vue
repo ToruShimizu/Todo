@@ -3,13 +3,10 @@
     <CloseButton :title="closeButtonTitle" @close-button="closeButton" />
     <SaveButton
       :title="saveButtonTitle"
-      :loader="loader"
       :loading="loading"
       @save-button="saveButton"
-      @stop-loading="stopLoading"
       :icon="icon"
-    >
-    </SaveButton>
+    />
   </v-card-actions>
 </template>
 
@@ -27,12 +24,7 @@ export default {
     },
     loading: {
       type: Boolean,
-      required: false,
       default: false
-    },
-    loader: {
-      type: null,
-      required: true
     }
   },
   methods: {
@@ -41,9 +33,6 @@ export default {
     },
     closeButton() {
       this.$emit('close-button')
-    },
-    stopLoading() {
-      this.$emit('stop-loading')
     }
   }
 }

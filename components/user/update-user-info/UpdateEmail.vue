@@ -1,7 +1,7 @@
 <template>
   <FormDialog :form-dialog="updateEmailDialog">
     <template v-slot:dialog>
-      <FormView :title="'メールアドレス変更'">
+      <FormView title="メールアドレス変更">
         <template v-slot:form>
           <FormCardText>
             <template v-slot:text>
@@ -10,17 +10,11 @@
             </template>
           </FormCardText>
           <v-form ref="form" lazy-validation @submit.prevent="updateEmail">
-            <FormUserEmail
-              :user-email.sync="editUser.email"
-              :email-label="'新しいメールアドレス'"
-            />
+            <FormUserEmail :user-email.sync="editUser.email" email-label="新しいメールアドレス" />
             <SaveAndCloseButton
-              :close-button-title="'close'"
-              :save-button-title="'save'"
-              :loading="loading"
-              :loader="loader"
-              :icon="'mdi-email-edit'"
-              @stop-loading="stopLoading"
+              close-button-title="close"
+              save-button-title="save"
+              icon="mdi-email-edit"
               @save-button="handleUpdateEmail"
               @close-button="selectUpdateEmail = 'closeUpdateEmail'"
             />
@@ -42,23 +36,11 @@ export default {
     },
     selectUpdateUserInfo: {
       type: String,
-      required: false,
       default: ''
     },
     editUser: {
       type: Object,
-      required: false,
       default: () => {}
-    },
-    loading: {
-      type: Boolean,
-      required: false,
-      default: false
-    },
-    loader: {
-      type: null,
-      required: false,
-      default: null
     }
   },
   computed: {
@@ -74,24 +56,23 @@ export default {
     },
     ...mapGetters('modules/user/auth', ['gettersUserEmail'])
   },
+  data() {
+    return {
+      loading: false
+    }
+  },
   methods: {
     async handleUpdateEmail() {
       const editUserEmail = this.editUser.email
-      if (!editUserEmail) {
-        this.$refs.form.validate()
-        return
-      }
-      this.startLoading()
+      if (!editUserEmail) this.$refs.form.validate()
+      // ローディングをON
+      this.loading = true
       await this.updateEmail({
         email: editUserEmail
       })
       this.$emit('close-update-email', 'closeUpdateEmail')
-    },
-    startLoading() {
-      this.$emit('start-loading')
-    },
-    stopLoading() {
-      this.$emit('stop-loading')
+      // ローディングをOFF
+      this.loading = false
     },
     ...mapActions('modules/user/userInfo', ['updateEmail'])
   }

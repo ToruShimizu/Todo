@@ -11,6 +11,7 @@
     <v-list dense nav>
       <v-list-item-content v-if="loginUser">
         <v-list-item-title class="title white--text font-weight-bold">
+          <!-- ユーザー画像 -->
           <v-avatar max-width="50" max-height="50">
             <v-img v-if="photoURL" :src="photoURL" :lazy-src="photoURL">
               <template v-slot:placeholder>
@@ -21,8 +22,10 @@
             </v-img>
             <v-icon v-else color="white">mdi-account</v-icon>
           </v-avatar>
+          <!-- ユーザーネーム -->
           {{ gettersUserName }}
         </v-list-item-title>
+        <!-- ユーザーメールアドレス -->
         <v-list-item-title class="title white--text">
           <v-icon color="white">mdi-email</v-icon>
           {{ gettersUserEmail }}
@@ -31,8 +34,8 @@
       <v-list-item>
         <v-list-item-content v-if="!loginUser">
           <v-list-item-title class="white--text font-weight-bold"
-            >ログインユーザーはいません</v-list-item-title
-          >
+            >ログインユーザーはいません
+          </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>

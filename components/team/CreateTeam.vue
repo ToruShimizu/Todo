@@ -1,6 +1,6 @@
 <template>
   <FormCreateTeam
-    :title="'サークル新規作成'"
+    title="サークル新規作成"
     :team="createTeam"
     :team-dialog="createTeamDialog"
     @save-team="handleCreateTeam"
@@ -27,6 +27,7 @@ export default {
     }
   },
   methods: {
+    // サークル作成
     async handleCreateTeam() {
       const team = this.createTeam
       if (team.imageFile) {

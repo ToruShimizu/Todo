@@ -37,13 +37,14 @@ export default {
   props: {
     comments: {
       type: Array,
-      required: false
+      default: () => []
     }
   },
   computed: {
     ...mapGetters('modules/user/auth', ['gettersUserName', 'photoURL'])
   },
   methods: {
+    // コメント削除
     handleRemoveComment(comment) {
       if (!confirm(comment.message + 'を削除しますか?')) return
       this.removeComment(comment)

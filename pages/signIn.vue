@@ -1,8 +1,9 @@
 <template>
-  <FormView :title="'ログインはこちら'" class="mt-8 py-5">
+  <FormView title="ログインはこちら" class="mt-8 py-5">
     <template v-slot:form>
       <FormCardText>
         <template v-slot:text>
+          <!-- Googleログインボタン -->
           <LoginButton @login="googleLogin" class="mb-3">
             <template v-slot:icon>
               <img
@@ -12,13 +13,12 @@
               />Googleアカウントでログイン
             </template>
           </LoginButton>
+          <!-- テストユーザーログインボタン -->
           <LoginButton
-            :loader="loginLoader"
             :loading="testLoginLoading"
-            @login="handleTestLogin"
-            @stop-loading="stopTestLoginLoading"
-            :icon="'mdi-account-arrow-left-outline'"
-            :title="'テストユーザーとしてログイン'"
+            @login="testLogin"
+            icon="mdi-account-arrow-left-outline"
+            title="テストユーザーとしてログイン"
           >
           </LoginButton>
         </template>
@@ -29,9 +29,9 @@
       </FormCardText>
 
       <v-form ref="form" lazy-validation @submit.prevent="login">
-        <FormUserEmail :user-email.sync="signInUser.email" :email-label="'メールアドレス'" />
+        <FormUserEmail :user-email.sync="signInUser.email" email-label="メールアドレス" />
         <FormUserPassword
-          :password-label="'パスワード'"
+          password-label="パスワード"
           :show-password="signInshowPassword"
           :user-password.sync="signInUser.password"
           @handle-show-password="toggleSignInShowPassword"
@@ -41,24 +41,21 @@
         >
         <v-card-actions class="justify-end">
           <SaveButton
-            :title="'login'"
-            :loader="loginLoader"
+            title="login"
             :loading="loginLoading"
-            @save-button="handleLogin"
-            @stop-loading="stopLoginLoading"
-            :icon="'mdi-account-arrow-left'"
-          >
-          </SaveButton>
-          <SaveButton :title="'new'" @save-button="openCreateUser" :icon="'mdi-account-plus'">
-          </SaveButton>
+            @save-button="login"
+            icon="mdi-account-arrow-left"
+          />
+
+          <SaveButton title="new" @save-button="openCreateUser" icon="mdi-account-plus" />
         </v-card-actions>
+        <!-- 新規ユーザー作成ダイアログ -->
         <CreateUser :create-user-dialog="createUserDialog" @close-create-user="closeCreateUser" />
+        <!-- パスワードリセットダイアログ -->
         <ResetPassword
-          :loader="loginLoader"
           :loading="resetPasswordLoading"
           :reset-password-dialog="resetPasswordDialog"
           @close-reset-password="closeResetPassword"
-          @stop-loading="stopResetPasswordLoading"
         />
       </v-form>
     </template>
@@ -80,31 +77,38 @@ export default {
       testLoginLoading: false,
       loginLoading: false,
       signInshowPassword: false,
-      resetPasswordLoading: false,
-      loginLoader: null
+      resetPasswordLoading: false
     }
   },
   methods: {
-    handleTestLogin() {
-      this.startTestLoginLoading()
+    // テストログイン
+    testLogin() {
+      // ボタンのローディングをON
+      this.testLoginLoading = true
       this.login({
         email: 'test@example.com',
         password: 'testUser',
         userName: 'テストユーザー'
       })
+      // ボタンのローディングをOFF
+      this.testLoginLoading = true
     },
-    async handleLogin() {
+    // メールアドレスログイン
+    async login() {
+      // ボタンのローディングをON
+      this.loginLoading = true
       const signInUser = this.signInUser
       if (!signInUser.password || !signInUser.email) {
         this.$refs.form.validate()
         return
       }
-      this.startLoginLoading()
+
       await this.login({
         email: signInUser.email,
         password: signInUser.password
       })
-      this.stopLoginLoading()
+      // ボタンのローディングをOFF
+      this.loginLoading = true
     },
     openCreateUser() {
       this.createUserDialog = true
@@ -117,27 +121,6 @@ export default {
     },
     closeResetPassword() {
       this.resetPasswordDialog = false
-    },
-    startTestLoginLoading() {
-      this.testLoginLoading = true
-      this.loginLoader = this.testLoginLoading
-    },
-    stopTestLoginLoading() {
-      this.testLoginLoading = false
-      this.loginLoader = this.testLoginLoading
-    },
-    startLoginLoading() {
-      this.loginLoading = true
-      this.loginLoader = this.loginLoading
-    },
-    stopLoginLoading() {
-      this.loginLoading = false
-      this.loginLoader = this.loginLoading
-    },
-
-    stopResetPasswordLoading() {
-      this.resetPasswordLoading = false
-      this.loginLoader = this.resetPasswordLoading
     },
     toggleSignInShowPassword() {
       this.signInshowPassword = !this.signInshowPassword
