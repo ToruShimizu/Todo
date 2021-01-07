@@ -28,6 +28,7 @@ export default {
     }
   },
   methods: {
+    // コメント追加
     handleAddComment() {
       this.addComment({
         id: this.planContentsId,

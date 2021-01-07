@@ -3,10 +3,12 @@
     <template v-slot:dialog>
       <FormView title="コメント">
         <template v-slot:form style="relative">
+          <!-- コメント入力、追加機能を持ったフォーム、 -->
           <AddComment :plan-contents-id="planContents.id" />
+          <!-- コメント表示 -->
           <Comment :comments="planContents.comments" />
           <v-card-actions class="justify-end">
-            <TextButton title="close" class="primary--text" @handle-text-button="closeComment" />
+            <AppButton title="close" class="primary--text" @handle-text-button="closeComment" />
           </v-card-actions>
         </template>
       </FormView>

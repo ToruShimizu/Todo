@@ -1,4 +1,5 @@
 <template>
+  <!-- 活動計画作成ダイアログ -->
   <FormCreateActivityPlan
     title="活動計画作成"
     :plan-contents="planContents"
@@ -38,6 +39,7 @@ export default {
     }
   },
   methods: {
+    // 活動計画作成
     async handleCreateActivityPlan(planContents) {
       if (planContents.imageFile) {
         await this.uploadPlanContentsImageFile(planContents)
@@ -46,6 +48,7 @@ export default {
       }
       this.closeActivityPlan()
     },
+    // 活動計画を閉じる
     closeActivityPlan() {
       this.$emit('close-activity-plan')
     },

@@ -21,6 +21,7 @@ export default {
     }
   },
   methods: {
+    // サークル更新
     async handleUpdateTeam() {
       const team = this.editTeam
       if (team.imageFile) {

@@ -7,7 +7,9 @@
             <template v-slot:text> ※ 削除後にログイン画面に戻ります。 </template>
           </FormCardText>
           <v-form ref="form" lazy-validation>
+            <!-- メールアドレス入力 -->
             <FormUserEmail :user-email.sync="editUser.email" email-label="現在のメールアドレス" />
+            <!-- パスワード入力 -->
             <FormUserPassword
               :show-password="deleteAccountShowPassword"
               :user-password.sync="editUser.password"
@@ -25,7 +27,6 @@
                 :loader="loader"
                 icon="mdi-account-multiple-remove"
                 @delete-button="handleDeleteAccount"
-                @stop-loading="stopLoading"
               />
             </v-card-actions>
           </v-form>
@@ -84,19 +85,11 @@ export default {
         this.$refs.form.validate()
         return
       }
-      this.startLoading()
       await this.deleteAccount({
         email: editUser.email,
         password: editUser.password
       })
       this.$emit('update:close-delete-account', 'closeDeleteAccount')
-    },
-
-    startLoading() {
-      this.$emit('start-loading')
-    },
-    stopLoading() {
-      this.$emit('stop-loading')
     },
     toggleDeleteAccountShowPassword() {
       this.deleteAccountShowPassword = !this.deleteAccountShowPassword

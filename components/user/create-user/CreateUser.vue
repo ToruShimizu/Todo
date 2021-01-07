@@ -20,12 +20,10 @@
             <SaveAndCloseButton
               close-button-title="close"
               save-button-title="save"
-              :loader="createUserLoader"
               :loading="createUserLoading"
               icon="mdi-account-plus"
               @close-button="closeCreateUser"
               @save-button="handleCreateUser"
-              @stop-loading="stopCreateUserLoading"
             />
           </v-form>
         </template>
@@ -51,36 +49,32 @@ export default {
         email: '',
         password: ''
       },
-      createUserLoading: false,
-      createUserLoader: null
+      createUserLoading: false
     }
   },
   methods: {
+    // ユーザー作成
     async handleCreateUser() {
       const createUser = this.createNewUser
       if (!createUser.password || !createUser.email || !createUser.name) {
         this.$refs.form.validate()
         return
       }
-      this.startCreateUserLoading()
+      // ローディングをON
+      this.createUserLoading = true
+
       await this.createUser({
         email: createUser.email,
         password: createUser.password,
         userName: createUser.name
       })
-      this.stopCreateUserLoading()
+      // ローディングをOFF
+      this.createUserLoading = false
+      this.closeCreateUser()
     },
     closeCreateUser() {
       this.$emit('close-create-user')
       this.$refs.form.reset()
-    },
-    startCreateUserLoading() {
-      this.createUserLoading = true
-      this.loginLoader = this.createUserLoading
-    },
-    stopCreateUserLoading() {
-      this.createUserLoading = false
-      this.loginLoader = this.createUserLoading
     },
 
     ...mapActions('modules/user/auth', ['createUser'])

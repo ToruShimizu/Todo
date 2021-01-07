@@ -18,7 +18,7 @@
     </template>
     <v-date-picker v-model="innerDate" no-title range>
       <v-spacer />
-      <TextButton title="close" class="primary--text" @handle-text-button="closeDateMenu" />
+      <AppButton title="close" class="primary--text" @handle-text-button="closeDateMenu" />
     </v-date-picker>
   </v-menu>
 </template>
@@ -46,6 +46,7 @@ export default {
         this.$emit('update:date', date)
       }
     },
+    // 日付の配列を文字列に加工
     dateRangeText: {
       get() {
         return this.innerDate.join('~')

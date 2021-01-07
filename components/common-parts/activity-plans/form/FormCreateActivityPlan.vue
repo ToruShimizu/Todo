@@ -24,6 +24,7 @@
                 </v-col>
                 <slot name="imageFile"></slot>
                 <v-col cols="12" sm="12" md="12">
+                  <!-- 画像入力エリア -->
                   <InputFile
                     :imageFile.sync="planContents.imageFile"
                     @change-image-file="changeImageFile"
@@ -31,6 +32,7 @@
                 </v-col>
               </v-row>
             </v-container>
+            <!-- 保存ボタン、閉じるボタン -->
             <SaveAndCloseButton
               close-button-title="close"
               save-button-title="save"
@@ -69,6 +71,7 @@ export default {
     ...mapGetters('modules/team/team', ['gettersTeamMember'])
   },
   methods: {
+    // 活動計画作成
     async handleSaveActivityPlan() {
       const planContents = this.planContents
       if (planContents.category === '') {
@@ -77,6 +80,7 @@ export default {
       }
       this.$emit('save-activity-plan', planContents)
     },
+    // ダイアログを閉じるボタン
     closeActivityPlan() {
       this.$refs.form.reset()
       this.planContents.category = []
@@ -88,9 +92,7 @@ export default {
       ]
       this.$emit('close-activity-plan')
     },
-    inputDate() {
-      this.dateMenu = false
-    },
+    // 画像ファイルを変換
     changeImageFile(file) {
       this.planContents.imageFile = file
       this.$emit('update-image-file', this.planContents)

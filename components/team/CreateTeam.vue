@@ -27,6 +27,7 @@ export default {
     }
   },
   methods: {
+    // サークル作成
     async handleCreateTeam() {
       const team = this.createTeam
       if (team.imageFile) {

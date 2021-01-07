@@ -32,6 +32,7 @@ export default {
     }
   },
   methods: {
+    // メンバー登録
     async handleRegistrationMember() {
       const teamMember = this.teamMember
       await this.registrationMember(teamMember)

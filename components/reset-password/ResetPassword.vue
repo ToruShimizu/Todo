@@ -16,13 +16,11 @@
             />
             <SaveAndCloseButton
               :loading="resetPasswordLoading"
-              :loader="resetPasswordLoader"
               close-button-title="close"
               save-button-title="send"
               icon="mdi-email-send"
               @close-button="closeResetPassword"
               @save-button="handleResetPassword"
-              @stop-loading="stopResetPasswordLoading"
             />
           </v-form>
         </template>
@@ -46,38 +44,33 @@ export default {
       resetUserPassword: {
         email: ''
       },
-      resetPasswordLoading: false,
-      resetPasswordLoader: null
+      resetPasswordLoading: false
     }
   },
   methods: {
+    // パスワードリセット実行
     async handleResetPassword() {
       const resetUserPassword = this.resetUserPassword
       if (resetUserPassword.email === 'test@example.com') {
+        // ローディングをON
+        resetPasswordLoading = true
         alert('テストユーザーはパスワードを再設定することはできません')
         return
       } else if (!resetUserPassword.email) {
         this.$refs.form.validate()
         return
       }
-      this.startResetPasswordLoading()
       await this.resetPassword({
         email: resetUserPassword.email
       })
-      this.stopResetPasswordLoading()
       this.closeResetPassword()
+      // ローディングをOFF
+      resetPasswordLoading = false
     },
+    // ダイアログを閉じる
     closeResetPassword() {
       this.$emit('close-reset-password')
       this.$refs.form.reset()
-    },
-    startResetPasswordLoading() {
-      this.resetPasswordLoading = true
-      this.loginLoader = this.resetPasswordLoading
-    },
-    stopResetPasswordLoading() {
-      this.resetPasswordLoading = false
-      this.loginLoader = this.resetPasswordLoading
     },
     ...mapActions('modules/user/userInfo', ['resetPassword'])
   }

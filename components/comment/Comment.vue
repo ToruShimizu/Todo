@@ -44,6 +44,7 @@ export default {
     ...mapGetters('modules/user/auth', ['gettersUserName', 'photoURL'])
   },
   methods: {
+    // コメント削除
     handleRemoveComment(comment) {
       if (!confirm(comment.message + 'を削除しますか?')) return
       this.removeComment(comment)

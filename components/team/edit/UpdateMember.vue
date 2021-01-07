@@ -33,6 +33,7 @@ export default {
   },
 
   methods: {
+    // メンバー更新
     async handleUpdateMember() {
       const editMember = this.editMember
       await this.updateMember(editMember)

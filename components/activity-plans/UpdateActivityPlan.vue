@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- 活動計画編集フォーム -->
     <FormCreateActivityPlan
       title="活動計画編集"
       :plan-contents="editPlanContents"
@@ -10,13 +11,12 @@
       @update-image-file="handleUpdateImageFile"
     >
       <template v-slot:imageFile v-if="editPlanContents.photoURL">
+        <!-- 画像ファイル削除ボタン -->
         <v-col cols="12" sm="12" md="12" class="pa-0 text-right">
-          <TextButton
-            icon="mdi-delete-outline"
-            @handle-text-button="handleRemovePlanContensImage"
-          />
+          <AppButton icon="mdi-delete-outline" @handle-text-button="handleRemovePlanContensImage" />
         </v-col>
         <v-col cols="12" sm="12" md="12">
+          <!-- 画像の表示 -->
           <LoadingImg
             class="mx-auto"
             v-if="editPlanContents.photoURL"
@@ -54,16 +54,20 @@ export default {
     }
   },
   methods: {
+    // 活動計画更新ボタン
     async handleUpdateActivityPlan(planContents) {
       await this.updateActivityPlan(planContents)
       this.closeUpdateActivityPlan()
     },
+    // 活動計画編集ダイアログを閉じる
     closeUpdateActivityPlan() {
       this.$emit('close-update-activity-plan')
     },
+    // 画像ファイルを削除
     handleRemovePlanContensImage() {
       this.removePlanContentsImage(this.editPlanContents)
     },
+    // 画像ファイルを更新
     handleUpdateImageFile(planContents) {
       this.updatePlanContentsImageFile(planContents)
     },
