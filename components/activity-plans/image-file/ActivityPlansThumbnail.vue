@@ -1,5 +1,5 @@
 <template>
-  <LoadingImg :src="photoURL" :width="'100%'" :height="'200'" @handle-image-file="openImageFile" />
+  <LoadingImg :src="photoURL" @handle-image-file="openImageFile" />
 </template>
 
 <script>

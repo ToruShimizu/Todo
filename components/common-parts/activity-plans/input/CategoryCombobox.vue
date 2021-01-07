@@ -20,7 +20,6 @@ export default {
     },
     category: {
       type: '',
-      required: false,
       default: ''
     }
   },
@@ -36,7 +35,7 @@ export default {
   },
   data() {
     return {
-      categoryRules: [(v) => !!v || 'カテゴリは必須です']
+      categoryRules: [v => !!v || 'カテゴリは必須です']
     }
   }
 }

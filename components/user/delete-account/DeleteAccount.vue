@@ -1,21 +1,18 @@
 <template>
   <FormDialog :form-dialog="deleteAccountDialog">
     <template v-slot:dialog>
-      <FormView :title="'アカウント削除'">
+      <FormView title="アカウント削除">
         <template v-slot:form>
           <FormCardText>
             <template v-slot:text> ※ 削除後にログイン画面に戻ります。 </template>
           </FormCardText>
           <v-form ref="form" lazy-validation>
-            <FormUserEmail
-              :user-email.sync="editUser.email"
-              :email-label="'現在のメールアドレス'"
-            />
+            <FormUserEmail :user-email.sync="editUser.email" email-label="現在のメールアドレス" />
             <FormUserPassword
               :show-password="deleteAccountShowPassword"
               :user-password.sync="editUser.password"
               @handle-show-password="toggleDeleteAccountShowPassword"
-              :passwordLabel="'現在のパスワード'"
+              passwordLabel="現在のパスワード"
             />
             <v-card-actions class="justify-end">
               <CloseButton
@@ -23,10 +20,10 @@
                 @close-button="selectedDeleteAccount = 'closeDeleteAccount'"
               />
               <DeleteButton
-                :title="'delete'"
+                title="delete"
                 :loading="loading"
                 :loader="loader"
-                :icon="'mdi-account-multiple-remove'"
+                icon="mdi-account-multiple-remove"
                 @delete-button="handleDeleteAccount"
                 @stop-loading="stopLoading"
               />
@@ -49,22 +46,18 @@ export default {
     },
     selectEditUserInfo: {
       type: String,
-      required: false,
       default: ''
     },
     editUser: {
       type: Object,
-      required: false,
       default: () => {}
     },
     loading: {
       type: Boolean,
-      required: false,
       default: false
     },
     loader: {
       type: null,
-      required: false,
       default: null
     }
   },

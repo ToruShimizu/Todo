@@ -18,7 +18,7 @@
     </template>
     <v-date-picker v-model="innerDate" no-title range>
       <v-spacer />
-      <TextButton :title="'close'" class="primary--text" @handle-text-button="closeDateMenu" />
+      <TextButton title="close" class="primary--text" @handle-text-button="closeDateMenu" />
     </v-date-picker>
   </v-menu>
 </template>
@@ -28,7 +28,6 @@ export default {
   props: {
     date: {
       type: Array,
-      required: false,
       default: [new Date().toISOString().substr(0, 10)]
     }
   },

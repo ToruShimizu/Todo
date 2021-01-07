@@ -12,8 +12,8 @@
           <TextButton
             class="white--text font-weight-bold"
             @handle-text-button="selectedEditUserInfo = 'openUpdateUserName'"
-            :icon="'mdi-badge-account-horizontal'"
-            :title="'ユーザー名変更'"
+            icon="mdi-badge-account-horizontal"
+            title="ユーザー名変更"
           />
         </v-list-item-title>
       </v-list-item>
@@ -22,8 +22,8 @@
           <TextButton
             class="white--text font-weight-bold"
             @handle-text-button="handleSelectUserImageFile"
-            :icon="'mdi-file-account'"
-            :title="'プロフィール画像変更'"
+            icon="mdi-file-account"
+            title="プロフィール画像変更"
           />
         </v-list-item-title>
       </v-list-item>
@@ -32,8 +32,8 @@
           <TextButton
             class="white--text font-weight-bold"
             @handle-text-button="selectedEditUserInfo = 'openUpdateEmail'"
-            :icon="'mdi-email-edit'"
-            :title="'メールアドレス変更'"
+            icon="mdi-email-edit"
+            title="メールアドレス変更"
           />
         </v-list-item-title>
       </v-list-item>
@@ -42,8 +42,8 @@
           <TextButton
             class="white--text font-weight-bold"
             @handle-text-button="selectedEditUserInfo = 'openUpdatePassword'"
-            :icon="'mdi-account'"
-            :title="'パスワード変更'"
+            icon="mdi-account"
+            title="パスワード変更"
           />
         </v-list-item-title>
       </v-list-item>
@@ -52,8 +52,8 @@
           <TextButton
             class="white--text font-weight-bold"
             @handle-text-button="selectedEditUserInfo = 'openDeleteAccount'"
-            :icon="'mdi-account-remove'"
-            :title="'アカウント削除 '"
+            icon="mdi-account-remove"
+            title="アカウント削除 "
           />
         </v-list-item-title>
       </v-list-item>
@@ -68,12 +68,10 @@ export default {
   props: {
     selectEditUserInfo: {
       type: String,
-      required: false,
       default: ''
     },
     selectedEditUserInfoScreen: {
       type: Boolean,
-      required: false,
       default: false
     }
   },

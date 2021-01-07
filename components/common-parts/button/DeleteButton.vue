@@ -24,12 +24,10 @@ export default {
     icon: String,
     loading: {
       type: Boolean,
-      required: false,
       default: false
     },
     loader: {
       type: null,
-      required: false,
       default: null
     }
   },

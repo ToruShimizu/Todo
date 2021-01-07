@@ -18,7 +18,6 @@ export default {
   props: {
     inChargeMember: {
       type: Array,
-      required: false,
       default: () => []
     },
     items: {

@@ -1,5 +1,5 @@
 <template>
-  <FormView :title="'ログインはこちら'" class="mt-8 py-5">
+  <FormView title="ログインはこちら" class="mt-8 py-5">
     <template v-slot:form>
       <FormCardText>
         <template v-slot:text>
@@ -17,8 +17,8 @@
             :loading="testLoginLoading"
             @login="handleTestLogin"
             @stop-loading="stopTestLoginLoading"
-            :icon="'mdi-account-arrow-left-outline'"
-            :title="'テストユーザーとしてログイン'"
+            icon="mdi-account-arrow-left-outline"
+            title="テストユーザーとしてログイン"
           >
           </LoginButton>
         </template>
@@ -29,9 +29,9 @@
       </FormCardText>
 
       <v-form ref="form" lazy-validation @submit.prevent="login">
-        <FormUserEmail :user-email.sync="signInUser.email" :email-label="'メールアドレス'" />
+        <FormUserEmail :user-email.sync="signInUser.email" email-label="メールアドレス" />
         <FormUserPassword
-          :password-label="'パスワード'"
+          password-label="パスワード"
           :show-password="signInshowPassword"
           :user-password.sync="signInUser.password"
           @handle-show-password="toggleSignInShowPassword"
@@ -41,15 +41,15 @@
         >
         <v-card-actions class="justify-end">
           <SaveButton
-            :title="'login'"
+            title="login"
             :loader="loginLoader"
             :loading="loginLoading"
             @save-button="handleLogin"
             @stop-loading="stopLoginLoading"
-            :icon="'mdi-account-arrow-left'"
+            icon="mdi-account-arrow-left"
           >
           </SaveButton>
-          <SaveButton :title="'new'" @save-button="openCreateUser" :icon="'mdi-account-plus'">
+          <SaveButton title="new" @save-button="openCreateUser" icon="mdi-account-plus">
           </SaveButton>
         </v-card-actions>
         <CreateUser :create-user-dialog="createUserDialog" @close-create-user="closeCreateUser" />

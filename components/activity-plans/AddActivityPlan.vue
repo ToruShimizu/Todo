@@ -1,6 +1,6 @@
 <template>
   <FormCreateActivityPlan
-    :title="'活動計画作成'"
+    title="活動計画作成"
     :plan-contents="planContents"
     :activity-plan-dialog="createActivityPlanDialog"
     :categorys="todoCategorys"

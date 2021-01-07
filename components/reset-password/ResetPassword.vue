@@ -1,7 +1,7 @@
 <template>
   <FormDialog :form-dialog="resetPasswordDialog">
     <template v-slot:dialog>
-      <FormView :title="'パスワード再設定'">
+      <FormView title="パスワード再設定">
         <template v-slot:form>
           <FormCardText>
             <template v-slot:text>
@@ -12,14 +12,14 @@
           <v-form ref="form" lazy-validation @submit.prevent="passwordReset">
             <FormUserEmail
               :user-email.sync="resetUserPassword.email"
-              :email-label="'現在のメールアドレス'"
+              email-label="現在のメールアドレス"
             />
             <SaveAndCloseButton
               :loading="resetPasswordLoading"
               :loader="resetPasswordLoader"
-              :close-button-title="'close'"
-              :save-button-title="'send'"
-              :icon="'mdi-email-send'"
+              close-button-title="close"
+              save-button-title="send"
+              icon="mdi-email-send"
               @close-button="closeResetPassword"
               @save-button="handleResetPassword"
               @stop-loading="stopResetPasswordLoading"
@@ -38,7 +38,6 @@ export default {
   props: {
     resetPasswordDialog: {
       type: Boolean,
-      required: false,
       default: false
     }
   },

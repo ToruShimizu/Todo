@@ -37,7 +37,7 @@ export default {
   props: {
     comments: {
       type: Array,
-      required: false
+      default: () => []
     }
   },
   computed: {

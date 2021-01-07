@@ -23,14 +23,14 @@
           <v-divider class="mx-4" inset vertical />
           <BlueDialogButton
             @dialog-button="openRegistrationMember"
-            :icon="'mdi-account-plus-outline'"
+            icon="mdi-account-plus-outline"
           />
           <v-spacer />
         </v-toolbar>
       </template>
       <template v-slot:item.actions="{ item }">
-        <TextButtonXSmall :icon="'mdi-pencil'" @handle-text-button="openUpdateMember(item)" />
-        <TextButtonXSmall :icon="'mdi-delete'" @handle-text-button="handleRemoveMember(item)" />
+        <TextButtonXSmall icon="mdi-pencil" @handle-text-button="openUpdateMember(item)" />
+        <TextButtonXSmall icon="mdi-delete" @handle-text-button="handleRemoveMember(item)" />
       </template>
     </v-data-table>
     <UpdateMember

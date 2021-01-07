@@ -27,7 +27,6 @@ export default {
     },
     loading: {
       type: Boolean,
-      required: false,
       default: false
     },
     loader: {

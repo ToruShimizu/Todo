@@ -16,8 +16,8 @@
         ><v-icon>mdi-account-edit</v-icon>サークル編集
       </v-btn>
       <BlueDialogButton
-        :title="'活動計画作成'"
-        :icon="'mdi-pencil-plus'"
+        title="活動計画作成"
+        icon="mdi-pencil-plus"
         @dialog-button="openCreateActivityPlan"
         v-if="teamName"
       />

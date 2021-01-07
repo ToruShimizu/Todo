@@ -1,6 +1,6 @@
 <template>
   <FormCreateTeam
-    :title="'サークル編集'"
+    title="サークル編集"
     :team="editTeam"
     :team-dialog="updateTeamDialog"
     @save-team="handleUpdateTeam"

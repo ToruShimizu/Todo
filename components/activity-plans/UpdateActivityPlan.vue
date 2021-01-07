@@ -1,7 +1,7 @@
 <template>
   <div>
     <FormCreateActivityPlan
-      :title="'活動計画編集'"
+      title="活動計画編集"
       :plan-contents="editPlanContents"
       :activity-plan-dialog="updateActivityPlanDialog"
       :categorys="todoCategorys"
@@ -12,7 +12,7 @@
       <template v-slot:imageFile v-if="editPlanContents.photoURL">
         <v-col cols="12" sm="12" md="12" class="pa-0 text-right">
           <TextButton
-            :icon="'mdi-delete-outline'"
+            icon="mdi-delete-outline"
             @handle-text-button="handleRemovePlanContensImage"
           />
         </v-col>
@@ -21,8 +21,8 @@
             class="mx-auto"
             v-if="editPlanContents.photoURL"
             :src="editPlanContents.photoURL"
-            :width="'200'"
-            :height="'200'"
+            width="200"
+            height="200"
           />
         </v-col>
       </template>

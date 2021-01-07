@@ -1,34 +1,31 @@
 <template>
   <FormDialog :form-dialog="updatePasswordDialog">
     <template v-slot:dialog>
-      <FormView :title="'パスワード変更'">
+      <FormView title="パスワード変更">
         <template v-slot:form>
           <FormCardText>
             <template v-slot:text> ※ 変更完了後にログイン画面に戻ります。 </template>
           </FormCardText>
           <v-form ref="form" lazy-validation @click="handleUpdatePassword">
-            <FormUserEmail
-              :user-email.sync="editUser.email"
-              :email-label="'現在のメールアドレス'"
-            />
+            <FormUserEmail :user-email.sync="editUser.email" email-label="現在のメールアドレス" />
             <FormUserPassword
               :user-password.sync="editUser.password"
               :show-password="showUserPassword"
               @handle-show-password="toggleShowUserPassword"
-              :password-label="'現在のパスワード'"
+              password-label="現在のパスワード"
             />
             <FormUserPassword
               :user-password.sync="editUser.editPassword"
               :show-password="showEditPassword"
               @handle-show-password="toggleShowEditPassword"
-              :password-label="'新しいパスワード'"
+              password-label="新しいパスワード"
             />
             <SaveAndCloseButton
-              :close-button-title="'close'"
-              :save-button-title="'save'"
+              close-button-title="close"
+              save-button-title="save"
               :loading="loading"
               :loader="loader"
-              :icon="'mdi-account-key'"
+              icon="mdi-account-key"
               @stop-loading="stopLoading"
               @save-button="handleUpdatePassword"
               @close-button="selectedUpdatePassword = 'closeUpdatePassword'"
@@ -51,22 +48,18 @@ export default {
     },
     selectUpdateUserInfo: {
       type: String,
-      required: false,
       default: ''
     },
     editUser: {
       type: Object,
-      required: false,
       default: () => {}
     },
     loading: {
       type: Boolean,
-      required: false,
       default: false
     },
     loader: {
       type: null,
-      required: false,
       default: null
     }
   },

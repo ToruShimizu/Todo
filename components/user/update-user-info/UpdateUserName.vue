@@ -1,7 +1,7 @@
 <template>
   <FormDialog :form-dialog="updateUserNameDialog">
     <template v-slot:dialog>
-      <FormView :title="'ユーザー名変更'">
+      <FormView title="ユーザー名変更">
         <template v-slot:form>
           <FormCardText>
             <template v-slot:text>
@@ -10,13 +10,13 @@
             </template>
           </FormCardText>
           <v-form ref="form" lazy-validation @submit.prevent="updateUserName">
-            <FormUserName :user-name.sync="editUser.name" :name-label="'新しいユーザー名'" />
+            <FormUserName :user-name.sync="editUser.name" name-label="新しいユーザー名" />
             <SaveAndCloseButton
-              :close-button-title="'close'"
-              :save-button-title="'save'"
+              close-button-title="close"
+              save-button-title="save"
               :loading="loading"
               :loader="loader"
-              :icon="'mdi-badge-account-horizontal'"
+              icon="mdi-badge-account-horizontal"
               @stop-loading="stopLoading"
               @save-button="handleUpdateUserName"
               @close-button="selectedUpdateUserName = 'closeUpdateUserName'"
@@ -39,22 +39,18 @@ export default {
     },
     selectUpdateUserInfo: {
       type: String,
-      required: false,
       default: ''
     },
     editUser: {
       type: Object,
-      required: false,
       default: () => {}
     },
     loading: {
       type: Boolean,
-      required: false,
       default: false
     },
     loader: {
       type: null,
-      required: false,
       default: null
     }
   },

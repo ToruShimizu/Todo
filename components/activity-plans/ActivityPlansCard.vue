@@ -28,7 +28,7 @@
               @close-comment="closeComment"
               :plan-contents="contents"
             />
-            <IconButton :icon="'mdi-comment-text-outline '" @handle-icon-button="openComment" />
+            <IconButton icon="mdi-comment-text-outline" @handle-icon-button="openComment" />
             {{ contents.comments.length }}
             <v-spacer />
             <v-menu transition="slide-y-transition" bottom>
@@ -43,8 +43,8 @@
                     <TextButton
                       class="white--text font-weight-bold"
                       @handle-text-button="openActivityPlan(contents)"
-                      :icon="'mdi-pencil'"
-                      :title="'編集'"
+                      icon="mdi-pencil"
+                      title="編集"
                     />
                   </v-list-item-title>
                 </v-list-item>
@@ -53,8 +53,8 @@
                     <TextButton
                       class="white--text font-weight-bold"
                       @handle-text-button="handleRemoveActivityPlan(contents)"
-                      :icon="'mdi-delete'"
-                      :title="'削除'"
+                      icon="mdi-delete"
+                      title="削除"
                     />
                   </v-list-item-title>
                 </v-list-item>

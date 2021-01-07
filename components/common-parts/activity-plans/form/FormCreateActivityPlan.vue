@@ -32,10 +32,10 @@
               </v-row>
             </v-container>
             <SaveAndCloseButton
-              :close-button-title="'close'"
-              :save-button-title="'save'"
+              close-button-title="close"
+              save-button-title="save"
               :loader="null"
-              :icon="'mdi-pencil-plus'"
+              icon="mdi-pencil-plus"
               @save-button="handleSaveActivityPlan"
               @close-button="closeActivityPlan"
             />
@@ -54,17 +54,7 @@ export default {
     title: String,
     planContents: {
       type: Object,
-      required: true,
-      default: () => ({
-        category: '',
-        detail: '',
-        imageFile: null,
-        inChargeMember: [],
-        fileName: '',
-        photoURL: '',
-        date: [new Date().toISOString().substr(0, 10)],
-        done: false
-      })
+      required: true
     },
     categorys: {
       type: Array,
@@ -72,8 +62,7 @@ export default {
     },
     activityPlanDialog: {
       type: Boolean,
-      required: true,
-      detail: false
+      required: true
     }
   },
   computed: {

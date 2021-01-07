@@ -12,8 +12,8 @@
             <TextButton
               class="white--text font-weight-bold"
               @handle-text-button="openUpdateTeam"
-              :icon="'mdi-pencil'"
-              :title="'サークル編集'"
+              icon="mdi-pencil"
+              title="サークル編集"
             />
           </v-list-item-title>
         </v-list-item>
@@ -22,8 +22,8 @@
             <TextButton
               class="white--text font-weight-bold"
               @handle-text-button="handleDeleteTeam"
-              :icon="'mdi-account-multiple-remove'"
-              :title="'サークル削除'"
+              icon="mdi-account-multiple-remove"
+              title="サークル削除"
             />
           </v-list-item-title>
         </v-list-item>

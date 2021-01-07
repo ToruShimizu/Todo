@@ -16,25 +16,22 @@ export default {
   props: {
     password: {
       type: String,
-      required: false,
       default: ''
     },
     passwordLabel: {
       type: String,
-      required: false,
       default: ''
     },
     showPassword: {
       type: Boolean,
-      required: false,
       default: false
     }
   },
   data() {
     return {
       passwordRules: [
-        (value) => !!value || 'パスワードは必須です',
-        (value) =>
+        value => !!value || 'パスワードは必須です',
+        value =>
           /^[\w-]{6,72}$/.test(value) || '半角英数字で6文字以上72文字以下でで入力してください'
       ]
     }

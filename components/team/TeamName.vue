@@ -4,7 +4,7 @@
       <template>
         <v-avatar size="70px">
           <template v-if="teamPhotoURL">
-            <LoadingImg v-if="teamPhotoURL" :src="teamPhotoURL" :width="'70'" :height="'70'" />
+            <LoadingImg v-if="teamPhotoURL" :src="teamPhotoURL" width="70" height="70" />
           </template>
           <v-icon v-else class="blue--grey darken-1">mdi-account-outline</v-icon>
         </v-avatar>
