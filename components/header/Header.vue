@@ -27,11 +27,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import SideNav from '@/components/header/side-nav/SideNav'
 export default {
-  components: {
-    SideNav
-  },
   data() {
     return {
       sideNavDrawer: null
@@ -45,4 +41,3 @@ export default {
   }
 }
 </script>
-

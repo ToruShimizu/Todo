@@ -47,23 +47,7 @@
 </template>
 
 <script>
-import FormDialog from '@/components/common-parts/dialog/FormDialog'
-import FormView from '@/components/common-parts/form/FormView'
-import MemberName from '@/components/common-parts/team/input/MemberName'
-import RoleComboBox from '@/components/common-parts/team/input/RoleComboBox'
-import ImprovementRoleComboBox from '@/components/common-parts/team/input/ImprovementRoleComboBox'
-import SaveAndCloseButton from '@/components/common-parts/button/SaveAndCloseButton'
-
 export default {
-  components: {
-    FormDialog,
-    FormView,
-    MemberName,
-    RoleComboBox,
-    ImprovementRoleComboBox,
-    SaveAndCloseButton
-  },
-
   props: {
     title: {
       type: String,

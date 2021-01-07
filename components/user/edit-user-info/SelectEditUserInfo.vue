@@ -63,12 +63,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import TextButton from '@/components/common-parts/button/text-button/TextButton'
 
 export default {
-  components: {
-    TextButton
-  },
   props: {
     selectEditUserInfo: {
       type: String,

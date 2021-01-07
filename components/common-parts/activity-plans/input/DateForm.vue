@@ -24,11 +24,7 @@
 </template>
 
 <script>
-import TextButton from '@/components/common-parts/button/text-button/TextButton'
 export default {
-  components: {
-    TextButton
-  },
   props: {
     date: {
       type: Array,

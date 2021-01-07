@@ -8,12 +8,12 @@
               <v-row>
                 <!-- カテゴリ入力エリア -->
                 <v-col cols="12" sm="6" md="6">
-                  <CategoryComboBox :items="categorys" :category.sync="planContents.category" />
+                  <CategoryCombobox :items="categorys" :category.sync="planContents.category" />
                 </v-col>
                 <!-- 日付入力エリア -->
                 <v-col cols="12" sm="6" md="6"><DateForm :date.sync="planContents.date" /> </v-col>
                 <v-col cols="12" sm="12" md="12"
-                  ><InChangeForm
+                  ><InChargeForm
                     :in-charge-member.sync="planContents.inChargeMember"
                     :items="gettersTeamMember"
                   />
@@ -48,27 +48,8 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import SaveAndCloseButton from '@/components/common-parts/button/SaveAndCloseButton'
-import FormDialog from '@/components/common-parts/dialog/FormDialog'
-import CategoryComboBox from '@/components/common-parts/activity-plans/input/CategoryComboBox'
-import DetailForm from '@/components/common-parts/activity-plans/input/DetailForm'
-import DateForm from '@/components/common-parts/activity-plans/input/DateForm'
-import InChangeForm from '@/components/common-parts/activity-plans/input/InChargeForm'
-import FormView from '@/components/common-parts/form/FormView'
-import InputFile from '@/components/common-parts/form/InputFile'
 
 export default {
-  components: {
-    SaveAndCloseButton,
-    FormDialog,
-    CategoryComboBox,
-    DetailForm,
-    DateForm,
-    InChangeForm,
-    FormView,
-    InputFile
-  },
-
   props: {
     title: String,
     planContents: {

@@ -50,19 +50,8 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import FormDialog from '@/components/common-parts/dialog/FormDialog'
-import InputFile from '@/components/common-parts/form/InputFile'
-import FormView from '@/components/common-parts/form/FormView'
-import LoadingImg from '@/components/common-parts/v-img/LoadingImg'
 
 export default {
-  components: {
-    FormDialog,
-    InputFile,
-    LoadingImg,
-    FormView
-  },
-
   props: {
     title: String,
     team: {
@@ -76,7 +65,7 @@ export default {
   },
   data() {
     return {
-      nameRules: [(v) => !!v || '名前は必須です。']
+      nameRules: [v => !!v || '名前は必須です。']
     }
   },
   computed: {

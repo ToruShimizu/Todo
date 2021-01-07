@@ -94,17 +94,7 @@
 </template>
 
 <script>
-import ActivityPlansThumbnail from '@/components/activity-plans/image-file/ActivityPlansThumbnail'
-import CommentView from '@/components/comment/CommentView'
-import IconButton from '@/components/common-parts/button/IconButton'
-import TextButton from '@/components/common-parts/button/text-button/Textbutton'
 export default {
-  components: {
-    IconButton,
-    TextButton,
-    CommentView,
-    ActivityPlansThumbnail
-  },
   props: {
     contents: {
       type: Object,
@@ -144,7 +134,6 @@ export default {
 }
 </script>
 
-
 <style scoped>
 .card-anim-enter-active {
   animation: fadeInUp 0.7s;
@@ -169,4 +158,3 @@ export default {
   }
 }
 </style>
-

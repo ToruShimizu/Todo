@@ -15,18 +15,7 @@
 </template>
 
 <script>
-import FormDialog from '@/components/common-parts/dialog/FormDialog'
-import FormView from '@/components/common-parts/form/FormView'
-import AddComment from '@/components/comment/AddComment'
-import Comment from '@/components/comment/Comment'
-
 export default {
-  components: {
-    FormDialog,
-    FormView,
-    AddComment,
-    Comment
-  },
   props: {
     commentDialog: {
       type: Boolean,

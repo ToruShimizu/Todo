@@ -31,21 +31,10 @@
   </FormDialog>
 </template>
 
-
 <script>
 import { mapActions } from 'vuex'
-import SaveAndCloseButton from '@/components/common-parts/button/SaveAndCloseButton'
-import FormCardText from '@/components/common-parts/card/FormCardText'
-import FormView from '@/components/common-parts/form/FormView'
-import FormDialog from '@/components/common-parts/dialog/FormDialog'
 
 export default {
-  components: {
-    SaveAndCloseButton,
-    FormCardText,
-    FormView,
-    FormDialog
-  },
   props: {
     resetPasswordDialog: {
       type: Boolean,

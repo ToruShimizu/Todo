@@ -9,7 +9,6 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
-import FormCreateTeam from '@/components/common-parts/team/form/FormCreateTeam'
 export default {
   props: {
     createTeamDialog: {
