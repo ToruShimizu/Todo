@@ -14,34 +14,24 @@ const mutations = {
   },
   // 活動計画削除
   removeActivityPlan(state, { activityPlanId }) {
-    const index = state.activityPlans.findIndex((activityPlan) => activityPlan.id === activityPlanId)
+    const index = state.activityPlans.findIndex(activityPlan => activityPlan.id === activityPlanId)
     state.activityPlans.splice(index, 1)
   },
   // 活動計画更新
   updateActivityPlan(state, updateActivityPlan) {
-    const index = state.activityPlans.findIndex((contents) => contents.id === updateActivityPlan.id)
-    const activityPlan = state.activityPlans[index]
-    activityPlan.category = updateActivityPlan.category
-    activityPlan.date = updateActivityPlan.date
-    activityPlan.detail = updateActivityPlan.detail
-    activityPlan.inChargeMember = updateActivityPlan.inChargeMember
-    activityPlan.done = updateActivityPlan.done
-    activityPlan.id = updateActivityPlan.id
-    activityPlan.photoURL = updateActivityPlan.photoURL
-    activityPlan.fileName = updateActivityPlan.fileName
-
+    const index = state.activityPlans.findIndex(contents => contents.id === updateActivityPlan.id)
+    state.activityPlans.splice(index, 1, updateActivityPlan)
   },
   // 活動計画の完了状態切り替え
   doneActivityPlan(state, planContents) {
     planContents.done = !planContents.done
   },
   removePhotoURL(state, id) {
-    const index = state.activityPlans.findIndex((contents) => contents.id === id)
+    const index = state.activityPlans.findIndex(contents => contents.id === id)
     state.activityPlans[index].photoURL = null
-
   },
   updateCompletionDate(state, { completionDate, id }) {
-    const index = state.activityPlans.findIndex((contents) => contents.id === id)
+    const index = state.activityPlans.findIndex(contents => contents.id === id)
     state.activityPlans[index].completionDate = completionDate
   },
   // コメントの初期化
@@ -49,16 +39,20 @@ const mutations = {
     state.comments = []
   },
   addComment(state, { comment, id }) {
-    const index = state.activityPlans.findIndex((contents) => contents.id === id)
+    const index = state.activityPlans.findIndex(contents => contents.id === id)
     state.activityPlans[index].comments.unshift(comment)
   },
   // コメント削除
   removeComment(state, comment) {
     const id = comment.id
-    const activityPlanIndex = state.activityPlans.findIndex((contents) => contents.id === comment.activityPlanId)
-    const commentIndex = state.activityPlans[activityPlanIndex].comments.findIndex((comment) => comment.id === id)
+    const activityPlanIndex = state.activityPlans.findIndex(
+      contents => contents.id === comment.activityPlanId
+    )
+    const commentIndex = state.activityPlans[activityPlanIndex].comments.findIndex(
+      comment => comment.id === id
+    )
     state.activityPlans[activityPlanIndex].comments.splice(commentIndex, 1)
-  },
+  }
 }
 const actions = {
   // firestoreからactivityPlanのデータを取り出す
@@ -68,12 +62,12 @@ const actions = {
       .orderBy('created', 'desc')
       .get()
     commit('initActivityPlans')
-    const id = snapShot.docs.map((doc) => {
+    const id = snapShot.docs.map(doc => {
       const planContents = doc.data()
       commit('addActivityPlan', planContents)
       return doc.data().id
     })
-    id.map((doc) => {
+    id.map(doc => {
       const activityPlansId = doc
       dispatch('fetchComments', activityPlansId)
     })
@@ -99,7 +93,10 @@ const actions = {
     }
     try {
       if (getters.userUid) {
-        await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).set(createActivityPlan)
+        await db
+          .collection(`users/${getters.userUid}/activityPlans`)
+          .doc(id)
+          .set(createActivityPlan)
         commit('addActivityPlan', createActivityPlan)
         commit('modules/common-parts/commonParts/openSnackbar', null, { root: true })
       }
@@ -135,13 +132,15 @@ const actions = {
     }
     try {
       if (getters.userUid) {
-        await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).update(updateActivityPlan)
+        await db
+          .collection(`users/${getters.userUid}/activityPlans`)
+          .doc(id)
+          .update(updateActivityPlan)
         commit('updateActivityPlan', updateActivityPlan)
         planContents.imageFile = null
         commit('modules/common-parts/commonParts/openSnackbar', null, { root: true })
       }
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err)
     }
   },
@@ -150,11 +149,13 @@ const actions = {
     const completionDate = new Date().toISOString().substr(0, 10)
     try {
       if (getters.userUid) {
-        await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).update({ completionDate })
+        await db
+          .collection(`users/${getters.userUid}/activityPlans`)
+          .doc(id)
+          .update({ completionDate })
         commit('updateCompletionDate', { completionDate, id })
       }
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err)
     }
   },
@@ -173,7 +174,10 @@ const actions = {
   async removeActivityPlan({ getters, commit, dispatch }, { id }) {
     const activityPlanId = id
     if (getters.userUid) {
-      await db.collection(`users/${getters.userUid}/activityPlans`).doc(activityPlanId).delete()
+      await db
+        .collection(`users/${getters.userUid}/activityPlans`)
+        .doc(activityPlanId)
+        .delete()
       commit('removeActivityPlan', { activityPlanId })
       dispatch('allRemoveComment', id)
     }
@@ -183,16 +187,22 @@ const actions = {
       .collection(`users/${getters.userUid}/activityPlans`)
       .orderBy('created', 'desc')
       .get()
-    snapShot.docs.map(async (doc) => {
-      await db.collection(`users/${getters.userUid}/activityPlans`).doc(doc.id).delete()
+    snapShot.docs.map(async doc => {
+      await db
+        .collection(`users/${getters.userUid}/activityPlans`)
+        .doc(doc.id)
+        .delete()
       commit('initActivityPlans')
     })
   },
   // 活動計画の完了状態切り替え
   async doneActivityPlan({ getters, commit, dispatch }, { planContents, id }) {
-    await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).update({
-      done: !planContents.done
-    })
+    await db
+      .collection(`users/${getters.userUid}/activityPlans`)
+      .doc(id)
+      .update({
+        done: !planContents.done
+      })
     if (!planContents.done) {
       dispatch('updateCompletionDate', planContents)
     }
@@ -203,7 +213,10 @@ const actions = {
     const imageRef = await storageRef.child(`planContentsImages/${id}/${planContents.fileName}`)
     try {
       await imageRef.delete()
-      await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).update({ photoURL: null })
+      await db
+        .collection(`users/${getters.userUid}/activityPlans`)
+        .doc(id)
+        .update({ photoURL: null })
       commit('removePhotoURL', id)
       planContents.photoURL = null
     } catch (err) {
@@ -224,7 +237,11 @@ const actions = {
       '時' +
       date.getMinutes() +
       '分'
-    const commentId = await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).collection(`comments/${getters.userUid}/message`).doc().id
+    const commentId = await db
+      .collection(`users/${getters.userUid}/activityPlans`)
+      .doc(id)
+      .collection(`comments/${getters.userUid}/message`)
+      .doc().id
 
     const comment = {
       activityPlanId: id,
@@ -241,14 +258,19 @@ const actions = {
         .set(comment)
     }
     commit('addComment', { comment, id })
-
   },
   // コメントの削除
   async removeComment({ getters, commit }, comment) {
     if (getters.userUid) {
-      const snapShot = await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).get()
-      snapShot.docs.map(async (doc) => {
-        await doc.ref.collection(`comments/${getters.userUid}/message`).doc(comment.id).delete()
+      const snapShot = await db
+        .collection(`users/${getters.userUid}/activityPlans`)
+        .doc(id)
+        .get()
+      snapShot.docs.map(async doc => {
+        await doc.ref
+          .collection(`comments/${getters.userUid}/message`)
+          .doc(comment.id)
+          .delete()
       })
       commit('allRemoveComment', id)
     }
@@ -256,22 +278,31 @@ const actions = {
   // コメントの取得
   async fetchComments({ getters, commit }, id) {
     commit('initComments')
-    const snapShot = await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).get()
+    const snapShot = await db
+      .collection(`users/${getters.userUid}/activityPlans`)
+      .doc(id)
+      .get()
     const subCollection = await snapShot.ref
       .collection(`comments/${getters.userUid}/message`)
       .orderBy('created', 'desc')
       .get()
-    subCollection.docs.map((doc) => {
+    subCollection.docs.map(doc => {
       const comment = doc.data()
       const commentId = comment.activityPlanId
       commit('addComment', { comment, id: commentId })
     })
   },
   async allRemoveComment({ commit, getters }, id) {
-    const snapShot = await db.collection(`users/${getters.userUid}/activityPlans`).doc(id).get()
+    const snapShot = await db
+      .collection(`users/${getters.userUid}/activityPlans`)
+      .doc(id)
+      .get()
     const subCollection = await snapShot.ref.collection(`comments/${getters.userUid}/message`).get()
-    subCollection.docs.map(async (doc) => {
-      snapShot.ref.collection(`comments/${getters.userUid}/message`).doc(doc.id).delete()
+    subCollection.docs.map(async doc => {
+      snapShot.ref
+        .collection(`comments/${getters.userUid}/message`)
+        .doc(doc.id)
+        .delete()
     })
   }
 }
@@ -300,11 +331,11 @@ const getters = {
   },
   // 未完了状態の活動計画の絞り込み
   remainingActivityPlans(state, getters) {
-    return state.activityPlans.filter((activityPlan) => !activityPlan.done)
+    return state.activityPlans.filter(activityPlan => !activityPlan.done)
   },
   // 完了状態の絞り込み
   completedActivityPlans(state) {
-    return state.activityPlans.filter((activityPlan) => activityPlan.done)
+    return state.activityPlans.filter(activityPlan => activityPlan.done)
   },
   sortByCategory(state) {
     return state.activityPlans.slice().sort((a, b) => {
@@ -320,7 +351,7 @@ const getters = {
     return state.activityPlans.slice().sort((a, b) => {
       if (a.date < b.date) return -1
     })
-  },
+  }
 }
 
 export default {
