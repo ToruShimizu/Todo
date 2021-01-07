@@ -9,7 +9,7 @@
       <v-divider />
       <v-list-item>
         <v-list-item-title>
-          <TextButton
+          <AppButton
             class="white--text font-weight-bold"
             @handle-text-button="selectedEditUserInfo = 'openUpdateUserName'"
             icon="mdi-badge-account-horizontal"
@@ -19,7 +19,7 @@
       </v-list-item>
       <v-list-item>
         <v-list-item-title>
-          <TextButton
+          <AppButton
             class="white--text font-weight-bold"
             @handle-text-button="handleSelectUserImageFile"
             icon="mdi-file-account"
@@ -29,7 +29,7 @@
       </v-list-item>
       <v-list-item>
         <v-list-item-title>
-          <TextButton
+          <AppButton
             class="white--text font-weight-bold"
             @handle-text-button="selectedEditUserInfo = 'openUpdateEmail'"
             icon="mdi-email-edit"
@@ -39,7 +39,7 @@
       </v-list-item>
       <v-list-item>
         <v-list-item-title>
-          <TextButton
+          <AppButton
             class="white--text font-weight-bold"
             @handle-text-button="selectedEditUserInfo = 'openUpdatePassword'"
             icon="mdi-account"
@@ -49,7 +49,7 @@
       </v-list-item>
       <v-list-item>
         <v-list-item-title>
-          <TextButton
+          <AppButton
             class="white--text font-weight-bold"
             @handle-text-button="selectedEditUserInfo = 'openDeleteAccount'"
             icon="mdi-account-remove"
