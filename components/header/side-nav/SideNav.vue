@@ -43,12 +43,8 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import EditUserInfo from '@/components/user/edit-user-info/EditUserInfo'
 
 export default {
-  components: {
-    EditUserInfo
-  },
   computed: {
     ...mapGetters('modules/user/auth', ['gettersUserName', 'photoURL', 'gettersUserEmail']),
     ...mapState('modules/user/auth', ['loginUser'])

@@ -11,12 +11,8 @@
 
 <script>
 import { mapActions } from 'vuex'
-import FormCreateActivityPlan from '@/components/common-parts/activity-plans/form/FormCreateActivityPlan'
 
 export default {
-  components: {
-    FormCreateActivityPlan
-  },
   props: {
     planContents: {
       type: Object,

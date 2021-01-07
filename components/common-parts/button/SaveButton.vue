@@ -18,12 +18,7 @@
 </template>
 
 <script>
-import Loading from '@/components/common-parts/button/Loading/'
-
 export default {
-  components: {
-    Loading
-  },
   props: {
     icon: String,
     title: String,
@@ -55,4 +50,3 @@ export default {
   }
 }
 </script>
-

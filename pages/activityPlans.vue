@@ -64,27 +64,10 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import AddActivityPlan from '@/components/activity-plans/AddActivityPlan'
-import FilteredActivityPlans from '@/components/activity-plans/processing/FilteredActivityPlans'
-import SearchActivityPlans from '@/components/activity-plans/processing/SearchActivityPlans'
-import SortByActivityPlans from '@/components/activity-plans/processing/SortByActivityPlans'
-import ActivityPlansPagination from '@/components/activity-plans/processing/ActivityPlansPagination'
-import ActivityPlansView from '@/components/activity-plans/ActivityPlansView'
-import TeamName from '@/components/team/TeamName'
-import BlueDialogButton from '@/components/common-parts/button/BlueDialogButton'
 
 export default {
   middleware: 'authenticated',
-  components: {
-    AddActivityPlan,
-    FilteredActivityPlans,
-    SearchActivityPlans,
-    SortByActivityPlans,
-    ActivityPlansPagination,
-    ActivityPlansView,
-    TeamName,
-    BlueDialogButton
-  },
+
   data() {
     return {
       createTeam: {
@@ -151,11 +134,11 @@ export default {
 
           break
         case 'active':
-          returnvalue = activityPlans.filter((activityPlan) => !activityPlan.done)
+          returnvalue = activityPlans.filter(activityPlan => !activityPlan.done)
 
           break
         case 'done':
-          returnvalue = activityPlans.filter((activityPlan) => activityPlan.done)
+          returnvalue = activityPlans.filter(activityPlan => activityPlan.done)
 
           break
         default:
@@ -169,7 +152,7 @@ export default {
         return this.sortByActivityPlans
       }
 
-      return activityPlans.filter((activityPlan) => {
+      return activityPlans.filter(activityPlan => {
         return activityPlan.category.includes(this.searchCategoryKeyword.toUpperCase())
       })
     },

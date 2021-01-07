@@ -14,15 +14,7 @@
 </template>
 
 <script>
-import Header from '@/components/header/Header'
-import DoneSnackbar from '@/components/common-parts/snackbar/DoneSnackbar'
-
-export default {
-  components: {
-    Header,
-    DoneSnackbar
-  }
-}
+export default {}
 </script>
 
 <style>

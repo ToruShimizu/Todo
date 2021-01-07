@@ -14,8 +14,6 @@
 </template>
 
 <script>
-import SaveButton from '@/components/common-parts/button/SaveButton'
-import CloseButton from '@/components/common-parts/button/CloseButton'
 export default {
   props: {
     icon: String,
@@ -36,10 +34,6 @@ export default {
       type: null,
       required: true
     }
-  },
-  components: {
-    SaveButton,
-    CloseButton
   },
   methods: {
     saveButton() {

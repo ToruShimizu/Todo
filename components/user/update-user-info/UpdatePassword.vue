@@ -42,22 +42,8 @@
 
 <script>
 import { mapActions } from 'vuex'
-import SaveAndCloseButton from '@/components/common-parts/button/SaveAndCloseButton'
-import FormUserEmail from '@/components/common-parts/user/form/FormUserEmail'
-import FormUserPassword from '@/components/common-parts/user/form/FormUserPassword'
-import FormView from '@/components/common-parts/form/FormView'
-import FormCardText from '@/components/common-parts/card/FormCardText'
-import FormDialog from '@/components/common-parts/dialog/FormDialog'
 
 export default {
-  components: {
-    FormUserEmail,
-    FormUserPassword,
-    SaveAndCloseButton,
-    FormView,
-    FormCardText,
-    FormDialog
-  },
   props: {
     updatePasswordDialog: {
       type: Boolean,

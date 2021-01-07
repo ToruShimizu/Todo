@@ -32,16 +32,8 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import FormCreateActivityPlan from '@/components/common-parts/activity-plans/form/FormCreateActivityPlan'
-import LoadingImg from '@/components/common-parts/v-img/LoadingImg'
-import TextButton from '@/components/common-parts/button/text-button/TextButton'
 
 export default {
-  components: {
-    FormCreateActivityPlan,
-    LoadingImg,
-    TextButton
-  },
   props: {
     editPlanContents: {
       type: Object,

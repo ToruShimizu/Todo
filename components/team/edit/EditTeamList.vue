@@ -39,13 +39,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import UpdateTeam from '@/components/team/edit/UpdateTeam'
-import TextButton from '@/components/common-parts/button/text-button/TextButton'
 export default {
-  components: {
-    UpdateTeam,
-    TextButton
-  },
   data() {
     return {
       editTeam: {

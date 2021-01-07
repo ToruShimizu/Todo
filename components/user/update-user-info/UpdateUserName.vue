@@ -30,21 +30,8 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import FormUserName from '@/components/common-parts/user/form/FormUserName'
-import SaveAndCloseButton from '@/components/common-parts/button/SaveAndCloseButton'
-import FormCardText from '@/components/common-parts/card/FormCardText'
-import FormView from '@/components/common-parts/form/FormView'
-import FormDialog from '@/components/common-parts/dialog/FormDialog'
 
 export default {
-  components: {
-    FormUserName,
-    SaveAndCloseButton,
-    FormCardText,
-    FormView,
-    FormDialog
-  },
-
   props: {
     updateUserNameDialog: {
       type: Boolean,

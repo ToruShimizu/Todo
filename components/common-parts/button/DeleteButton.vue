@@ -17,14 +17,8 @@
   </div>
 </template>
 
-
 <script>
-import Loading from '@/components/common-parts/button/Loading/'
-
 export default {
-  components: {
-    Loading
-  },
   props: {
     title: String,
     icon: String,

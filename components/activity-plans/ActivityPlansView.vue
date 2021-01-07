@@ -19,13 +19,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import UpdateActivityPlan from '@/components/activity-plans/UpdateActivityPlan'
-import ActivityPlansCard from '@/components/activity-plans/ActivityPlansCard'
 export default {
-  components: {
-    UpdateActivityPlan,
-    ActivityPlansCard
-  },
   props: {
     displayActivityPlans: {
       type: Array,
@@ -65,4 +59,3 @@ export default {
   }
 }
 </script>
-

@@ -19,16 +19,10 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import RegistrationMember from '@/components/team/RegistrationMember'
-import TeamMember from '@/components/team/teamMember'
-import TeamName from '@/components/team/TeamName'
 
 export default {
   middleware: 'authenticated',
-  components: {
-    RegistrationMember,
-    TeamName
-  },
+
   data() {
     return {
       registrationMemberDialog: false,

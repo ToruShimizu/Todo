@@ -6,7 +6,7 @@
       @handle-select-user-image-file="handleSelectUserImageFile"
     />
 
-    <UpdateUser
+    <UpdateUserName
       :edit-user="editUser"
       :update-user-name-dialog="updateUserNameDialog"
       :close-update-user-name.sync="selectEditUserInfo"
@@ -50,21 +50,7 @@
   </div>
 </template>
 <script>
-import SelectEditUserInfo from '@/components/user/edit-user-info/SelectEditUserInfo'
-import UpdateUser from '@/components/user/update-user-info/UpdateUserName'
-import updateUserAvatar from '@/components/user/update-user-info/updateUserAvatar'
-import UpdateEmail from '@/components/user/update-user-info/UpdateEmail'
-import UpdatePassword from '@/components/user/update-user-info/UpdatePassword'
-import DeleteAccount from '@/components/user/delete-account/DeleteAccount'
 export default {
-  components: {
-    updateUserAvatar,
-    UpdateUser,
-    UpdateEmail,
-    UpdatePassword,
-    DeleteAccount,
-    SelectEditUserInfo
-  },
   data() {
     return {
       editUser: {

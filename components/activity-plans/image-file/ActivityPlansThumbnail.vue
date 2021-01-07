@@ -3,8 +3,6 @@
 </template>
 
 <script>
-import LoadingImg from '@/components/common-parts/v-img/LoadingImg'
-
 export default {
   props: {
     photoURL: {
@@ -12,9 +10,6 @@ export default {
       required: false,
       default: ''
     }
-  },
-  components: {
-    LoadingImg
   },
   methods: {
     openImageFile() {

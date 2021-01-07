@@ -11,12 +11,8 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
-import FormMember from '@/components/common-parts/team/form/FormMember'
 
 export default {
-  components: {
-    FormMember
-  },
   props: {
     editMember: {
       type: Object,

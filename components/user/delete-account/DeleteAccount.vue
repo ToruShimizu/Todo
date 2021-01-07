@@ -40,24 +40,8 @@
 
 <script>
 import { mapActions } from 'vuex'
-import FormUserEmail from '@/components/common-parts/user/form/FormUserEmail'
-import FormUserPassword from '@/components/common-parts/user/form/FormUserPassword'
-import DeleteButton from '@/components/common-parts/button/DeleteButton'
-import CloseButton from '@/components/common-parts/button/CloseButton'
-import FormView from '@/components/common-parts/form/FormView'
-import FormCardText from '@/components/common-parts/card/FormCardText'
-import FormDialog from '@/components/common-parts/dialog/FormDialog'
 
 export default {
-  components: {
-    FormUserEmail,
-    FormUserPassword,
-    DeleteButton,
-    CloseButton,
-    FormView,
-    FormCardText,
-    FormDialog
-  },
   props: {
     deleteAccountDialog: {
       type: Boolean,
