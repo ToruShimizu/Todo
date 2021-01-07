@@ -7,26 +7,26 @@
             <template v-slot:text> ※ 変更完了後にログイン画面に戻ります。 </template>
           </FormCardText>
           <v-form ref="form" lazy-validation @click="handleUpdatePassword">
+            <!-- メールアドレス入力 -->
             <FormUserEmail :user-email.sync="editUser.email" email-label="現在のメールアドレス" />
+            <!-- 現在のパスワード入力 -->
             <FormUserPassword
               :user-password.sync="editUser.password"
               :show-password="showUserPassword"
-              @handle-show-password="toggleShowUserPassword"
+              @handle-show-password="showUserPassword = !showUserPassword"
               password-label="現在のパスワード"
             />
+            <!-- 新しいパスワード入力 -->
             <FormUserPassword
               :user-password.sync="editUser.editPassword"
               :show-password="showEditPassword"
-              @handle-show-password="toggleShowEditPassword"
+              @handle-show-password="showEditPassword = !showEditPassword"
               password-label="新しいパスワード"
             />
             <SaveAndCloseButton
               close-button-title="close"
               save-button-title="save"
-              :loading="loading"
-              :loader="loader"
               icon="mdi-account-key"
-              @stop-loading="stopLoading"
               @save-button="handleUpdatePassword"
               @close-button="selectedUpdatePassword = 'closeUpdatePassword'"
             />
@@ -53,20 +53,13 @@ export default {
     editUser: {
       type: Object,
       default: () => {}
-    },
-    loading: {
-      type: Boolean,
-      default: false
-    },
-    loader: {
-      type: null,
-      default: null
     }
   },
   data() {
     return {
       showUserPassword: false,
-      showEditPassword: false
+      showEditPassword: false,
+      loading: false
     }
   },
   computed: {
@@ -81,31 +74,23 @@ export default {
     }
   },
   methods: {
+    // パスワード更新ボタン
     async handleUpdatePassword() {
       const editUser = this.editUser
       if (!editUser.email || !editUser.password || !editUser.editPassword) {
         this.$refs.form.validate()
         return
       }
-      this.startLoading()
+      // ローディングをON
+      this.loading = true
       await this.updatePassword({
         updatePassword: editUser.editPassword,
         email: editUser.email,
         password: editUser.password
       })
       this.$emit('update:close-update-password', 'closeUpdatePassword')
-    },
-    toggleShowUserPassword(showPassword) {
-      this.showUserPassword = !this.showUserPassword
-    },
-    toggleShowEditPassword() {
-      this.showEditPassword = !this.showEditPassword
-    },
-    startLoading() {
-      this.$emit('start-loading')
-    },
-    stopLoading() {
-      this.$emit('stop-loading')
+      // ローディングをOFF
+      this.loading = false
     },
     ...mapActions('modules/user/userInfo', ['updatePassword'])
   }

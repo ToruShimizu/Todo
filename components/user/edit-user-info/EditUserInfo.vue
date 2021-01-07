@@ -10,42 +10,26 @@
       :edit-user="editUser"
       :update-user-name-dialog="updateUserNameDialog"
       :close-update-user-name.sync="selectEditUserInfo"
-      :loading="editUserLoading"
-      :loader="editUserLoader"
-      @start-loading="startEditUserLoading"
-      @stop-loading="stopEditUserLoading"
     />
 
     <UpdateUserAvatar ref="updateUserAvatar" />
 
     <UpdateEmail
-      :loading="editUserLoading"
-      :loader="editUserLoader"
       :edit-user="editUser"
       :update-email-dialog="updateEmailDialog"
       :close-update-email.sync="selectEditUserInfo"
-      @start-loading="startEditUserLoading"
-      @stop-loading="stopEditUserLoading"
     />
 
     <UpdatePassword
-      :loading="editUserLoading"
-      :loader="editUserLoader"
       :edit-user="editUser"
       :update-password-dialog="updatePasswordDialog"
       :close-update-password.sync="selectEditUserInfo"
-      @start-loading="startEditUserLoading"
-      @stop-loading="stopEditUserLoading"
     />
 
     <DeleteAccount
-      :loading="editUserLoading"
-      :loader="editUserLoader"
       :edit-user="editUser"
       :delete-account-dialog="deleteAccountDialog"
       :close-delete-account.sync="selectEditUserInfo"
-      @start-loading="startEditUserLoading"
-      @stop-loading="stopEditUserLoading"
     />
   </div>
 </template>
@@ -59,8 +43,6 @@ export default {
         password: '',
         editPassword: ''
       },
-      editUserLoading: false,
-      editUserLoader: null,
       selectEditUserInfo: '',
       updateUserNameDialog: false,
       updatePasswordDialog: false,
@@ -114,16 +96,9 @@ export default {
       }
       return returnvalue
     },
+    // 画像選択画面を開く
     handleSelectUserImageFile() {
       this.$refs.updateUserAvatar.selectUserImageFile()
-    },
-    startEditUserLoading() {
-      this.editUserLoading = true
-      this.editUserLoader = this.editUserLoading
-    },
-    stopEditUserLoading() {
-      this.editUserLoading = false
-      this.editUserLoader = this.editUserLoading
     }
   }
 }

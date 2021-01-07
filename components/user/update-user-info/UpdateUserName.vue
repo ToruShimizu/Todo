@@ -15,9 +15,7 @@
               close-button-title="close"
               save-button-title="save"
               :loading="loading"
-              :loader="loader"
               icon="mdi-badge-account-horizontal"
-              @stop-loading="stopLoading"
               @save-button="handleUpdateUserName"
               @close-button="selectedUpdateUserName = 'closeUpdateUserName'"
             />
@@ -44,14 +42,6 @@ export default {
     editUser: {
       type: Object,
       default: () => {}
-    },
-    loading: {
-      type: Boolean,
-      default: false
-    },
-    loader: {
-      type: null,
-      default: null
     }
   },
   computed: {
@@ -67,6 +57,11 @@ export default {
     },
     ...mapGetters('modules/user/auth', ['gettersUserName'])
   },
+  data() {
+    return {
+      loading: false
+    }
+  },
   methods: {
     async handleUpdateUserName() {
       const editUser = this.editUser
@@ -74,19 +69,17 @@ export default {
         this.$refs.form.validate()
         return
       }
-      this.startLoading()
+      // ローディングをON
+      this.loading = true
       await this.updateUserName({
         userName: editUser.name
       })
       this.$refs.form.reset()
       this.$emit('update:close-update-user-name', 'closeUpdateUserName')
+      // ローディングをOFF
+      this.loading = false
     },
-    startLoading() {
-      this.$emit('start-loading')
-    },
-    stopLoading() {
-      this.$emit('stop-loading')
-    },
+
     ...mapActions('modules/user/userInfo', ['updateUserName'])
   }
 }
