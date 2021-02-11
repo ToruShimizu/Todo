@@ -1,16 +1,19 @@
 <template>
   <FormDialog :form-dialog="updateEmailDialog">
     <template v-slot:dialog>
-      <FormView title="メールアドレス変更">
-        <template v-slot:form>
-          <FormCardText>
-            <template v-slot:text>
-              現在登録されているメールアドレス<br /><v-icon left>mdi-email-outline</v-icon
-              >{{ gettersUserEmail }}
-            </template>
-          </FormCardText>
-          <v-form ref="form" lazy-validation @submit.prevent="updateEmail">
+      <v-card width="500px" class="mx-auto">
+        <v-card-subtitle class="text-center font-italic">
+          現在登録されているメールアドレス<br />
+          <v-icon left>mdi-email-outline</v-icon>
+          {{ gettersUserEmail }}
+        </v-card-subtitle>
+
+        <v-divider />
+        <v-form ref="form" lazy-validation @submit.prevent="updateEmail">
+          <v-row class="mx-2">
             <FormUserEmail :user-email.sync="editUser.email" email-label="新しいメールアドレス" />
+          </v-row>
+          <v-row class="mx-2" justify="end">
             <SaveAndCloseButton
               close-button-title="close"
               save-button-title="save"
@@ -18,9 +21,9 @@
               @save-button="handleUpdateEmail"
               @close-button="selectUpdateEmail = 'closeUpdateEmail'"
             />
-          </v-form>
-        </template>
-      </FormView>
+          </v-row>
+        </v-form>
+      </v-card>
     </template>
   </FormDialog>
 </template>

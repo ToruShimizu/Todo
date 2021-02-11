@@ -1,16 +1,18 @@
 <template>
   <FormDialog :form-dialog="updateUserNameDialog">
     <template v-slot:dialog>
-      <FormView title="ユーザー名変更">
-        <template v-slot:form>
-          <FormCardText>
-            <template v-slot:text>
-              現在登録されているユーザー名<br />
-              <v-icon left>mdi-account-outline</v-icon>{{ gettersUserName }}さん
-            </template>
-          </FormCardText>
-          <v-form ref="form" lazy-validation @submit.prevent="updateUserName">
+      <v-card width="500px" class="mx-auto">
+        <v-card-subtitle class="text-center font-italic">
+          現在登録されているユーザー名<br />
+          <v-icon left>mdi-account-outline</v-icon>
+          {{ gettersUserName }}さん
+        </v-card-subtitle>
+        <v-divider />
+        <v-form ref="form" lazy-validation @submit.prevent="updateUserName">
+          <v-row class="mx-2">
             <FormUserName :user-name.sync="editUser.name" name-label="新しいユーザー名" />
+          </v-row>
+          <v-row class="mx-2" justify="end">
             <SaveAndCloseButton
               close-button-title="close"
               save-button-title="save"
@@ -19,9 +21,9 @@
               @save-button="handleUpdateUserName"
               @close-button="selectedUpdateUserName = 'closeUpdateUserName'"
             />
-          </v-form>
-        </template>
-      </FormView>
+          </v-row>
+        </v-form>
+      </v-card>
     </template>
   </FormDialog>
 </template>

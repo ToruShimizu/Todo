@@ -1,17 +1,20 @@
 <template>
   <FormDialog :form-dialog="commentDialog">
     <template v-slot:dialog>
-      <FormView title="コメント">
-        <template v-slot:form style="relative">
-          <!-- コメント入力、追加機能を持ったフォーム、 -->
+      <v-card width="500px" class="mx-auto">
+        <v-divider />
+        <!-- コメント入力、追加機能を持ったフォーム、 -->
+        <v-row class="mx-2">
           <AddComment :plan-contents-id="planContents.id" />
-          <!-- コメント表示 -->
+        </v-row>
+        <!-- コメント表示 -->
+        <v-row class="mx-2">
           <Comment :comments="planContents.comments" />
-          <v-card-actions class="justify-end">
-            <AppButton title="close" class="primary--text" @handle-text-button="closeComment" />
-          </v-card-actions>
-        </template>
-      </FormView>
+        </v-row>
+        <v-card-actions class="justify-end">
+          <AppButton title="close" class="primary--text" @handle-text-button="closeComment" />
+        </v-card-actions>
+      </v-card>
     </template>
   </FormDialog>
 </template>

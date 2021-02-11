@@ -1,37 +1,41 @@
 <template>
   <FormDialog :form-dialog="deleteAccountDialog">
     <template v-slot:dialog>
-      <FormView title="アカウント削除">
-        <template v-slot:form>
-          <FormCardText>
-            <template v-slot:text> ※ 削除後にログイン画面に戻ります。 </template>
-          </FormCardText>
-          <v-form ref="form" lazy-validation>
-            <!-- メールアドレス入力 -->
+      <v-card width="500px" class="mx-auto">
+        <v-card-subtitle class="text-center font-italic">
+          ※ 削除後にログイン画面に戻ります。
+        </v-card-subtitle>
+
+        <v-divider />
+        <v-form ref="form" lazy-validation>
+          <!-- メールアドレス入力 -->
+          <v-row class="mx-2">
             <FormUserEmail :user-email.sync="editUser.email" email-label="現在のメールアドレス" />
-            <!-- パスワード入力 -->
+          </v-row>
+          <!-- パスワード入力 -->
+          <v-row class="mx-2">
             <FormUserPassword
               :show-password="deleteAccountShowPassword"
               :user-password.sync="editUser.password"
               @handle-show-password="toggleDeleteAccountShowPassword"
               passwordLabel="現在のパスワード"
             />
-            <v-card-actions class="justify-end">
-              <CloseButton
-                title="close"
-                @close-button="selectedDeleteAccount = 'closeDeleteAccount'"
-              />
-              <DeleteButton
-                title="delete"
-                :loading="loading"
-                :loader="loader"
-                icon="mdi-account-multiple-remove"
-                @delete-button="handleDeleteAccount"
-              />
-            </v-card-actions>
-          </v-form>
-        </template>
-      </FormView>
+          </v-row>
+          <v-card-actions class="justify-end">
+            <CloseButton
+              title="close"
+              @close-button="selectedDeleteAccount = 'closeDeleteAccount'"
+            />
+            <DeleteButton
+              title="delete"
+              :loading="loading"
+              :loader="loader"
+              icon="mdi-account-multiple-remove"
+              @delete-button="handleDeleteAccount"
+            />
+          </v-card-actions>
+        </v-form>
+      </v-card>
     </template>
   </FormDialog>
 </template>

@@ -1,49 +1,54 @@
 <template>
   <FormDialog :form-dialog="activityPlanDialog">
     <template v-slot:dialog>
-      <FormView :title="title">
-        <template v-slot:form>
-          <v-form ref="form" lazy-validation>
-            <v-container>
-              <v-row>
-                <!-- カテゴリ入力エリア -->
-                <v-col cols="12" sm="6" md="6">
-                  <CategoryCombobox :items="categorys" :category.sync="planContents.category" />
-                </v-col>
-                <!-- 日付入力エリア -->
-                <v-col cols="12" sm="6" md="6"><DateForm :date.sync="planContents.date" /> </v-col>
-                <v-col cols="12" sm="12" md="12"
-                  ><InChargeForm
-                    :in-charge-member.sync="planContents.inChargeMember"
-                    :items="gettersTeamMember"
-                  />
-                </v-col>
-                <!-- 詳細入力エリア -->
-                <v-col cols="12">
-                  <DetailForm :detail.sync="planContents.detail" />
-                </v-col>
-                <slot name="imageFile"></slot>
-                <v-col cols="12" sm="12" md="12">
-                  <!-- 画像入力エリア -->
-                  <InputFile
-                    :imageFile.sync="planContents.imageFile"
-                    @change-image-file="changeImageFile"
-                  />
-                </v-col>
-              </v-row>
-            </v-container>
-            <!-- 保存ボタン、閉じるボタン -->
-            <SaveAndCloseButton
-              close-button-title="close"
-              save-button-title="save"
-              :loader="null"
-              icon="mdi-pencil-plus"
-              @save-button="handleSaveActivityPlan"
-              @close-button="closeActivityPlan"
-            />
-          </v-form>
-        </template>
-      </FormView>
+      <v-card width="500px" class="mx-auto">
+        <v-divider />
+        <v-form ref="form" lazy-validation>
+          <v-row class="mx-2">
+            <!-- カテゴリ入力エリア -->
+            <v-col cols="12" sm="6" md="6">
+              <CategoryCombobox :items="categorys" :category.sync="planContents.category" />
+            </v-col>
+            <!-- 日付入力エリア -->
+            <v-col cols="12" sm="6" md="6"><DateForm :date.sync="planContents.date" /> </v-col>
+          </v-row>
+          <!-- 担当入力エリア -->
+          <v-row class="mx-2">
+            <v-col cols="12" sm="12" md="12"
+              ><InChargeForm
+                :in-charge-member.sync="planContents.inChargeMember"
+                :items="gettersTeamMember"
+              />
+            </v-col>
+          </v-row>
+
+          <!-- 詳細入力エリア -->
+          <v-row class="mx-2">
+            <v-col cols="12">
+              <DetailForm :detail.sync="planContents.detail" />
+            </v-col>
+          </v-row>
+          <slot name="imageFile"></slot>
+          <v-row class="mx-2">
+            <v-col cols="12" sm="12" md="12">
+              <!-- 画像入力エリア -->
+              <InputFile
+                :imageFile.sync="planContents.imageFile"
+                @change-image-file="changeImageFile"
+              />
+            </v-col>
+          </v-row>
+          <!-- 保存ボタン、閉じるボタン -->
+          <SaveAndCloseButton
+            close-button-title="close"
+            save-button-title="save"
+            :loader="null"
+            icon="mdi-pencil-plus"
+            @save-button="handleSaveActivityPlan"
+            @close-button="closeActivityPlan"
+          />
+        </v-form>
+      </v-card>
     </template>
   </FormDialog>
 </template>

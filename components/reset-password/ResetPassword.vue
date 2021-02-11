@@ -1,19 +1,21 @@
 <template>
   <FormDialog :form-dialog="resetPasswordDialog">
     <template v-slot:dialog>
-      <FormView title="パスワード再設定">
-        <template v-slot:form>
-          <FormCardText>
-            <template v-slot:text>
-              登録されているメールアドレスを入力してください。
-              <br />パスワード再設定のURLが送信されます。
-            </template>
-          </FormCardText>
-          <v-form ref="form" lazy-validation @submit.prevent="passwordReset">
+      <v-card width="500px" class="mx-auto">
+        <v-card-subtitle class="text-center font-italic">
+          登録されているメールアドレスを入力してください。
+          <br />パスワード再設定のURLが送信されます。
+        </v-card-subtitle>
+
+        <v-divider />
+        <v-form ref="form" lazy-validation @submit.prevent="passwordReset">
+          <v-row class="mx-2">
             <FormUserEmail
               :user-email.sync="resetUserPassword.email"
               email-label="現在のメールアドレス"
             />
+          </v-row>
+          <v-row class="mx-2">
             <SaveAndCloseButton
               :loading="resetPasswordLoading"
               close-button-title="close"
@@ -22,9 +24,9 @@
               @close-button="closeResetPassword"
               @save-button="handleResetPassword"
             />
-          </v-form>
-        </template>
-      </FormView>
+          </v-row>
+        </v-form>
+      </v-card>
     </template>
   </FormDialog>
 </template>
