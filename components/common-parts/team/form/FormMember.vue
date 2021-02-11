@@ -1,39 +1,39 @@
 <template>
   <FormDialog :form-dialog="memberDialog">
     <template v-slot:dialog>
-      <FormView :title="title">
-        <template v-slot:form>
-          <v-form ref="form" lazy-validation>
-            <v-container>
-              <v-row>
-                <!-- メンバー名入力フォーム -->
-                <v-col cols="12" sm="12" md="12">
-                  <MemberName
-                    :team-member="teamMember"
-                    :member-name.sync="teamMember.name"
-                    label="名前"
-                  />
-                </v-col>
-                <!-- 役割入力フォーム -->
-                <v-col cols="12" sm="12" md="12">
-                  <RoleComboBox
-                    :team-member="teamMember"
-                    :items="teamRoles"
-                    :role.sync="teamMember.role"
-                    label="役割"
-                  />
-                </v-col>
-                <!-- 改善担当入力フォーム -->
-                <v-col cols="12" sm="12" md="12">
-                  <ImprovementRoleComboBox
-                    :team-member="teamMember"
-                    :items="improvementRoles"
-                    :improvement-role.sync="teamMember.improvementRole"
-                    label="改善担当"
-                  />
-                </v-col>
-              </v-row>
-            </v-container>
+      <v-card width="500px" class="mx-auto">
+        <v-form ref="form" lazy-validation>
+          <v-row class="mx-2">
+            <!-- メンバー名入力フォーム -->
+            <v-col cols="12" sm="12" md="12">
+              <MemberName
+                :team-member="teamMember"
+                :member-name.sync="teamMember.name"
+                label="名前"
+              />
+            </v-col>
+          </v-row>
+          <!-- 役割入力フォーム -->
+          <v-col cols="12" sm="12" md="12">
+            <RoleComboBox
+              :team-member="teamMember"
+              :items="teamRoles"
+              :role.sync="teamMember.role"
+              label="役割"
+            />
+          </v-col>
+          <!-- 改善担当入力フォーム -->
+          <v-row class="mx-2">
+            <v-col cols="12" sm="12" md="12">
+              <ImprovementRoleComboBox
+                :team-member="teamMember"
+                :items="improvementRoles"
+                :improvement-role.sync="teamMember.improvementRole"
+                label="改善担当"
+              />
+            </v-col>
+          </v-row>
+          <v-row class="mx-2" justify="end">
             <SaveAndCloseButton
               close-button-title="close"
               save-button-title="save"
@@ -41,9 +41,10 @@
               @close-button="closeMemberDialog"
               @save-button="handleSaveMember"
             />
-          </v-form>
-        </template>
-      </FormView>
+          </v-row>
+        </v-form>
+        <v-divider />
+      </v-card>
     </template>
   </FormDialog>
 </template>

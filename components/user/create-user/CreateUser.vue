@@ -1,33 +1,39 @@
 <template>
   <FormDialog :form-dialog="createUserDialog">
     <template v-slot:dialog>
-      <FormView title="新規作成">
-        <template v-slot:form>
-          <FormCardText>
-            <template v-slot:text> ※ 作成後にログインします。 </template>
-          </FormCardText>
-          <v-form ref="form" lazy-validation @submit.prevent="createUser">
+      <v-card width="500px" class="mx-auto">
+        <v-card-subtitle class="text-center font-italic">
+          ※ 作成後にログインします
+        </v-card-subtitle>
+
+        <v-divider />
+        <v-form ref="form" lazy-validation @submit.prevent="createUser">
+          <v-row class="mx-2">
             <FormUserName :user-name.sync="createNewUser.name" name-label="登録する名前" />
+          </v-row>
+          <v-row class="mx-2">
             <FormUserEmail
               :user-email.sync="createNewUser.email"
               email-label="登録するメールアドレス"
             />
+          </v-row>
+          <v-row class="mx-2">
             <FormUserPassword
               :user-password.sync="createNewUser.password"
               passwordLabel="登録するパスワード"
             />
+          </v-row>
 
-            <SaveAndCloseButton
-              close-button-title="close"
-              save-button-title="save"
-              :loading="createUserLoading"
-              icon="mdi-account-plus"
-              @close-button="closeCreateUser"
-              @save-button="handleCreateUser"
-            />
-          </v-form>
-        </template>
-      </FormView>
+          <SaveAndCloseButton
+            close-button-title="close"
+            save-button-title="save"
+            :loading="createUserLoading"
+            icon="mdi-account-plus"
+            @close-button="closeCreateUser"
+            @save-button="handleCreateUser"
+          />
+        </v-form>
+      </v-card>
     </template>
   </FormDialog>
 </template>

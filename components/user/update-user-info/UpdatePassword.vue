@@ -1,28 +1,35 @@
 <template>
   <FormDialog :form-dialog="updatePasswordDialog">
     <template v-slot:dialog>
-      <FormView title="パスワード変更">
-        <template v-slot:form>
-          <FormCardText>
-            <template v-slot:text> ※ 変更完了後にログイン画面に戻ります。 </template>
-          </FormCardText>
-          <v-form ref="form" lazy-validation @click="handleUpdatePassword">
-            <!-- メールアドレス入力 -->
+      <v-card width="500px" class="mx-auto">
+        <v-card-subtitle class="text-center font-italic">
+          ※ 変更完了後にログイン画面に戻ります。
+        </v-card-subtitle>
+        <v-divider />
+        <v-form ref="form" lazy-validation @click="handleUpdatePassword">
+          <!-- メールアドレス入力 -->
+          <v-row class="mx-2">
             <FormUserEmail :user-email.sync="editUser.email" email-label="現在のメールアドレス" />
-            <!-- 現在のパスワード入力 -->
+          </v-row>
+          <!-- 現在のパスワード入力 -->
+          <v-row class="mx-2">
             <FormUserPassword
               :user-password.sync="editUser.password"
               :show-password="showUserPassword"
               @handle-show-password="showUserPassword = !showUserPassword"
               password-label="現在のパスワード"
             />
-            <!-- 新しいパスワード入力 -->
+          </v-row>
+          <!-- 新しいパスワード入力 -->
+          <v-row class="mx-2">
             <FormUserPassword
               :user-password.sync="editUser.editPassword"
               :show-password="showEditPassword"
               @handle-show-password="showEditPassword = !showEditPassword"
               password-label="新しいパスワード"
             />
+          </v-row>
+          <v-row class="mx-2" justify="end">
             <SaveAndCloseButton
               close-button-title="close"
               save-button-title="save"
@@ -30,9 +37,9 @@
               @save-button="handleUpdatePassword"
               @close-button="selectedUpdatePassword = 'closeUpdatePassword'"
             />
-          </v-form>
-        </template>
-      </FormView>
+          </v-row>
+        </v-form>
+      </v-card>
     </template>
   </FormDialog>
 </template>
