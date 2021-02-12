@@ -3,27 +3,30 @@
     <v-card-title class="justify-center"> ログインはこちら</v-card-title>
     <v-divider />
     <!-- Googleログインボタン -->
-    <LoginButton @login="googleLogin" class="mb-3">
-      <template v-slot:icon>
+    <v-row justify="center" class="my-3">
+      <AppButton width="400" color="success" outlined @click="googleLogin">
         <img
-          class="google-btn mr-4"
+          class="google-icon mr-4"
           src="https://madeby.google.com/static/images/google_g_logo.svg"
-          style="height: 24px"
         />Googleアカウントでログイン
-      </template>
-    </LoginButton>
+      </AppButton>
+    </v-row>
     <!-- テストユーザーログインボタン -->
-    <LoginButton
-      :loading="testLoginLoading"
-      @login="testLogin"
-      icon="mdi-account-arrow-left-outline"
-      title="テストユーザーとしてログイン"
-    >
-    </LoginButton>
-    <v-dvider />
+    <v-row justify="center" class="my-3">
+      <AppButton
+        :loading="isRunningTestLogin"
+        width="400"
+        color="success"
+        outlined
+        @click="testLogin"
+        ><v-icon>mdi-account-arrow-left-outline</v-icon>テストユーザーでログイン
+      </AppButton>
+    </v-row>
+
+    <v-divider />
 
     <v-card-title class="justify-center">
-      またはこちらからログイン
+      または
     </v-card-title>
 
     <v-form ref="form" lazy-validation @submit.prevent="login">
@@ -33,31 +36,30 @@
       <v-row class="mx-2">
         <FormUserPassword
           password-label="パスワード"
-          :show-password="signInshowPassword"
+          :show-password="isOpenedShowPassword"
           :user-password.sync="signInUser.password"
-          @handle-show-password="toggleSignInShowPassword"
+          @handle-show-password="isOpenedShowPassword = !isOpenedShowPassword"
         />
       </v-row>
-      <v-btn text color="primary accent-4" @click="openResetPassword">
-        ※パスワードを忘れた方はこちら</v-btn
-      >
-      <v-card-actions class="justify-end">
-        <SaveButton
-          title="login"
-          :loading="loginLoading"
-          @save-button="login"
-          icon="mdi-account-arrow-left"
-        />
+      <v-row justify="center">
+        <AppButton text @click="isOpenedResetPasswordDialog = true"
+          >※パスワードを忘れた方はこちら
+        </AppButton>
+      </v-row>
 
-        <SaveButton title="new" @save-button="openCreateUser" icon="mdi-account-plus" />
+      <v-card-actions class="justify-end">
+        <AppButton :disabled="isValid" :loading="isRunningLogin" @click="login">ログイン</AppButton>
+        <AppButton outlined @click="isOpenedCreateUserDialog = true">新規作成</AppButton>
       </v-card-actions>
       <!-- 新規ユーザー作成ダイアログ -->
-      <CreateUser :create-user-dialog="createUserDialog" @close-create-user="closeCreateUser" />
+      <CreateUser
+        :create-user-dialog="isOpenedCreateUserDialog"
+        @close-create-user="isOpenedCreateUserDialog = false"
+      />
       <!-- パスワードリセットダイアログ -->
       <ResetPassword
-        :loading="resetPasswordLoading"
-        :reset-password-dialog="resetPasswordDialog"
-        @close-reset-password="closeResetPassword"
+        :reset-password-dialog="isOpenedResetPasswordDialog"
+        @close-reset-password="isOpenedResetPasswordDialog = false"
       />
     </v-form>
   </v-card>
@@ -73,31 +75,30 @@ export default {
         email: '',
         password: ''
       },
-      createUserDialog: false,
-      resetPasswordDialog: false,
-      testLoginLoading: false,
-      loginLoading: false,
-      signInshowPassword: false,
-      resetPasswordLoading: false
+      isOpenedCreateUserDialog: false,
+      isOpenedResetPasswordDialog: false,
+      isRunningTestLogin: false,
+      isRunningLogin: false,
+      isOpenedShowPassword: false
     }
   },
   methods: {
     // テストログイン
     testLogin() {
       // ボタンのローディングをON
-      this.testLoginLoading = true
+      this.isRunningTestLogin = true
       this.login({
         email: 'test@example.com',
         password: 'testUser',
         userName: 'テストユーザー'
       })
       // ボタンのローディングをOFF
-      this.testLoginLoading = true
+      this.isRunningTestLogin = true
     },
     // メールアドレスログイン
     async login() {
       // ボタンのローディングをON
-      this.loginLoading = true
+      this.isRunningLogin = true
       const signInUser = this.signInUser
       if (!signInUser.password || !signInUser.email) {
         this.$refs.form.validate()
@@ -109,30 +110,16 @@ export default {
         password: signInUser.password
       })
       // ボタンのローディングをOFF
-      this.loginLoading = true
+      this.isRunningLogin = false
     },
-    openCreateUser() {
-      this.createUserDialog = true
-    },
-    closeCreateUser() {
-      this.createUserDialog = false
-    },
-    openResetPassword() {
-      this.resetPasswordDialog = true
-    },
-    closeResetPassword() {
-      this.resetPasswordDialog = false
-    },
-    toggleSignInShowPassword() {
-      this.signInshowPassword = !this.signInshowPassword
-    },
+
     ...mapActions('modules/user/auth', ['googleLogin', 'login'])
   }
 }
 </script>
 
 <style>
-.google-btn {
+.google-icon {
   height: 24px;
 }
 </style>

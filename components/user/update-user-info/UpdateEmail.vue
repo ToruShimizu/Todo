@@ -9,18 +9,22 @@
         </v-card-subtitle>
 
         <v-divider />
-        <v-form ref="form" lazy-validation @submit.prevent="updateEmail">
+        <v-form v-model="isValid" ref="form" lazy-validation @submit.prevent="updateEmail">
           <v-row class="mx-2">
             <FormUserEmail :user-email.sync="editUser.email" email-label="新しいメールアドレス" />
           </v-row>
           <v-row class="mx-2" justify="end">
-            <SaveAndCloseButton
-              close-button-title="close"
-              save-button-title="save"
-              icon="mdi-email-edit"
-              @save-button="handleUpdateEmail"
-              @close-button="selectUpdateEmail = 'closeUpdateEmail'"
-            />
+            <AppButton :disabled="isValid" @click="handleUpdateEmail">
+              保存する
+            </AppButton>
+            <AppButton
+              :loading="isRunning"
+              color="success"
+              outlined
+              @click="selectUpdateEmail = 'closeUpdateEmail'"
+            >
+              キャンセル
+            </AppButton>
           </v-row>
         </v-form>
       </v-card>
@@ -46,6 +50,12 @@ export default {
       default: () => {}
     }
   },
+  data() {
+    return {
+      isRunning: false,
+      isValid: false
+    }
+  },
   computed: {
     selectUpdateEmail: {
       get() {
@@ -59,23 +69,18 @@ export default {
     },
     ...mapGetters('modules/user/auth', ['gettersUserEmail'])
   },
-  data() {
-    return {
-      loading: false
-    }
-  },
   methods: {
     async handleUpdateEmail() {
       const editUserEmail = this.editUser.email
       if (!editUserEmail) this.$refs.form.validate()
       // ローディングをON
-      this.loading = true
+      this.isRunning = true
       await this.updateEmail({
         email: editUserEmail
       })
       this.$emit('close-update-email', 'closeUpdateEmail')
       // ローディングをOFF
-      this.loading = false
+      this.isRunning = false
     },
     ...mapActions('modules/user/userInfo', ['updateEmail'])
   }

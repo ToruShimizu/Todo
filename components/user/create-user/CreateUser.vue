@@ -7,7 +7,7 @@
         </v-card-subtitle>
 
         <v-divider />
-        <v-form ref="form" lazy-validation @submit.prevent="createUser">
+        <v-form v-model="isValid" ref="form" lazy-validation>
           <v-row class="mx-2">
             <FormUserName :user-name.sync="createNewUser.name" name-label="登録する名前" />
           </v-row>
@@ -23,15 +23,16 @@
               passwordLabel="登録するパスワード"
             />
           </v-row>
-
-          <SaveAndCloseButton
-            close-button-title="close"
-            save-button-title="save"
-            :loading="createUserLoading"
-            icon="mdi-account-plus"
-            @close-button="closeCreateUser"
-            @save-button="handleCreateUser"
-          />
+          <AppButton
+            :disabled="isValid"
+            :loading="isRunning"
+            color="success"
+            @click="handleCreateUser"
+            >保存する</AppButton
+          >
+          <AppButton :disabled="isRunning" outlined @click="closeCreateUser">
+            キャンセルする
+          </AppButton>
         </v-form>
       </v-card>
     </template>
@@ -55,7 +56,9 @@ export default {
         email: '',
         password: ''
       },
-      createUserLoading: false
+      isRunning: false,
+      isValid: false,
+      isOpened: false
     }
   },
   methods: {
@@ -67,7 +70,7 @@ export default {
         return
       }
       // ローディングをON
-      this.createUserLoading = true
+      this.isRunning = true
 
       await this.createUser({
         email: createUser.email,
@@ -75,7 +78,7 @@ export default {
         userName: createUser.name
       })
       // ローディングをOFF
-      this.createUserLoading = false
+      this.isRunning = false
       this.closeCreateUser()
     },
     closeCreateUser() {

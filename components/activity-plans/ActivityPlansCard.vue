@@ -18,12 +18,14 @@
             </v-card-title>
             <!-- コメント作成ダイアログ -->
             <CommentView
-              :comment-dialog="commentDialog"
-              @close-comment="closeComment"
+              :comment-dialog="isOpenedCommentDialog"
               :plan-contents="contents"
+              @close-comment="isOpenedCommentDialog = false"
             />
             <!-- コメントを開くダイアログ -->
-            <IconButton icon="mdi-comment-text-outline" @handle-icon-button="openComment" />
+            <AppButton width="50" color="success" icon @click="isOpenedCommentDialog = true"
+              ><v-icon>mdi-comment-text-outline</v-icon></AppButton
+            >
             {{ contents.comments.length }}
             <v-spacer />
             <!-- 削除・編集選択リスト -->
@@ -33,25 +35,15 @@
                   <v-icon> mdi-dots-vertical</v-icon>
                 </v-btn>
               </template>
-              <v-list color="blue-grey darken-4">
-                <v-list-item class="px-0">
-                  <v-list-item-title>
-                    <AppButton
-                      class="white--text font-weight-bold"
-                      @handle-text-button="openActivityPlan(contents)"
-                      icon="mdi-pencil"
-                      title="編集"
-                    />
+              <v-list>
+                <v-list-item @click="openActivityPlan(contents)">
+                  <v-list-item-title class="font-weight-bold">
+                    編集する
                   </v-list-item-title>
                 </v-list-item>
-                <v-list-item class="px-0">
-                  <v-list-item-title>
-                    <AppButton
-                      class="white--text font-weight-bold"
-                      @handle-text-button="handleRemoveActivityPlan(contents)"
-                      icon="mdi-delete"
-                      title="削除"
-                    />
+                <v-list-item @click="handleRemoveActivityPlan(contents)">
+                  <v-list-item-title class="font-weight-bold">
+                    削除する
                   </v-list-item-title>
                 </v-list-item>
               </v-list>
@@ -103,7 +95,7 @@ export default {
   },
   data() {
     return {
-      commentDialog: false
+      isOpenedCommentDialog: false
     }
   },
   computed: {
@@ -128,14 +120,6 @@ export default {
     // 活動計画作成ダイアログを開く
     openActivityPlan(contents) {
       this.$emit('open-activity-plan', contents)
-    },
-    // コメントダイアログを開く
-    openComment() {
-      this.commentDialog = true
-    },
-    // コメントダイアログを閉じる
-    closeComment() {
-      this.commentDialog = false
     }
   }
 }
