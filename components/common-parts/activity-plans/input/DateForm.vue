@@ -1,6 +1,6 @@
 <template>
   <v-menu
-    v-model="dateMenu"
+    v-model="isOpenedDateMenu"
     :close-on-content-click="false"
     transition="scale-transition"
     offset-y
@@ -18,7 +18,7 @@
     </template>
     <v-date-picker v-model="innerDate" no-title range>
       <v-spacer />
-      <AppButton title="close" class="primary--text" @handle-text-button="closeDateMenu" />
+      <AppButton outlined @click="isOpenedDateMenu = false">閉じる </AppButton>
     </v-date-picker>
   </v-menu>
 </template>
@@ -33,7 +33,7 @@ export default {
   },
   data() {
     return {
-      dateMenu: false
+      isOpenedDateMenu: false
     }
   },
 
@@ -54,11 +54,6 @@ export default {
       set(dateRangeText) {
         return dateRangeText
       }
-    }
-  },
-  methods: {
-    closeDateMenu() {
-      this.dateMenu = false
     }
   }
 }
