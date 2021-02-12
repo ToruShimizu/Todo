@@ -73,6 +73,11 @@ export default {
           error: colors.deepOrange.accent4,
           success: colors.green.accent3,
           mainBackground: '#f5f5f5'
+        },
+        light: {
+          accent: colors.blue.accent3,
+          success: '#212121',
+          warning: '#df1207'
         }
       }
     }
