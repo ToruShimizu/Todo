@@ -13,14 +13,22 @@
             <FormUserName :user-name.sync="editUser.name" name-label="新しいユーザー名" />
           </v-row>
           <v-row class="mx-2" justify="end">
-            <SaveAndCloseButton
-              close-button-title="close"
-              save-button-title="save"
-              :loading="loading"
-              icon="mdi-badge-account-horizontal"
-              @save-button="handleUpdateUserName"
-              @close-button="selectedUpdateUserName = 'closeUpdateUserName'"
-            />
+            <AppButton
+              :disabled="isValid"
+              :loading="isRunning"
+              outlined
+              @click="handleUpdateUserName"
+            >
+              保存する
+            </AppButton>
+            <AppButton
+              :disabled="isRunning"
+              color="success"
+              outlined
+              @click="selectedUpdateUserName = 'closeUpdateUserName'"
+            >
+              キャンセル
+            </AppButton>
           </v-row>
         </v-form>
       </v-card>
@@ -61,7 +69,8 @@ export default {
   },
   data() {
     return {
-      loading: false
+      isRunning: false,
+      isValid: false
     }
   },
   methods: {

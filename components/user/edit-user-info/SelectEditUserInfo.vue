@@ -6,55 +6,30 @@
           <v-list-item-title class="title white--text">ユーザー情報編集 </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-divider />
-      <v-list-item>
-        <v-list-item-title>
-          <AppButton
-            class="white--text font-weight-bold"
-            @handle-text-button="selectedEditUserInfo = 'openUpdateUserName'"
-            icon="mdi-badge-account-horizontal"
-            title="ユーザー名変更"
-          />
+      <v-divider color="white" />
+      <v-list-item @click="selectedEditUserInfo = 'openUpdateUserName'">
+        <v-list-item-title class="white--text font-weight-bold">
+          ユーザー情報変更
         </v-list-item-title>
       </v-list-item>
-      <v-list-item>
-        <v-list-item-title>
-          <AppButton
-            class="white--text font-weight-bold"
-            @handle-text-button="handleSelectUserImageFile"
-            icon="mdi-file-account"
-            title="プロフィール画像変更"
-          />
+      <v-list-item @click="handleSelectUserImageFile">
+        <v-list-item-title class="white--text font-weight-bold">
+          プロフィール画像変更
         </v-list-item-title>
       </v-list-item>
-      <v-list-item>
-        <v-list-item-title>
-          <AppButton
-            class="white--text font-weight-bold"
-            @handle-text-button="selectedEditUserInfo = 'openUpdateEmail'"
-            icon="mdi-email-edit"
-            title="メールアドレス変更"
-          />
+      <v-list-item @click="selectedEditUserInfo = 'openUpdateEmail'">
+        <v-list-item-title class="white--text font-weight-bold">
+          メールアドレス変更
         </v-list-item-title>
       </v-list-item>
-      <v-list-item>
-        <v-list-item-title>
-          <AppButton
-            class="white--text font-weight-bold"
-            @handle-text-button="selectedEditUserInfo = 'openUpdatePassword'"
-            icon="mdi-account"
-            title="パスワード変更"
-          />
+      <v-list-item @click="selectedEditUserInfo = 'openUpdatePassword'">
+        <v-list-item-title class="white--text font-weight-bold">
+          パスワード変更
         </v-list-item-title>
       </v-list-item>
-      <v-list-item>
-        <v-list-item-title>
-          <AppButton
-            class="white--text font-weight-bold"
-            @handle-text-button="selectedEditUserInfo = 'openDeleteAccount'"
-            icon="mdi-account-remove"
-            title="アカウント削除 "
-          />
+      <v-list-item @click="selectedEditUserInfo = 'openDeleteAccount'">
+        <v-list-item-title class="white--text font-weight-bold">
+          アカウント削除
         </v-list-item-title>
       </v-list-item>
     </v-list>

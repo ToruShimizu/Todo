@@ -12,7 +12,7 @@
           <Comment :comments="planContents.comments" />
         </v-row>
         <v-card-actions class="justify-end">
-          <AppButton title="close" class="primary--text" @handle-text-button="closeComment" />
+          <AppButton @click.stop="closeComment" outlined>閉じる</AppButton>
         </v-card-actions>
       </v-card>
     </template>

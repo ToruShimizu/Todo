@@ -2,7 +2,7 @@
   <FormDialog :form-dialog="teamDialog">
     <template v-slot:dialog>
       <v-card width="500px" class="mx-auto">
-        <v-form ref="form" lazy-validation>
+        <v-form v-model="isValid" ref="form" lazy-validation>
           <!-- チーム画像表示 -->
           <v-row class="mx-2">
             <v-col cols="12" sm="12" md="12" class="text-center">
@@ -35,13 +35,12 @@
             </v-col>
           </v-row>
           <!-- 保存、閉じるボタン -->
-          <SaveAndCloseButton
-            close-button-title="close"
-            save-button-title="save"
-            icon="mdi-account-plus"
-            @close-button="closeTeamDialog"
-            @save-button="handleSaveTeam"
-          />
+          <AppButton :disabled="isValid" :loading="isRunning" @click="handleSaveTeam"
+            >保存する
+          </AppButton>
+          <AppButton color="success" outlined :disabled="isRunning" @click="closeTeamDialog"
+            >キャンセル
+          </AppButton>
         </v-form>
       </v-card>
     </template>
@@ -65,7 +64,9 @@ export default {
   },
   data() {
     return {
-      nameRules: [v => !!v || '名前は必須です。']
+      nameRules: [v => !!v || '名前は必須です。'],
+      isRunning: false,
+      isValid: false
     }
   },
   computed: {

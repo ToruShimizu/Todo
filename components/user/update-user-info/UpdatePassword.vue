@@ -6,7 +6,7 @@
           ※ 変更完了後にログイン画面に戻ります。
         </v-card-subtitle>
         <v-divider />
-        <v-form ref="form" lazy-validation @click="handleUpdatePassword">
+        <v-form v-model="isValid" ref="form" lazy-validation @click="handleUpdatePassword">
           <!-- メールアドレス入力 -->
           <v-row class="mx-2">
             <FormUserEmail :user-email.sync="editUser.email" email-label="現在のメールアドレス" />
@@ -15,8 +15,8 @@
           <v-row class="mx-2">
             <FormUserPassword
               :user-password.sync="editUser.password"
-              :show-password="showUserPassword"
-              @handle-show-password="showUserPassword = !showUserPassword"
+              :show-password="isOpenedUserPassword"
+              @handle-show-password="isOpenedUserPassword = !isOpenedUserPassword"
               password-label="現在のパスワード"
             />
           </v-row>
@@ -24,19 +24,23 @@
           <v-row class="mx-2">
             <FormUserPassword
               :user-password.sync="editUser.editPassword"
-              :show-password="showEditPassword"
-              @handle-show-password="showEditPassword = !showEditPassword"
+              :show-password="isOpenedEditPassword"
+              @handle-show-password="isOpenedEditPassword = !isOpenedEditPassword"
               password-label="新しいパスワード"
             />
           </v-row>
           <v-row class="mx-2" justify="end">
-            <SaveAndCloseButton
-              close-button-title="close"
-              save-button-title="save"
-              icon="mdi-account-key"
-              @save-button="handleUpdatePassword"
-              @close-button="selectedUpdatePassword = 'closeUpdatePassword'"
-            />
+            <AppButton :disabled="isValid" outlined @click="handleUpdatePassword">
+              保存する
+            </AppButton>
+            <AppButton
+              :loading="isRunning"
+              color="success"
+              outlined
+              @click="selectedUpdatePassword = 'closeUpdatePassword'"
+            >
+              キャンセル
+            </AppButton>
           </v-row>
         </v-form>
       </v-card>
@@ -64,9 +68,10 @@ export default {
   },
   data() {
     return {
-      showUserPassword: false,
-      showEditPassword: false,
-      loading: false
+      isOpenedUserPassword: false,
+      isOpenedEditPassword: false,
+      isRunning: false,
+      isValid: false
     }
   },
   computed: {
@@ -89,7 +94,7 @@ export default {
         return
       }
       // ローディングをON
-      this.loading = true
+      this.isRunning = true
       await this.updatePassword({
         updatePassword: editUser.editPassword,
         email: editUser.email,
@@ -97,7 +102,7 @@ export default {
       })
       this.$emit('update:close-update-password', 'closeUpdatePassword')
       // ローディングをOFF
-      this.loading = false
+      this.isRunning = false
     },
     ...mapActions('modules/user/userInfo', ['updatePassword'])
   }

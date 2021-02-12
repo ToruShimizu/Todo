@@ -2,7 +2,7 @@
   <FormDialog :form-dialog="memberDialog">
     <template v-slot:dialog>
       <v-card width="500px" class="mx-auto">
-        <v-form ref="form" lazy-validation>
+        <v-form v-model="isValid" ref="form" lazy-validation>
           <v-row class="mx-2">
             <!-- メンバー名入力フォーム -->
             <v-col cols="12" sm="12" md="12">
@@ -34,13 +34,12 @@
             </v-col>
           </v-row>
           <v-row class="mx-2" justify="end">
-            <SaveAndCloseButton
-              close-button-title="close"
-              save-button-title="save"
-              icon="mdi-account-plus"
-              @close-button="closeMemberDialog"
-              @save-button="handleSaveMember"
-            />
+            <AppButton :loading="isRunning" :disabled="isValid" @click="handleSaveMember"
+              >保存する
+            </AppButton>
+            <AppButton :disabled="isRunning" color="success" outlined @click="closeMemberDialog"
+              >キャンセル
+            </AppButton>
           </v-row>
         </v-form>
         <v-divider />
@@ -73,7 +72,12 @@ export default {
       required: true
     }
   },
-
+  data() {
+    return {
+      isRunning: false,
+      isValid: false
+    }
+  },
   methods: {
     closeMemberDialog() {
       this.$emit('close-member-dialog')

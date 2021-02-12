@@ -3,7 +3,7 @@
     <template v-slot:dialog>
       <v-card width="500px" class="mx-auto">
         <v-divider />
-        <v-form ref="form" lazy-validation>
+        <v-form v-model="isValid" ref="form" lazy-validation>
           <v-row class="mx-2">
             <!-- カテゴリ入力エリア -->
             <v-col cols="12" sm="6" md="6">
@@ -39,14 +39,12 @@
             </v-col>
           </v-row>
           <!-- 保存ボタン、閉じるボタン -->
-          <SaveAndCloseButton
-            close-button-title="close"
-            save-button-title="save"
-            :loader="null"
-            icon="mdi-pencil-plus"
-            @save-button="handleSaveActivityPlan"
-            @close-button="closeActivityPlan"
-          />
+          <AppButton :disabled="isValid" :loading="isRunning" @click="handleSaveActivityPlan"
+            >保存する
+          </AppButton>
+          <AppButton :disabled="isRunning" color="success" outlined @click="closeActivityPlan"
+            >キャンセル
+          </AppButton>
         </v-form>
       </v-card>
     </template>
@@ -54,7 +52,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   props: {
@@ -70,6 +68,12 @@ export default {
     activityPlanDialog: {
       type: Boolean,
       required: true
+    }
+  },
+  data() {
+    return {
+      isRunning: false,
+      isValid: false
     }
   },
   computed: {
