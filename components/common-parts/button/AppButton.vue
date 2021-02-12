@@ -10,6 +10,8 @@
     :loading="loading"
     :icon="icon"
     :text="text"
+    :nuxt="nuxt"
+    :to="to"
     depressed
     @click="$emit('click')"
   >
@@ -52,6 +54,14 @@ export default {
     text: {
       type: Boolean,
       default: false
+    },
+    nuxt: {
+      type: Boolean,
+      default: false
+    },
+    to: {
+      type: String,
+      default: ''
     }
   }
 }
