@@ -15,24 +15,23 @@
           <!-- パスワード入力 -->
           <v-row class="mx-2">
             <FormUserPassword
-              :show-password="deleteAccountShowPassword"
+              :show-password="isOpenedShowPassword"
               :user-password.sync="editUser.password"
-              @handle-show-password="toggleDeleteAccountShowPassword"
               passwordLabel="現在のパスワード"
+              @handle-show-password="isOpenedShowPassword = !isOpenedShowPassword"
             />
           </v-row>
           <v-card-actions class="justify-end">
-            <CloseButton
-              title="close"
-              @close-button="selectedDeleteAccount = 'closeDeleteAccount'"
-            />
-            <DeleteButton
-              title="delete"
-              :loading="loading"
-              :loader="loader"
-              icon="mdi-account-multiple-remove"
-              @delete-button="handleDeleteAccount"
-            />
+            <AppButton
+              color="success"
+              outlined
+              @click="selectedDeleteAccount = 'closeDeleteAccount'"
+              >閉じる
+            </AppButton>
+
+            <AppButton color="warning" :loading="isRunning" @click="handleDeleteAccount"
+              >削除する
+            </AppButton>
           </v-card-actions>
         </v-form>
       </v-card>
@@ -56,19 +55,12 @@ export default {
     editUser: {
       type: Object,
       default: () => {}
-    },
-    loading: {
-      type: Boolean,
-      default: false
-    },
-    loader: {
-      type: null,
-      default: null
     }
   },
   data() {
     return {
-      deleteAccountShowPassword: false
+      isOpenedShowPassword: false,
+      isRunning: false
     }
   },
   computed: {
@@ -94,9 +86,6 @@ export default {
         password: editUser.password
       })
       this.$emit('update:close-delete-account', 'closeDeleteAccount')
-    },
-    toggleDeleteAccountShowPassword() {
-      this.deleteAccountShowPassword = !this.deleteAccountShowPassword
     },
     ...mapActions('modules/user/userInfo', ['deleteAccount'])
   }

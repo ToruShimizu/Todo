@@ -1,36 +1,34 @@
 <template>
   <v-container style="max-width: 500px" class="mb-5 py-5">
-    <v-layout class="justify-center">
+    <v-row class="justify-center">
       <!-- サークル作成ダイアログ（チームが作成されていない時に表示） -->
-      <CreateTeam :create-team-dialog="createTeamDialog" @close-team-dialog="closeCreateTeam" />
-      <v-btn
-        v-if="!teamName"
-        color="teal lighten-1"
-        dark
-        class="font-italic mb-5"
-        @click="openCreateTeam"
-        @close-team-dialog="closeCreateTeam"
-      >
-        <v-icon>mdi-account-plus</v-icon>サークル新規作成
-      </v-btn>
-      <v-btn color="teal lighten-1" dark to="/team" nuxt class="font-italic mr-2" v-else
-        ><v-icon>mdi-account-edit</v-icon>サークル編集
-      </v-btn>
-      <!-- 活動計画作成ダイアログを開くボタン -->
-      <BlueDialogButton
-        v-if="teamName"
-        title="活動計画作成"
-        icon="mdi-pencil-plus"
-        @dialog-button="openCreateActivityPlan"
+      <CreateTeam
+        :create-team-dialog="isOpenedCreateTeamDialog"
+        @close-team-dialog="isOpenedCreateTeamDialog = false"
       />
-    </v-layout>
+      <template v-if="!teamName">
+        <AppButton width="200" @click="isOpenedCreateTeamDialog = true"
+          >サークル新規作成
+        </AppButton>
+      </template>
+      <template v-else>
+        <AppButton class="mx-2" width="150" color="teal lighten-1" to="/team" nuxt
+          >サークル編集
+        </AppButton>
+
+        <!-- 活動計画作成ダイアログを開くボタン -->
+        <AppButton class="mx-2" width="150" @click="isOpenedCreateActivityPlanDialog = true"
+          >活動計画作成
+        </AppButton>
+      </template>
+    </v-row>
     <!-- 活動計画作成ダイアログ -->
     <AddActivityPlan
       :create-activity-plans.sync="planContents"
       :todo-categorys="todoCategorys"
-      :create-activity-plan-dialog="createActivityPlanDialog"
-      @open-create-activity-plan="openCreateActivityPlan"
-      @close-activity-plan="closeCreateActivityPlan"
+      :create-activity-plan-dialog="isOpenedCreateActivityPlanDialog"
+      @open-create-activity-plan="isOpenedCreateActivityPlanDialog = true"
+      @close-activity-plan="isOpenedCreateActivityPlanDialog = false"
     />
     <v-divider class="mt-4" />
     <v-card class="mb-5">
@@ -38,7 +36,7 @@
       <FilteredActivityPlans :selected-activity-plans-filter.sync="selectActivityPlansFilter" />
       <v-divider />
       <!-- チームが作成されている時に表示 -->
-      <v-layout v-if="teamName">
+      <v-row v-if="teamName">
         <!-- 活動計画検索 -->
         <SearchActivityPlans
           :searched-category-keyword.sync="searchCategoryKeyword"
@@ -49,12 +47,12 @@
           :selected-sort-activity-plans.sync="selectSortActivityPlans"
           :sort-activity-plans-states="sortActivityPlansStates"
         />
-      </v-layout>
-      <v-layout v-else>
-        <v-card-text class="text-center font-italic grey--text">
+      </v-row>
+      <v-row v-else>
+        <v-card-title class="text-center font-italic grey--text">
           サークルがありません
-        </v-card-text></v-layout
-      >
+        </v-card-title>
+      </v-row>
       <!-- ページネーション -->
       <ActivityPlansPagination
         :activity-plans-page.sync="activityPlansPage"
@@ -82,7 +80,8 @@ export default {
         name: '',
         imageFile: null
       },
-      createTeamDialog: false,
+      isOpenedCreateTeamDialog: false,
+      isOpenedCreateActivityPlanDialog: false,
       planContents: {
         category: '',
         detail: '',
@@ -119,8 +118,7 @@ export default {
       activityPlansPage: 1,
       activityPlansPageSize: 7,
       activityPlansPageLength: 0,
-      displayActivityPlans: [],
-      createActivityPlanDialog: false
+      displayActivityPlans: []
     }
   },
   mounted() {
@@ -205,18 +203,7 @@ export default {
         pageSize * pageNumber
       )
     },
-    openCreateActivityPlan() {
-      this.createActivityPlanDialog = true
-    },
-    closeCreateActivityPlan() {
-      this.createActivityPlanDialog = false
-    },
-    openCreateTeam() {
-      this.createTeamDialog = true
-    },
-    closeCreateTeam() {
-      this.createTeamDialog = false
-    },
+
     // ページネーション機能
     activityPlansPagination() {
       const pageSize = this.activityPlansPageSize

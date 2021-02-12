@@ -13,7 +13,9 @@
       <template v-slot:imageFile v-if="editPlanContents.photoURL">
         <!-- 画像ファイル削除ボタン -->
         <v-col cols="12" sm="12" md="12" class="pa-0 text-right">
-          <AppButton icon="mdi-delete-outline" @handle-text-button="handleRemovePlanContensImage" />
+          <AppButton color="success" icon @click="handleRemovePlanContensImage"
+            ><v-icon>mdi-delete-outline</v-icon>
+          </AppButton>
         </v-col>
         <v-col cols="12" sm="12" md="12">
           <!-- 画像の表示 -->

@@ -16,14 +16,16 @@
             />
           </v-row>
           <v-row class="mx-2">
-            <SaveAndCloseButton
-              :loading="resetPasswordLoading"
-              close-button-title="close"
-              save-button-title="send"
-              icon="mdi-email-send"
-              @close-button="closeResetPassword"
-              @save-button="handleResetPassword"
-            />
+            <AppButton
+              :loading="isRunning"
+              :disabled="isValid"
+              color="accent"
+              @click="handleResetPassword"
+              >保存する
+            </AppButton>
+            <AppButton :disabled="isRunning" outlined @click="closeResetPassword"
+              >キャンセル</AppButton
+            >
           </v-row>
         </v-form>
       </v-card>
@@ -46,7 +48,8 @@ export default {
       resetUserPassword: {
         email: ''
       },
-      resetPasswordLoading: false
+      isRunning: false,
+      isValid: false
     }
   },
   methods: {
@@ -55,7 +58,7 @@ export default {
       const resetUserPassword = this.resetUserPassword
       if (resetUserPassword.email === 'test@example.com') {
         // ローディングをON
-        resetPasswordLoading = true
+        isRunning = true
         alert('テストユーザーはパスワードを再設定することはできません')
         return
       } else if (!resetUserPassword.email) {
@@ -67,7 +70,7 @@ export default {
       })
       this.closeResetPassword()
       // ローディングをOFF
-      resetPasswordLoading = false
+      isRunning = false
     },
     // ダイアログを閉じる
     closeResetPassword() {

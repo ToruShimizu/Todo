@@ -21,25 +21,23 @@
             hide-details
           />
           <v-divider class="mx-4" inset vertical />
-          <BlueDialogButton
-            @dialog-button="openRegistrationMember"
-            icon="mdi-account-plus-outline"
-          />
+          <AppButton @click="openRegistrationMember">メンバー追加 </AppButton>
+
           <v-spacer />
         </v-toolbar>
       </template>
 
-      <template v-slot:item.actions="{ item }">
-        <AppButtonXSmall icon="mdi-pencil" @handle-text-button="openUpdateMember(item)" />
-        <AppButtonXSmall icon="mdi-delete" @handle-text-button="handleRemoveMember(item)" />
+      <template v-slot:[`item.actions`]="{ item }">
+        <v-icon class="pr-1" color="success" @click="openUpdateMember(item)">mdi-pencil</v-icon>
+        <v-icon class="pl-1" color="success" @click="handleRemoveMember(item)">mdi-delete</v-icon>
       </template>
     </v-data-table>
     <UpdateMember
       :edit-member="editMember"
       :improvement-roles="improvementRoles"
       :team-roles="teamRoles"
-      :update-member-dialog="updateMemberDialog"
-      @close-update-member="closeUpdateMember"
+      :update-member-dialog="isOpenedUpdateMemberDialog"
+      @close-update-member="isOpenedUpdateMemberDialog = true"
     />
   </v-layout>
 </template>
@@ -76,7 +74,7 @@ export default {
       itemsPerPage: 5
     },
     editMember: {},
-    updateMemberDialog: false
+    isOpenedUpdateMemberDialog: false
   }),
 
   computed: {
@@ -94,12 +92,9 @@ export default {
     // メンバー編集ダイアログを開く
     openUpdateMember(item) {
       this.editMember = Object.assign({}, item)
-      this.updateMemberDialog = true
+      this.isOpened = true
     },
-    // メンバー編集ダイアログを閉じる
-    closeUpdateMember() {
-      this.updateMemberDialog = false
-    },
+
     ...mapActions('modules/team/team', ['removeMember'])
   }
 }
