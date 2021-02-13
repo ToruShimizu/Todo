@@ -47,7 +47,7 @@
     </v-form>
     <!-- 保存ボタン、閉じるボタン -->
     <template slot="buttons">
-      <AppButton :disabled="isValid" :loading="isRunning" @click="handleSaveActivityPlan"
+      <AppButton :disabled="isValid" :loading="isRunning" @click="onUpdate(contents)"
         >保存する
       </AppButton>
       <AppButton :disabled="isRunning" color="success" outlined @click="$emit('close', false)"
@@ -90,14 +90,11 @@ export default {
   },
   methods: {
     // 活動計画更新ボタン
-    async handleUpdateActivityPlan(planContents) {
+    async onUpdate(planContents) {
       await this.updateActivityPlan(planContents)
-      this.closeUpdateActivityPlan()
+      this.$emit('close', false)
     },
-    // 活動計画編集ダイアログを閉じる
-    closeUpdateActivityPlan() {
-      this.$emit('close-update-activity-plan')
-    },
+
     // 画像ファイルを削除
     handleRemovePlanContensImage() {
       this.removePlanContentsImage(this.contents)
