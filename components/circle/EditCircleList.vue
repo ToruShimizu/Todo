@@ -15,7 +15,7 @@
               class="font-weight-bold"
               color="success"
               text
-              @click="isOpenedUpdateTeamDialog = true"
+              @click="isOpenedUpdateCircleDialog = true"
             >
               編集する
             </AppButton>
@@ -24,7 +24,7 @@
         <v-list-item>
           <v-list-item-title>
             <!-- サークル削除ボタン -->
-            <AppButton class="font-weight-bold" color="success" text @click="handleDeleteTeam"
+            <AppButton class="font-weight-bold" color="success" text @click="runRemoveCircle"
               >削除する
             </AppButton>
           </v-list-item-title>
@@ -32,7 +32,7 @@
       </v-list>
     </v-menu>
     <!-- サークル編集ダイアログ -->
-    <UpdateTeam v-model="isOpenedUpdateTeamDialog" />
+    <LazyUpdateCircleDialog v-model="isOpenedUpdateCircleDialog" />
   </div>
 </template>
 
@@ -41,19 +41,19 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   data() {
     return {
-      isOpenedUpdateTeamDialog: false
+      isOpenedUpdateCircleDialog: false
     }
   },
   computed: {
-    ...mapGetters('modules/team/team', ['teamName', 'teamPhotoURL'])
+    ...mapGetters('modules/circle', ['circleName', 'circlePhotoURL'])
   },
   methods: {
     // サークル削除
-    handleDeleteTeam() {
+    runRemoveCircle() {
       if (!confirm('サークルを削除しますか？')) return
-      this.removeTeam()
+      this.removeCircle()
     },
-    ...mapActions('modules/team/team', ['removeTeam'])
+    ...mapActions('modules/circle', ['removeCircle'])
   }
 }
 </script>
