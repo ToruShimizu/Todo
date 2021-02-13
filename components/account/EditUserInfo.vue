@@ -15,7 +15,7 @@
         </v-list-item-title>
       </v-list-item>
 
-      <v-list-item @click="handleSelectUserImageFile">
+      <v-list-item @click="openSelectUserImageFile">
         <v-list-item-title class="white--text font-weight-bold">
           プロフィール画像変更
         </v-list-item-title>
@@ -33,23 +33,23 @@
         </v-list-item-title>
       </v-list-item>
 
-      <v-list-item @click="isOpenedDeleteAccount = true">
+      <v-list-item @click="isOpenedRemoveAccount = true">
         <v-list-item-title class="white--text font-weight-bold">
           アカウント削除
         </v-list-item-title>
       </v-list-item>
     </v-list>
     <!-- ユーザー名変更ダイアログ -->
-    <UpdateUserName v-model="isOpenedUpdateUserNameDialog" />
+    <LazyUpdateUsernameDialog v-model="isOpenedUpdateUserNameDialog" />
     <!-- プロフィール画像変更 -->
     <UpdateUserAvatar ref="updateUserAvatar" />
 
     <!-- メールアドレス変更ダイアログ -->
-    <UpdateEmail v-model="isOpenedUpdateEmail" />
+    <LazyUpdateEmailDialog v-model="isOpenedUpdateEmail" />
     <!-- パスワード変更ダイアログ -->
-    <UpdatePassword v-model="isOpenedUpdatePassword" />
+    <LazyUpdatePasswordDialog v-model="isOpenedUpdatePassword" />
     <!-- アカウント削除ダイアログ -->
-    <DeleteAccount v-model="isOpenedDeleteAccount" />
+    <LazyRemoveAccountDialog v-model="isOpenedRemoveAccount" />
   </div>
 </template>
 <script>
@@ -61,7 +61,7 @@ export default {
       isOpenedUpdateUserNameDialog: false,
       isOpenedUpdateEmail: false,
       isOpenedUpdatePassword: false,
-      isOpenedDeleteAccount: false
+      isOpenedRemoveAccount: false
     }
   },
   computed: {
@@ -69,7 +69,7 @@ export default {
   },
   methods: {
     // 画像選択画面を開く
-    handleSelectUserImageFile() {
+    openSelectUserImageFile() {
       this.$refs.updateUserAvatar.selectUserImageFile()
     }
   }
