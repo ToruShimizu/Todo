@@ -1,5 +1,10 @@
 <template>
-  <AppDialog :is-opened="isOpened" @close="$emit('close', false)" title="活動計画作成">
+  <AppDialog
+    :is-opened="isOpened"
+    class="create-activity-plan-dialog"
+    @close="$emit('close', false)"
+    title="活動計画作成"
+  >
     <v-divider />
     <v-form v-model="isValid" ref="form" lazy-validation>
       <v-row class="mx-2">
@@ -17,7 +22,7 @@
         <v-col cols="12" sm="12" md="12"
           ><InChargeForm
             :in-charge-member.sync="createPlanContentsInput.inChargeMember"
-            :items="gettersTeamMember"
+            :items="gettersCircleMember"
           />
         </v-col>
       </v-row>
@@ -41,7 +46,7 @@
     </v-form>
     <!-- 保存ボタン、閉じるボタン -->
     <template slot="buttons">
-      <AppButton :disabled="isValid" :loading="isRunning" @click="createActivityPlan"
+      <AppButton :disabled="isValid" :loading="isRunning" @click="runCreateActivityPlan"
         >保存する
       </AppButton>
       <AppButton :disabled="isRunning" color="success" outlined @click="$emit('close', false)"
@@ -55,6 +60,7 @@
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
+  name: 'CreateActivityPlanDialog',
   model: {
     prop: 'isOpened',
     event: 'close'
@@ -86,15 +92,16 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('modules/team/team', ['gettersTeamMember'])
+    ...mapGetters('modules/circle', ['gettersCircleMember'])
   },
   methods: {
     // 活動計画作成
-    async createActivityPlan() {
+    async runCreateActivityPlan() {
+      if (!confirm('活動計画を作成しますか？')) return
       if (this.createPlanContentsInput.imageFile) {
         await this.uploadPlanContentsImageFile(this.createPlanContentsInput)
       } else {
-        await this.addActivityPlan(this.createPlanContentsInput)
+        await this.createActivityPlan(this.createPlanContentsInput)
       }
       this.$emit('close', false)
     },
@@ -106,7 +113,7 @@ export default {
     },
 
     ...mapActions('modules/activity-plans/activityPlans', [
-      'addActivityPlan',
+      'createActivityPlan',
       'uploadPlanContentsImageFile'
     ])
   }
