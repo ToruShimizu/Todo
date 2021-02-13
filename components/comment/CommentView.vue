@@ -1,28 +1,75 @@
 <template>
-  <FormDialog :form-dialog="commentDialog">
-    <template v-slot:dialog>
-      <v-card width="500px" class="mx-auto">
-        <v-divider />
-        <!-- コメント入力、追加機能を持ったフォーム、 -->
-        <v-row class="mx-2">
-          <AddComment :plan-contents-id="planContents.id" />
-        </v-row>
-        <!-- コメント表示 -->
-        <v-row class="mx-2">
-          <Comment :comments="planContents.comments" />
-        </v-row>
-        <v-card-actions class="justify-end">
-          <AppButton @click.stop="closeComment" outlined>閉じる</AppButton>
-        </v-card-actions>
-      </v-card>
+  <AppDialog
+    :is-opened="isOpened"
+    class="add-comment-dialog"
+    @close="$emit('close', false)"
+    title="コメント"
+  >
+    <v-divider />
+
+    <!-- コメント表示 -->
+    <v-row class="mx-2">
+      <v-col cols="12">
+        <div v-for="comment in planContents.comments" :key="comment.id">
+          <v-card class="mx-auto my-2" width="100%" elevation="3">
+            <v-card-title class="pa-0 ml-1 mt-1">
+              <v-icon small> mdi-comment-text-outline </v-icon>
+              <!-- コメント作成日時 -->
+              <span class="text-subtitle-2 font-weight-light ml-2">{{ comment.created }}</span>
+            </v-card-title>
+            <!-- コメント -->
+            <v-card-title class="text-body-1 font-weight-bold  mt-2">
+              "{{ comment.message }}"
+            </v-card-title>
+            <v-card-actions class="py-0">
+              <!-- ユーザー画像 -->
+              <v-avatar max-width="50" max-height="50">
+                <v-img v-if="photoURL" :src="photoURL" :lazy-src="photoURL">
+                  <template v-slot:placeholder>
+                    <v-row class="ma-0" align="center" justify="center">
+                      <v-progress-circular
+                        indeterminate
+                        color="grey lighten-5"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
+                <!-- ユーザー画像がない場合 -->
+                <v-icon v-else>mdi-account-outline</v-icon>
+              </v-avatar>
+              <!-- ユーザーネーム -->
+              <span>{{ gettersUserName }}</span> <v-spacer />
+              <v-btn icon @click="handleRemoveComment(comment)">
+                <v-icon>mdi-delete-outline</v-icon>
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </div>
+      </v-col>
+    </v-row>
+    <template slot="buttons">
+      <!-- コメント入力 -->
+      <v-text-field
+        v-model="message"
+        prepend-inner-icon="mdi-message-text-outline"
+        label="コメントを追加する"
+        clearable
+      />
+      <AppButton class="ml-2" outlined @click="handleAddComment">追加する </AppButton>
     </template>
-  </FormDialog>
+  </AppDialog>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
+
 export default {
+  model: {
+    prop: 'isOpened',
+    event: 'close'
+  },
   props: {
-    commentDialog: {
+    isOpened: {
       type: Boolean,
       default: false
     },
@@ -31,10 +78,25 @@ export default {
       required: true
     }
   },
-  methods: {
-    closeComment() {
-      this.$emit('close-comment')
+  data() {
+    return {
+      message: ''
     }
+  },
+  computed: {
+    ...mapGetters('modules/user/auth', ['gettersUserName', 'photoURL'])
+  },
+  methods: {
+    // コメント追加
+    handleAddComment() {
+      this.addComment({
+        id: this.planContents.id,
+        message: this.message
+      })
+      this.message = ''
+    },
+
+    ...mapActions('modules/activity-plans/activityPlans', ['addComment'])
   }
 }
 </script>
