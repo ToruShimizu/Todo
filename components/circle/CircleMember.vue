@@ -1,8 +1,8 @@
 <template>
-  <v-layout class="justify-center mb-8">
+  <v-row class="justify-center mb-8">
     <v-data-table
       :headers="memberHeaders"
-      :items="teamMember"
+      :items="circleMember"
       :search="searchWord"
       :options.sync="DEFAULT_PAGE_OPTIONS"
       sort-by="名前"
@@ -29,21 +29,21 @@
 
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon class="pr-1" color="success" @click="openUpdateMember(item)">mdi-pencil</v-icon>
-        <v-icon class="pl-1" color="success" @click="handleRemoveMember(item)">mdi-delete</v-icon>
+        <v-icon class="pl-1" color="success" @click="runRemoveMember(item)">mdi-delete</v-icon>
       </template>
     </v-data-table>
-    <RegistrationMember
+    <LazyAddMemberDialog
       v-model="isOpenedRegistrationMemberDialog"
-      :team-member="teamMember"
-      :team-roles="teamRoles"
+      :circle-member="circleMember"
+      :circle-roles="circleRoles"
       :improvement-roles="improvementRoles"
     />
-    <UpdateMember
+    <LazyUpdateMemberDialog
       v-model="isOpenedUpdateMemberDialog"
       :edit-member="editMember"
-      :team-roles="teamRoles"
+      :circle-roles="circleRoles"
     />
-  </v-layout>
+  </v-row>
 </template>
 
 <script>
@@ -51,7 +51,7 @@ import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
   props: {
-    teamRoles: {
+    circleRoles: {
       type: Array,
       required: true
     },
@@ -80,12 +80,12 @@ export default {
   }),
 
   computed: {
-    ...mapState('modules/team/team', ['teamMember']),
-    ...mapGetters('modules/team/team', ['teamName', 'teamPhotoURL'])
+    ...mapState('modules/circle', ['circleMember']),
+    ...mapGetters('modules/circle', ['circleName', 'circlePhotoURL'])
   },
   methods: {
     // メンバー削除
-    handleRemoveMember(item) {
+    runRemoveMember(item) {
       if (!confirm(item.name + 'を削除しますか？')) return
       this.removeMember(item)
     },
@@ -98,7 +98,7 @@ export default {
       this.isOpened = true
     },
 
-    ...mapActions('modules/team/team', ['removeMember'])
+    ...mapActions('modules/circle', ['removeMember'])
   }
 }
 </script>
