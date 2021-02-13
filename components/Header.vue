@@ -13,7 +13,7 @@
         nuxt
         to="/activityPlans"
         color="indigo darken-2"
-        v-if="this.$route.path === '/team'"
+        v-if="this.$route.path === '/circle'"
       >
         <v-icon color="white">mdi-arrow-left-bold-box-outline </v-icon>
       </v-btn>
