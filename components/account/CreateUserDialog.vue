@@ -1,5 +1,10 @@
 <template>
-  <AppDialog :is-opened="isOpened" title="ユーザー作成" @close="$emit('close', false)">
+  <AppDialog
+    :is-opened="isOpened"
+    class="create-user-dialog"
+    title="ユーザー作成"
+    @close="$emit('close', false)"
+  >
     <v-card-subtitle class="text-center font-italic">
       ※ 作成後にログインします
     </v-card-subtitle>
@@ -7,23 +12,23 @@
     <v-divider />
     <v-form v-model="isValid" ref="form" lazy-validation>
       <v-row class="mx-2">
-        <FormUserName :user-name.sync="createNewUser.name" name-label="登録する名前" />
+        <FormUserName :user-name.sync="createUserInput.name" name-label="登録する名前" />
       </v-row>
       <v-row class="mx-2">
         <FormUserEmail
-          :user-email.sync="createNewUser.email"
+          :user-email.sync="createUserInput.email"
           email-label="登録するメールアドレス"
         />
       </v-row>
       <v-row class="mx-2">
         <FormUserPassword
-          :user-password.sync="createNewUser.password"
+          :user-password.sync="createUserInput.password"
           passwordLabel="登録するパスワード"
         />
       </v-row>
     </v-form>
     <template slot="buttons">
-      <AppButton :disabled="isValid" :loading="isRunning" @click="handleCreateUser"
+      <AppButton :disabled="isValid" :loading="isRunning" @click="runCreateUser"
         >保存する
       </AppButton>
       <AppButton :disabled="isRunning" color="success" outlined @click="$emit('close', false)">
@@ -37,6 +42,7 @@
 import { mapActions } from 'vuex'
 
 export default {
+  name: 'CreateUserDialog',
   model: {
     prop: 'isOpened',
     event: 'close'
@@ -49,7 +55,7 @@ export default {
   },
   data() {
     return {
-      createNewUser: {
+      createUserInput: {
         name: '',
         email: '',
         password: ''
@@ -61,9 +67,12 @@ export default {
   },
   methods: {
     // ユーザー作成
-    async handleCreateUser() {
-      const createUser = this.createNewUser
-      if (!createUser.password || !createUser.email || !createUser.name) {
+    async runCreateUser() {
+      if (
+        !this.createUserInput.password ||
+        !this.createUserInput.email ||
+        !this.createUserInput.name
+      ) {
         this.$refs.form.validate()
         return
       }
@@ -71,9 +80,9 @@ export default {
       this.isRunning = true
 
       await this.createUser({
-        email: createUser.email,
-        password: createUser.password,
-        userName: createUser.name
+        email: createUserInput.email,
+        password: createUserInput.password,
+        userName: createUserInput.name
       })
       // ローディングをOFF
       this.isRunning = false
