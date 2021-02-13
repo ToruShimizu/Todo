@@ -1,6 +1,6 @@
 <template>
   <v-combobox
-    v-model="innnerImprovementRole"
+    v-model="improvementRole"
     :items="items"
     :label="label"
     clearable
@@ -16,10 +16,6 @@
 <script>
 export default {
   props: {
-    teamMember: {
-      type: Object,
-      required: true
-    },
     improvementRole: {
       type: Array,
       default: () => []
@@ -31,16 +27,6 @@ export default {
     label: {
       type: String,
       required: true
-    }
-  },
-  computed: {
-    innnerImprovementRole: {
-      get() {
-        return this.teamMember.improvementRole
-      },
-      set(improvementRole) {
-        this.$emit('update:improvementRole', improvementRole)
-      }
     }
   }
 }
