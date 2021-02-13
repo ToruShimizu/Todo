@@ -1,5 +1,10 @@
 <template>
-  <AppDialog :is-opened="isOpened" title="メールアドレス変更" @close="$emit('close', false)">
+  <AppDialog
+    :is-opened="isOpened"
+    class="update-user-email"
+    title="メールアドレス変更"
+    @close="$emit('close', false)"
+  >
     <v-card-subtitle class="text-center font-italic">
       現在登録されているメールアドレス<br />
       <v-icon left>mdi-email-outline</v-icon>
@@ -13,7 +18,7 @@
       </v-row>
     </v-form>
     <template slot="buttons">
-      <AppButton :disabled="isValid" @click="handleUpdateEmail">
+      <AppButton :disabled="isValid" @click="runUpdateEmail">
         保存する
       </AppButton>
       <AppButton :loading="isRunning" color="success" outlined @click="$emit('close', false)">
@@ -27,6 +32,7 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
+  name: 'UpdateUserEmailDialog',
   model: {
     prop: 'isOpened',
     event: 'close'
@@ -48,7 +54,7 @@ export default {
     ...mapGetters('modules/user/auth', ['gettersUserEmail'])
   },
   methods: {
-    async handleUpdateEmail() {
+    async runUpdateEmail() {
       if (!this.updateEmailInput) this.$refs.form.validate()
       // ローディングをON
       this.isRunning = true
