@@ -5,16 +5,18 @@
       <v-row class="mx-2">
         <!-- カテゴリ入力エリア -->
         <v-col cols="12" sm="6" md="6">
-          <CategoryCombobox :items="items" :category.sync="planContents.category" />
+          <CategoryCombobox :items="items" :category.sync="createPlanContentsInput.category" />
         </v-col>
         <!-- 日付入力エリア -->
-        <v-col cols="12" sm="6" md="6"><DateForm :date.sync="planContents.date" /> </v-col>
+        <v-col cols="12" sm="6" md="6"
+          ><DateForm :date.sync="createPlanContentsInput.date" />
+        </v-col>
       </v-row>
       <!-- 担当入力エリア -->
       <v-row class="mx-2">
         <v-col cols="12" sm="12" md="12"
           ><InChargeForm
-            :in-charge-member.sync="planContents.inChargeMember"
+            :in-charge-member.sync="createPlanContentsInput.inChargeMember"
             :items="gettersTeamMember"
           />
         </v-col>
@@ -23,7 +25,7 @@
       <!-- 詳細入力エリア -->
       <v-row class="mx-2">
         <v-col cols="12">
-          <DetailForm :detail.sync="planContents.detail" />
+          <DetailForm :detail.sync="createPlanContentsInput.detail" />
         </v-col>
       </v-row>
       <slot name="imageFile"></slot>
@@ -31,7 +33,7 @@
         <v-col cols="12" sm="12" md="12">
           <!-- 画像入力エリア -->
           <InputFile
-            :imageFile.sync="planContents.imageFile"
+            :imageFile.sync="createPlanContentsInput.imageFile"
             @change-image-file="changeImageFile"
           />
         </v-col>
@@ -69,19 +71,15 @@ export default {
   },
   data() {
     return {
-      planContents: {
-        type: Object,
-        required: false,
-        default: () => ({
-          category: '',
-          detail: '',
-          imageFile: null,
-          inChargeMember: [],
-          fileName: '',
-          photoURL: '',
-          date: [new Date().toISOString().substr(0, 10)],
-          done: false
-        })
+      createPlanContentsInput: {
+        category: '',
+        detail: '',
+        imageFile: null,
+        inChargeMember: [],
+        fileName: '',
+        photoURL: '',
+        date: [new Date().toISOString().substr(0, 10)],
+        done: false
       },
       isRunning: false,
       isValid: false
@@ -92,19 +90,19 @@ export default {
   },
   methods: {
     // 活動計画作成
-    async createActivityPlan(planContents) {
-      if (planContents.imageFile) {
-        await this.uploadPlanContentsImageFile(planContents)
+    async createActivityPlan() {
+      if (this.createPlanContentsInput.imageFile) {
+        await this.uploadPlanContentsImageFile(this.createPlanContentsInput)
       } else {
-        await this.addActivityPlan(planContents)
+        await this.addActivityPlan(this.createPlanContentsInput)
       }
       this.$emit('close', false)
     },
 
     // 画像ファイルを変換
     changeImageFile(file) {
-      this.planContents.imageFile = file
-      this.$emit('update-image-file', this.planContents)
+      this.createPlanContentsInput.imageFile = file
+      this.$emit('update-image-file', this.createPlanContentsInput)
     },
 
     ...mapActions('modules/activity-plans/activityPlans', [
