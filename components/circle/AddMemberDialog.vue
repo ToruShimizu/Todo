@@ -1,11 +1,16 @@
 <template>
-  <AppDialog :is-opened="isOpened" title="メンバー追加" @close="$emit('close', false)">
+  <AppDialog
+    :is-opened="isOpened"
+    class="add-member-dialog"
+    title="メンバー追加"
+    @close="$emit('close', false)"
+  >
     <v-form v-model="isValid" ref="form" lazy-validation>
       <v-row class="mx-2">
         <!-- メンバー名入力フォーム -->
         <v-col cols="12">
           <v-text-field
-            v-model="registrationMemberInput.name"
+            v-model="addMemberInput.name"
             required
             label="名前"
             clearable
@@ -18,9 +23,9 @@
       <!-- 役割入力フォーム -->
       <v-col cols="12">
         <RoleComboBox
-          :team-member="registrationMemberInput"
-          :items="teamRoles"
-          :role.sync="registrationMemberInput.role"
+          :circle-member="addMemberInput"
+          :items="circleRoles"
+          :role.sync="addMemberInput.role"
           label="役割"
         />
       </v-col>
@@ -28,16 +33,16 @@
       <v-row class="mx-2">
         <v-col cols="12">
           <ImprovementRoleComboBox
-            :team-member="registrationMemberInput"
+            :circle-member="addMemberInput"
             :items="improvementRoles"
-            :improvement-role.sync="registrationMemberInput.improvementRole"
+            :improvement-role.sync="addMemberInput.improvementRole"
             label="改善担当"
           />
         </v-col>
       </v-row>
     </v-form>
     <template slot="buttons">
-      <AppButton :loading="isRunning" :disabled="isValid" @click="handleRegistrationMember"
+      <AppButton :loading="isRunning" :disabled="isValid" @click="runAddMember"
         >保存する
       </AppButton>
       <AppButton :disabled="isRunning" color="success" outlined @click="$emit('close', false)"
@@ -51,6 +56,7 @@
 <script>
 import { mapActions } from 'vuex'
 export default {
+  name: 'AddMemberDialog',
   model: {
     prop: 'isOpened',
     event: 'close'
@@ -64,13 +70,13 @@ export default {
       type: Array,
       default: () => []
     },
-    teamRoles: {
+    circleRoles: {
       type: Array,
       required: true
     }
   },
   data: () => ({
-    registrationMemberInput: {
+    addMemberInput: {
       name: '',
       role: [],
       improvementRole: []
@@ -82,12 +88,12 @@ export default {
   }),
   methods: {
     // メンバー登録
-    handleRegistrationMember() {
-      this.registrationMember(this.registrationMemberInput)
+    runAddMember() {
+      this.addMember(this.addMemberInput)
       this.$emit('close', false)
     },
 
-    ...mapActions('modules/team/team', ['registrationMember'])
+    ...mapActions('modules/circle', ['addMember'])
   }
 }
 </script>
