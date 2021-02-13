@@ -1,18 +1,23 @@
 <template>
-  <AppDialog :is-opened="isOpened" title="ユーザー名変更" @close="$emit('close', false)">
+  <AppDialog
+    :is-opened="isOpened"
+    class="update-username-dialog"
+    title="ユーザー名変更"
+    @close="$emit('close', false)"
+  >
     <v-card-subtitle class="text-center font-italic">
       現在登録されているユーザー名<br />
       <v-icon left>mdi-account-outline</v-icon>
       {{ gettersUserName }}さん
     </v-card-subtitle>
     <v-divider />
-    <v-form ref="form" lazy-validation @submit.prevent="updateUserName">
+    <v-form ref="form" lazy-validation>
       <v-row class="mx-2">
         <FormUserName :user-name.sync="usernameInput" name-label="新しいユーザー名" />
       </v-row>
     </v-form>
     <template slot="buttons">
-      <AppButton :disabled="isValid" :loading="isRunning" outlined @click="handleUpdateUserName">
+      <AppButton :disabled="isValid" :loading="isRunning" outlined @click="runUpdateUserName">
         保存する
       </AppButton>
       <AppButton :disabled="isRunning" color="success" outlined @click="$emit('close', false)">
@@ -26,6 +31,7 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
+  name: 'UpdateUsernameDialog',
   model: {
     prop: 'isOpened',
     event: 'close'
@@ -47,7 +53,7 @@ export default {
     }
   },
   methods: {
-    async handleUpdateUserName() {
+    async runUpdateUserName() {
       if (!this.usernameInput) {
         this.$refs.form.validate()
         return
