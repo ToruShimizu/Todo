@@ -3,8 +3,8 @@
     <v-data-table
       :headers="memberHeaders"
       :items="teamMember"
-      :search="searchMember"
-      :options.sync="pageOptions"
+      :search="searchWord"
+      :options.sync="DEFAULT_PAGE_OPTIONS"
       sort-by="名前"
       class="elevation-1"
       style="width: 80%"
@@ -13,7 +13,7 @@
         <v-toolbar flat dense>
           <v-spacer />
           <v-text-field
-            v-model="searchMember"
+            v-model="searchWord"
             prepend-inner-icon="mdi-magnify"
             label="検索"
             clearable
@@ -21,7 +21,7 @@
             hide-details
           />
           <v-divider class="mx-4" inset vertical />
-          <AppButton @click="openRegistrationMember">メンバー追加 </AppButton>
+          <AppButton @click="isOpenedRegistrationMemberDialog = true">メンバー追加 </AppButton>
 
           <v-spacer />
         </v-toolbar>
@@ -32,18 +32,22 @@
         <v-icon class="pl-1" color="success" @click="handleRemoveMember(item)">mdi-delete</v-icon>
       </template>
     </v-data-table>
-    <UpdateMember
-      :edit-member="editMember"
-      :improvement-roles="improvementRoles"
+    <RegistrationMember
+      v-model="isOpenedRegistrationMemberDialog"
+      :team-member="teamMember"
       :team-roles="teamRoles"
-      :update-member-dialog="isOpenedUpdateMemberDialog"
-      @close-update-member="isOpenedUpdateMemberDialog = true"
+      :improvement-roles="improvementRoles"
+    />
+    <UpdateMember
+      v-model="isOpenedUpdateMemberDialog"
+      :edit-member="editMember"
+      :team-roles="teamRoles"
     />
   </v-layout>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
   props: {
@@ -57,6 +61,7 @@ export default {
     }
   },
   data: () => ({
+    DEFAULT_PAGE_OPTIONS,
     memberHeaders: [
       {
         text: '名前',
@@ -68,17 +73,15 @@ export default {
       { text: '改善', value: 'improvementRole', sortable: true },
       { text: '編集or削除', value: 'actions', sortable: false }
     ],
-    searchMember: '',
-    pageOptions: {
-      page: 1,
-      itemsPerPage: 5
-    },
+    searchWord: '',
+
     editMember: {},
     isOpenedUpdateMemberDialog: false
   }),
 
   computed: {
-    ...mapState('modules/team/team', ['teamMember'])
+    ...mapState('modules/team/team', ['teamMember']),
+    ...mapGetters('modules/team/team', ['teamName', 'teamPhotoURL'])
   },
   methods: {
     // メンバー削除

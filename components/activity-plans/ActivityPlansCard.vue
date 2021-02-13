@@ -17,15 +17,11 @@
               </v-card-title>
             </v-card-title>
             <!-- コメント作成ダイアログ -->
-            <CommentView
-              :comment-dialog="isOpenedCommentDialog"
-              :plan-contents="contents"
-              @close-comment="isOpenedCommentDialog = false"
-            />
+            <CommentView v-model="isOpenedCommentDialog" :plan-contents="contents" />
             <!-- コメントを開くダイアログ -->
             <AppButton width="50" color="success" icon @click="isOpenedCommentDialog = true"
-              ><v-icon>mdi-comment-text-outline</v-icon></AppButton
-            >
+              ><v-icon>mdi-comment-text-outline</v-icon>
+            </AppButton>
             {{ contents.comments.length }}
             <v-spacer />
             <!-- 削除・編集選択リスト -->
@@ -36,7 +32,7 @@
                 </v-btn>
               </template>
               <v-list>
-                <v-list-item @click="openActivityPlan(contents)">
+                <v-list-item @click="openEditActivityPlan(contents)">
                   <v-list-item-title class="font-weight-bold">
                     編集する
                   </v-list-item-title>
@@ -82,6 +78,12 @@
         </v-card>
       </transition-group>
     </template>
+    <!-- 活動計画編集ダイアログ -->
+    <UpdateActivityPlan
+      v-model="isOpenedUpdateActivityPlanDialog"
+      :contents="selectedItem"
+      :items="items"
+    />
   </div>
 </template>
 
@@ -91,11 +93,17 @@ export default {
     contents: {
       type: Object,
       required: true
+    },
+    items: {
+      type: Array,
+      required: true
     }
   },
   data() {
     return {
-      isOpenedCommentDialog: false
+      selectedItem: {},
+      isOpenedCommentDialog: false,
+      isOpenedUpdateActivityPlanDialog: false
     }
   },
   computed: {
@@ -118,8 +126,9 @@ export default {
       this.$emit('toggle-done-activity-plan', contents)
     },
     // 活動計画作成ダイアログを開く
-    openActivityPlan(contents) {
-      this.$emit('open-activity-plan', contents)
+    openEditActivityPlan(contents) {
+      this.selectedItem = contents
+      this.isOpenedUpdateActivityPlanDialog = true
     }
   }
 }

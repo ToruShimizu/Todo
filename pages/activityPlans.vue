@@ -2,10 +2,7 @@
   <v-container style="max-width: 500px" class="mb-5 py-5">
     <v-row class="justify-center">
       <!-- サークル作成ダイアログ（チームが作成されていない時に表示） -->
-      <CreateTeam
-        :create-team-dialog="isOpenedCreateTeamDialog"
-        @close-team-dialog="isOpenedCreateTeamDialog = false"
-      />
+      <CreateTeam v-model="isOpenedCreateTeamDialog" />
       <template v-if="!teamName">
         <AppButton width="200" @click="isOpenedCreateTeamDialog = true"
           >サークル新規作成
@@ -23,13 +20,7 @@
       </template>
     </v-row>
     <!-- 活動計画作成ダイアログ -->
-    <AddActivityPlan
-      :create-activity-plans.sync="planContents"
-      :todo-categorys="todoCategorys"
-      :create-activity-plan-dialog="isOpenedCreateActivityPlanDialog"
-      @open-create-activity-plan="isOpenedCreateActivityPlanDialog = true"
-      @close-activity-plan="isOpenedCreateActivityPlanDialog = false"
-    />
+    <AddActivityPlan v-model="isOpenedCreateActivityPlanDialog" :items="todoCategorys" />
     <v-divider class="mt-4" />
     <v-card class="mb-5">
       <!-- 完了状態に応じた絞り込み -->
@@ -59,10 +50,14 @@
         @change-activity-plans-page="changeActivityPlansPage"
         :activity-plans-page-length="activityPlansPageLength"
       />
-      <!-- 活動計画一覧 -->
-      <ActivityPlansView
-        :display-activity-plans="displayActivityPlans"
-        :todo-categorys="todoCategorys"
+      <!-- 活動計画一覧表示 -->
+      <ActivityPlansCard
+        v-for="(contents, index) in displayActivityPlans"
+        :key="index"
+        :contents="contents"
+        :items="todoCategorys"
+        @toggle-done-activity-plan="toggleDoneActivityPlan"
+        @handle-remove-activity-plan="handleRemoveActivityPlan"
       />
     </v-card>
   </v-container>
@@ -82,16 +77,6 @@ export default {
       },
       isOpenedCreateTeamDialog: false,
       isOpenedCreateActivityPlanDialog: false,
-      planContents: {
-        category: '',
-        detail: '',
-        imageFile: null,
-        inChargeMember: [],
-        fileName: '',
-        photoURL: '',
-        date: [new Date().toISOString().substr(0, 10)],
-        done: false
-      },
       todoCategorys: [
         '会合',
         'KYT',

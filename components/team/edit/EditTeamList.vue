@@ -11,8 +11,13 @@
         <v-list-item>
           <v-list-item-title>
             <!-- サークル編集ダイアログを開くボタン -->
-            <AppButton class="font-weight-bold" color="success" text @click="openUpdateTeam"
-              >編集する
+            <AppButton
+              class="font-weight-bold"
+              color="success"
+              text
+              @click="isOpenedUpdateTeamDialog = true"
+            >
+              編集する
             </AppButton>
           </v-list-item-title>
         </v-list-item>
@@ -27,11 +32,7 @@
       </v-list>
     </v-menu>
     <!-- サークル編集ダイアログ -->
-    <UpdateTeam
-      :update-team-dialog="isOpenedUpdateTeamDialog"
-      @close-team-dialog="isOpenedUpdateTeamDialog = false"
-      :edit-team="editTeam"
-    />
+    <UpdateTeam v-model="isOpenedUpdateTeamDialog" />
   </div>
 </template>
 
@@ -40,12 +41,6 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   data() {
     return {
-      editTeam: {
-        name: '',
-        imageFile: null,
-        fileName: '',
-        photoURL: ''
-      },
       isOpenedUpdateTeamDialog: false
     }
   },
@@ -53,13 +48,6 @@ export default {
     ...mapGetters('modules/team/team', ['teamName', 'teamPhotoURL'])
   },
   methods: {
-    // サークル編集ダイアログを開く
-    openUpdateTeam() {
-      this.editTeam.name = this.teamName
-      this.editTeam.photoURL = this.teamPhotoURL
-      this.isOpenedUpdateTeamDialog = true
-    },
-
     // サークル削除
     handleDeleteTeam() {
       if (!confirm('サークルを削除しますか？')) return

@@ -52,15 +52,9 @@
         <AppButton outlined @click="isOpenedCreateUserDialog = true">新規作成</AppButton>
       </v-card-actions>
       <!-- 新規ユーザー作成ダイアログ -->
-      <CreateUser
-        :create-user-dialog="isOpenedCreateUserDialog"
-        @close-create-user="isOpenedCreateUserDialog = false"
-      />
+      <CreateUser v-model="isOpenedCreateUserDialog" />
       <!-- パスワードリセットダイアログ -->
-      <ResetPassword
-        :reset-password-dialog="isOpenedResetPasswordDialog"
-        @close-reset-password="isOpenedResetPasswordDialog = false"
-      />
+      <ResetPassword v-model="isOpenedResetPasswordDialog" />
     </v-form>
   </v-card>
 </template>
