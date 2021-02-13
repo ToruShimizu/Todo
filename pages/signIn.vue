@@ -29,7 +29,7 @@
       または
     </v-card-title>
 
-    <v-form ref="form" lazy-validation @submit.prevent="login">
+    <v-form ref="form" lazy-validation>
       <v-row class="mx-2">
         <FormUserEmail :user-email.sync="signInUser.email" email-label="メールアドレス" />
       </v-row>
@@ -52,9 +52,9 @@
         <AppButton outlined @click="isOpenedCreateUserDialog = true">新規作成</AppButton>
       </v-card-actions>
       <!-- 新規ユーザー作成ダイアログ -->
-      <CreateUser v-model="isOpenedCreateUserDialog" />
+      <LazyCreateUserDialog v-model="isOpenedCreateUserDialog" />
       <!-- パスワードリセットダイアログ -->
-      <ResetPassword v-model="isOpenedResetPasswordDialog" />
+      <LazyResetPasswordDialog v-model="isOpenedResetPasswordDialog" />
     </v-form>
   </v-card>
 </template>
@@ -73,7 +73,8 @@ export default {
       isOpenedResetPasswordDialog: false,
       isRunningTestLogin: false,
       isRunningLogin: false,
-      isOpenedShowPassword: false
+      isOpenedShowPassword: false,
+      isValid: false
     }
   },
   methods: {

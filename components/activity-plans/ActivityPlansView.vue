@@ -6,11 +6,14 @@
       :key="contents.id"
       :contents="contents"
       @toggle-done-activity-plan="toggleDoneActivityPlan"
-      @handle-remove-activity-plan="handleRemoveActivityPlan"
+      @handle-remove-activity-plan="runRemoveActivityPlan"
       @open-activity-plan="openUpdateActivityPlan"
     />
     <!-- 活動計画編集ダイアログ -->
-    <UpdateActivityPlan v-model="updateActivityPlanDialog" :todo-categorys="todoCategorys" />
+    <LazyUpdateActivityPlanDialog
+      v-model="updateActivityPlanDialog"
+      :todo-categorys="todoCategorys"
+    />
   </div>
 </template>
 
@@ -35,7 +38,7 @@ export default {
   },
   methods: {
     // 活動計画削除ボタン
-    handleRemoveActivityPlan(contents) {
+    runRemoveActivityPlan(contents) {
       if (!confirm(contents.category + 'を削除しますか？')) return
       this.removeActivityPlan({ id: contents.id })
     },

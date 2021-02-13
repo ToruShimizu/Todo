@@ -2,14 +2,14 @@
   <v-container style="max-width: 500px" class="mb-5 py-5">
     <v-row class="justify-center">
       <!-- サークル作成ダイアログ（チームが作成されていない時に表示） -->
-      <CreateTeam v-model="isOpenedCreateTeamDialog" />
-      <template v-if="!teamName">
-        <AppButton width="200" @click="isOpenedCreateTeamDialog = true"
+      <LazyCreateCircleDialog v-model="isOpenedCreateCircleDialog" />
+      <template v-if="!circleName">
+        <AppButton width="200" @click="isOpenedCreateCircleDialog = true"
           >サークル新規作成
         </AppButton>
       </template>
       <template v-else>
-        <AppButton class="mx-2" width="150" color="teal lighten-1" to="/team" nuxt
+        <AppButton class="mx-2" width="150" color="teal lighten-1" to="/circle" nuxt
           >サークル編集
         </AppButton>
 
@@ -27,7 +27,7 @@
       <FilteredActivityPlans :selected-activity-plans-filter.sync="selectActivityPlansFilter" />
       <v-divider />
       <!-- チームが作成されている時に表示 -->
-      <v-row v-if="teamName">
+      <v-row v-if="circleName">
         <!-- 活動計画検索 -->
         <SearchActivityPlans
           :searched-category-keyword.sync="searchCategoryKeyword"
@@ -52,12 +52,10 @@
       />
       <!-- 活動計画一覧表示 -->
       <ActivityPlansCard
-        v-for="(contents, index) in displayActivityPlans"
-        :key="index"
+        v-for="contents in displayActivityPlans"
+        :key="contents.id"
         :contents="contents"
         :items="todoCategorys"
-        @toggle-done-activity-plan="toggleDoneActivityPlan"
-        @handle-remove-activity-plan="handleRemoveActivityPlan"
       />
     </v-card>
   </v-container>
@@ -71,11 +69,7 @@ export default {
 
   data() {
     return {
-      createTeam: {
-        name: '',
-        imageFile: null
-      },
-      isOpenedCreateTeamDialog: false,
+      isOpenedCreateCircleDialog: false,
       isOpenedCreateActivityPlanDialog: false,
       todoCategorys: [
         '会合',
@@ -175,7 +169,7 @@ export default {
       'sortByDescDate'
     ]),
     ...mapGetters('modules/user/auth', ['photoURL']),
-    ...mapGetters('modules/team/team', ['teamName']),
+    ...mapGetters('modules/circle', ['circleName']),
     ...mapState('modules/activity-plans/activityPlans', ['activityPlans'])
   },
   methods: {
