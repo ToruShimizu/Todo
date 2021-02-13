@@ -14,7 +14,7 @@
 <script>
 export default {
   props: {
-    teamMember: {
+    circleMember: {
       type: Object,
       required: true
     },
@@ -26,7 +26,7 @@ export default {
   computed: {
     innerName: {
       get() {
-        return this.teamMember.name
+        return this.circleMember.name
       },
       set(memberName) {
         this.$emit('update:member-name', memberName)
@@ -35,7 +35,7 @@ export default {
   },
   data() {
     return {
-      nameRules: [(v) => !!v || '名前は必須です。']
+      nameRules: [v => !!v || '名前は必須です。']
     }
   }
 }
