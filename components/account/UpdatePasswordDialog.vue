@@ -9,7 +9,7 @@
       ※ 変更完了後にログイン画面に戻ります。
     </v-card-subtitle>
     <v-divider />
-    <v-form v-model="isValid" ref="form" lazy-validation @click="handleUpdatePassword">
+    <v-form v-model="isValid" ref="form" lazy-validation>
       <!-- メールアドレス入力 -->
       <v-row class="mx-2">
         <FormUserEmail
@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     // パスワード更新ボタン
-    async handleUpdatePassword() {
+    async runUpdatePassword() {
       if (
         !this.updatePasswordInput.email ||
         !this.updatePasswordInput.password ||

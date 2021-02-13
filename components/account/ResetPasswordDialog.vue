@@ -11,7 +11,7 @@
     </v-card-subtitle>
 
     <v-divider />
-    <v-form ref="form" lazy-validation @submit.prevent="passwordReset">
+    <v-form ref="form" lazy-validation>
       <v-row class="mx-2">
         <FormUserEmail
           :user-email.sync="resetUserPasswordInput.email"
