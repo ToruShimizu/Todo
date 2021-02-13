@@ -1,5 +1,10 @@
 <template>
-  <AppDialog :is-opened="isOpened" title="メンバー編集" @close="$emit('close', false)">
+  <AppDialog
+    :is-opened="isOpened"
+    class="update-member-dialog"
+    title="メンバー編集"
+    @close="$emit('close', false)"
+  >
     <v-form v-model="isValid" ref="form" lazy-validation>
       <v-row class="mx-2">
         <!-- メンバー名入力フォーム -->
@@ -17,7 +22,7 @@
       </v-row>
       <!-- 役割入力フォーム -->
       <v-col cols="12">
-        <RoleComboBox :items="teamRoles" :role.sync="editMemberInput.role" label="役割" />
+        <RoleComboBox :items="circleRoles" :role.sync="editMemberInput.role" label="役割" />
       </v-col>
       <!-- 改善担当入力フォーム -->
       <v-row class="mx-2">
@@ -31,7 +36,7 @@
       </v-row>
     </v-form>
     <template slot="buttons">
-      <AppButton :loading="isRunning" :disabled="isValid" @click="handleUpdateMember"
+      <AppButton :loading="isRunning" :disabled="isValid" @click="runUpdateMember"
         >保存する
       </AppButton>
       <AppButton :disabled="isRunning" color="success" outlined @click="$emit('close', false)"
@@ -45,6 +50,7 @@
 import { mapActions } from 'vuex'
 
 export default {
+  name: 'UpdateMemberDialog',
   model: {
     prop: 'isOpened',
     event: 'close'
@@ -58,7 +64,7 @@ export default {
       type: Object,
       required: true
     },
-    teamRoles: {
+    circleRoles: {
       type: Array,
       required: true
     },
@@ -82,11 +88,11 @@ export default {
 
   methods: {
     // メンバー更新
-    handleUpdateMember() {
+    runUpdateMember() {
       this.updateMember(this.editMemberInput)
       this.$emit('close', false)
     },
-    ...mapActions('modules/team/team', ['updateMember'])
+    ...mapActions('modules/circle', ['updateMember'])
   }
 }
 </script>
