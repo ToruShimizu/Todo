@@ -1,5 +1,10 @@
 <template>
-  <AppDialog :is-opened="isOpened" title="パスワード変更" @close="$emit('close', false)">
+  <AppDialog
+    :is-opened="isOpened"
+    class="update-password-dialog"
+    title="パスワード変更"
+    @close="$emit('close', false)"
+  >
     <v-card-subtitle class="text-center font-italic">
       ※ 変更完了後にログイン画面に戻ります。
     </v-card-subtitle>
@@ -32,7 +37,7 @@
       </v-row>
     </v-form>
     <template slot="buttons">
-      <AppButton :disabled="isValid" outlined @click="handleUpdatePassword">
+      <AppButton :disabled="isValid" outlined @click="runUpdatePassword">
         保存する
       </AppButton>
       <AppButton :loading="isRunning" color="success" outlined @click="$emit('close', false)">
@@ -46,6 +51,7 @@
 import { mapActions } from 'vuex'
 
 export default {
+  name: 'UpdatePasswordDialog',
   model: {
     prop: 'isOpened',
     event: 'close'
