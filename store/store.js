@@ -3,9 +3,8 @@ import Vuex from 'vuex'
 import * as auth from './modules/user/auth'
 import * as userInfo from './modules/user/userInfo'
 import * as activityPlans from './modules/activity-plans/activityPlans'
-import * as team from './modules/team/team'
+import * as circle from './modules/circle'
 import * as commonParts from './modules/common-parts/commonParts'
-
 
 Vue.use(Vuex)
 
@@ -14,7 +13,7 @@ export default new Vuex.Store({
     auth,
     userInfo,
     activityPlans,
-    team,
-    commonParts,
+    circle,
+    commonParts
   }
 })

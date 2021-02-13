@@ -20,7 +20,7 @@ const mutations = {
     state.loginUser.photoURL = photoURL
   },
   // ログインユーザー情報の削除
-  deleteLoginUser(state) {
+  removeAccount(state) {
     state.loginUser = null
   }
 }
@@ -30,11 +30,11 @@ const actions = {
   async setLoginUser({ commit, dispatch }, userInfo) {
     await commit('setLoginUser', userInfo)
     dispatch('modules/activity-plans/activityPlans/fetchActivityPlans', null, { root: true })
-    dispatch('modules/team/team/fetchTeam', null, { root: true })
+    dispatch('modules/circle/fetchCircle', null, { root: true })
   },
   // ログインユーザー情報の削除
-  deleteLoginUser({ commit }) {
-    commit('deleteLoginUser')
+  removeAccount({ commit }) {
+    commit('removeAccount')
   },
   // Googleログイン
   async googleLogin() {
@@ -64,7 +64,7 @@ const actions = {
   async logout({ commit }) {
     await auth.signOut()
     alert('ログアウトしました。')
-    commit('deleteLoginUser')
+    commit('removeAccount')
   },
   // ユーザー作成してからそのままログインする
   async createUser({ dispatch, commit }, { email, password, username }) {
