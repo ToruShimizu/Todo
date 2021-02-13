@@ -40,6 +40,7 @@
       </v-list-item>
     </v-list>
     <v-divider />
+    <!-- ユーザー情報編集選択リスト -->
     <EditUserInfo />
   </v-container>
 </template>
