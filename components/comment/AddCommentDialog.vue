@@ -39,7 +39,7 @@
               </v-avatar>
               <!-- ユーザーネーム -->
               <span>{{ gettersUserName }}</span> <v-spacer />
-              <v-btn icon @click="handleRemoveComment(comment)">
+              <v-btn icon @click="runRemoveComment(comment)">
                 <v-icon>mdi-delete-outline</v-icon>
               </v-btn>
             </v-card-actions>
@@ -55,7 +55,7 @@
         label="コメントを追加する"
         clearable
       />
-      <AppButton class="ml-2" outlined @click="handleAddComment">追加する </AppButton>
+      <AppButton class="ml-2" outlined @click="runAddComment">追加する </AppButton>
     </template>
   </AppDialog>
 </template>
@@ -64,6 +64,7 @@
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
+  name: 'AddCommentDialog',
   model: {
     prop: 'isOpened',
     event: 'close'
@@ -88,15 +89,19 @@ export default {
   },
   methods: {
     // コメント追加
-    handleAddComment() {
+    runAddComment() {
       this.addComment({
         id: this.planContents.id,
         message: this.message
       })
       this.message = ''
     },
-
-    ...mapActions('modules/activity-plans/activityPlans', ['addComment'])
+    // コメント削除
+    runRemoveComment(comment) {
+      if (!confirm(comment.message + 'を削除しますか?')) return
+      this.removeComment(comment)
+    },
+    ...mapActions('modules/activity-plans/activityPlans', ['addComment', 'removeComment'])
   }
 }
 </script>
