@@ -2,17 +2,16 @@
   <v-container style="max-width: 500px" class="mb-5 py-5">
     <v-row class="justify-center">
       <!-- サークル作成ダイアログ（チームが作成されていない時に表示） -->
-      <CreateTeam
-        :create-team-dialog="isOpenedCreateTeamDialog"
-        @close-team-dialog="isOpenedCreateTeamDialog = false"
-      />
-      <template v-if="!teamName">
-        <AppButton width="200" @click="isOpenedCreateTeamDialog = true"
+      <template v-if="!circleName">
+        <LazyCreateCircleDialog v-model="isOpenedCreateCircleDialog" />
+        <AppButton width="200" @click="isOpenedCreateCircleDialog = true"
           >サークル新規作成
         </AppButton>
       </template>
+
+      <!-- サークルが作成されている場合 -->
       <template v-else>
-        <AppButton class="mx-2" width="150" color="teal lighten-1" to="/team" nuxt
+        <AppButton class="mx-2" width="150" color="teal lighten-1" to="/circle" nuxt
           >サークル編集
         </AppButton>
 
@@ -23,46 +22,52 @@
       </template>
     </v-row>
     <!-- 活動計画作成ダイアログ -->
-    <AddActivityPlan
-      :create-activity-plans.sync="planContents"
-      :todo-categorys="todoCategorys"
-      :create-activity-plan-dialog="isOpenedCreateActivityPlanDialog"
-      @open-create-activity-plan="isOpenedCreateActivityPlanDialog = true"
-      @close-activity-plan="isOpenedCreateActivityPlanDialog = false"
+    <LazyCreateActivityPlanDialog
+      v-model="isOpenedCreateActivityPlanDialog"
+      :items="todoCategorys"
     />
     <v-divider class="mt-4" />
     <v-card class="mb-5">
       <!-- 完了状態に応じた絞り込み -->
       <FilteredActivityPlans :selected-activity-plans-filter.sync="selectActivityPlansFilter" />
       <v-divider />
+
       <!-- チームが作成されている時に表示 -->
-      <v-row v-if="teamName">
-        <!-- 活動計画検索 -->
-        <SearchActivityPlans
-          :searched-category-keyword.sync="searchCategoryKeyword"
-          :todo-categorys="todoCategorys"
-        />
-        <!-- 活動計画の並び替え -->
-        <SortByActivityPlans
-          :selected-sort-activity-plans.sync="selectSortActivityPlans"
-          :sort-activity-plans-states="sortActivityPlansStates"
-        />
-      </v-row>
-      <v-row v-else>
-        <v-card-title class="text-center font-italic grey--text">
-          サークルがありません
-        </v-card-title>
-      </v-row>
+      <template v-if="circleName">
+        <v-row>
+          <!-- 活動計画検索 -->
+          <SearchActivityPlans
+            :searched-category-keyword.sync="searchCategoryKeyword"
+            :todo-categorys="todoCategorys"
+          />
+          <!-- 活動計画の並び替え -->
+          <SortByActivityPlans
+            :selected-sort-activity-plans.sync="selectSortActivityPlans"
+            :sort-activity-plans-states="sortActivityPlansStates"
+          />
+        </v-row>
+      </template>
+
+      <!-- サークルがない場合 -->
+      <template v-else>
+        <v-row>
+          <v-card-title class="text-center font-italic grey--text">
+            サークルがありません
+          </v-card-title>
+        </v-row>
+      </template>
       <!-- ページネーション -->
       <ActivityPlansPagination
         :activity-plans-page.sync="activityPlansPage"
         @change-activity-plans-page="changeActivityPlansPage"
         :activity-plans-page-length="activityPlansPageLength"
       />
-      <!-- 活動計画一覧 -->
-      <ActivityPlansView
-        :display-activity-plans="displayActivityPlans"
-        :todo-categorys="todoCategorys"
+      <!-- 活動計画一覧表示 -->
+      <ActivityPlansCard
+        v-for="contents in displayActivityPlans"
+        :key="contents.id"
+        :contents="contents"
+        :items="todoCategorys"
       />
     </v-card>
   </v-container>
@@ -76,22 +81,8 @@ export default {
 
   data() {
     return {
-      createTeam: {
-        name: '',
-        imageFile: null
-      },
-      isOpenedCreateTeamDialog: false,
+      isOpenedCreateCircleDialog: false,
       isOpenedCreateActivityPlanDialog: false,
-      planContents: {
-        category: '',
-        detail: '',
-        imageFile: null,
-        inChargeMember: [],
-        fileName: '',
-        photoURL: '',
-        date: [new Date().toISOString().substr(0, 10)],
-        done: false
-      },
       todoCategorys: [
         '会合',
         'KYT',
@@ -151,6 +142,7 @@ export default {
       }
       return returnvalue
     },
+
     // 活動計画の検索
     searchActivityPlans() {
       const activityPlans = this.sortByActivityPlans
@@ -162,6 +154,7 @@ export default {
         return activityPlan.category.includes(this.searchCategoryKeyword.toUpperCase())
       })
     },
+
     // 活動計画の並べ替え
     sortByActivityPlans() {
       let returnvalue
@@ -190,8 +183,9 @@ export default {
       'sortByDescDate'
     ]),
     ...mapGetters('modules/user/auth', ['photoURL']),
-    ...mapGetters('modules/team/team', ['teamName']),
-    ...mapState('modules/activity-plans/activityPlans', ['activityPlans'])
+    ...mapGetters('modules/circle', ['circleName']),
+    ...mapState('modules/activity-plans/activityPlans', ['activityPlans']),
+    ...mapState('modules/circle', ['circle'])
   },
   methods: {
     // ページ番号のボタンが押された時にページを切り替える

@@ -2,19 +2,17 @@
   <div>
     <!-- 活動計画一覧表示 -->
     <ActivityPlansCard
-      v-for="(contents, index) in displayActivityPlans"
-      :key="index"
+      v-for="contents in displayActivityPlans"
+      :key="contents.id"
       :contents="contents"
       @toggle-done-activity-plan="toggleDoneActivityPlan"
-      @handle-remove-activity-plan="handleRemoveActivityPlan"
+      @handle-remove-activity-plan="runRemoveActivityPlan"
       @open-activity-plan="openUpdateActivityPlan"
     />
     <!-- 活動計画編集ダイアログ -->
-    <UpdateActivityPlan
-      :edit-plan-contents="editPlanContents"
+    <LazyUpdateActivityPlanDialog
+      v-model="updateActivityPlanDialog"
       :todo-categorys="todoCategorys"
-      :update-activity-plan-dialog="updateActivityPlanDialog"
-      @close-update-activity-plan="closeUpdateActivityPlan"
     />
   </div>
 </template>
@@ -40,7 +38,7 @@ export default {
   },
   methods: {
     // 活動計画削除ボタン
-    handleRemoveActivityPlan(contents) {
+    runRemoveActivityPlan(contents) {
       if (!confirm(contents.category + 'を削除しますか？')) return
       this.removeActivityPlan({ id: contents.id })
     },
@@ -53,10 +51,7 @@ export default {
       this.editPlanContents = Object.assign({}, contents)
       this.updateActivityPlanDialog = true
     },
-    // 活動計画編集ダイアログを閉じる
-    closeUpdateActivityPlan() {
-      this.updateActivityPlanDialog = false
-    },
+
     ...mapActions('modules/activity-plans/activityPlans', [
       'removeActivityPlan',
       'doneActivityPlan'

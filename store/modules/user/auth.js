@@ -10,17 +10,17 @@ const mutations = {
   setLoginUser(state, userInfo) {
     state.loginUser = userInfo
   },
-  updateUserName(state, userName) {
-    state.loginUser.displayName = userName;
+  updateUserName(state, username) {
+    state.loginUser.displayName = username
   },
   updateUserEmail(state, userEmail) {
-    state.loginUser.email = userEmail;
+    state.loginUser.email = userEmail
   },
   updateUserAvatar(state, photoURL) {
-    state.loginUser.photoURL = photoURL;
+    state.loginUser.photoURL = photoURL
   },
   // ログインユーザー情報の削除
-  deleteLoginUser(state) {
+  removeAccount(state) {
     state.loginUser = null
   }
 }
@@ -30,18 +30,17 @@ const actions = {
   async setLoginUser({ commit, dispatch }, userInfo) {
     await commit('setLoginUser', userInfo)
     dispatch('modules/activity-plans/activityPlans/fetchActivityPlans', null, { root: true })
-    dispatch('modules/team/team/fetchTeam', null, { root: true })
-
+    dispatch('modules/circle/fetchCircle', null, { root: true })
   },
   // ログインユーザー情報の削除
-  deleteLoginUser({ commit }) {
-    commit('deleteLoginUser')
+  removeAccount({ commit }) {
+    commit('removeAccount')
   },
   // Googleログイン
   async googleLogin() {
     try {
       const provider = new firebase.auth.GoogleAuthProvider()
-      await auth.signInWithPopup(provider).then((result) => {
+      await auth.signInWithPopup(provider).then(result => {
         alert('ようこそ ' + result.user.displayName + 'さん!')
         this.$router.push({ path: '/activityPlans' })
       })
@@ -65,21 +64,21 @@ const actions = {
   async logout({ commit }) {
     await auth.signOut()
     alert('ログアウトしました。')
-    commit('deleteLoginUser')
+    commit('removeAccount')
   },
   // ユーザー作成してからそのままログインする
-  async createUser({ dispatch, commit }, { email, password, userName }) {
+  async createUser({ dispatch, commit }, { email, password, username }) {
     try {
       const newUser = await auth.createUserWithEmailAndPassword(email, password)
       await newUser.user.updateProfile({
-        displayName: userName
+        displayName: username
       })
       alert('ユーザーの作成に成功しました。このままログインします。')
       await dispatch('login', { email, password })
-      commit('updateUserName', userName)
+      commit('updateUsername', username)
       email = null
       password = null
-      userName = null
+      username = null
     } catch (err) {
       alert('ユーザーの作成に失敗しました。もう一度やり直してください。')
       console.log(err)
@@ -89,13 +88,13 @@ const actions = {
 
 const getters = {
   // ユーザー名の取得
-  gettersUserName: (state) => (state.loginUser ? state.loginUser.displayName : ''),
+  gettersUserName: state => (state.loginUser ? state.loginUser.displayName : ''),
   // ユーザーのメールアドレスの取得
-  gettersUserEmail: (state) => (state.loginUser ? state.loginUser.email : ''),
+  gettersUserEmail: state => (state.loginUser ? state.loginUser.email : ''),
   // ユーザー画像の取得
-  photoURL: (state) => (state.loginUser ? state.loginUser.photoURL : ''),
+  photoURL: state => (state.loginUser ? state.loginUser.photoURL : ''),
   // uidの取得
-  uid: (state) => (state.loginUser ? state.loginUser.uid : null)
+  uid: state => (state.loginUser ? state.loginUser.uid : null)
 }
 
 export default {

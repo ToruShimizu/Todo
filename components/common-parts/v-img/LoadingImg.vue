@@ -7,7 +7,7 @@
     class="grey lighten-2"
     :max-width="width"
     :max-height="height"
-    @click="handleImageFile"
+    @click="removeImageFile"
   >
     <template v-slot:placeholder>
       <v-row class="fill-height ma-0" align="center" justify="center">
@@ -34,11 +34,11 @@ export default {
     }
   },
   methods: {
-    handleDeleteImage() {
-      this.$emit('delete-image')
+    removeImage() {
+      this.$emit('remove-image')
     },
-    handleImageFile() {
-      this.$emit('handle-image-file')
+    removeImageFile() {
+      this.$emit('remove-image-file')
     }
   }
 }

@@ -31,7 +31,6 @@ const actions = {
         })
         commit('modules/user/auth/updateUserName', userName, { root: true })
         commit('modules/common-parts/commonParts/openSnackbar', null, { root: true })
-
       } catch (err) {
         alert('ユーザー名の変更に失敗しました。もう一度やり直してください。')
         console.log(err)
@@ -48,7 +47,6 @@ const actions = {
         await userInfo.updateEmail(email)
         commit('modules/user/auth/updateUserEmail', email, { root: true })
         commit('modules/common-parts/commonParts/openSnackbar', null, { root: true })
-
       } catch (err) {
         alert('新しいメールアドレスの登録に失敗しました。もう一度やり直してください。')
         console.log(err)
@@ -85,7 +83,7 @@ const actions = {
     }
   },
   // ユーザー情報削除
-  async deleteAccount({ commit }, { email, password }) {
+  async removeAccount({ commit }, { email, password }) {
     if (email === 'test@example.com') {
       alert('テストユーザーは削除できません')
     } else {
@@ -115,5 +113,5 @@ const getters = {
 export default {
   namespaced: true,
   getters,
-  actions,
+  actions
 }

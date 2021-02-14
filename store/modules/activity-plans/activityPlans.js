@@ -9,7 +9,7 @@ const mutations = {
     state.activityPlans = []
   },
   // 活動計画追加
-  addActivityPlan(state, activityPlan) {
+  createActivityPlan(state, activityPlan) {
     state.activityPlans.unshift(activityPlan)
   },
   // 活動計画削除
@@ -23,7 +23,7 @@ const mutations = {
     state.activityPlans.splice(index, 1, updateActivityPlan)
   },
   // 活動計画の完了状態切り替え
-  doneActivityPlan(state, planContents) {
+  toggleDoneActivityPlan(state, planContents) {
     planContents.done = !planContents.done
   },
   removePhotoURL(state, id) {
@@ -64,7 +64,7 @@ const actions = {
     commit('initActivityPlans')
     const id = snapShot.docs.map(doc => {
       const planContents = doc.data()
-      commit('addActivityPlan', planContents)
+      commit('createActivityPlan', planContents)
       return doc.data().id
     })
     id.map(doc => {
@@ -73,12 +73,12 @@ const actions = {
     })
   },
   // 活動計画追加
-  async addActivityPlan({ getters, commit }, planContents) {
+  async createActivityPlan({ getters, commit }, planContents) {
     let id = await db.collection(`users/${getters.userUid}/activityPlans`).doc().id
     if (planContents.id) {
       id = planContents.id
     }
-    const createActivityPlan = {
+    const createActivityPlanInput = {
       id,
       category: planContents.category,
       detail: planContents.detail,
@@ -96,8 +96,8 @@ const actions = {
         await db
           .collection(`users/${getters.userUid}/activityPlans`)
           .doc(id)
-          .set(createActivityPlan)
-        commit('addActivityPlan', createActivityPlan)
+          .set(createActivityPlanInput)
+        commit('createActivityPlan', createActivityPlanInput)
         commit('modules/common-parts/commonParts/openSnackbar', null, { root: true })
       }
     } catch (err) {
@@ -113,12 +113,12 @@ const actions = {
     planContents.photoURL = photoURL
     planContents.fileName = imageFile.name
     planContents.id = id
-    dispatch('addActivityPlan', planContents)
+    dispatch('createActivityPlan', planContents)
   },
   // 活動計画更新
   async updateActivityPlan({ getters, commit }, planContents) {
     const id = planContents.id
-    const updateActivityPlan = {
+    const updateActivityPlanInput = {
       id,
       category: planContents.category,
       date: planContents.date,
@@ -135,8 +135,8 @@ const actions = {
         await db
           .collection(`users/${getters.userUid}/activityPlans`)
           .doc(id)
-          .update(updateActivityPlan)
-        commit('updateActivityPlan', updateActivityPlan)
+          .update(updateActivityPlanInput)
+        commit('updateActivityPlan', updateActivityPlanInput)
         planContents.imageFile = null
         commit('modules/common-parts/commonParts/openSnackbar', null, { root: true })
       }
@@ -196,17 +196,17 @@ const actions = {
     })
   },
   // 活動計画の完了状態切り替え
-  async doneActivityPlan({ getters, commit, dispatch }, { planContents, id }) {
+  async toggleDoneActivityPlan({ getters, commit, dispatch }, planContents) {
     await db
       .collection(`users/${getters.userUid}/activityPlans`)
-      .doc(id)
+      .doc(planContents.id)
       .update({
         done: !planContents.done
       })
     if (!planContents.done) {
       dispatch('updateCompletionDate', planContents)
     }
-    commit('doneActivityPlan', planContents)
+    commit('toggleDoneActivityPlan', planContents)
   },
   async removePlanContentsImage({ commit, getters }, planContents) {
     const id = planContents.id
