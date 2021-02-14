@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="activity-plans-card">
     <transition-group name="card-anim">
       <v-card class="mb-5 elevation-5" :key="contents.id">
         <v-card-actions class="pa-0">
@@ -16,7 +16,7 @@
             </v-card-title>
           </v-card-title>
           <!-- コメント作成ダイアログ -->
-          <CommentView v-model="isOpenedCommentDialog" :plan-contents="contents" />
+          <LazyAddCommentDialog v-model="isOpenedCommentDialog" :plan-contents="contents" />
           <!-- コメントを開くダイアログ -->
           <AppButton width="50" color="success" icon @click="isOpenedCommentDialog = true"
             ><v-icon>mdi-comment-text-outline</v-icon>
@@ -77,7 +77,7 @@
       </v-card>
     </transition-group>
     <!-- 活動計画編集ダイアログ -->
-    <UpdateActivityPlan
+    <LazyUpdateActivityPlanDialog
       v-model="isOpenedUpdateActivityPlanDialog"
       :contents="selectedItem"
       :items="items"
@@ -88,6 +88,7 @@
 <script>
 import { mapActions } from 'vuex'
 export default {
+  name: 'ActivityPlansCard',
   props: {
     contents: {
       type: Object,
